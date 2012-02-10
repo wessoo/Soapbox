@@ -23,7 +23,7 @@
 		public function Main() {
 			settingsPath = "application.xml";
 		}
-		
+		//testing
 		override protected function initialize():void {
 			
 		}
