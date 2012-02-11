@@ -19,13 +19,19 @@
 	import caurina.transitions.Tweener;	
 	
 	public class Main extends Application {
-
+		
+		public static var language:int = 0; //language mode. 0: English, 1: Spanish
+		
 		public function Main() {
 			settingsPath = "application.xml";
 		}
-		//testing
+		
 		override protected function initialize():void {
-			
+			var r:Rating = new Rating();
+			var a:Array = r.getImages();
+			for(var i:int = 0; i < a.length; ++i){
+				trace(a[i]);
+			}
 		}
 
 	}
