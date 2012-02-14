@@ -19,7 +19,9 @@
 	import caurina.transitions.Tweener;	
 	
 	public class Main extends Application {
-
+		
+		public static var language:int = 0; //language mode. 0: English, 1: Spanish
+		
 		public function Main() {
 			settingsPath = "application.xml";
 		}
