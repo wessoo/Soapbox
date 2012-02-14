@@ -23,7 +23,7 @@
 		public function Main() {
 			settingsPath = "application.xml";
 		}
-		
+		//testing
 		override protected function initialize():void {
 			var r:Rating = new Rating();
 			var a:Array = r.getImages();
