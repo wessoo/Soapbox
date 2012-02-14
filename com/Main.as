@@ -25,7 +25,11 @@
 		}
 		
 		override protected function initialize():void {
-			
+			var r:Rating = new Rating();
+			var a:Array = r.getImages();
+			for(var i:int = 0; i < a.length; ++i){
+				trace(a[i]);
+			}
 		}
 
 	}
