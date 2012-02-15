@@ -1,0 +1,1449 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Soapbox xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<Content>
+		<Source id="1">
+			<url1>images/1983.029.001.jpg</url1>
+			<url2>thumbs/1983.029.001.jpg</url2>
+			<url3>bigthumbs/1983.029.001.jpg</url3>
+			<ext>1983.029.001</ext>
+			<artist>Patrick August Nagatani</artist>
+			<bio>American, b. 1945</bio>
+			<title>Untitled (Chromotheraphy Series)</title>
+			<date>1980</date>
+			<process>Cibachrome print</process>
+			<credit>Gift of the artist</credit>
+		</Source>
+		<Source id="2">
+			<url1>images/1983.039.001.jpg</url1>
+			<url2>thumbs/1983.039.001.jpg</url2>
+			<url3>bigthumbs/1983.039.001.jpg</url3>
+			<ext>1983.039.001</ext>
+			<artist>Suda Kay House</artist>
+			<bio>American, b. 1951</bio>
+			<title>Untitled (man wearing goggles in water)</title>
+			<date>1983</date>
+			<process>polaroid (color)</process>
+			<credit>Gift of the Artist and Polaroid Corporation</credit>
+		</Source>
+		<Source id="3">
+			<url1>images/1984.003.001.jpg</url1>
+			<url2>thumbs/1984.003.001.jpg</url2>
+			<url3>bigthumbs/1984.003.001.jpg</url3>
+			<ext>1984.003.001</ext>
+			<artist>Mark Chamberlain</artist>
+			<bio>American, b. 1967</bio>
+			<title>Laguna Canyon Project-Phase V 9/83 Primary Light Documentation</title>
+			<date>1983</date>
+			<process>Ektacolor</process>
+			<credit>Gift of the artists</credit>
+		</Source>
+		<Source id="4">
+			<url1>images/1984.005.004.jpg</url1>
+			<url2>thumbs/1984.005.004.jpg</url2>
+			<url3>bigthumbs/1984.005.004.jpg</url3>
+			<ext>1984.005.004</ext>
+			<artist>Harry Wilson</artist>
+			<bio>American, b. 1943</bio>
+			<title>Castle, Salzburg, Austria</title>
+			<date>1978</date>
+			<process>gelatin silver print</process>
+			<credit>Gift of the artist</credit>
+		</Source>
+		<Source id="5">
+			<url1>images/1984.007.004.jpg</url1>
+			<url2>thumbs/1984.007.004.jpg</url2>
+			<url3>bigthumbs/1984.007.004.jpg</url3>
+			<ext>1984.007.004</ext>
+			<artist>Laurence Salzmann</artist>
+			<bio>American, b. 1944</bio>
+			<title>Untitled (man covered w/soap, hand reaching to faucet)</title>
+			<date>1979</date>
+			<process>selenium-toned gelatin silver print</process>
+			<credit>Gift of the artist</credit>
+		</Source>
+		<Source id="6">
+			<url1>images/1984.014.001.jpg</url1>
+			<url2>thumbs/1984.014.001.jpg</url2>
+			<url3>bigthumbs/1984.014.001.jpg</url3>
+			<ext>1984.014.001</ext>
+			<artist>Michael McLoughlin</artist>
+			<bio>American, 1936 - 1997</bio>
+			<title>Storefront, Portsmouth, NH</title>
+			<date>1984</date>
+			<process>gelatin silver print</process>
+			<credit>Gift of the artist</credit>
+		</Source>
+		<Source id="7">
+			<url1>images/1985.009.002.jpg</url1>
+			<url2>thumbs/1985.009.002.jpg</url2>
+			<url3>bigthumbs/1985.009.002.jpg</url3>
+			<ext>1985.009.002</ext>
+			<artist>Jack E. Fulton</artist>
+			<bio>American, b. 1939</bio>
+			<title>Patisserie double</title>
+			<date>n/a</date>
+			<process>Cibachrome print</process>
+			<credit>Gift of the artist                                                                                                                        </credit>
+		</Source>
+		<Source id="8">
+			<url1>images/1985.014.010.jpg</url1>
+			<url2>thumbs/1985.014.010.jpg</url2>
+			<url3>bigthumbs/1985.014.010.jpg</url3>
+			<ext>1985.014.010</ext>
+			<artist>Clarence John Laughlin</artist>
+			<bio>American, 1905 - 1985</bio>
+			<title>The Woman Whom the Trees Loved</title>
+			<date>1950</date>
+			<process>gelatin silver print</process>
+			<credit>Bequest of the Clarence John Laughlin Estate</credit>
+		</Source>
+		<Source id="9">
+			<url1>images/1985.014.017.jpg</url1>
+			<url2>thumbs/1985.014.017.jpg</url2>
+			<url3>bigthumbs/1985.014.017.jpg</url3>
+			<ext>1985.014.017</ext>
+			<artist>Clarence John Laughlin</artist>
+			<bio>American, 1905 - 1985</bio>
+			<title>The Self-Divided</title>
+			<date>1941</date>
+			<process>gelatin silver print</process>
+			<credit>Bequest of the Clarence John Laughlin Estate</credit>
+		</Source>
+		<Source id="10">
+			<url1>images/1985.026.002.jpg</url1>
+			<url2>thumbs/1985.026.002.jpg</url2>
+			<url3>bigthumbs/1985.026.002.jpg</url3>
+			<ext>1985.026.002</ext>
+			<artist>Archie Lieberman</artist>
+			<bio>American, 1926 - 2008</bio>
+			<title>Israeli Scribe</title>
+			<date>n/a</date>
+			<process>gelatin silver print</process>
+			<credit>Gift of the artist</credit>
+		</Source>
+		<Source id="11">
+			<url1>images/1986.001.003.jpg</url1>
+			<url2>thumbs/1986.001.003.jpg</url2>
+			<url3>bigthumbs/1986.001.003.jpg</url3>
+			<ext>1986.001.003</ext>
+			<artist>Juan Laurent</artist>
+			<bio>French, 1816 - 1892</bio>
+			<title>Orihuela (Murcia), Patio del Convento de Santo Domingo</title>
+			<date>1870</date>
+			<process>albumen print</process>
+			<credit>Gift of R. Joseph Monsen</credit>
+		</Source>
+		<Source id="12">
+			<url1>images/1986.007.001.jpg</url1>
+			<url2>thumbs/1986.007.001.jpg</url2>
+			<url3>bigthumbs/1986.007.001.jpg</url3>
+			<ext>1986.007.001</ext>
+			<artist>Emmet Gowin</artist>
+			<bio>American, b. 1941</bio>
+			<title>Edith, Danville, VA</title>
+			<date>1975</date>
+			<process>gelatin silver print</process>
+			<credit>Museum purchase, Las Patronas Acquisition Fund</credit>
+		</Source>
+		<Source id="13">
+			<url1>images/1986.011.001.jpg</url1>
+			<url2>thumbs/1986.011.001.jpg</url2>
+			<url3>bigthumbs/1986.011.001.jpg</url3>
+			<ext>1986.011.001</ext>
+			<artist>Barry Bell</artist>
+			<bio>American, b. 1954</bio>
+			<title>Union Station, Los Angeles</title>
+			<date>1985</date>
+			<process>polaroid (color)</process>
+			<credit>Gift of the artist</credit>
+		</Source>
+		<Source id="14">
+			<url1>images/1986.017.002.jpg</url1>
+			<url2>thumbs/1986.017.002.jpg</url2>
+			<url3>bigthumbs/1986.017.002.jpg</url3>
+			<ext>1986.017.002</ext>
+			<artist>Robert Epstein</artist>
+			<bio>American, b. 1945</bio>
+			<title>Chantecler; Hotel Negresso, Nice, France</title>
+			<date>1984</date>
+			<process>type C print</process>
+			<credit>Gift of Ronald Abramson</credit>
+		</Source>
+		<Source id="15">
+			<url1>images/1986.025.002.jpg</url1>
+			<url2>thumbs/1986.025.002.jpg</url2>
+			<url3>bigthumbs/1986.025.002.jpg</url3>
+			<ext>1986.025.002</ext>
+			<artist>Tim Handfield</artist>
+			<bio>Australian, b. 1952</bio>
+			<title>Woomargama</title>
+			<date>1985</date>
+			<process>Cibachrome print</process>
+			<credit>Gift of the artist</credit>
+		</Source>
+		<Source id="16">
+			<url1>images/1986.027.008.jpg</url1>
+			<url2>thumbs/1986.027.008.jpg</url2>
+			<url3>bigthumbs/1986.027.008.jpg</url3>
+			<ext>1986.027.008</ext>
+			<artist>J. Lotte Jacobi</artist>
+			<bio>German, 1896 - 1990</bio>
+			<title>Untitled</title>
+			<date>1981</date>
+			<process>palladium</process>
+			<credit>Gift of Stephen White</credit>
+		</Source>
+		<Source id="17">
+			<url1>images/1987.019.001.jpg</url1>
+			<url2>thumbs/1987.019.001.jpg</url2>
+			<url3>bigthumbs/1987.019.001.jpg</url3>
+			<ext>1987.019.001</ext>
+			<artist>Christopher Kilmer</artist>
+			<bio>American</bio>
+			<title>View from a Trailer Court, Topaz, Nevada</title>
+			<date>1985</date>
+			<process>gelatin silver print</process>
+			<credit>Gift of the artist</credit>
+		</Source>
+		<Source id="18">
+			<url1>images/1987.033.002.jpg</url1>
+			<url2>thumbs/1987.033.002.jpg</url2>
+			<url3>bigthumbs/1987.033.002.jpg</url3>
+			<ext>1987.033.002</ext>
+			<artist>William Stinson Soule</artist>
+			<bio>American, 1836 - 1908</bio>
+			<title>Medicine Creek</title>
+			<date>c. 1870</date>
+			<process>albumen print</process>
+			<credit>Gift of Carol K. Smith</credit>
+		</Source>
+		<Source id="19">
+			<url1>images/1987.037.008.jpg</url1>
+			<url2>thumbs/1987.037.008.jpg</url2>
+			<url3>bigthumbs/1987.037.008.jpg</url3>
+			<ext>1987.037.008</ext>
+			<artist>Ruthe Morand</artist>
+			<bio>American, b. 1953</bio>
+			<title>El Encanto, Tucson</title>
+			<date>1983</date>
+			<process>gelatin silver print</process>
+			<credit>Gift of Terry Etherton                                                                                                                        </credit>
+		</Source>
+		<Source id="20">
+			<url1>images/1988.006.001.jpg</url1>
+			<url2>thumbs/1988.006.001.jpg</url2>
+			<url3>bigthumbs/1988.006.001.jpg</url3>
+			<ext>1988.006.001</ext>
+			<artist>Samuel Bourne</artist>
+			<bio>British, 1834 - 1912</bio>
+			<title>A Shooting Party in Camp Srinuggar, Kashmir</title>
+			<date>1864</date>
+			<process>albumen print</process>
+			<credit>Museum purchase</credit>
+		</Source>
+		<Source id="21">
+			<url1>images/1988.027.010.jpg</url1>
+			<url2>thumbs/1988.027.010.jpg</url2>
+			<url3>bigthumbs/1988.027.010.jpg</url3>
+			<ext>1988.027.010</ext>
+			<artist>Kenneth McGowan</artist>
+			<bio>American, 1940 - 1986</bio>
+			<title>Pink Panthers</title>
+			<date>1978</date>
+			<process>Cibachrome print</process>
+			<credit>Gift of Victor Landweber                                                                                                </credit>
+		</Source>
+		<Source id="22">
+			<url1>images/1988.028.001.jpg</url1>
+			<url2>thumbs/1988.028.001.jpg</url2>
+			<url3>bigthumbs/1988.028.001.jpg</url3>
+			<ext>1988.028.001</ext>
+			<artist>Arthur Ollman</artist>
+			<bio>American, b. 1947</bio>
+			<title>Untitled (torso)</title>
+			<date>1977</date>
+			<process>gelatin silver print</process>
+			<credit>Gift of the artist</credit>
+		</Source>
+		<Source id="23">
+			<url1>images/1988.032.002.jpg</url1>
+			<url2>thumbs/1988.032.002.jpg</url2>
+			<url3>bigthumbs/1988.032.002.jpg</url3>
+			<ext>1988.032.002</ext>
+			<artist>Jo Leggett</artist>
+			<bio>American, b. 1940</bio>
+			<title>Ruth (a Scottish Highland Cow)</title>
+			<date>1987</date>
+			<process>type C print</process>
+			<credit>Museum purchase</credit>
+		</Source>
+		<Source id="24">
+			<url1>images/1988.049.001.jpg</url1>
+			<url2>thumbs/1988.049.001.jpg</url2>
+			<url3>bigthumbs/1988.049.001.jpg</url3>
+			<ext>1988.049.001</ext>
+			<artist>Betty Hahn</artist>
+			<bio>American, b. 1940</bio>
+			<title>Arizona Sky</title>
+			<date>1977</date>
+			<process>serigraph</process>
+			<credit>Gift of Arthur Ollman</credit>
+		</Source>
+		<Source id="25">
+			<url1>images/1988.052.002.jpg</url1>
+			<url2>thumbs/1988.052.002.jpg</url2>
+			<url3>bigthumbs/1988.052.002.jpg</url3>
+			<ext>1988.052.002</ext>
+			<artist>Philipp Scholz Rittermann</artist>
+			<bio>American, b. Peru, 1955</bio>
+			<title>Destroyer with Fire Hose</title>
+			<date>1986</date>
+			<process>gelatin silver print</process>
+			<credit>Museum purchase</credit>
+		</Source>
+		<Source id="26">
+			<url1>images/1989.003.001.jpg</url1>
+			<url2>thumbs/1989.003.001.jpg</url2>
+			<url3>bigthumbs/1989.003.001.jpg</url3>
+			<ext>1989.003.001</ext>
+			<artist>Jacob Martin Aronberg</artist>
+			<bio>American, active 1980s</bio>
+			<title>Untitled (man sitting on hydrant)</title>
+			<date>1987</date>
+			<process>gelatin silver print</process>
+			<credit>Museum purchase</credit>
+		</Source>
+		<Source id="27">
+			<url1>images/1989.026.002.jpg</url1>
+			<url2>thumbs/1989.026.002.jpg</url2>
+			<url3>bigthumbs/1989.026.002.jpg</url3>
+			<ext>1989.026.002</ext>
+			<artist>Charles Moore</artist>
+			<bio>American, 1931 - 2010</bio>
+			<title>Birmingham, Alabama</title>
+			<date>1963</date>
+			<process>gelatin silver print</process>
+			<credit>Museum purchase with the assistance from NEA Matching Grant </credit>
+		</Source>
+		<Source id="28">
+			<url1>images/1989.029.001.jpg</url1>
+			<url2>thumbs/1989.029.001.jpg</url2>
+			<url3>bigthumbs/1989.029.001.jpg</url3>
+			<ext>1989.029.001</ext>
+			<artist>Francis Bedford</artist>
+			<bio>British, 1816 - 1894</bio>
+			<title>Christ Church Gateway, Canterbury</title>
+			<date>c. 1850</date>
+			<process>albumen print</process>
+			<credit>Museum purchase</credit>
+		</Source>
+		<Source id="29">
+			<url1>images/1989.039.040.jpg</url1>
+			<url2>thumbs/1989.039.040.jpg</url2>
+			<url3>bigthumbs/1989.039.040.jpg</url3>
+			<ext>1989.039.040</ext>
+			<artist>Horatio Agius</artist>
+			<bio>Maltese, 1844 - 1910</bio>
+			<title>General View of Cottonera, Malta</title>
+			<date>late 19th century</date>
+			<process>albumen print</process>
+			<credit>Gift of James Garfinkel</credit>
+		</Source>
+		<Source id="30">
+			<url1>images/1990.005.004.jpg</url1>
+			<url2>thumbs/1990.005.004.jpg</url2>
+			<url3>bigthumbs/1990.005.004.jpg</url3>
+			<ext>1990.005.004</ext>
+			<artist>Kevin Bubriski</artist>
+			<bio>American, b. 1954</bio>
+			<title>Young Boy at the Mugu Karnali River, Mugu Village, Mugu District, Nepal</title>
+			<date>1985</date>
+			<process>gelatin silver print</process>
+			<credit>Museum purchase</credit>
+		</Source>
+		<Source id="31">
+			<url1>images/1990.006.001.jpg</url1>
+			<url2>thumbs/1990.006.001.jpg</url2>
+			<url3>bigthumbs/1990.006.001.jpg</url3>
+			<ext>1990.006.001</ext>
+			<artist>Corinne Whitaker</artist>
+			<bio>American</bio>
+			<title>Elegy #29</title>
+			<date>1990</date>
+			<process>gelatin silver print</process>
+			<credit>Gift of the artist</credit>
+		</Source>
+		<Source id="32">
+			<url1>images/1990.007.002.jpg</url1>
+			<url2>thumbs/1990.007.002.jpg</url2>
+			<url3>bigthumbs/1990.007.002.jpg</url3>
+			<ext>1990.007.002</ext>
+			<artist>Edna Bullock</artist>
+			<bio>American, 1915 - 1997</bio>
+			<title>RB 137-11 Nude &amp; Door</title>
+			<date>1979</date>
+			<process>gelatin silver print</process>
+			<credit>Gift of Wynn and Edna Bullock Trust</credit>
+		</Source>
+		<Source id="33">
+			<url1>images/1990.008.001.jpg</url1>
+			<url2>thumbs/1990.008.001.jpg</url2>
+			<url3>bigthumbs/1990.008.001.jpg</url3>
+			<ext>1990.008.001</ext>
+			<artist>John Sexton</artist>
+			<bio>American, b. 1953</bio>
+			<title>Aspens, Dusk, Conway Summit, California</title>
+			<date>1978</date>
+			<process>gelatin silver print</process>
+			<credit>Gift of Arthur Ollman</credit>
+		</Source>
+		<Source id="34">
+			<url1>images/1991.014.001.jpg</url1>
+			<url2>thumbs/1991.014.001.jpg</url2>
+			<url3>bigthumbs/1991.014.001.jpg</url3>
+			<ext>1991.014.001</ext>
+			<artist>Leland Rice</artist>
+			<bio>American, b. 1940</bio>
+			<title>Spray Painted Lattice Against Wall</title>
+			<date>c. 1979</date>
+			<process>Cibachrome print</process>
+			<credit>Gift of Howard Schickler</credit>
+		</Source>
+		<Source id="35">
+			<url1>images/1991.024.001.jpg</url1>
+			<url2>thumbs/1991.024.001.jpg</url2>
+			<url3>bigthumbs/1991.024.001.jpg</url3>
+			<ext>1991.024.001</ext>
+			<artist>Brett Weston</artist>
+			<bio>American, 1911 - 1993</bio>
+			<title>Untitled (trees and clouds)</title>
+			<date>1973</date>
+			<process>gelatin silver print</process>
+			<credit>Gift of Howard Schickler</credit>
+		</Source>
+		<Source id="36">
+			<url1>images/1991.024.004.jpg</url1>
+			<url2>thumbs/1991.024.004.jpg</url2>
+			<url3>bigthumbs/1991.024.004.jpg</url3>
+			<ext>1991.024.004</ext>
+			<artist>Brett Weston</artist>
+			<bio>American, 1911 - 1993</bio>
+			<title>Untitled (branches in water)</title>
+			<date>1968</date>
+			<process>gelatin silver print</process>
+			<credit>Gift of Howard Schickler </credit>
+		</Source>
+		<Source id="37">
+			<url1>images/1991.028.001.jpg</url1>
+			<url2>thumbs/1991.028.001.jpg</url2>
+			<url3>bigthumbs/1991.028.001.jpg</url3>
+			<ext>1991.028.001</ext>
+			<artist>C.B. Waite</artist>
+			<bio>American, active c. 1890 - c. 1910</bio>
+			<title>Water Carriers, Isleta Pueblo, New Mexico</title>
+			<date>1896</date>
+			<process>gelatin silver print</process>
+			<credit>Gift of Mr. and Mrs. Norman Mann</credit>
+		</Source>
+		<Source id="38">
+			<url1>images/1992.008.001.jpg</url1>
+			<url2>thumbs/1992.008.001.jpg</url2>
+			<url3>bigthumbs/1992.008.001.jpg</url3>
+			<ext>1992.008.001</ext>
+			<artist>Todd Jay Weinstein</artist>
+			<bio>American, b. 1951</bio>
+			<title>Woman Leaving Trump Tower, NYC</title>
+			<date>1983</date>
+			<process>dye coupler print</process>
+			<credit>Gift of the artist                                                                  </credit>
+		</Source>
+		<Source id="39">
+			<url1>images/1992.028.001.jpg</url1>
+			<url2>thumbs/1992.028.001.jpg</url2>
+			<url3>bigthumbs/1992.028.001.jpg</url3>
+			<ext>1992.028.001</ext>
+			<artist>John Pfahl</artist>
+			<bio>American, b. 1939</bio>
+			<title>Blue X, Pembroke NY</title>
+			<date>1975</date>
+			<process>dye transfer</process>
+			<credit>Gift of Charles Schinner</credit>
+		</Source>
+		<Source id="40">
+			<url1>images/1992.030.022.jpg</url1>
+			<url2>thumbs/1992.030.022.jpg</url2>
+			<url3>bigthumbs/1992.030.022.jpg</url3>
+			<ext>1992.030.022</ext>
+			<artist>Lou Stoumen</artist>
+			<bio>American, 1917 - 1991</bio>
+			<title>It seemed there was a woman and she was sitting near a lamp...</title>
+			<date>1986</date>
+			<process>gelatin silver print</process>
+			<credit>Bequest of the Lou Stoumen Estate</credit>
+		</Source>
+		<Source id="41">
+			<url1>images/1992.031.001.jpg</url1>
+			<url2>thumbs/1992.031.001.jpg</url2>
+			<url3>bigthumbs/1992.031.001.jpg</url3>
+			<ext>1992.031.001</ext>
+			<artist>Samuel Bourne</artist>
+			<bio>British, 1834 - 1912</bio>
+			<title>Interior of the Chousut Kamba, or Sixty-four Pillared Hall, Delhi</title>
+			<date>1865</date>
+			<process>albumen print</process>
+			<credit>Gift of Arthur Ollman</credit>
+		</Source>
+		<Source id="42">
+			<url1>images/1993.003.001.jpg</url1>
+			<url2>thumbs/1993.003.001.jpg</url2>
+			<url3>bigthumbs/1993.003.001.jpg</url3>
+			<ext>1993.003.001</ext>
+			<artist>Don Bartletti</artist>
+			<bio>American, b. 1947</bio>
+			<title>Highway Camp, Encinitas, California (Campamento en la Autopista)</title>
+			<date>1989</date>
+			<process>gelatin silver print</process>
+			<credit>Gift of Don Bartletti</credit>
+		</Source>
+		<Source id="43">
+			<url1>images/1993.007.001.jpg</url1>
+			<url2>thumbs/1993.007.001.jpg</url2>
+			<url3>bigthumbs/1993.007.001.jpg</url3>
+			<ext>1993.007.001</ext>
+			<artist>Shimon Attie</artist>
+			<bio>American, b. 1957</bio>
+			<title>Joachim, Ecke Auguststrasse, Berlin</title>
+			<date>1991</date>
+			<process>type C print</process>
+			<credit>Gift of Lucy Goldman</credit>
+		</Source>
+		<Source id="44">
+			<url1>images/1993.013.013.jpg</url1>
+			<url2>thumbs/1993.013.013.jpg</url2>
+			<url3>bigthumbs/1993.013.013.jpg</url3>
+			<ext>1993.013.013</ext>
+			<artist>Ben Magid Rabinovitch</artist>
+			<bio>American, 1884 - 1964</bio>
+			<title>Kotchetovsky of the Chauve-Souris</title>
+			<date>1922</date>
+			<process>photogravure</process>
+			<credit>Gift of Joseph David Isaacson</credit>
+		</Source>
+		<Source id="45">
+			<url1>images/1993.031.008.jpg</url1>
+			<url2>thumbs/1993.031.008.jpg</url2>
+			<url3>bigthumbs/1993.031.008.jpg</url3>
+			<ext>1993.031.008</ext>
+			<artist>Neil H. Folberg</artist>
+			<bio>American, b. 1950</bio>
+			<title>Moon Setting Over the Jewish Quarter of the Old City</title>
+			<date>1985</date>
+			<process>Cibachrome print</process>
+			<credit>Gift of Jock P. Sturges</credit>
+		</Source>
+		<Source id="46">
+			<url1>images/1993.043.002.jpg</url1>
+			<url2>thumbs/1993.043.002.jpg</url2>
+			<url3>bigthumbs/1993.043.002.jpg</url3>
+			<ext>1993.043.002</ext>
+			<artist>Francis F. Frith</artist>
+			<bio>British, 1822 - 1898</bio>
+			<title>Ramleh</title>
+			<date>1857</date>
+			<process>albumen print</process>
+			<credit>Gift of Frederick P. Currier</credit>
+		</Source>
+		<Source id="47">
+			<url1>images/1994.005.001.jpg</url1>
+			<url2>thumbs/1994.005.001.jpg</url2>
+			<url3>bigthumbs/1994.005.001.jpg</url3>
+			<ext>1994.005.001</ext>
+			<artist>Robert W. Fichter</artist>
+			<bio>American, b. 1939</bio>
+			<title>Space Heater</title>
+			<date>1990</date>
+			<process>Cibachrome print</process>
+			<credit>Gift of Arthur Ollman</credit>
+		</Source>
+		<Source id="48">
+			<url1>images/1994.009.001.jpg</url1>
+			<url2>thumbs/1994.009.001.jpg</url2>
+			<url3>bigthumbs/1994.009.001.jpg</url3>
+			<ext>1994.009.001</ext>
+			<artist>Diane Cook</artist>
+			<bio>American, b. 1954</bio>
+			<title>Mammatus Clouds, Lassen Volcanic National Park, California</title>
+			<date>1992</date>
+			<process>gelatin silver print</process>
+			<credit>Gift of the artist</credit>
+		</Source>
+		<Source id="49">
+			<url1>images/1994.011.006.jpg</url1>
+			<url2>thumbs/1994.011.006.jpg</url2>
+			<url3>bigthumbs/1994.011.006.jpg</url3>
+			<ext>1994.011.006</ext>
+			<artist>C.S. Cobb</artist>
+			<bio>American, active 1880s</bio>
+			<title>Untitled (portrait of young woman)</title>
+			<date>late 19th century</date>
+			<process>Cabinet card</process>
+			<credit>Unknown source</credit>
+		</Source>
+		<Source id="50">
+			<url1>images/1994.014.001d.jpg</url1>
+			<url2>thumbs/1994.014.001d.jpg</url2>
+			<url3>bigthumbs/1994.014.001d.jpg</url3>
+			<ext>1994.014.001d</ext>
+			<artist>Helen Mayer</artist>
+			<bio>American, b. 1929</bio>
+			<title>Untitled (aerial view of Interstate 5 on left)</title>
+			<date>c. 1987</date>
+			<process>chromogenic print</process>
+			<credit>Gift of Arthur Ollman</credit>
+		</Source>
+		<Source id="51">
+			<url1>images/1994.021.001.jpg</url1>
+			<url2>thumbs/1994.021.001.jpg</url2>
+			<url3>bigthumbs/1994.021.001.jpg</url3>
+			<ext>1994.021.001</ext>
+			<artist>Mark Alice Durant</artist>
+			<bio>American, b. 1955</bio>
+			<title>Astonish (Frederico Garcia Lorca)</title>
+			<date>1993</date>
+			<process>gelatin silver print</process>
+			<credit>Gift of the artist</credit>
+		</Source>
+		<Source id="52">
+			<url1>images/1994.022.004.jpg</url1>
+			<url2>thumbs/1994.022.004.jpg</url2>
+			<url3>bigthumbs/1994.022.004.jpg</url3>
+			<ext>1994.022.004</ext>
+			<artist>Jerry Burchard</artist>
+			<bio>American, 1931 - 2011</bio>
+			<title>San Francisco</title>
+			<date>1977</date>
+			<process>gelatin silver print</process>
+			<credit>Gift of Arthur Ollman</credit>
+		</Source>
+		<Source id="53">
+			<url1>images/1994.028.082.jpg</url1>
+			<url2>thumbs/1994.028.082.jpg</url2>
+			<url3>bigthumbs/1994.028.082.jpg</url3>
+			<ext>1994.028.082</ext>
+			<artist>Charles Pratt</artist>
+			<bio>American, 1926 - 1976</bio>
+			<title>Italy</title>
+			<date>1967</date>
+			<process>gelatin silver print</process>
+			<credit>Gift of Julie Shattuck</credit>
+		</Source>
+		<Source id="54">
+			<url1>images/1995.009.001.jpg</url1>
+			<url2>thumbs/1995.009.001.jpg</url2>
+			<url3>bigthumbs/1995.009.001.jpg</url3>
+			<ext>1995.009.001</ext>
+			<artist>James Wallace Black</artist>
+			<bio>American, 1825 - 1896</bio>
+			<title>Carl Schurz, Secretary of Interior</title>
+			<date>1860</date>
+			<process>albumen print</process>
+			<credit>Museum purchase</credit>
+		</Source>
+		<Source id="55">
+			<url1>images/1995.014.001.jpg</url1>
+			<url2>thumbs/1995.014.001.jpg</url2>
+			<url3>bigthumbs/1995.014.001.jpg</url3>
+			<ext>1995.014.001</ext>
+			<artist>Lisa Stancati</artist>
+			<bio>American, b. 1959</bio>
+			<title>Untitled, Deans Court</title>
+			<date>1994</date>
+			<process>platinum</process>
+			<credit>Gift of the artist</credit>
+		</Source>
+		<Source id="56">
+			<url1>images/1995.016.001.jpg</url1>
+			<url2>thumbs/1995.016.001.jpg</url2>
+			<url3>bigthumbs/1995.016.001.jpg</url3>
+			<ext>1995.016.001</ext>
+			<artist>Jan van Leeuwen</artist>
+			<bio>Dutch, b. 1932</bio>
+			<title>Ank van Leeuwen, 'Standley Chasm,' McDonnells Ranges, Central Australia</title>
+			<date>1993</date>
+			<process>collotype</process>
+			<credit>Gift of the artist</credit>
+		</Source>
+		<Source id="57">
+			<url1>images/1995.017.051.jpg</url1>
+			<url2>thumbs/1995.017.051.jpg</url2>
+			<url3>bigthumbs/1995.017.051.jpg</url3>
+			<ext>1995.017.051</ext>
+			<artist>Alexander Ustinov</artist>
+			<bio>Russian, 1909 - 1995</bio>
+			<title>Cameras and Kalachinkovs</title>
+			<date>1940</date>
+			<process>gelatin silver print</process>
+			<credit>Gift of Joyce and Michael Axelrod</credit>
+		</Source>
+		<Source id="58">
+			<url1>images/1996.011.002.jpg</url1>
+			<url2>thumbs/1996.011.002.jpg</url2>
+			<url3>bigthumbs/1996.011.002.jpg</url3>
+			<ext>1996.011.002</ext>
+			<artist>Anthony Gleaton</artist>
+			<bio>American, b. 1948</bio>
+			<title>Untitled</title>
+			<date>1990</date>
+			<process>gelatin silver print</process>
+			<credit>Gift of William Cheek and Aimee Lee Cheek on behalf of the artist</credit>
+		</Source>
+		<Source id="59">
+			<url1>images/1996.018.001.jpg</url1>
+			<url2>thumbs/1996.018.001.jpg</url2>
+			<url3>bigthumbs/1996.018.001.jpg</url3>
+			<ext>1996.018.001</ext>
+			<artist>Duncan McCosker</artist>
+			<bio>American, b. 1944</bio>
+			<title>Cordoba, Spain</title>
+			<date>1991</date>
+			<process>gelatin silver print</process>
+			<credit>Gift of the artist</credit>
+		</Source>
+		<Source id="60">
+			<url1>images/1996.019.001.jpg</url1>
+			<url2>thumbs/1996.019.001.jpg</url2>
+			<url3>bigthumbs/1996.019.001.jpg</url3>
+			<ext>1996.019.001</ext>
+			<artist>Cecil Beaton</artist>
+			<bio>British, 1904 - 1980</bio>
+			<title>Untitled (portrait of a woman)</title>
+			<date>n/a</date>
+			<process>gelatin silver print</process>
+			<credit>Gift of Thomas Jacobson and Kaori Hashimoto</credit>
+		</Source>
+		<Source id="61">
+			<url1>images/1996.023.002.jpg</url1>
+			<url2>thumbs/1996.023.002.jpg</url2>
+			<url3>bigthumbs/1996.023.002.jpg</url3>
+			<ext>1996.023.002</ext>
+			<artist>Unknown artist</artist>
+			<bio>n/a</bio>
+			<title>Suspension Bridge, Niagara (three-quarter view)</title>
+			<date>before 1886</date>
+			<process>albumen print</process>
+			<credit>Gift of the Catherine and Ralph Benkaim Collection</credit>
+		</Source>
+		<Source id="62">
+			<url1>images/1997.012.002.jpg</url1>
+			<url2>thumbs/1997.012.002.jpg</url2>
+			<url3>bigthumbs/1997.012.002.jpg</url3>
+			<ext>1997.012.002</ext>
+			<artist>Flor Garduno</artist>
+			<bio>Mexican, b. 1957</bio>
+			<title>Member Of A Confraternity And His Son, Solola, Guatemala</title>
+			<date>1989</date>
+			<process>gelatin silver print</process>
+			<credit>Museum purchase by numerous contributions to the Joseph Zamudio (1936-1996) Memorial Fund</credit>
+		</Source>
+		<Source id="63">
+			<url1>images/1997.022.001.jpg</url1>
+			<url2>thumbs/1997.022.001.jpg</url2>
+			<url3>bigthumbs/1997.022.001.jpg</url3>
+			<ext>1997.022.001</ext>
+			<artist>Jan van Leeuwen</artist>
+			<bio>Dutch, b. 1932</bio>
+			<title>Untitled (table/chairs)</title>
+			<date>n/a</date>
+			<process>kallitype</process>
+			<credit>Gift of the artist</credit>
+		</Source>
+		<Source id="64">
+			<url1>images/1997.023.001.jpg</url1>
+			<url2>thumbs/1997.023.001.jpg</url2>
+			<url3>bigthumbs/1997.023.001.jpg</url3>
+			<ext>1997.023.001</ext>
+			<artist>James Fee</artist>
+			<bio>American, 1949 - 2006</bio>
+			<title>Untitled (prison bed)</title>
+			<date>1996</date>
+			<process>gelatin silver print</process>
+			<credit>Gift of the artist</credit>
+		</Source>
+		<Source id="65">
+			<url1>images/1997.024.001.jpg</url1>
+			<url2>thumbs/1997.024.001.jpg</url2>
+			<url3>bigthumbs/1997.024.001.jpg</url3>
+			<ext>1997.024.001</ext>
+			<artist>Eric Blau</artist>
+			<bio>American, b. 1947</bio>
+			<title>Anne with Nests</title>
+			<date>1991</date>
+			<process>polylith</process>
+			<credit>Gift of David Zapf Gallery</credit>
+		</Source>
+		<Source id="66">
+			<url1>images/1997.026.001.jpg</url1>
+			<url2>thumbs/1997.026.001.jpg</url2>
+			<url3>bigthumbs/1997.026.001.jpg</url3>
+			<ext>1997.026.001</ext>
+			<artist>Kira Corser</artist>
+			<bio>American, b. 1951</bio>
+			<title>Untitled (Arnold Newman portrait)</title>
+			<date>n/a</date>
+			<process>gelatin silver print</process>
+			<credit>n/a</credit>
+		</Source>
+		<Source id="67">
+			<url1>images/1998.011.001.jpg</url1>
+			<url2>thumbs/1998.011.001.jpg</url2>
+			<url3>bigthumbs/1998.011.001.jpg</url3>
+			<ext>1998.011.001</ext>
+			<artist>Joel Sternfeld</artist>
+			<bio>American, b. 1944</bio>
+			<title>The Space Shuttle lands at Kelly AFB, San Antonio, March 1979</title>
+			<date>1979</date>
+			<process>type C print</process>
+			<credit>Gift of Joseph Bellows</credit>
+		</Source>
+		<Source id="68">
+			<url1>images/1998.014.003.jpg</url1>
+			<url2>thumbs/1998.014.003.jpg</url2>
+			<url3>bigthumbs/1998.014.003.jpg</url3>
+			<ext>1998.014.003</ext>
+			<artist>Nathan Lerner</artist>
+			<bio>American, 1913 - 1997</bio>
+			<title>The Swimmer</title>
+			<date>1935</date>
+			<process>gelatin silver print</process>
+			<credit>Gift of David C. and Sarajean Ruttenberg</credit>
+		</Source>
+		<Source id="69">
+			<url1>images/1998.016.001.jpg</url1>
+			<url2>thumbs/1998.016.001.jpg</url2>
+			<url3>bigthumbs/1998.016.001.jpg</url3>
+			<ext>1998.016.001</ext>
+			<artist>Ferenc Suto</artist>
+			<bio>American, b. 1960</bio>
+			<title>Untitled</title>
+			<date>1990</date>
+			<process>gelatin silver print</process>
+			<credit>Gift of the artist</credit>
+		</Source>
+		<Source id="70">
+			<url1>images/1998.022.006.jpg</url1>
+			<url2>thumbs/1998.022.006.jpg</url2>
+			<url3>bigthumbs/1998.022.006.jpg</url3>
+			<ext>1998.022.006</ext>
+			<artist>Leland Foerster</artist>
+			<bio>American, b. 1943</bio>
+			<title>Christina Arce, Santa Marta, Sierra San Francisco, March 1996</title>
+			<date>1996</date>
+			<process>gelatin silver print</process>
+			<credit>Gift of David C. Copley</credit>
+		</Source>
+		<Source id="71">
+			<url1>images/1998.023.001.jpg</url1>
+			<url2>thumbs/1998.023.001.jpg</url2>
+			<url3>bigthumbs/1998.023.001.jpg</url3>
+			<ext>1998.023.001</ext>
+			<artist>Jan van Leeuwen</artist>
+			<bio>Dutch, b. 1932</bio>
+			<title>Coal Mine Hapard Cheratte, Jupille, Belgium</title>
+			<date>1998</date>
+			<process>cyanotype</process>
+			<credit>Gift of the artist</credit>
+		</Source>
+		<Source id="72">
+			<url1>images/1998.027.001.jpg</url1>
+			<url2>thumbs/1998.027.001.jpg</url2>
+			<url3>bigthumbs/1998.027.001.jpg</url3>
+			<ext>1998.027.001</ext>
+			<artist>Duncan McCosker</artist>
+			<bio>American, b. 1944</bio>
+			<title>Rough Water Swim, La Jolla, California</title>
+			<date>1991</date>
+			<process>gelatin silver print</process>
+			<credit>Gift of the artist</credit>
+		</Source>
+		<Source id="73">
+			<url1>images/1999.012.002.jpg</url1>
+			<url2>thumbs/1999.012.002.jpg</url2>
+			<url3>bigthumbs/1999.012.002.jpg</url3>
+			<ext>1999.012.002</ext>
+			<artist>Irving Greines</artist>
+			<bio>American, b. 1941</bio>
+			<title>84 Mercer St., Manhattan, Sept 27, 1995</title>
+			<date>1995</date>
+			<process>Cibachrome print</process>
+			<credit>Gift of Joyce and Michael Axelrod</credit>
+		</Source>
+		<Source id="74">
+			<url1>images/1999.016.004.jpg</url1>
+			<url2>thumbs/1999.016.004.jpg</url2>
+			<url3>bigthumbs/1999.016.004.jpg</url3>
+			<ext>1999.016.004</ext>
+			<artist>Sebastiao Salgado</artist>
+			<bio>Brazilian, b. 1944</bio>
+			<title>Untitled (2 men standing near shack)</title>
+			<date>1997</date>
+			<process>gelatin silver print</process>
+			<credit>Donated from the collection of Laura J. Galinson</credit>
+		</Source>
+		<Source id="75">
+			<url1>images/1999.039.024.jpg</url1>
+			<url2>thumbs/1999.039.024.jpg</url2>
+			<url3>bigthumbs/1999.039.024.jpg</url3>
+			<ext>1999.039.024</ext>
+			<artist>Kusakabe Kimbei</artist>
+			<bio>Japanese, 1841 - 1934</bio>
+			<title>Dancing Girls</title>
+			<date>c. 1890s</date>
+			<process>albumen print</process>
+			<credit>Gift of Rudi Bianchi</credit>
+		</Source>
+		<Source id="76">
+			<url1>images/2000.006.002.jpg</url1>
+			<url2>thumbs/2000.006.002.jpg</url2>
+			<url3>bigthumbs/2000.006.002.jpg</url3>
+			<ext>2000.006.002</ext>
+			<artist>Arthur Lavine</artist>
+			<bio>American, b. 1922</bio>
+			<title>Subway Exit, New York City</title>
+			<date>1999</date>
+			<process>gelatin silver print</process>
+			<credit>Gift of the artist</credit>
+		</Source>
+		<Source id="77">
+			<url1>images/2000.009.003.jpg</url1>
+			<url2>thumbs/2000.009.003.jpg</url2>
+			<url3>bigthumbs/2000.009.003.jpg</url3>
+			<ext>2000.009.003</ext>
+			<artist>Anthony Friedkin</artist>
+			<bio>American, b. 1949</bio>
+			<title>4 Convicts, Folsom Prison</title>
+			<date>1991</date>
+			<process>gelatin silver print</process>
+			<credit>Gift of Richard and Strawn Rosenthal</credit>
+		</Source>
+		<Source id="78">
+			<url1>images/2000.018.001.jpg</url1>
+			<url2>thumbs/2000.018.001.jpg</url2>
+			<url3>bigthumbs/2000.018.001.jpg</url3>
+			<ext>2000.018.001</ext>
+			<artist>Unknown artist</artist>
+			<bio>n/a</bio>
+			<title>Atomic bomb blast at Bikini Island</title>
+			<date>1946</date>
+			<process>gelatin silver print</process>
+			<credit>Anonymous gift</credit>
+		</Source>
+		<Source id="79">
+			<url1>images/2000.024.002.jpg</url1>
+			<url2>thumbs/2000.024.002.jpg</url2>
+			<url3>bigthumbs/2000.024.002.jpg</url3>
+			<ext>2000.024.002</ext>
+			<artist>Garry Fabian Miller</artist>
+			<bio>British, b. 1957</bio>
+			<title>Crowned Summer</title>
+			<date>1993</date>
+			<process>Dye destruction</process>
+			<credit>Gift of Burt and Jane Berman</credit>
+		</Source>
+		<Source id="80">
+			<url1>images/2000.032.001.jpg</url1>
+			<url2>thumbs/2000.032.001.jpg</url2>
+			<url3>bigthumbs/2000.032.001.jpg</url3>
+			<ext>2000.032.001</ext>
+			<artist>Dwight A. Davis</artist>
+			<bio>American, 1852 - 1944</bio>
+			<title>Lady in White</title>
+			<date>c. 1905</date>
+			<process>platinum</process>
+			<credit>Gift of Warren and Margot Coville and The Coville Photographic Art Foundation</credit>
+		</Source>
+		<Source id="81">
+			<url1>images/2001.009.006.jpg</url1>
+			<url2>thumbs/2001.009.006.jpg</url2>
+			<url3>bigthumbs/2001.009.006.jpg</url3>
+			<ext>2001.009.006</ext>
+			<artist>David Finn</artist>
+			<bio>American, b. 1921</bio>
+			<title>Athlete Attrib. to Giambologna</title>
+			<date>2000</date>
+			<process>gelatin silver print</process>
+			<credit>Gift of Amy Binder</credit>
+		</Source>
+		<Source id="82">
+			<url1>images/2001.013.003.jpg</url1>
+			<url2>thumbs/2001.013.003.jpg</url2>
+			<url3>bigthumbs/2001.013.003.jpg</url3>
+			<ext>2001.013.003</ext>
+			<artist>Bradford Washburn</artist>
+			<bio>American, 1910 - 2007</bio>
+			<title>After the Storm, Climbers on the Doldenhorn, Switzerland</title>
+			<date>1960</date>
+			<process>gelatin silver print</process>
+			<credit>Museum purchase with funds provided by MOPA Collectors Group</credit>
+		</Source>
+		<Source id="83">
+			<url1>images/2001.018.001.jpg</url1>
+			<url2>thumbs/2001.018.001.jpg</url2>
+			<url3>bigthumbs/2001.018.001.jpg</url3>
+			<ext>2001.018.001</ext>
+			<artist>Lyle Gomes</artist>
+			<bio>American, b. 1954</bio>
+			<title>Stone Enclosures, North Yorkshire, England</title>
+			<date>1998</date>
+			<process>gelatin silver print</process>
+			<credit>Museum purchase with funds provided by the Help-MOPA-Buy -This-Print Fund</credit>
+		</Source>
+		<Source id="84">
+			<url1>images/2002.003.004.jpg</url1>
+			<url2>thumbs/2002.003.004.jpg</url2>
+			<url3>bigthumbs/2002.003.004.jpg</url3>
+			<ext>2002.003.004</ext>
+			<artist>Robert Weingarten</artist>
+			<bio>American, b. 1941</bio>
+			<title>Amish #13, Pennsylvania</title>
+			<date>2001</date>
+			<process>Iris print</process>
+			<credit>Gift of the artist</credit>
+		</Source>
+		<Source id="85">
+			<url1>images/2002.007.001.jpg</url1>
+			<url2>thumbs/2002.007.001.jpg</url2>
+			<url3>bigthumbs/2002.007.001.jpg</url3>
+			<ext>2002.007.001</ext>
+			<artist>Unknown artist</artist>
+			<bio>n/a</bio>
+			<title>WWI era postcards of female nudes (51)</title>
+			<date>n/a</date>
+			<process>gelatin silver print</process>
+			<credit>Gift of Jay Sarno</credit>
+		</Source>
+		<Source id="86">
+			<url1>images/2002.017.001.jpg</url1>
+			<url2>thumbs/2002.017.001.jpg</url2>
+			<url3>bigthumbs/2002.017.001.jpg</url3>
+			<ext>2002.017.001</ext>
+			<artist>Richard S. Buswell</artist>
+			<bio>American, b. 1945</bio>
+			<title>Three Ladies: Newspaper.Wallpaper</title>
+			<date>1996</date>
+			<process>gelatin silver print</process>
+			<credit>Gift of the artist</credit>
+		</Source>
+		<Source id="87">
+			<url1>images/2002.021.001.jpg</url1>
+			<url2>thumbs/2002.021.001.jpg</url2>
+			<url3>bigthumbs/2002.021.001.jpg</url3>
+			<ext>2002.021.001</ext>
+			<artist>William E. Williams</artist>
+			<bio>American</bio>
+			<title>Boulder Plum Run</title>
+			<date>1986</date>
+			<process>gelatin silver print</process>
+			<credit>Gift of the artist in honor of Anna Rogers</credit>
+		</Source>
+		<Source id="88">
+			<url1>images/2002.029.005.jpg</url1>
+			<url2>thumbs/2002.029.005.jpg</url2>
+			<url3>bigthumbs/2002.029.005.jpg</url3>
+			<ext>2002.029.005</ext>
+			<artist>Harold Eugene Edgerton</artist>
+			<bio>American, 1903 - 1990</bio>
+			<title>Moscow Circus</title>
+			<date>1963</date>
+			<process>dye transfer </process>
+			<credit>Gift of Irving Rubin</credit>
+		</Source>
+		<Source id="89">
+			<url1>images/2002.041.001.jpg</url1>
+			<url2>thumbs/2002.041.001.jpg</url2>
+			<url3>bigthumbs/2002.041.001.jpg</url3>
+			<ext>2002.041.001</ext>
+			<artist>Seiichi Furuya</artist>
+			<bio>Japanese, b. 1950</bio>
+			<title>Venice</title>
+			<date>1985</date>
+			<process>type C print</process>
+			<credit>Gift of the artist</credit>
+		</Source>
+		<Source id="90">
+			<url1>images/2003.008.002.jpg</url1>
+			<url2>thumbs/2003.008.002.jpg</url2>
+			<url3>bigthumbs/2003.008.002.jpg</url3>
+			<ext>2003.008.002</ext>
+			<artist>William Henry Jackson</artist>
+			<bio>American, 1843 - 1942</bio>
+			<title>Royal Gorge, Grand Canyon of the Arkansas</title>
+			<date>1881 - 1888</date>
+			<process>albumen print</process>
+			<credit>Museum purchase with funds provided by MOPA Collectors Group</credit>
+		</Source>
+		<Source id="91">
+			<url1>images/2004.007.001.jpg</url1>
+			<url2>thumbs/2004.007.001.jpg</url2>
+			<url3>bigthumbs/2004.007.001.jpg</url3>
+			<ext>2004.007.001</ext>
+			<artist>Koichiro Kurita</artist>
+			<bio>Japanese, b. 1943</bio>
+			<title>Fall</title>
+			<date>1991</date>
+			<process>platinum print</process>
+			<credit>Museum purchase with funds provided by Bruce Levy</credit>
+		</Source>
+		<Source id="92">
+			<url1>images/2004.008.002.jpg</url1>
+			<url2>thumbs/2004.008.002.jpg</url2>
+			<url3>bigthumbs/2004.008.002.jpg</url3>
+			<ext>2004.008.002</ext>
+			<artist>Roman Vishniac</artist>
+			<bio>American, b. Russia, 1897 - 1990</bio>
+			<title>Entrance to the Krakow Ghetto</title>
+			<date>1937</date>
+			<process>gelatin silver print</process>
+			<credit>Museum purchase with funds provided by MOPA Collectors Group</credit>
+		</Source>
+		<Source id="93">
+			<url1>images/2004.020.007.jpg</url1>
+			<url2>thumbs/2004.020.007.jpg</url2>
+			<url3>bigthumbs/2004.020.007.jpg</url3>
+			<ext>2004.020.007</ext>
+			<artist>Abe Frajndlich</artist>
+			<bio>German, b. 1946</bio>
+			<title>Berlin 1997 / Graffiti Berlin Wall 1997</title>
+			<date>1997</date>
+			<process>gelatin silver print</process>
+			<credit>Gift of Kurt Olden</credit>
+		</Source>
+		<Source id="94">
+			<url1>images/2004.033.006.jpg</url1>
+			<url2>thumbs/2004.033.006.jpg</url2>
+			<url3>bigthumbs/2004.033.006.jpg</url3>
+			<ext>2004.033.006</ext>
+			<artist>Francesco Scavullo</artist>
+			<bio>American, 1921 - 2004</bio>
+			<title>Deborah Harry, 1986</title>
+			<date>1986</date>
+			<process>gelatin silver print</process>
+			<credit>Gift of the Motion Picture Group, Inc., Philadelphia, PA </credit>
+		</Source>
+		<Source id="95">
+			<url1>images/2004.039.041.jpg</url1>
+			<url2>thumbs/2004.039.041.jpg</url2>
+			<url3>bigthumbs/2004.039.041.jpg</url3>
+			<ext>2004.039.041</ext>
+			<artist>Marion Faller</artist>
+			<bio>American, b. 1941</bio>
+			<title>Joseph Pandolfino’s Christmas display, Colvin Blvd., Buffalo, New York, December</title>
+			<date>1998</date>
+			<process>type C print</process>
+			<credit>Gift of The National Millennium Survey, organized by the College of Santa Fe and the Museum of Photographic Arts, San Diego</credit>
+		</Source>
+		<Source id="96">
+			<url1>images/2004.039.127.jpg</url1>
+			<url2>thumbs/2004.039.127.jpg</url2>
+			<url3>bigthumbs/2004.039.127.jpg</url3>
+			<ext>2004.039.127</ext>
+			<artist>Joel Sternfeld</artist>
+			<bio>American, b. 1944</bio>
+			<title>Old Economy, Ambrose, Pennsylvania, August 1995</title>
+			<date>1995</date>
+			<process>Ektacolor print</process>
+			<credit>Gift of The National Millennium Survey, organized by the College of Santa Fe and the Museum of Photographic Arts, San Diego</credit>
+		</Source>
+		<Source id="97">
+			<url1>images/2004.039.132.jpg</url1>
+			<url2>thumbs/2004.039.132.jpg</url2>
+			<url3>bigthumbs/2004.039.132.jpg</url3>
+			<ext>2004.039.132</ext>
+			<artist>Catherine Wagner</artist>
+			<bio>American, b. 1953</bio>
+			<title>Green Onion</title>
+			<date>1998</date>
+			<process>Iris print</process>
+			<credit>Gift of The National Millennium Survey, organized by the College of Santa Fe and the Museum of Photographic Arts, San Diego</credit>
+		</Source>
+		<Source id="98">
+			<url1>images/2005.009.070.jpg</url1>
+			<url2>thumbs/2005.009.070.jpg</url2>
+			<url3>bigthumbs/2005.009.070.jpg</url3>
+			<ext>2005.009.070</ext>
+			<artist>John Pfahl</artist>
+			<bio>American, b. 1939</bio>
+			<title>Shed With Blue Dotted Lines, Penland, N.C.</title>
+			<date>1975</date>
+			<process>type C print</process>
+			<credit>Gift of Joyce and Ted Strauss</credit>
+		</Source>
+		<Source id="99">
+			<url1>images/2005.027.002.jpg</url1>
+			<url2>thumbs/2005.027.002.jpg</url2>
+			<url3>bigthumbs/2005.027.002.jpg</url3>
+			<ext>2005.027.002</ext>
+			<artist>Walker Evans</artist>
+			<bio>American, 1903 - 1975</bio>
+			<title>American Woolen Mill Buildings</title>
+			<date>1954</date>
+			<process>gelatin silver print</process>
+			<credit>Gift of Donald and Roberta Schwartz</credit>
+		</Source>
+		<Source id="100">
+			<url1>images/2005.029.001.jpg</url1>
+			<url2>thumbs/2005.029.001.jpg</url2>
+			<url3>bigthumbs/2005.029.001.jpg</url3>
+			<ext>2005.029.001</ext>
+			<artist>Koichiro Kurita</artist>
+			<bio>Japanese, b. 1943</bio>
+			<title>Untitled</title>
+			<date>2005</date>
+			<process>platinum print</process>
+			<credit>Gift of Arthur Ollman</credit>
+		</Source>
+		<Source id="101">
+			<url1>images/2005.034.001.jpg</url1>
+			<url2>thumbs/2005.034.001.jpg</url2>
+			<url3>bigthumbs/2005.034.001.jpg</url3>
+			<ext>2005.034.001</ext>
+			<artist>Bert E. Underwood</artist>
+			<bio>American photography studio, active 1880 - 1925</bio>
+			<title>Border Guard Inspecting Suspicious Mexican</title>
+			<date>1916</date>
+			<process>gelatin silver print</process>
+			<credit>Museum purchase</credit>
+		</Source>
+		<Source id="102">
+			<url1>images/2006.011.001.jpg</url1>
+			<url2>thumbs/2006.011.001.jpg</url2>
+			<url3>bigthumbs/2006.011.001.jpg</url3>
+			<ext>2006.011.001</ext>
+			<artist>James Fee</artist>
+			<bio>American, 1949 - 2006</bio>
+			<title>Griffin</title>
+			<date>1998</date>
+			<process>monoprint</process>
+			<credit>Gift of the artist to the Arthur Ollman Tribute Collection</credit>
+		</Source>
+		<Source id="103">
+			<url1>images/2006.017.002.jpg</url1>
+			<url2>thumbs/2006.017.002.jpg</url2>
+			<url3>bigthumbs/2006.017.002.jpg</url3>
+			<ext>2006.017.002</ext>
+			<artist>Kenro Izu</artist>
+			<bio>Japanese, b. 1949</bio>
+			<title>Angkor #158, Ta Prohm, Cambodia</title>
+			<date>1994</date>
+			<process>platinum/paladium</process>
+			<credit>Gift of the artist to the Arthur Ollman Tribute Collection</credit>
+		</Source>
+		<Source id="104">
+			<url1>images/2006.025.001.jpg</url1>
+			<url2>thumbs/2006.025.001.jpg</url2>
+			<url3>bigthumbs/2006.025.001.jpg</url3>
+			<ext>2006.025.001</ext>
+			<artist>Joan Myers</artist>
+			<bio>American, b. 1944</bio>
+			<title>Mummy Pond Glacier, Antarctica</title>
+			<date>2002</date>
+			<process>platinum print</process>
+			<credit>Gift of the artist to the Arthur Ollman Tribute Collection</credit>
+		</Source>
+		<Source id="105">
+			<url1>images/2006.045.045.jpg</url1>
+			<url2>thumbs/2006.045.045.jpg</url2>
+			<url3>bigthumbs/2006.045.045.jpg</url3>
+			<ext>2006.045.045</ext>
+			<artist>Unknown artist</artist>
+			<bio>n/a</bio>
+			<title>Ahmedabad, Rani Sipri's Mosque</title>
+			<date>c. 1880</date>
+			<process>albumen print</process>
+			<credit>Gift of the Catherine and Ralph Benkaim Collection</credit>
+		</Source>
+		<Source id="106">
+			<url1>images/2006.049.001.jpg</url1>
+			<url2>thumbs/2006.049.001.jpg</url2>
+			<url3>bigthumbs/2006.049.001.jpg</url3>
+			<ext>2006.049.001</ext>
+			<artist>Art Myers</artist>
+			<bio>American</bio>
+			<title>10 year old Joseph with HIV in Kenya Orphanage</title>
+			<date>2000</date>
+			<process>gelatin silver print</process>
+			<credit>Gift of the artist to the Arthur Ollman Tribute Collection</credit>
+		</Source>
+		<Source id="107">
+			<url1>images/2007.001.005.jpg</url1>
+			<url2>thumbs/2007.001.005.jpg</url2>
+			<url3>bigthumbs/2007.001.005.jpg</url3>
+			<ext>2007.001.005</ext>
+			<artist>Edward Sheriff Curtis</artist>
+			<bio>American, 1868 - 1952</bio>
+			<title>A Hesquiat Maiden</title>
+			<date>1915</date>
+			<process>photogravure</process>
+			<credit>Gift of Jo and Howard Weiner</credit>
+		</Source>
+		<Source id="108">
+			<url1>images/2007.001.056.jpg</url1>
+			<url2>thumbs/2007.001.056.jpg</url2>
+			<url3>bigthumbs/2007.001.056.jpg</url3>
+			<ext>2007.001.056</ext>
+			<artist>Edward Sheriff Curtis</artist>
+			<bio>American, 1868 - 1952</bio>
+			<title>Hupa Purses and Money</title>
+			<date>1923</date>
+			<process>photogravure</process>
+			<credit>Gift of Jo and Howard Weiner</credit>
+		</Source>
+		<Source id="109">
+			<url1>images/2007.002.001.jpg</url1>
+			<url2>thumbs/2007.002.001.jpg</url2>
+			<url3>bigthumbs/2007.002.001.jpg</url3>
+			<ext>2007.002.001</ext>
+			<artist>Lisa M. Robinson</artist>
+			<bio>American, b. 1968</bio>
+			<title>Veranda View</title>
+			<date>2005</date>
+			<process>type C print</process>
+			<credit>Museum purchase with funds provided by the Help-MOPA-Buy -This-Print Fund</credit>
+		</Source>
+		<Source id="110">
+			<url1>images/2007.004.001.jpg</url1>
+			<url2>thumbs/2007.004.001.jpg</url2>
+			<url3>bigthumbs/2007.004.001.jpg</url3>
+			<ext>2007.004.001</ext>
+			<artist>Faiya Fredman</artist>
+			<bio>American, b. 1925</bio>
+			<title>#050743</title>
+			<date>2007</date>
+			<process>Flatbed scanned pigment print</process>
+			<credit>Musuem purchase</credit>
+		</Source>
+		<Source id="111">
+			<url1>images/2007.014.006.jpg</url1>
+			<url2>thumbs/2007.014.006.jpg</url2>
+			<url3>bigthumbs/2007.014.006.jpg</url3>
+			<ext>2007.014.006</ext>
+			<artist>Unknown artist</artist>
+			<bio>n/a</bio>
+			<title>Aviator in the Arctic</title>
+			<date>1935</date>
+			<process>gelatin silver print</process>
+			<credit>Gift of Susan Herzig and Paul Hertzmann</credit>
+		</Source>
+		<Source id="112">
+			<url1>images/2008.017.019.jpg</url1>
+			<url2>thumbs/2008.017.019.jpg</url2>
+			<url3>bigthumbs/2008.017.019.jpg</url3>
+			<ext>2008.017.019</ext>
+			<artist>Judith Fox</artist>
+			<bio>American, b. 1941</bio>
+			<title>I Still Do. La Jolla</title>
+			<date>2007</date>
+			<process>digital print</process>
+			<credit>Gift of Judith Fox</credit>
+		</Source>
+		<Source id="113">
+			<url1>images/2008.033.001.jpg</url1>
+			<url2>thumbs/2008.033.001.jpg</url2>
+			<url3>bigthumbs/2008.033.001.jpg</url3>
+			<ext>2008.033.001</ext>
+			<artist>Sandra J. Raredon</artist>
+			<bio>American, b. France</bio>
+			<title>Enchelynassa canina (Moray eel)</title>
+			<date>2004</date>
+			<process>digital radiograph</process>
+			<credit>Anonymous gift</credit>
+		</Source>
+		<Source id="114">
+			<url1>images/2008.037.002.jpg</url1>
+			<url2>thumbs/2008.037.002.jpg</url2>
+			<url3>bigthumbs/2008.037.002.jpg</url3>
+			<ext>2008.037.002</ext>
+			<artist>Mikhael Subotzky</artist>
+			<bio>South African, b. 1981</bio>
+			<title>Exercise Yard, Pollsmoor Maximum Security Prison</title>
+			<date>2004</date>
+			<process>digital print</process>
+			<credit>Gift of the artist to the Lou Stoumen Collection</credit>
+		</Source>
+		<Source id="115">
+			<url1>images/2008.037.003.jpg</url1>
+			<url2>thumbs/2008.037.003.jpg</url2>
+			<url3>bigthumbs/2008.037.003.jpg</url3>
+			<ext>2008.037.003</ext>
+			<artist>Mikhael Subotzky</artist>
+			<bio>South African, b. 1981</bio>
+			<title>Prisoners, Voorberg Prison</title>
+			<date>2004</date>
+			<process>digital print</process>
+			<credit>Gift of the artist to the Lou Stoumen Collection</credit>
+		</Source>
+		<Source id="116">
+			<url1>images/2009.003.002.jpg</url1>
+			<url2>thumbs/2009.003.002.jpg</url2>
+			<url3>bigthumbs/2009.003.002.jpg</url3>
+			<ext>2009.003.002</ext>
+			<artist>Ann Johansson</artist>
+			<bio>Swedish, b. 1963</bio>
+			<title>Gaza City</title>
+			<date>37715</date>
+			<process>digital print</process>
+			<credit>Gift of the artist</credit>
+		</Source>
+		<Source id="117">
+			<url1>images/2009.004.007.jpg</url1>
+			<url2>thumbs/2009.004.007.jpg</url2>
+			<url3>bigthumbs/2009.004.007.jpg</url3>
+			<ext>2009.004.007</ext>
+			<artist>Byron Wolfe</artist>
+			<bio>American, b. 1967</bio>
+			<title>July 10, 2002 (7 of 7)</title>
+			<date>2002</date>
+			<process>digital inkjet pigment print</process>
+			<credit>Gift of the artist</credit>
+		</Source>
+		<Source id="118">
+			<url1>images/2009.004.010.jpg</url1>
+			<url2>thumbs/2009.004.010.jpg</url2>
+			<url3>bigthumbs/2009.004.010.jpg</url3>
+			<ext>2009.004.010</ext>
+			<artist>Byron Wolfe</artist>
+			<bio>American, b. 1967</bio>
+			<title>December 29, 2002 (3 of 3)</title>
+			<date>2002</date>
+			<process>digital inkjet pigment print</process>
+			<credit>Gift of the artist</credit>
+		</Source>
+		<Source id="119">
+			<url1>images/2009.008.001.jpg</url1>
+			<url2>thumbs/2009.008.001.jpg</url2>
+			<url3>bigthumbs/2009.008.001.jpg</url3>
+			<ext>2009.008.001</ext>
+			<artist>Joni Sternbach</artist>
+			<bio>American, b. 1953</bio>
+			<title>08.04.08 #15 Top Wendover</title>
+			<date>2008</date>
+			<process>Archival pigment print</process>
+			<credit>Gift of the artist</credit>
+		</Source>
+		<Source id="120">
+			<url1>images/2009.010.003.jpg</url1>
+			<url2>thumbs/2009.010.003.jpg</url2>
+			<url3>bigthumbs/2009.010.003.jpg</url3>
+			<ext>2009.010.003</ext>
+			<artist>Takeshi Shikama</artist>
+			<bio>Japanese, b. 1948</bio>
+			<title>Kayagatake F#1</title>
+			<date>2008</date>
+			<process>platinum print</process>
+			<credit>Gift of the artist</credit>
+		</Source>
+	</Content>
+	<GlobalSettings>
+		<maxScale>1</maxScale><!-- The maximum size the images can zoom to, set relative to their full size within the application (set by <scale> or <imagesNormalize>). For instance, setting maxScale to 2.5 will allow the user to zoom the videos to 2.5 times their full size. -->
+		<minScale>.5</minScale><!-- The minimum size the images can zoom to, set relative to their full size within the application (set by <scale> or <imagesNormalize>). For instance, setting minScale to .5 will allow the user to shrink the images to half their full size. -->
+	</GlobalSettings>
+</Soapbox>
