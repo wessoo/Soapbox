@@ -14,30 +14,32 @@
 	import caurina.transitions.Tweener;	
 	
 	public class Rating extends TouchComponent {
-			private var images:Array;     //the array of randomized image id's
-			private var ratings:Array; 		//the array of ratings of each image
-			private var currentLoc:int;   //current location in the array
-			private var lastRated:int;		//tells you the last image rated
-			private var reachedEnd:Boolean;  //tells you if you've reached the end of the array
-			private var currentBadge:int;	//The badge that the user currently has
-			private var badge1:int = 10;	//The badges that can be attained
-			private var badge2:int = 25;
-			private var badge3:int = 45;
-			private var badge4:int = 70;
-			private var badge5:int = 95;
-			private var badge6:int = 120;			
-			
-			private var cont_endsession:TouchSprite;
-			private var cont_toscreen:TouchSprite;
-			private var cont_email:TouchSprite;
-			private var cont_star1:TouchSprite;
-			private var cont_star2:TouchSprite;
-			private var cont_star3:TouchSprite;
-			private var cont_star4:TouchSprite;
+		private var images:Array;     //the array of randomized image id's
+		private var ratings:Array; 		//the array of ratings of each image
+		private var currentLoc:int;   //current location in the array
+		private var lastRated:int;		//tells you the last image rated
+		private var reachedEnd:Boolean;  //tells you if you've reached the end of the array
+		private var currentBadge:int;	//The badge that the user currently has
+		private var badge1:int = 10;	//The badges that can be attained
+		private var badge2:int = 25;
+		private var badge3:int = 45;
+		private var badge4:int = 70;
+		private var badge5:int = 95;
+		private var badge6:int = 120;			
+		
+		private var cont_endsession:TouchSprite;
+		private var cont_toscreen:TouchSprite;
+		private var cont_email:TouchSprite;
+		private var cont_lang:TouchSprite;
+		private var cont_star1:TouchSprite;
+		private var cont_star2:TouchSprite;
+		private var cont_star3:TouchSprite;
+		private var cont_star4:TouchSprite;
 			
 		public function Rating() {
 			super();
 			
+			trace("flag1");
 			//initialize vars 
 			images = new Array();
 			ratings = new Array();
@@ -45,10 +47,8 @@
 			reachedEnd = false;
 			currentBadge = -1;
 			lastRated = -1;
-			initialize();
-		}
-		
-		private function initialize():void{
+			
+			//initialize();
 			cont_endsession = new TouchSprite();
 			cont_toscreen = new TouchSprite();
 			cont_email = new TouchSprite();
@@ -59,13 +59,21 @@
 			cont_star4 = new TouchSprite();
 			
 			cont_endsession.addChild(button_endsession);
+			addChild(cont_endsession);
 			cont_toscreen.addChild(button_toscreen);
+			addChild(cont_toscreen);
 			cont_email.addChild(button_email);
+			addChild(cont_email);
 			cont_lang.addChild(button_lang);
+			addChild(cont_lang);
 			cont_star1.addChild(button_star1);
+			addChild(cont_star1);
 			cont_star2.addChild(button_star2);
+			addChild(cont_star2);
 			cont_star3.addChild(button_star3);
+			addChild(cont_star3);
 			cont_star4.addChild(button_star4);
+			addChild(cont_star4);
 			
 			cont_endsession.addEventListener(TouchEvent.TOUCH_DOWN, endsession_dwn, false, 0, true);
 			cont_endsession.addEventListener(TouchEvent.TOUCH_UP, endsession_up, false, 0, true);
@@ -90,6 +98,10 @@
 			}
 			shuffle();
 		}
+		
+		/*private function initialize():void{
+			
+		}*/
 		
 		override protected function createUI():void {
 			

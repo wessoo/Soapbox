@@ -21,17 +21,25 @@
 	public class Main extends Application {
 		
 		public static var language:int = 0; //language mode. 0: English, 1: Spanish
+		public static var rating:Rating;
 		
 		public function Main() {
 			settingsPath = "application.xml";
 		}
 		//testing
 		override protected function initialize():void {
-			var r:Rating = new Rating();
-			var a:Array = r.getImages();
+			rating = new Rating();
+			rating.x = 962.7;
+			rating.y = 549.95;
+			addChild(rating);
+			var a:Array = rating.getImages();
 			for(var i:int = 0; i < a.length; ++i){
 				trace(a[i]);
 			}
+		}
+		
+		private function loadUI():void {
+			
 		}
 
 	}
