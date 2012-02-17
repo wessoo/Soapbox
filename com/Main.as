@@ -56,6 +56,8 @@
 			for(var i:int = 0; i < a.length; ++i){
 				trace(a[i]);
 			}
+			
+			//stage.displayState = StageDisplayState.FULL_SCREEN; 
 		}
 		
 		/* ------ Logical Functions ------- */
