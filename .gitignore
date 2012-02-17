@@ -5,7 +5,9 @@
 #Ignore executables
 *.exe
 
-#Ignore images
+#Ignore image files
+*.jpg
+*.png
 images/*
 thumbs/*
 bigthumbs/*
