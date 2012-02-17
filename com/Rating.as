@@ -12,7 +12,7 @@
 	import id.core.TouchSprite;
 	
 	import caurina.transitions.Tweener;	
-	
+		//Hi just for commit comment
 	public class Rating extends TouchComponent {
 		private var images:Array;     //the array of randomized image id's
 		private var ratings:Array; 		//the array of ratings of each image
