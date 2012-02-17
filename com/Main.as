@@ -20,6 +20,7 @@
 	
 	public class Main extends Application {
 		
+		public static var parserLoaded = false;  //Tells you whether the metadata is available or not.
 		public static var language:int = 0; //language mode. 0: English, 1: Spanish
 		public static var rating:Rating;
 		
@@ -37,11 +38,20 @@
 				trace(a[i]);
 			}
 			
+			
+			ImageParser.addEventListener(Event.COMPLETE, imageParserLoaded, false, 0, true);
+			ImageParser.settingsPath = "Soapbox.xml";
 			//stage.displayState = StageDisplayState.FULL_SCREEN; 
 		}
 		
 		private function loadUI():void {
 			
+		}
+		
+		private function imageParserLoaded(e:Event):void{
+			parserLoaded = true;
+			//var photo:Photo = new Photo(1);
+			//addChild(photo);
 		}
 
 	}
