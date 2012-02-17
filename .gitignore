@@ -4,3 +4,8 @@
 
 #Ignore executables
 *.exe
+
+#Ignore image files
+*.jpg
+*.png
+images/*
