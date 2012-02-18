@@ -47,18 +47,8 @@
 			cont_lang.addEventListener(TouchEvent.TOUCH_DOWN, lang_dwn, false, 0, true);
 			cont_lang.addEventListener(TouchEvent.TOUCH_UP, lang_up, false, 0, true);
 			
-			rating = new Rating();
-			//Damn straight, hard coded screen positioning for Rating class, don't judge
-			rating.x = 960;
-			rating.y = 540;			
-			addChild(rating);
 			
-			var a:Array = rating.getImages();
-			for(var i:int = 0; i < a.length; ++i){
-				trace(a[i]);
-			}
-			
-			
+			//Start parsing Soapbox.xml for its metadata
 			ImageParser.addEventListener(Event.COMPLETE, imageParserLoaded, false, 0, true);
 			ImageParser.settingsPath = "Soapbox.xml";
 			//stage.displayState = StageDisplayState.FULL_SCREEN; 
@@ -99,8 +89,12 @@
 		
 		private function imageParserLoaded(e:Event):void{
 			parserLoaded = true;
-			//var photo:Photo = new Photo(1);
-			//addChild(photo);
+			
+			rating = new Rating();
+			//Damn straight, hard coded screen positioning for Rating class, don't judge
+			rating.x = 960;
+			rating.y = 540;			
+			addChild(rating);
 		}
 	}
 	

@@ -35,6 +35,9 @@
 		private var cont_star2:TouchSprite;
 		private var cont_star3:TouchSprite;
 		private var cont_star4:TouchSprite;
+		
+		/*Photo object for rating*/
+		private var photo:Photo;
 			
 		public function Rating() {
 			super();
@@ -95,8 +98,10 @@
 			shuffle();
 			
 			//addPhoto();
-			currentLoc = 0; //delete when addPhoto() has been written
-			getNext();
+			photo = new Photo(getNext());
+			addChild(photo);
+			photo.x = photo_slot.x - photo_slot.width/2;
+			photo.y = photo_slot.y - photo_slot.height/2;
 		}
 		
 		/*private function initialize():void{
@@ -106,6 +111,7 @@
 		override protected function createUI():void {
 			
 		}
+		
 		
 		override public function Dispose():void {
 			
