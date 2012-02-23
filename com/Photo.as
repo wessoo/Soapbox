@@ -78,10 +78,6 @@
 		override protected function layoutUI():void{
 			var pw = photo.width;
 			var ph = photo.height;
-			trace("Photo Width: " + pw);
-			trace("Photo Height: " + ph);
-			trace();
-
 			var heightLongest:Boolean = false;
 			
 			//Find the longest side of this thumbnail

@@ -42,7 +42,7 @@
 		public function Rating() {
 			super();
 			
-			trace("flag1");
+			//trace("flag1");
 			//initialize vars 
 			images = new Array();
 			ratings = new Array();
@@ -267,7 +267,7 @@
 			button_star1.gotoAndStop("up");
 			
 			setRating(1);
-			getNext();
+			photo.id = getNext();
 		}
 		
 		private function star2_dwn(e:TouchEvent):void {
@@ -280,7 +280,7 @@
 			button_star2.gotoAndStop("up");
 			
 			setRating(2);
-			getNext();
+			photo.id = getNext();
 		}
 		
 		private function star3_dwn(e:TouchEvent):void {
@@ -295,7 +295,7 @@
 			button_star3.gotoAndStop("up");
 			
 			setRating(3);
-			getNext();
+			photo.id = getNext();
 		}
 		
 		private function star4_dwn(e:TouchEvent):void {
@@ -312,7 +312,7 @@
 			button_star4.gotoAndStop("up");
 			
 			setRating(4);
-			getNext();
+			photo.id = getNext();
 		}
 		
 /*		private function randomRange(minNum:Number, maxNum:Number):Number{

@@ -590,10 +590,11 @@
 			<credit>Unknown source</credit>
 		</Source>
 		<Source id="50">
-			<url1>images/1994.014.001d.jpg</url1>
-			<url2>thumbs/1994.014.001d.jpg</url2>
-			<url3>bigthumbs/1994.014.001d.jpg</url3>
-			<ext>1994.014.001d</ext>
+			<!-- was 001d -->
+			<url1>images/1994.014.001.jpg</url1>
+			<url2>thumbs/1994.014.001.jpg</url2>
+			<url3>bigthumbs/1994.014.001.jpg</url3>
+			<ext>1994.014.001</ext>
 			<artist>Helen Mayer</artist>
 			<bio>American, b. 1929</bio>
 			<title>Untitled (aerial view of Interstate 5 on left)</title>
