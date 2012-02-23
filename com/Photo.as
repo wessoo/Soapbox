@@ -29,6 +29,9 @@
 		private var savedX:Number;
 		private var savedY:Number;
 		private var savedScale:Number;
+		private var correctionPixels:Number = 3;  //For correcting the position of the photo
+		private var frameWidth:Number = 1201;  //How large the frame is that fits the photo
+		private var frameHeight:Number = 831;
 		
 		public function Photo(idValue:int){
 			_id = idValue;
@@ -75,22 +78,31 @@
 		override protected function layoutUI():void{
 			var pw = photo.width;
 			var ph = photo.height;
+			trace("Photo Width: " + pw);
+			trace("Photo Height: " + ph);
+			trace();
+
 			var heightLongest:Boolean = false;
 			
+			//Find the longest side of this thumbnail
 			//Find the longest side of this thumbnail
 			if(ph >= pw){
 				heightLongest = true;
 			}
 			
 			if(heightLongest){
-				photo.scaleX = photo.scaleY = savedScale = 831/ph;
+				photo.scaleX = photo.scaleY = savedScale = frameHeight/ph;
 			}
 			else{
-				photo.scaleX = photo.scaleY = savedScale = 1201/pw;
+				photo.scaleX = photo.scaleY = savedScale = frameWidth/pw;
+				//Correct the image if it is still too tall for the photo frame
+				if(savedScale*ph > frameHeight){
+					photo.scaleX = photo.scaleY = savedScale = frameHeight/ph;
+				}
 			}
 			
-			photo.x = savedX = (1201/2) - (photo.width*photo.scaleX/2) + 3;
-			photo.y = savedY = (831/2) - (photo.height*photo.scaleY/2) + 3;
+			photo.x = savedX = (frameWidth/2) - (photo.width*photo.scaleX/2) + 3;
+			photo.y = savedY = (frameHeight/2) - (photo.height*photo.scaleY/2) + 3;
 		}
 		
 		override protected function updateUI():void{
@@ -120,14 +132,18 @@
 			}
 			
 			if(heightLongest){
-				photo.scaleX = photo.scaleY = savedScale = 831/ph;
+				photo.scaleX = photo.scaleY = savedScale = frameHeight/ph;
 			}
 			else{
-				photo.scaleX = photo.scaleY = savedScale =1201/pw;
+				photo.scaleX = photo.scaleY = savedScale = frameWidth/pw;
+				//Correct the image if it is still too tall for the photo frame
+				if(savedScale*ph > frameHeight){
+					photo.scaleX = photo.scaleY = savedScale = frameHeight/ph;
+				}
 			}
 			
-			photo.x = savedX = (1201/2) - (photo.width*photo.scaleX/2);
-			photo.y = savedY = (831/2) - (photo.height*photo.scaleY/2);
+			photo.x = savedX = (frameWidth/2) - (photo.width*photo.scaleX/2) + correctionPixels;
+			photo.y = savedY = (frameHeight/2) - (photo.height*photo.scaleY/2) + correctionPixels;
 		}
 		
 		public function resetPhoto(){
