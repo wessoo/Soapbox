@@ -19,22 +19,29 @@
 	import caurina.transitions.Tweener;	
 	
 	public class Main extends Application {
-		private var idleCountdown:Timer; //timer for idle
+		private var timeout:Timer; //timer for idle
+		private var timeoutWarn:Timer; //timer for notifying time out
 		
 		public static var language:int = 0; //language mode. 0: English, 1: Spanish
 		public static var rating:Rating;
+		
+		/* dynamic interface components */
+		private static var shader:Shade;
+		private static var blocker_fullscreen:Blocker;
 		
 		/* button containers */
 		private var cont_toStats:TouchSprite;
 		private var cont_toRating:TouchSprite;
 		private var cont_lang:TouchSprite;
+		private var cont_shader:TouchSprite;
+		private var cont_blocker_fullscreen:TouchSprite;
 		
 		public function Main() {
 			settingsPath = "application.xml";
 		}
 		//testing
 		override protected function initialize():void {
-			idleCountdown = new Timer(45000, 1);
+			timeout = new Timer(45000, 1);
 			
 			cont_toStats = new TouchSprite();
 			cont_toRating = new TouchSprite();
@@ -46,18 +53,26 @@
 			cont_lang.addEventListener(TouchEvent.TOUCH_DOWN, lang_dwn, false, 0, true);
 			cont_lang.addEventListener(TouchEvent.TOUCH_UP, lang_up, false, 0, true);
 			
-			rating = new Rating();
-			//Damn straight, hard coded screen positioning for Rating class, don't judge
-			rating.x = 960;
+			//shader
+			shader = new Shade();
+			cont_shader = new TouchSprite();
+			cont_shader.addChild(shader);
+			shader.alpha = 0;
+			
+			//blocker
+			blocker_fullscreen = new Blocker();
+			cont_blocker_fullscreen = new TouchSprite();
+			cont_blocker_fullscreen.addChild(blocker_fullscreen);
+			
+			rating = new Rating();			
+			rating.x = 960; //Damn straight, hard coded screen positioning for Rating class, don't judge
 			rating.y = 540;			
 			addChild(rating);
 			
 			var a:Array = rating.getImages();
-			for(var i:int = 0; i < a.length; ++i){
-				trace(a[i]);
-			}
 			
-			//stage.displayState = StageDisplayState.FULL_SCREEN; 
+			addEventListener("shiftUp", shiftUp);
+			addEventListener("shiftDown", shiftDown);
 		}
 		
 		/* ------ Logical Functions ------- */
@@ -91,6 +106,36 @@
 				button_lang.gotoAndStop("esp_up");
 				changeLang(); //switch to English
 			}
+		}
+		
+		private function shiftUp(e:Event):void {
+			Tweener.addTween( background_texture, { y: background_texture.y - 300, time: 1 } );
+			Tweener.addTween( cont_lang, { y: cont_lang.y - 300, time: 1} );
+		}
+		
+		private function shiftDown(e:Event):void {
+			Tweener.addTween( background_texture, { y: background_texture.y + 300, time: 1 } );
+			Tweener.addTween( cont_lang, { y: cont_lang.y + 300, time: 1} );
+		}
+		
+		public function shadeOn():void {
+			addChild(cont_shader);
+			Tweener.addTween(shader, { alpha: 1, time: 0.5 } );
+		}
+		
+		public function shadeOff():void {
+			trace("call off shader");
+			Tweener.addTween(shader, { delay: 1, alpha: 0, time: 0.5, onComplete: function() { removeChild(cont_shader) } } );
+		}
+		
+		public function blockerOn():void {
+			addChild(cont_blocker_fullscreen);
+			cont_blocker_fullscreen.visible = true;
+		}
+		
+		public function blockerOff():void {
+			removeChild(cont_blocker_fullscreen);
+			cont_blocker_fullscreen.visible = false;
 		}
 	}
 	

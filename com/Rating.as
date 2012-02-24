@@ -1,4 +1,5 @@
 ﻿package com {
+	import flash.display.Shader;
 	import flash.events.Event;
 	import flash.display.DisplayObject;	
 	import flash.events.TimerEvent;
@@ -12,20 +13,26 @@
 	import id.core.TouchSprite;
 	
 	import caurina.transitions.Tweener;	
-		//Hi just for commit comment
+	
 	public class Rating extends TouchComponent {
-		private var images:Array;     //the array of randomized image id's
+		private var images:Array;     	//the array of randomized image id's
 		private var ratings:Array; 		//the array of ratings of each image
-		private var currentLoc:int;   //current location in the array
+		private var currentLoc:int;		//current location in the array
 		private var lastRated:int;		//tells you the last image rated
-		private var reachedEnd:Boolean;  //tells you if you've reached the end of the array
-		private var currentBadge:int;	//The badge that the user currently has
-		private static var badge1:int = 10;	//The badges that can be attained
+		private var reachedEnd:Boolean; //tells you if you've reached the end of the array
+		private var email:String;
+		private var currentBadge:int;			//The badge that the user currently has
+		private static var badge1:int = 10;		//The badges that can be attained
 		private static var badge2:int = 25;
 		private static var badge3:int = 45;
 		private static var badge4:int = 70;
 		private static var badge5:int = 95;
 		private static var badge6:int = 120;			
+		
+		/* dyanmic interface components */
+		private static var hitarea_exitEmail:ExitEmail;	//hit area outside of email box and keyboard to return to Rating screen
+		private static var shader:Shade;
+		private static var blocker_fullscreen:Blocker;
 		
 		/* button containers */
 		private var cont_endsession:TouchSprite;
@@ -35,11 +42,14 @@
 		private var cont_star2:TouchSprite;
 		private var cont_star3:TouchSprite;
 		private var cont_star4:TouchSprite;
-			
+		private var cont_okemail:TouchSprite;
+		private var cont_exitEmail:TouchSprite;
+		private var cont_shader:TouchSprite;
+		private var cont_blocker_fullscreen:TouchSprite;
+		
 		public function Rating() {
 			super();
 			
-			trace("flag1");
 			//initialize vars 
 			images = new Array();
 			ratings = new Array();
@@ -47,8 +57,8 @@
 			reachedEnd = false;
 			currentBadge = -1;
 			lastRated = -1;
+			email = '';
 			
-			//initialize();
 			cont_endsession = new TouchSprite();
 			cont_toscreen = new TouchSprite();
 			cont_email = new TouchSprite();
@@ -56,6 +66,7 @@
 			cont_star2 = new TouchSprite();
 			cont_star3 = new TouchSprite();
 			cont_star4 = new TouchSprite();
+			cont_okemail = new TouchSprite();
 			
 			cont_endsession.addChild(button_endsession);
 			addChild(cont_endsession);
@@ -71,6 +82,8 @@
 			addChild(cont_star3);
 			cont_star4.addChild(button_star4);
 			addChild(cont_star4);
+			cont_okemail.addChild(button_okemail);
+			addChild(cont_okemail);
 			
 			cont_endsession.addEventListener(TouchEvent.TOUCH_DOWN, endsession_dwn, false, 0, true);
 			cont_endsession.addEventListener(TouchEvent.TOUCH_UP, endsession_up, false, 0, true);
@@ -86,6 +99,34 @@
 			cont_star3.addEventListener(TouchEvent.TOUCH_UP, star3_up, false, 0, true);
 			cont_star4.addEventListener(TouchEvent.TOUCH_DOWN, star4_dwn, false, 0, true);
 			cont_star4.addEventListener(TouchEvent.TOUCH_UP, star4_up, false, 0, true);
+			
+			button_okemail.alpha = 0;
+			window_email.alpha = 0;
+			window_email.height -= 100;
+			window_email.width -= 100;
+			
+			//exit email blocker
+			hitarea_exitEmail = new ExitEmail();
+			cont_exitEmail = new TouchSprite();
+			cont_exitEmail.addChild(hitarea_exitEmail);
+			cont_exitEmail.x = -1920 / 2;
+			cont_exitEmail.y = -1080 / 2;
+			cont_exitEmail.addEventListener(TouchEvent.TOUCH_UP, exitEmail);
+			
+			//shader
+			shader = new Shade();
+			cont_shader = new TouchSprite();
+			cont_shader.addChild(shader);
+			shader.alpha = 0;
+			
+			//TEMP
+			//shader.alpha = 1;
+			//addChild(cont_shader);
+			
+			//blocker
+			blocker_fullscreen = new Blocker();
+			cont_blocker_fullscreen = new TouchSprite();
+			cont_blocker_fullscreen.addChild(blocker_fullscreen);
 			
 			//initialize arrays
 			for(var i:int = 1; i <= 120; ++i){
@@ -227,6 +268,27 @@
 			return currentBadge;
 		}
 		
+		/*
+		 * Checks to see whether e-mail is a valid e-mail
+		 * 
+		 * @param address E-mail address
+		 * @return Boolean whether e-mail is validated
+		 */
+		private function validateEmail(address:String):Boolean {
+			var email_REGEX:RegExp = /^[0-9a-zA-Z][-._a-zA-Z0-9]*@([0-9a-zA-Z][-._0-9a-zA-Z]*\.)+[a-zA-Z]{2,4}$/;
+			
+			return email_REGEX.test(address);
+		}
+		
+		/*
+		 * Stores e-mail
+		 * 
+		 * @param address E-mail address
+		 */
+		private function storeEmail(address:String):void {
+			email = address;
+		}
+		
 		/* ------ Interface/Animation Functions ------ */
 		
 		private function endsession_dwn(e:TouchEvent):void {
@@ -251,6 +313,40 @@
 		
 		private function email_up(e:TouchEvent):void {
 			button_email.gotoAndStop("up");
+			
+			if (email == '') { //if no e-mail entered yet
+				shadeOn();
+				addChild(cont_exitEmail); //put exit_email above shade
+				addChild(window_email); //put window_email above shade
+				addChild(cont_okemail); //put button_okemail above all else
+				Tweener.addTween(cont_shader, { y: cont_shader.y + 300, time: 1 } );				
+				Tweener.addTween(this, { y: this.y - 300, time: 1 } );				
+				Tweener.addTween(button_okemail, { alpha: 1, delay: 0.5, time: 1 } );
+				Tweener.addTween(window_email, { alpha: 1, delay: 0.5, time: 1 } );
+				Tweener.addTween(window_email, { height: window_email.height + 100, width: window_email.width + 100, delay: 0.5, time: 1, transition: "easeOutElastic" } );
+				dispatchEvent(new Event("shiftUp", true)); //move background up
+				
+				blockerOn();
+				Tweener.addTween(cont_blocker_fullscreen, { y: cont_blocker_fullscreen.y + 300, time: 1 } );
+				Tweener.addTween(cont_blocker_fullscreen, { delay: 1.5, onComplete: blockerOff } );
+			} else { //e-mail already entered
+				
+			}
+		}
+		
+		private function exitEmail(e:TouchEvent):void {
+			removeChild(cont_exitEmail); //put exit_email above shade
+			Tweener.addTween(cont_shader, { y: cont_shader.y - 300, time: 1 } );				
+			Tweener.addTween(this, { y: this.y + 300, time: 1 } );				
+			Tweener.addTween(button_okemail, { alpha: 0, time: 1 } );
+			Tweener.addTween(window_email, { alpha: 0, time: 1 } );
+			Tweener.addTween(window_email, { height: window_email.height - 100, width: window_email.width - 100, time: 1, transition: "easeOutElastic" } );
+			dispatchEvent(new Event("shiftDown", true)); //move background down
+			shadeOff();
+			
+			blockerOn();
+			Tweener.addTween(cont_blocker_fullscreen, { y: cont_blocker_fullscreen.y - 300, time: 1 } );
+			Tweener.addTween(cont_blocker_fullscreen, { delay: 1.5, onComplete: blockerOff } );
 		}
 		
 		private function star1_dwn(e:TouchEvent):void {
@@ -307,6 +403,29 @@
 			
 			setRating(4);
 			getNext();
+		}
+		
+		public function shadeOn():void {
+			addChild(cont_shader);
+			Tweener.addTween(shader, { alpha: 1, time: 1 } );
+		}
+		
+		public function shadeOff():void {
+			//trace("call off shader");
+			Tweener.addTween(shader, { alpha: 0, time: 1, onComplete: function() { removeChild(cont_shader) } } );
+		}
+		
+		public function blockerOn():void {
+			//trace("blocker ON");
+			addChild(cont_blocker_fullscreen);
+			setChildIndex(cont_blocker_fullscreen, numChildren - 1);
+			cont_blocker_fullscreen.visible = true;
+		}
+		
+		public function blockerOff():void {
+			//trace("blocker OFF");
+			removeChild(cont_blocker_fullscreen);
+			cont_blocker_fullscreen.visible = false;
 		}
 		
 /*		private function randomRange(minNum:Number, maxNum:Number):Number{
