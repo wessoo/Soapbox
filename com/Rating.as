@@ -13,7 +13,7 @@
 	import id.core.TouchSprite;
 	
 	import caurina.transitions.Tweener;	
-	
+
 	public class Rating extends TouchComponent {
 		private var images:Array;     	//the array of randomized image id's
 		private var ratings:Array; 		//the array of ratings of each image
@@ -48,6 +48,9 @@
 		private var cont_shader:TouchSprite;
 		private var cont_blocker_fullscreen:TouchSprite;
 		private var cont_removeemail:TouchSprite;
+		
+		/*Photo object for rating*/
+		private var photo:Photo;
 		
 		/* guidance cue booleans */
 		public static var EMAIL_ADDED:Boolean = false;
@@ -169,8 +172,10 @@
 			shuffle();
 			
 			//addPhoto();
-			currentLoc = 0; //delete when addPhoto() has been written
-			getNext();
+			/*photo = new Photo(getNext());
+			addChild(photo);
+			photo.x = photo_slot.x - photo_slot.width/2;
+			photo.y = photo_slot.y - photo_slot.height/2;*/
 		}
 		
 		/*private function initialize():void{
@@ -180,6 +185,7 @@
 		override protected function createUI():void {
 			
 		}
+		
 		
 		override public function Dispose():void {
 			
@@ -460,7 +466,7 @@
 			button_star1.gotoAndStop("up");
 			
 			setRating(1);
-			getNext();
+			photo.id = getNext();
 		}
 		
 		private function star2_dwn(e:TouchEvent):void {
@@ -473,7 +479,7 @@
 			button_star2.gotoAndStop("up");
 			
 			setRating(2);
-			getNext();
+			photo.id = getNext();
 		}
 		
 		private function star3_dwn(e:TouchEvent):void {
@@ -488,7 +494,7 @@
 			button_star3.gotoAndStop("up");
 			
 			setRating(3);
-			getNext();
+			photo.id = getNext();
 		}
 		
 		private function star4_dwn(e:TouchEvent):void {
@@ -505,7 +511,7 @@
 			button_star4.gotoAndStop("up");
 			
 			setRating(4);
-			getNext();
+			photo.id = getNext();
 		}
 		
 		public function shadeOn():void {

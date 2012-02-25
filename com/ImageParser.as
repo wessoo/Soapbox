@@ -23,7 +23,7 @@
 		private static var settingsLoader:URLLoader;
 		protected static var dispatch:EventDispatcher;
 		//private static var count:int;
-
+		
 		public static function get settingsPath():String
 		{
 			return _settingsPath;

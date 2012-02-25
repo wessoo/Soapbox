@@ -22,6 +22,7 @@
 		private var timeout:Timer; //timer for idle
 		private var timeoutWarn:Timer; //timer for notifying time out
 		
+		public static var parserLoaded = false;  //Tells you whether the metadata is available or not.
 		public static var language:int = 0; //language mode. 0: English, 1: Spanish
 		public static var rating:Rating;
 		
@@ -73,6 +74,10 @@
 			
 			addEventListener("shiftUp", shiftUp);
 			addEventListener("shiftDown", shiftDown);
+			
+			//Start parsing Soapbox.xml for its metadata
+			/*ImageParser.addEventListener(Event.COMPLETE, imageParserLoaded, false, 0, true);
+			ImageParser.settingsPath = "Soapbox.xml";*/
 		}
 		
 		/* ------ Logical Functions ------- */
@@ -107,7 +112,7 @@
 				changeLang(); //switch to English
 			}
 		}
-		
+
 		private function shiftUp(e:Event):void {
 			Tweener.addTween( background_texture, { y: background_texture.y - 300, time: 1 } );
 			Tweener.addTween( cont_lang, { y: cont_lang.y - 300, time: 1} );
@@ -136,6 +141,16 @@
 		public function blockerOff():void {
 			removeChild(cont_blocker_fullscreen);
 			cont_blocker_fullscreen.visible = false;
+		}
+		
+		private function imageParserLoaded(e:Event):void{
+			parserLoaded = true;
+			
+			rating = new Rating();
+			//Damn straight, hard coded screen positioning for Rating class, don't judge
+			rating.x = 960;
+			rating.y = 540;			
+			addChild(rating);
 		}
 	}
 	

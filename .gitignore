@@ -9,3 +9,5 @@
 *.jpg
 *.png
 images/*
+thumbs/*
+bigthumbs/*

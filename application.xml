@@ -78,7 +78,7 @@
 		
 		<Aggregator></Aggregator>
 		<Filter></Filter>
-		<InputProvider>Flosc</InputProvider>
+		<InputProvider>Native</InputProvider>
 		
 		<Clustering>1</Clustering> <!-- 0 | 1 | 2 -->
 		<Degradation>auto</Degradation> <!-- always | auto | never -->
