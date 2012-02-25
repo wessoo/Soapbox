@@ -47,6 +47,7 @@
 		private var cont_exitEmail:TouchSprite;
 		private var cont_shader:TouchSprite;
 		private var cont_blocker_fullscreen:TouchSprite;
+		private var cont_removeemail:TouchSprite;
 		
 		/* guidance cue booleans */
 		public static var EMAIL_ADDED:Boolean = false;
@@ -71,6 +72,7 @@
 			cont_star3 = new TouchSprite();
 			cont_star4 = new TouchSprite();
 			cont_okemail = new TouchSprite();
+			cont_removeemail = new TouchSprite();
 			
 			cont_endsession.addChild(button_endsession);
 			addChild(cont_endsession);
@@ -88,6 +90,7 @@
 			addChild(cont_star4);
 			cont_okemail.addChild(button_okemail);
 			addChild(cont_okemail);
+			cont_removeemail.addChild(button_removeemail);
 			
 			cont_endsession.addEventListener(TouchEvent.TOUCH_DOWN, endsession_dwn, false, 0, true);
 			cont_endsession.addEventListener(TouchEvent.TOUCH_UP, endsession_up, false, 0, true);
@@ -105,6 +108,8 @@
 			cont_star4.addEventListener(TouchEvent.TOUCH_UP, star4_up, false, 0, true);
 			cont_okemail.addEventListener(TouchEvent.TOUCH_DOWN, okemail_dwn, false, 0, true);
 			cont_okemail.addEventListener(TouchEvent.TOUCH_UP, okemail_up, false, 0, true);
+			cont_removeemail.addEventListener(TouchEvent.TOUCH_DOWN, removeemail_dwn, false, 0, true);
+			cont_removeemail.addEventListener(TouchEvent.TOUCH_UP, removeemail_up, false, 0, true);
 			
 			//email window
 			button_okemail.alpha = 0;
@@ -117,6 +122,11 @@
 			bubble_emailinstruct.alpha = 0;
 			bubble_emailinstruct.height -= 50;
 			bubble_emailinstruct.width -= 50;
+			
+			//email remove button
+			button_removeemail.alpha = 0;
+			button_removeemail.width -= 20;
+			button_removeemail.height -= 20;			
 			
 			//exit email blocker
 			hitarea_exitEmail = new ExitEmail();
@@ -149,6 +159,7 @@
 			addEventListener(TouchEvent.TOUCH_DOWN, anyTouch); //registering any touch on the screen
 			button_email.text_emailimageto.alpha = 0; //turns off label
 			addEventListener("okemail", okemail);
+			email_entered.text = '';
 			
 			//initialize arrays
 			for(var i:int = 1; i <= 120; ++i){
@@ -301,6 +312,14 @@
 			email = address;
 		}
 		
+		/*
+		 * Calculates how far to position the X to remove email based on the email
+		 * string length.
+		 */
+		private function getXpos():int {
+			return (email_entered.x + email_entered.width/2) - (8 * email.length) + 15;
+		}
+		
 		/* ------------------------------------------- */
 		/* ------ Interface/Animation Functions ------ */
 		/* ------------------------------------------- */
@@ -382,12 +401,20 @@
 				softKeyboard.clearEmail();
 				exitEmail();
 				
+				trace(softKeyboard.emailText());
+				trace(email);
+				trace(email_entered.text);
+				
 				//crossfade action brahhhhhh
 				Tweener.addTween(button_email.text_emailimage, { alpha: 0, delay: 1, time: 1 } );
 				Tweener.addTween(button_email.text_emailimageto, { alpha: 1, delay: 1, time: 1 } );
 				Tweener.addTween(email_entered, { alpha: 1, delay: 1, time: 1 } );
 				Tweener.addTween(bubble_emailinstruct, { alpha: 1, delay: 1, time: 1 } );
 				Tweener.addTween(bubble_emailinstruct, { height: bubble_emailinstruct.height + 50, width: bubble_emailinstruct.width + 50, delay: 1, time: 1, transition: "easeOutElastic" } );
+				addChild(cont_removeemail);
+				button_removeemail.x = getXpos();
+				Tweener.addTween(button_removeemail, { alpha: 1, delay: 1, time: 1 } );
+				Tweener.addTween(button_removeemail, { height: button_removeemail.height + 20, width: button_removeemail.width + 20, delay: 1, time: 1, transition: "easeOutElastic" } );
 				EMAIL_ADDED = true; //bubble is on
 			}
 		}
@@ -407,6 +434,22 @@
 			blockerOn();
 			Tweener.addTween(cont_blocker_fullscreen, { y: cont_blocker_fullscreen.y - 300, time: 1 } );
 			Tweener.addTween(cont_blocker_fullscreen, { delay: 1.5, onComplete: blockerOff } );
+		}
+		
+		private function removeemail_dwn(e:TouchEvent):void {
+			button_removeemail.gotoAndStop("down");
+		}
+		
+		private function removeemail_up(e:TouchEvent):void {
+			button_removeemail.gotoAndStop("up");
+			Tweener.addTween(button_email.text_emailimage, { alpha: 1, time: 1 } );
+			Tweener.addTween(button_email.text_emailimageto, { alpha: 0, time: 1 } );
+			Tweener.addTween(button_removeemail, { alpha: 0, time: 1 } );
+			Tweener.addTween(button_removeemail, { height: button_removeemail.height - 20, width: button_removeemail.width - 20, time: 1 } );
+			Tweener.addTween(email_entered, { alpha: 0, time: 1 } );
+			
+			email = '';
+			softKeyboard.clearEmail();
 		}
 		
 		private function star1_dwn(e:TouchEvent):void {

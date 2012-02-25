@@ -31,7 +31,7 @@
 		}
 		
 		override protected function commitUI():void{
-			format.font = "Arial";
+			format.font = "Calibri";
 			format.align = TextFieldAutoSize.CENTER;
 			format.color = 0x666666;
 			format.size = 20;
