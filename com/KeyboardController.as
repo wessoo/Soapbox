@@ -9,158 +9,73 @@
 
 	
 	public class KeyboardController extends TouchComponent{
-		private var titleInputTxt:TextField;
-		public var englishKeyboard:SoftKeyboard;
+		public var emailInputTxt:TextField;
+		public var keyboard:SoftKeyboard;
 		public var touchName:TouchSprite;
 		public var touchTitle:TouchSprite;
-		private var n:NameInput;
-		private var t:TitleInput;
+		//private var n:NameInput;
+		//private var t:TitleInput;
 		private var format:TextFormat;
 		
 		public var english:Boolean = true;
 		public var transition:Boolean = false; //animation is occurring
 		
 		public function KeyboardController(){
-			createUI();
+			format = new TextFormat();
+			emailInputTxt = new TextField();
+			keyboard = new SoftKeyboard(emailInputTxt);
+			addChild(keyboard);
+			
 			commitUI();
 			layoutUI();
 		}
 		
-		public function get titleText():String{
-			return titleInputTxt.text;
-		}
-		
-		public function get nameText():String{
-			return nameInputTxt.text;
-		}
-		
-		override protected function createUI():void{
-			format = new TextFormat();
-			titleInputTxt = new TextField();
-			nameInputTxt = new TextField();
-			englishKeyboard = new SoftKeyboard(titleInputTxt);
-			touchName = new TouchSprite();
-			touchTitle = new TouchSprite();
-			n = new NameInput();
-			t = new TitleInput();
-			
-			touchName.addEventListener(TouchEvent.TOUCH_UP, nameUp);
-			touchTitle.addEventListener(TouchEvent.TOUCH_UP, titleUp);
-			
-			//addChild(titleInputTxt);
-			addChild(englishKeyboard);
-			addChild(japaneseKeyboard);
-			touchName.addChild(n);
-			touchName.addChild(nameInputTxt);
-			addChild(touchName);
-			touchTitle.addChild(t);
-			touchTitle.addChild(titleInputTxt);
-			addChild(touchTitle);
-		}
-		
 		override protected function commitUI():void{
 			format.font = "Arial";
-			format.align = TextFieldAutoSize.LEFT;
-			format.color = 0xFFFFFF;
-			format.size = 24;
+			format.align = TextFieldAutoSize.CENTER;
+			format.color = 0x666666;
+			format.size = 20;
+			format.bold = true;
 			
-			titleInputTxt.type = TextFieldType.INPUT; 
-			titleInputTxt.width = 685; 
-			titleInputTxt.height = 30;
-			titleInputTxt.border = false;
-			titleInputTxt.background = false;
-			titleInputTxt.defaultTextFormat = format;
-			//titleInputTxt.textColor = 0xFFFFFF;
-			//titleInputTxt.autoSize = TextFieldAutoSize.LEFT;
-			
-			nameInputTxt.type = TextFieldType.INPUT; 
-			nameInputTxt.width = 685; 
-			nameInputTxt.height = 30;
-			nameInputTxt.border = false;
-			nameInputTxt.background = false;
-			nameInputTxt.defaultTextFormat = format;
-			//nameInputTxt.textColor = 0xFFFFFF;
-			//nameInputTxt.autoSize = TextFieldAutoSize.LEFT;
-			
+			emailInputTxt.type = TextFieldType.INPUT; 
+			emailInputTxt.width = 365; 
+			emailInputTxt.height = 30;
+			emailInputTxt.border = false;
+			emailInputTxt.background = false;
+			emailInputTxt.defaultTextFormat = format;
 		}
 		
 		override protected function layoutUI():void{
-			x = 1425.35;
-			y = 527.45;
+			//x = 0;
+			//y = 0;
+			keyboard.scaleX = keyboard.scaleY = 0.7;
+			emailInputTxt.x = 515;
+			emailInputTxt.y = 75;
+			addChild(emailInputTxt);
 			
-			titleInputTxt.y = 28;
-			titleInputTxt.x = 10;
-			nameInputTxt.y = 28;
-			nameInputTxt.x = 10;
-			touchName. y = 66;
-			
-			englishKeyboard.y = touchName.y + touchName.height + 100;
-			japaneseKeyboard.y = englishKeyboard.y;
-			englishKeyboard.alpha = 0;
-			japaneseKeyboard.scaleX = japaneseKeyboard.scaleY = englishKeyboard.scaleX = englishKeyboard.scaleY = 0.9;
-			if(english){
-				japaneseKeyboard.visible = false;
-			}
-			else{
-				englishKeyboard.visible = false;
-			}
-		}
-		
-		public function reset():void {
+			//keyboard.y = touchName.y + touchName.height + 100;
+			//keyboard.alpha = 0;
 			
 		}
 		
-		private function nameUp(e:Event) {
-			if (!Main.guideTitNamOn) {
-				Main.guideTitNamOn = true;
-			}
+		/*
+		 * Checks to see whether e-mail is a valid e-mail
+		 * 
+		 * @param address E-mail address
+		 * @return Boolean whether e-mail is validated
+		 */
+		public function validateEmail(address:String):Boolean {
+			var email_REGEX:RegExp = /^[0-9a-zA-Z][-._a-zA-Z0-9]*@([0-9a-zA-Z][-._0-9a-zA-Z]*\.)+[a-zA-Z]{2,4}$/;
 			
-			englishKeyboard.input = nameInputTxt;
-			japaneseKeyboard.input = nameInputTxt;
-			if(transition == false){
-				Tweener.addTween(this, { y: y - 310, alpha: 1, time: 0.6, transition:"easeOutQuart" } );
-				Tweener.addTween(englishKeyboard, {alpha: 1, time:0.6, transition:"easeOutQuart" } );
-				Tweener.addTween(japaneseKeyboard, { alpha: 1, time:0.6, transition:"easeOutQuart" } );
-				Tweener.addTween(Main.personalCollection, { y: Main.personalCollection.y - 310, time: 0.6, transition:"easeOutQuart" } );
-
-				dispatchEvent(new Event("keyboard transition", true));
-				transition = true;
-			}
+			return email_REGEX.test(address);
 		}
 		
-		private function titleUp(e:Event) {
-			if (!Main.guideTitNamOn) {
-				Main.guideTitNamOn = true;
-			}
-			
-			englishKeyboard.input = titleInputTxt;
-			japaneseKeyboard.input = titleInputTxt;
-			if(transition == false){
-				Tweener.addTween(this, { y: y - 310, alpha: 1, time: 0.6, transition:"easeOutQuart" } );
-				Tweener.addTween(englishKeyboard, { alpha: 1, time:0.6, transition:"easeOutQuart" } );
-				Tweener.addTween(japaneseKeyboard, { alpha: 1, time:0.6, transition:"easeOutQuart" } );
-				Tweener.addTween(Main.personalCollection, {y: Main.personalCollection.y - 310, time: 0.6, transition:"easeOutQuart" } );
-				
-				dispatchEvent(new Event("keyboard transition", true));
-				transition = true;
-			}
+		public function emailText():String{
+			return emailInputTxt.text;
 		}
 		
-		public function extKeyboard():void {
-			if(transition == true){
-				transition = false;
-				Tweener.addTween(this, { y: y + 310, time: 0.6, transition:"easeOutQuart" } );
-				Tweener.addTween(englishKeyboard, { alpha: 0, time:0.6, transition:"easeOutQuart" } );
-				Tweener.addTween(japaneseKeyboard, {alpha: 0, time:0.6, transition:"easeOutQuart" });
-				Tweener.addTween(Main.personalCollection, {y: Main.personalCollection.y + 310, time: 0.6, transition:"easeOutQuart"} );
-			}
+		public function clearEmail():void {
+			emailInputTxt.text = '';
 		}
-		
-		public function clearText():void {
-			titleInputTxt.text = '';
-			nameInputTxt.text = '';
-		}
-
-	}
-	
+	}	
 }

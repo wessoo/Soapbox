@@ -27,12 +27,13 @@
 		private static var badge3:int = 45;
 		private static var badge4:int = 70;
 		private static var badge5:int = 95;
-		private static var badge6:int = 120;			
+		private static var badge6:int = 120;
 		
 		/* dyanmic interface components */
 		private static var hitarea_exitEmail:ExitEmail;	//hit area outside of email box and keyboard to return to Rating screen
 		private static var shader:Shade;
 		private static var blocker_fullscreen:Blocker;
+		private var softKeyboard:KeyboardController;
 		
 		/* button containers */
 		private var cont_endsession:TouchSprite;
@@ -46,6 +47,9 @@
 		private var cont_exitEmail:TouchSprite;
 		private var cont_shader:TouchSprite;
 		private var cont_blocker_fullscreen:TouchSprite;
+		
+		/* guidance cue booleans */
+		public static var EMAIL_ADDED:Boolean = false;
 		
 		public function Rating() {
 			super();
@@ -99,11 +103,20 @@
 			cont_star3.addEventListener(TouchEvent.TOUCH_UP, star3_up, false, 0, true);
 			cont_star4.addEventListener(TouchEvent.TOUCH_DOWN, star4_dwn, false, 0, true);
 			cont_star4.addEventListener(TouchEvent.TOUCH_UP, star4_up, false, 0, true);
+			cont_okemail.addEventListener(TouchEvent.TOUCH_DOWN, okemail_dwn, false, 0, true);
+			cont_okemail.addEventListener(TouchEvent.TOUCH_UP, okemail_up, false, 0, true);
 			
+			//email window
 			button_okemail.alpha = 0;
+			window_email.text_invalidemail.alpha = 0;
 			window_email.alpha = 0;
 			window_email.height -= 100;
 			window_email.width -= 100;
+			
+			//email instructions
+			bubble_emailinstruct.alpha = 0;
+			bubble_emailinstruct.height -= 50;
+			bubble_emailinstruct.width -= 50;
 			
 			//exit email blocker
 			hitarea_exitEmail = new ExitEmail();
@@ -111,7 +124,7 @@
 			cont_exitEmail.addChild(hitarea_exitEmail);
 			cont_exitEmail.x = -1920 / 2;
 			cont_exitEmail.y = -1080 / 2;
-			cont_exitEmail.addEventListener(TouchEvent.TOUCH_UP, exitEmail);
+			cont_exitEmail.addEventListener(TouchEvent.TOUCH_UP, exitEmailUp);
 			
 			//shader
 			shader = new Shade();
@@ -119,14 +132,23 @@
 			cont_shader.addChild(shader);
 			shader.alpha = 0;
 			
-			//TEMP
-			//shader.alpha = 1;
-			//addChild(cont_shader);
-			
 			//blocker
 			blocker_fullscreen = new Blocker();
 			cont_blocker_fullscreen = new TouchSprite();
 			cont_blocker_fullscreen.addChild(blocker_fullscreen);
+			
+			//keyboard
+			softKeyboard = new KeyboardController();
+			softKeyboard.x = 0;
+			softKeyboard.y = 590;
+			softKeyboard.alpha = 0;
+			softKeyboard.width -= 100;
+			softKeyboard.height -= 100;
+			addChild(softKeyboard);
+			
+			addEventListener(TouchEvent.TOUCH_DOWN, anyTouch); //registering any touch on the screen
+			button_email.text_emailimageto.alpha = 0; //turns off label
+			addEventListener("okemail", okemail);
 			
 			//initialize arrays
 			for(var i:int = 1; i <= 120; ++i){
@@ -152,7 +174,9 @@
 			
 		}
 		
-		/* ------ Logical Functions ------ */
+		/* ----------------------------------- */
+		/* -------- Logical Functions -------- */
+		/* ----------------------------------- */
 		
 		//Randomly shuffles the images in the images array		
 		private function shuffle():void{
@@ -269,18 +293,6 @@
 		}
 		
 		/*
-		 * Checks to see whether e-mail is a valid e-mail
-		 * 
-		 * @param address E-mail address
-		 * @return Boolean whether e-mail is validated
-		 */
-		private function validateEmail(address:String):Boolean {
-			var email_REGEX:RegExp = /^[0-9a-zA-Z][-._a-zA-Z0-9]*@([0-9a-zA-Z][-._0-9a-zA-Z]*\.)+[a-zA-Z]{2,4}$/;
-			
-			return email_REGEX.test(address);
-		}
-		
-		/*
 		 * Stores e-mail
 		 * 
 		 * @param address E-mail address
@@ -289,7 +301,16 @@
 			email = address;
 		}
 		
+		/* ------------------------------------------- */
 		/* ------ Interface/Animation Functions ------ */
+		/* ------------------------------------------- */
+		private function anyTouch(e:TouchEvent):void {
+			if (EMAIL_ADDED) {
+				EMAIL_ADDED = false;
+				Tweener.addTween(bubble_emailinstruct, { alpha: 0, time: 1 } );
+				Tweener.addTween(bubble_emailinstruct, { height: bubble_emailinstruct.height - 50, width: bubble_emailinstruct.width - 50, time: 1 } );
+			}
+		}
 		
 		private function endsession_dwn(e:TouchEvent):void {
 			button_endsession.gotoAndStop("down");
@@ -318,12 +339,15 @@
 				shadeOn();
 				addChild(cont_exitEmail); //put exit_email above shade
 				addChild(window_email); //put window_email above shade
+				addChild(softKeyboard); //put window_email above shade
 				addChild(cont_okemail); //put button_okemail above all else
 				Tweener.addTween(cont_shader, { y: cont_shader.y + 300, time: 1 } );				
 				Tweener.addTween(this, { y: this.y - 300, time: 1 } );				
 				Tweener.addTween(button_okemail, { alpha: 1, delay: 0.5, time: 1 } );
 				Tweener.addTween(window_email, { alpha: 1, delay: 0.5, time: 1 } );
 				Tweener.addTween(window_email, { height: window_email.height + 100, width: window_email.width + 100, delay: 0.5, time: 1, transition: "easeOutElastic" } );
+				Tweener.addTween(softKeyboard, { alpha: 1, delay: 0.5, time: 1 } );
+				Tweener.addTween(softKeyboard, { height: softKeyboard.height + 100, width: softKeyboard.width + 100, delay: 0.5, time: 1, transition: "easeOutElastic" } );
 				dispatchEvent(new Event("shiftUp", true)); //move background up
 				
 				blockerOn();
@@ -334,13 +358,49 @@
 			}
 		}
 		
-		private function exitEmail(e:TouchEvent):void {
+		private function exitEmailUp(e:TouchEvent):void {
+			exitEmail();
+		}
+		
+		private function okemail_dwn(e:TouchEvent):void {
+			button_okemail.gotoAndStop("down");
+		}
+		
+		private function okemail_up(e:TouchEvent):void {
+			button_okemail.gotoAndStop("up");
+			okemail(e);
+		}
+		
+		private function okemail(e:Event):void {
+			if ( !softKeyboard.validateEmail(softKeyboard.emailText()) ) { //e-mail invalid
+				Tweener.addTween( window_email.text_invalidemail, { alpha: 1, time: 0.5 } );
+				Tweener.addTween( window_email.text_invalidemail, { alpha: 0, delay: 2, time: 0.5 } );
+			} else { //e-mail valid				
+				email = softKeyboard.emailText();
+				email_entered.text = softKeyboard.emailText();
+				email_entered.alpha = 0;
+				softKeyboard.clearEmail();
+				exitEmail();
+				
+				//crossfade action brahhhhhh
+				Tweener.addTween(button_email.text_emailimage, { alpha: 0, delay: 1, time: 1 } );
+				Tweener.addTween(button_email.text_emailimageto, { alpha: 1, delay: 1, time: 1 } );
+				Tweener.addTween(email_entered, { alpha: 1, delay: 1, time: 1 } );
+				Tweener.addTween(bubble_emailinstruct, { alpha: 1, delay: 1, time: 1 } );
+				Tweener.addTween(bubble_emailinstruct, { height: bubble_emailinstruct.height + 50, width: bubble_emailinstruct.width + 50, delay: 1, time: 1, transition: "easeOutElastic" } );
+				EMAIL_ADDED = true; //bubble is on
+			}
+		}
+		
+		private function exitEmail():void {
 			removeChild(cont_exitEmail); //put exit_email above shade
 			Tweener.addTween(cont_shader, { y: cont_shader.y - 300, time: 1 } );				
 			Tweener.addTween(this, { y: this.y + 300, time: 1 } );				
 			Tweener.addTween(button_okemail, { alpha: 0, time: 1 } );
 			Tweener.addTween(window_email, { alpha: 0, time: 1 } );
 			Tweener.addTween(window_email, { height: window_email.height - 100, width: window_email.width - 100, time: 1, transition: "easeOutElastic" } );
+			Tweener.addTween(softKeyboard, { alpha: 0, time: 1 } );
+			Tweener.addTween(softKeyboard, { height: softKeyboard.height - 100, width: softKeyboard.width - 100, time: 1, transition: "easeOutElastic" } );
 			dispatchEvent(new Event("shiftDown", true)); //move background down
 			shadeOff();
 			
@@ -428,7 +488,7 @@
 			cont_blocker_fullscreen.visible = false;
 		}
 		
-/*		private function randomRange(minNum:Number, maxNum:Number):Number{
+		/*private function randomRange(minNum:Number, maxNum:Number):Number{
 			return (Math.floor(Math.random()*(maxNum-minNum + 1)) + minNum);
 		}*/
 

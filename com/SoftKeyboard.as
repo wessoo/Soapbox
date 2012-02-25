@@ -57,7 +57,8 @@
 		private var keyToJapanese:TouchSprite;
 		private var keyBackspace:TouchSprite;
 		private var keySpace:TouchSprite;
-		
+		private var keyAt:TouchSprite;
+		private var keyCom:TouchSprite;
 		
 		private var inputTxt:TextField; 
 		//private var outputTxt:TextField;
@@ -273,12 +274,7 @@
 			keySymbols = new TouchSprite();
 			keySymbols.addChild(key_symbols);
 			keySymbols.addEventListener(TouchEvent.TOUCH_UP, symbolsUpHandler);
-			keySymbols.addEventListener(TouchEvent.TOUCH_DOWN, symbolsDownHandler);
-			
-			/*keyToJapanese = new TouchSprite();
-			keyToJapanese.addChild(key_toJpn);
-			keyToJapanese.addEventListener(TouchEvent.TOUCH_UP, toJapaneseUpHandler);
-			keyToJapanese.addEventListener(TouchEvent.TOUCH_DOWN, toJapaneseDownHandler);*/		
+			keySymbols.addEventListener(TouchEvent.TOUCH_DOWN, symbolsDownHandler);	
 			
 			keyBackspace = new TouchSprite();
 			keyBackspace.addChild(key_backspace);
@@ -289,6 +285,16 @@
 			keySpace.addChild(key_space);
 			keySpace.addEventListener(TouchEvent.TOUCH_UP, spaceUpHandler);
 			keySpace.addEventListener(TouchEvent.TOUCH_DOWN, spaceDownHandler);
+			
+			keyAt = new TouchSprite();
+			keyAt.addChild(key_at);
+			keyAt.addEventListener(TouchEvent.TOUCH_UP, atUpHandler);
+			keyAt.addEventListener(TouchEvent.TOUCH_DOWN, atDownHandler);
+			
+			keyCom = new TouchSprite();
+			keyCom.addChild(key_com);
+			keyCom.addEventListener(TouchEvent.TOUCH_UP, comUpHandler);
+			keyCom.addEventListener(TouchEvent.TOUCH_DOWN, comDownHandler);
 			
 			//addChild(inputTxt);
 			//addChild(outputTxt); 
@@ -331,24 +337,14 @@
 			addChildAt(keyZ, 0);
 			addChildAt(keyShift, 0);
 			addChildAt(keySymbols, 0);
-			//addChildAt(keyToJapanese, 0);
 			addChildAt(keyBackspace, 0);
 			addChildAt(keySpace, 0);
+			addChildAt(keyAt, 0);
+			addChildAt(keyCom, 0);
 		}
 		
 		override protected function commitUI():void{
-			key_q.gotoAndStop("default");
-			/*inputTxt.type = TextFieldType.INPUT; 
-			inputTxt.width = 200; 
-			inputTxt.height = 18;
-			inputTxt.border = true;
-			inputTxt.background = true;*/
-			
-			//outputTxt.autoSize = TextFieldAutoSize.LEFT;
-			
-		}
-		
-		override protected function layoutUI():void{
+			key_q.gotoAndStop("default");			
 		}
 		
 		private function zeroDownHandler(e:TouchEvent):void{
@@ -360,8 +356,7 @@
 			inputTxt.appendText("0");
 			inputTxt.setSelection(inputTxt.length, inputTxt.length);
 			key_0.gotoAndStop("default");
-		}
-		
+		}		
 		
 		private function oneDownHandler(e:TouchEvent):void{
 			key_1.gotoAndStop("pressed");
@@ -1254,18 +1249,24 @@
 			switch(keyboardStates.currentLabel){
 				case "keyboard_lc":
 					keyboardStates.gotoAndStop("keyboard_symnum");
-					keyShift.visible = false;
+					keyShift.alpha = 0.5;
 					key_symbols.gotoAndStop("default");
+					keyShift.removeEventListener(TouchEvent.TOUCH_DOWN, shiftDownHandler);
+					keyShift.removeEventListener(TouchEvent.TOUCH_UP, shiftUpHandler);
 					break;
 				case "keyboard_uc":
 					keyboardStates.gotoAndStop("keyboard_symnum");
-					keyShift.visible = false;
+					keyShift.alpha = 0.5;
 					key_symbols.gotoAndStop("default");
+					keyShift.removeEventListener(TouchEvent.TOUCH_DOWN, shiftDownHandler);
+					keyShift.removeEventListener(TouchEvent.TOUCH_UP, shiftUpHandler);
 					break;
 				case "keyboard_symnum":
 					keyboardStates.gotoAndStop("keyboard_lc");
-					keyShift.visible = true;
+					keyShift.alpha = 1;
 					key_symbols.gotoAndStop("default");
+					keyShift.addEventListener(TouchEvent.TOUCH_UP, shiftUpHandler);
+					keyShift.addEventListener(TouchEvent.TOUCH_DOWN, shiftDownHandler);
 					break;
 				default:
 					trace("Keyboard state was not an expected value: " + keyboardStates.currentLabel);
@@ -1293,6 +1294,31 @@
 			inputTxt.appendText(" ");
 			inputTxt.setSelection(inputTxt.length, inputTxt.length);
 			key_space.gotoAndStop("default");
+		}
+		
+		private function atDownHandler(e:TouchEvent):void{
+			key_at.gotoAndStop("pressed");
+		}
+		
+		private function atUpHandler(e:TouchEvent):void{
+			stage.focus = inputTxt;
+			inputTxt.appendText("@");
+			inputTxt.setSelection(inputTxt.length, inputTxt.length);
+			key_at.gotoAndStop("default");
+		}
+		
+		private function comDownHandler(e:TouchEvent):void{
+			key_com.gotoAndStop("pressed");
+		}
+		
+		private function comUpHandler(e:TouchEvent):void{
+			/*stage.focus = inputTxt;
+			dispatchEvent(new Event("okemail", true));
+			key_enter.gotoAndStop("default");*/
+			stage.focus = inputTxt;
+			inputTxt.appendText(".com");
+			inputTxt.setSelection(inputTxt.length, inputTxt.length);
+			key_com.gotoAndStop("default");
 		}
 	}
 }
