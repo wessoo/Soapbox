@@ -172,10 +172,10 @@
 			shuffle();
 			
 			//addPhoto();
-			/*photo = new Photo(getNext());
+			photo = new Photo(getNext());
 			addChild(photo);
 			photo.x = photo_slot.x - photo_slot.width/2;
-			photo.y = photo_slot.y - photo_slot.height/2;*/
+			photo.y = photo_slot.y - photo_slot.height / 2;
 		}
 		
 		/*private function initialize():void{
@@ -235,6 +235,7 @@
 				reachedEnd = true;
 				--currentLoc;
 			}
+			
 			return images[currentLoc];
 		}
 		

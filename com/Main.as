@@ -65,23 +65,22 @@
 			cont_blocker_fullscreen = new TouchSprite();
 			cont_blocker_fullscreen.addChild(blocker_fullscreen);
 			
-			rating = new Rating();			
+			/*rating = new Rating();			
 			rating.x = 960; //Damn straight, hard coded screen positioning for Rating class, don't judge
 			rating.y = 540;			
-			addChild(rating);
-			
-			var a:Array = rating.getImages();
+			addChild(rating);*/
 			
 			addEventListener("shiftUp", shiftUp);
 			addEventListener("shiftDown", shiftDown);
 			
 			//Start parsing Soapbox.xml for its metadata
-			/*ImageParser.addEventListener(Event.COMPLETE, imageParserLoaded, false, 0, true);
-			ImageParser.settingsPath = "Soapbox.xml";*/
+			ImageParser.addEventListener(Event.COMPLETE, imageParserLoaded, false, 0, true);
+			ImageParser.settingsPath = "Soapbox.xml";
 		}
 		
-		/* ------ Logical Functions ------- */
-		
+		/* -------------------------------------------- */
+		/* ------------ Logical Functions ------------- */
+		/* -------------------------------------------- */
 		public function resetSession():void {
 			rating.resetSession();
 		}
@@ -94,7 +93,9 @@
 			}
 		}
 		
+		/* -------------------------------------------- */
 		/* ------ Interface/Animation Functions ------- */
+		/* -------------------------------------------- */
 		private function lang_dwn(e:TouchEvent):void {
 			if ( language == 0) { //in English mode
 				button_lang.gotoAndStop("esp_down");
