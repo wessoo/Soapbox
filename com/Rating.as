@@ -21,7 +21,8 @@
 		private var lastRated:int;		//tells you the last image rated
 		private var reachedEnd:Boolean; //tells you if you've reached the end of the array
 		private var email:String;
-		private var currentBadge:int;			//The badge that the user currently has
+		private var currentBadge:int;	//The badge that the user currently has
+		private var photoSent:Boolean;	//whether current photo has been sent (e-mailed)
 		private static var badge1:int = 10;		//The badges that can be attained
 		private static var badge2:int = 25;
 		private static var badge3:int = 45;
@@ -49,7 +50,7 @@
 		private var cont_blocker_fullscreen:TouchSprite;
 		private var cont_removeemail:TouchSprite;
 		
-		/*Photo object for rating*/
+		/* Photo object for rating */
 		private var photo:Photo;
 		
 		/* guidance cue booleans */
@@ -301,8 +302,6 @@
 			for (var i:int = 0; i < ratings.length; i++) {
 				ratings[i] = -1;
 			}
-			
-			
 		}
 		
 		//gets the current badge
@@ -379,9 +378,21 @@
 				blockerOn();
 				Tweener.addTween(cont_blocker_fullscreen, { y: cont_blocker_fullscreen.y + 300, time: 1 } );
 				Tweener.addTween(cont_blocker_fullscreen, { delay: 1.5, onComplete: blockerOff } );
-			} else { //e-mail already entered
+			} else if (!photoSent) { //e-mail already entered
+				/* code for sending e-mail */
 				
+				photoSent = true;
+				button_email.alpha = 0.5;
+				cont_email.removeEventListener(TouchEvent.TOUCH_DOWN, email_dwn);
+				cont_email.removeEventListener(TouchEvent.TOUCH_UP, email_up);
 			}
+		}
+		
+		private function reactivateEmailButton():void {
+			photoSent = false;
+			button_email.alpha = 1;
+			cont_email.addEventListener(TouchEvent.TOUCH_DOWN, email_dwn, false, 0, true);
+			cont_email.addEventListener(TouchEvent.TOUCH_UP, email_up, false, 0, true);
 		}
 		
 		private function exitEmailUp(e:TouchEvent):void {
@@ -468,6 +479,9 @@
 			
 			setRating(1);
 			photo.id = getNext();
+			
+			if (photoSent)
+				reactivateEmailButton();
 		}
 		
 		private function star2_dwn(e:TouchEvent):void {
@@ -481,6 +495,9 @@
 			
 			setRating(2);
 			photo.id = getNext();
+			
+			if (photoSent)
+				reactivateEmailButton();
 		}
 		
 		private function star3_dwn(e:TouchEvent):void {
@@ -496,6 +513,9 @@
 			
 			setRating(3);
 			photo.id = getNext();
+			
+			if (photoSent)
+				reactivateEmailButton();
 		}
 		
 		private function star4_dwn(e:TouchEvent):void {
@@ -513,6 +533,9 @@
 			
 			setRating(4);
 			photo.id = getNext();
+			
+			if (photoSent)
+				reactivateEmailButton();
 		}
 		
 		public function shadeOn():void {
