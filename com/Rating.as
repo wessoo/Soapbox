@@ -176,6 +176,9 @@
 			addChild(photo);
 			photo.x = photo_slot.x - photo_slot.width/2;
 			photo.y = photo_slot.y - photo_slot.height / 2;
+			
+			setMetadata(photo.title, photo.artist, photo.bio, photo.date, photo.process, photo.credit);
+			
 		}
 		
 		/*private function initialize():void{
@@ -206,6 +209,20 @@
 				images[n] = images[i];
 				images[i] = t;
 			}
+		}
+		
+		private function setMetadata(iTitle, iArtist, iBio, iDate, iProcess, iCredit):void{
+			var newline:String = "\n";
+			var oldTH:Number = text_metadata.textHeight;
+			var	oldWH:Number = window_metadata.height;
+			text_metadata.text = iArtist + newline + iBio + newline + newline + iTitle +
+								 newline + iDate + newline + newline + iProcess + newline + iCredit;
+			text_metadata.wordWrap = true;
+		
+			text_metadata.height += (text_metadata.textHeight - oldTH);
+			window_metadata.height = text_metadata.textHeight + 14 * 2;
+			window_metadata.y += (oldWH - window_metadata.height)/2;
+			text_metadata.y = window_metadata.y - text_metadata.height/2;
 		}
 		
 		//gets the array of shuffled images
@@ -251,6 +268,8 @@
 			}else{
 				ratings[currentLoc] = r;
 				lastRated = currentLoc;
+				text_remaining_ratings.text = (int(text_remaining_ratings.text) - 1).toString();
+				badgeCheck();
 				return true;
 			}
 		}
@@ -260,21 +279,27 @@
 			switch(currentLoc + 1){
 				case badge1:
 					currentBadge = 1;
+					text_remaining_ratings.text = (badge2 - badge1).toString();
 					return true;
 				case badge2:
 					currentBadge = 2;
+					text_remaining_ratings.text = (badge3 - badge2).toString();
 					return true;
 				case badge3:
 					currentBadge = 3;
+					text_remaining_ratings.text = (badge4 - badge3).toString();
 					return true;
 				case badge4:
 					currentBadge = 4;
+					text_remaining_ratings.text = (badge5 - badge4).toString();
 					return true;
 				case badge5:
 					currentBadge = 5;
+					text_remaining_ratings.text = (badge6 - badge5).toString();
 					return true;
 				case badge6:
 					currentBadge = 6;
+					text_remaining_ratings.text = "0";
 					return true;
 				default:
 					return false;
@@ -468,6 +493,7 @@
 			
 			setRating(1);
 			photo.id = getNext();
+			setMetadata(photo.title, photo.artist, photo.bio, photo.date, photo.process, photo.credit);
 		}
 		
 		private function star2_dwn(e:TouchEvent):void {
@@ -481,6 +507,7 @@
 			
 			setRating(2);
 			photo.id = getNext();
+			setMetadata(photo.title, photo.artist, photo.bio, photo.date, photo.process, photo.credit);
 		}
 		
 		private function star3_dwn(e:TouchEvent):void {
@@ -496,6 +523,7 @@
 			
 			setRating(3);
 			photo.id = getNext();
+			setMetadata(photo.title, photo.artist, photo.bio, photo.date, photo.process, photo.credit);
 		}
 		
 		private function star4_dwn(e:TouchEvent):void {
@@ -513,6 +541,7 @@
 			
 			setRating(4);
 			photo.id = getNext();
+			setMetadata(photo.title, photo.artist, photo.bio, photo.date, photo.process, photo.credit);
 		}
 		
 		public function shadeOn():void {

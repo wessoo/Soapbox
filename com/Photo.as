@@ -52,6 +52,38 @@
 			updateUI();
 		}
 		
+		public function get url1():String{
+			return iUrl;
+		}
+		
+		public function get ext():String{
+			return iExt;
+		}
+		
+		public function get artist():String{
+			return iArtist;
+		}
+		
+		public function get bio():String{
+			return iBio;
+		}
+		
+		public function get title():String{
+			return iTitle;
+		}
+		
+		public function get date():String{
+			return iDate;
+		}
+		
+		public function get process():String{
+			return iProcess;
+		}
+		
+		public function get credit():String{
+			return iCredit;
+		}
+		
 		override protected function createUI():void{
 			//Data
 			iUrl = ImageParser.settings.Content.Source[_id - 1].url1;
