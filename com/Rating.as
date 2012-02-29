@@ -6,6 +6,8 @@
 	import flash.utils.Timer;
 	import flash.display.MovieClip;
 	import flash.geom.Point;
+	import com.refunk.events.TimelineEvent;
+    import com.refunk.timeline.TimelineWatcher;
 	
 	import gl.events.GestureEvent;
 	import gl.events.TouchEvent;
@@ -35,6 +37,8 @@
 		private static var shader:Shade;
 		private static var blocker_fullscreen:Blocker;
 		private var softKeyboard:KeyboardController;
+		private var photo:Photo; 						//Photo object for rating
+		private var timelineWatcher:TimelineWatcher;	//Used to watch timeline for labels
 		
 		/* button containers */
 		private var cont_endsession:TouchSprite;
@@ -50,11 +54,10 @@
 		private var cont_blocker_fullscreen:TouchSprite;
 		private var cont_removeemail:TouchSprite;
 		
-		/* Photo object for rating */
-		private var photo:Photo;
-		
 		/* guidance cue booleans */
 		public static var EMAIL_ADDED:Boolean = false;
+		public static var SEND_BUBBLE_ON:Boolean = false;		//Whether send to screen button is displayed
+		public static var SEND_BUBBLE_COMPLETE:Boolean = false; //Whether send to screen button is done animating
 		
 		public function Rating() {
 			super();
@@ -115,6 +118,10 @@
 			cont_removeemail.addEventListener(TouchEvent.TOUCH_DOWN, removeemail_dwn, false, 0, true);
 			cont_removeemail.addEventListener(TouchEvent.TOUCH_UP, removeemail_up, false, 0, true);
 			
+			//timeline watcher for sending button
+			timelineWatcher = new TimelineWatcher(bubble_toscreen);
+            timelineWatcher.addEventListener(TimelineEvent.LABEL_REACHED, screen_bubble_done);
+			
 			//email window
 			button_okemail.alpha = 0;
 			window_email.text_invalidemail.alpha = 0;
@@ -126,6 +133,11 @@
 			bubble_emailinstruct.alpha = 0;
 			bubble_emailinstruct.height -= 50;
 			bubble_emailinstruct.width -= 50;
+			
+			//send to screen bubble
+			bubble_toscreen.alpha = 0;
+			bubble_toscreen.height -= 50;
+			bubble_toscreen.width -= 50;
 			
 			//email remove button
 			button_removeemail.alpha = 0;
@@ -160,9 +172,13 @@
 			softKeyboard.height -= 100;
 			addChild(softKeyboard);
 			
+			//class event listeners
 			addEventListener(TouchEvent.TOUCH_DOWN, anyTouch); //registering any touch on the screen
-			button_email.text_emailimageto.alpha = 0; //turns off label
 			addEventListener("okemail", okemail);
+			addEventListener("screen_bubble_done", screen_bubble_done);
+			
+			//other presets
+			button_email.text_emailimageto.alpha = 0; //turns off label
 			email_entered.text = '';
 			
 			//initialize arrays
@@ -360,6 +376,18 @@
 				Tweener.addTween(bubble_emailinstruct, { alpha: 0, time: 1 } );
 				Tweener.addTween(bubble_emailinstruct, { height: bubble_emailinstruct.height - 50, width: bubble_emailinstruct.width - 50, time: 1 } );
 			}
+			
+			if (SEND_BUBBLE_COMPLETE) {				
+				SEND_BUBBLE_COMPLETE = false;
+				Tweener.addTween(bubble_toscreen, { alpha: 0, time: 1 } );
+				Tweener.addTween(bubble_toscreen, { height: bubble_toscreen.height - 50, width: bubble_toscreen.width - 50, time: 1, onComplete: function () {
+					//SEND_BUBBLE_ON = false;
+					
+					cont_toscreen.addEventListener(TouchEvent.TOUCH_DOWN, toscreen_dwn, false, 0, true);
+					cont_toscreen.addEventListener(TouchEvent.TOUCH_UP, toscreen_up, false, 0, true);
+					bubble_toscreen.gotoAndStop(1);
+				} } );
+			}
 		}
 		
 		private function endsession_dwn(e:TouchEvent):void {
@@ -371,11 +399,23 @@
 		}
 		
 		private function toscreen_dwn(e:TouchEvent):void {
-			button_toscreen..gotoAndStop("down");
+			button_toscreen.gotoAndStop("down");
 		}
 		
 		private function toscreen_up(e:TouchEvent):void {
-			button_toscreen..gotoAndStop("up");
+			button_toscreen.gotoAndStop("up");
+			
+			cont_toscreen.removeEventListener(TouchEvent.TOUCH_DOWN, toscreen_dwn);
+			cont_toscreen.removeEventListener(TouchEvent.TOUCH_UP, toscreen_up);
+			
+			/*if (!SEND_BUBBLE_ON) {
+				SEND_BUBBLE_ON = true;*/
+				Tweener.addTween(bubble_toscreen, { alpha: 1, time: 1 } );
+				Tweener.addTween(bubble_toscreen, { height: bubble_toscreen.height + 50, width: bubble_toscreen.width + 50, 
+					time: 1, transition: "easeOutElastic", onComplete: function() { 
+						bubble_toscreen.gotoAndPlay("play");						
+					} } );
+			//}
 		}
 		
 		private function email_dwn(e:TouchEvent):void {
@@ -565,6 +605,13 @@
 			
 			if (photoSent)
 				reactivateEmailButton();
+		}
+		
+		private function screen_bubble_done(e:TimelineEvent):void {
+			if (e.currentLabel === "done") {
+				trace("screen bubble complete");
+				SEND_BUBBLE_COMPLETE = true;
+			}
 		}
 		
 		public function shadeOn():void {
