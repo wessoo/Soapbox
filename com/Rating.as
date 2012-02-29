@@ -203,7 +203,7 @@
 			dummyPhoto = new Photo(photo.id);
 			dummyPhoto.x = photo_slot.x - photo_slot.width/2;
 			dummyPhoto.y = photo_slot.y - photo_slot.height/2;
-			//addChild(dummyPhoto);
+			addChildAt(dummyPhoto, getChildIndex(photo) + 1);
 			
 			setMetadata(photo.title, photo.artist, photo.bio, photo.date, photo.process, photo.credit);
 			
