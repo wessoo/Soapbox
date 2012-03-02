@@ -9,6 +9,7 @@
 	import id.core.TouchSprite;
 	import caurina.transitions.Tweener;
 	import flash.events.GestureEvent;
+	import flash.geom.Point;
 		
 	public class Photo extends TouchComponent{
 		//Variables this object is physically made up of
@@ -28,10 +29,17 @@
 		private var _id:int;
 		private var savedX:Number;
 		private var savedY:Number;
+		private var savedContainerX:Number;
+		private var savedContainerY:Number;
 		private var savedScale:Number;
 		private var correctionPixels:Number = 3;  //For correcting the position of the photo
 		private var frameWidth:Number = 1201;  //How large the frame is that fits the photo
 		private var frameHeight:Number = 831;
+		private var padding:Number = 35; //padding that should go around the images
+		private var viewPadding:Number = 40;
+		private var viewing:Boolean = false;  //Whether or not the image is currently zoomed in
+		private var stageWidth:Number = 1920;
+		private var stageHeight:Number = 1080;
 		
 		public function Photo(idValue:int){
 			_id = idValue;
@@ -96,8 +104,8 @@
 			iCredit = ImageParser.settings.Content.Source[_id - 1].credit;
 			
 			photo = new BitmapLoader();
-			photo.blobContainerEnabled = true;
-			photo.addEventListener(GestureEvent.GESTURE_DRAG_1, dragHandler, false, 0, true);
+			//blobContainerEnabled = true;
+			addEventListener(TouchEvent.TOUCH_UP, touchHandler, false, 0, true);
 			addChild(photo);
 			
 		}
@@ -132,8 +140,8 @@
 		}
 		
 		private function setupPhoto():void{
-			var pw = photo.width;
-			var ph = photo.height;
+			var pw = photo.width + padding * 2;
+			var ph = photo.height + padding * 2;
 			var heightLongest:Boolean = false;
 			
 			//Find the longest side of this thumbnail
@@ -147,7 +155,7 @@
 			else{
 				photo.scaleX = photo.scaleY = savedScale = frameWidth/pw;
 				//Correct the image if it is still too tall for the photo frame
-				if(savedScale*ph > frameHeight){
+				if(savedScale * ph > frameHeight){
 					photo.scaleX = photo.scaleY = savedScale = frameHeight/ph;
 				}
 			}
@@ -156,16 +164,48 @@
 			photo.y = savedY = (frameHeight/2) - (photo.height*photo.scaleY/2) + correctionPixels;
 		}
 		
+		public function setupViewingPhoto():void{
+			var pw = photo.width + viewPadding * 2;
+			var ph = photo.height + viewPadding * 2;
+			var heightLongest:Boolean = false;
+			
+			//Find the longest side of this thumbnail
+			if(ph >= pw){
+				heightLongest = true;
+			}
+			
+			if(heightLongest){
+				photo.scaleX = photo.scaleY = stage.stageHeight/ph;
+			}
+			else{
+				photo.scaleX = photo.scaleY = stage.stageWidth/pw;
+				//Correct the image if it is still too tall for the photo frame
+				if(photo.scaleY * ph > stage.stageHeight){
+					photo.scaleX = photo.scaleY = stage.stageHeight/ph;
+				}
+			}
+			var nextX = (stage.stageWidth/2) - ((photo.width * photo.scaleX)/2);
+			var nextY = (stage.stageHeight/2) - ((photo.height * photo.scaleY)/2);
+			var localPoint:Point = globalToLocal(new Point(nextX,nextY));
+			photo.x = localPoint.x;
+			photo.y = localPoint.y;
+		}
+		
 		public function resetPhoto(){
 			photo.x = savedX;
 			photo.y = savedY;
-			photo.scaleX = savedScale;
-			photo.scaleY = savedScale;
+			photo.scaleX = photo.scaleY = savedScale;
 		}
 		
-		private function dragHandler(e:GestureEvent):void{
-			photo.x += e.dx;
-            photo.y += e.dy;
+		private function touchHandler(e:TouchEvent):void{
+			if(!viewing){
+				setupViewingPhoto();
+				viewing = true;
+			}
+			else{
+				resetPhoto();
+				viewing = false;
+			}
 		}
 		
 		override public function Dispose():void{
