@@ -108,29 +108,7 @@
 		}
 		
 		override protected function layoutUI():void{
-			var pw = photo.width;
-			var ph = photo.height;
-			var heightLongest:Boolean = false;
-			
-			//Find the longest side of this thumbnail
-			//Find the longest side of this thumbnail
-			if(ph >= pw){
-				heightLongest = true;
-			}
-			
-			if(heightLongest){
-				photo.scaleX = photo.scaleY = savedScale = frameHeight/ph;
-			}
-			else{
-				photo.scaleX = photo.scaleY = savedScale = frameWidth/pw;
-				//Correct the image if it is still too tall for the photo frame
-				if(savedScale*ph > frameHeight){
-					photo.scaleX = photo.scaleY = savedScale = frameHeight/ph;
-				}
-			}
-			
-			photo.x = savedX = (frameWidth/2) - (photo.width*photo.scaleX/2) + 3;
-			photo.y = savedY = (frameHeight/2) - (photo.height*photo.scaleY/2) + 3;
+			setupPhoto();
 		}
 		
 		override protected function updateUI():void{
@@ -150,6 +128,10 @@
 			photo.url = iUrl;
 			addChild(photo);
 			
+			setupPhoto();
+		}
+		
+		private function setupPhoto():void{
 			var pw = photo.width;
 			var ph = photo.height;
 			var heightLongest:Boolean = false;
