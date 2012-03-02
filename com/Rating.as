@@ -6,6 +6,8 @@
 	import flash.utils.Timer;
 	import flash.display.MovieClip;
 	import flash.geom.Point;
+	import com.refunk.events.TimelineEvent;
+    import com.refunk.timeline.TimelineWatcher;
 	
 	import gl.events.GestureEvent;
 	import gl.events.TouchEvent;
@@ -35,6 +37,9 @@
 		private static var shader:Shade;
 		private static var blocker_fullscreen:Blocker;
 		private var softKeyboard:KeyboardController;
+		private var photo:Photo; 						//Photo object for rating
+		private var dummyPhoto:Photo;					//Photo object used for creating transition
+		private var timelineWatcher:TimelineWatcher;	//Used to watch timeline for labels
 		
 		/* button containers */
 		private var cont_endsession:TouchSprite;
@@ -50,11 +55,12 @@
 		private var cont_blocker_fullscreen:TouchSprite;
 		private var cont_removeemail:TouchSprite;
 		
-		/* Photo object for rating */
-		private var photo:Photo;
-		
 		/* guidance cue booleans */
 		public static var EMAIL_ADDED:Boolean = false;
+		public static var SEND_BUBBLE_ON:Boolean = false;		//Whether send to screen button is displayed
+		public static var SEND_BUBBLE_COMPLETE:Boolean = false; //Whether send to screen button is done animating
+		public static var SLOT_WIDTH:int = 1201;
+		public static var SLOT_HEIGHT:int = 831;
 		
 		public function Rating() {
 			super();
@@ -115,6 +121,10 @@
 			cont_removeemail.addEventListener(TouchEvent.TOUCH_DOWN, removeemail_dwn, false, 0, true);
 			cont_removeemail.addEventListener(TouchEvent.TOUCH_UP, removeemail_up, false, 0, true);
 			
+			//timeline watcher for sending button
+			timelineWatcher = new TimelineWatcher(bubble_toscreen);
+            timelineWatcher.addEventListener(TimelineEvent.LABEL_REACHED, screen_bubble_done);
+			
 			//email window
 			button_okemail.alpha = 0;
 			window_email.text_invalidemail.alpha = 0;
@@ -126,6 +136,11 @@
 			bubble_emailinstruct.alpha = 0;
 			bubble_emailinstruct.height -= 50;
 			bubble_emailinstruct.width -= 50;
+			
+			//send to screen bubble
+			bubble_toscreen.alpha = 0;
+			bubble_toscreen.height -= 50;
+			bubble_toscreen.width -= 50;
 			
 			//email remove button
 			button_removeemail.alpha = 0;
@@ -160,9 +175,13 @@
 			softKeyboard.height -= 100;
 			addChild(softKeyboard);
 			
+			//class event listeners
 			addEventListener(TouchEvent.TOUCH_DOWN, anyTouch); //registering any touch on the screen
-			button_email.text_emailimageto.alpha = 0; //turns off label
 			addEventListener("okemail", okemail);
+			addEventListener("screen_bubble_done", screen_bubble_done);
+			
+			//other presets
+			button_email.text_emailimageto.alpha = 0; //turns off label
 			email_entered.text = '';
 			
 			//initialize arrays
@@ -172,11 +191,19 @@
 			}
 			shuffle();
 			
-			//addPhoto();
-			photo = new Photo(getNext());
-			addChild(photo);
+			//Photo object
+			photo = new Photo(getNext());			
 			photo.x = photo_slot.x - photo_slot.width/2;
-			photo.y = photo_slot.y - photo_slot.height / 2;
+			photo.y = photo_slot.y - photo_slot.height/2;
+			addChildAt(photo, getChildIndex(effect_insetbg) + 1);
+			//photo.height = photo.height * 0.9;
+			//photo.width = photo.width * 0.9;
+			
+			//dummy Photo object
+			dummyPhoto = new Photo(photo.id);
+			dummyPhoto.x = photo_slot.x - photo_slot.width/2;
+			dummyPhoto.y = photo_slot.y - photo_slot.height/2;
+			addChildAt(dummyPhoto, getChildIndex(photo) + 1);
 			
 			setMetadata(photo.title, photo.artist, photo.bio, photo.date, photo.process, photo.credit);
 			
@@ -210,20 +237,6 @@
 				images[n] = images[i];
 				images[i] = t;
 			}
-		}
-		
-		private function setMetadata(iTitle, iArtist, iBio, iDate, iProcess, iCredit):void{
-			var newline:String = "\n";
-			var oldTH:Number = text_metadata.textHeight;
-			var	oldWH:Number = window_metadata.height;
-			text_metadata.text = iArtist + newline + iBio + newline + newline + iTitle +
-								 newline + iDate + newline + newline + iProcess + newline + iCredit;
-			text_metadata.wordWrap = true;
-		
-			text_metadata.height += (text_metadata.textHeight - oldTH);
-			window_metadata.height = text_metadata.textHeight + 14 * 2;
-			window_metadata.y += (oldWH - window_metadata.height)/2;
-			text_metadata.y = window_metadata.y - text_metadata.height/2;
 		}
 		
 		//gets the array of shuffled images
@@ -360,6 +373,18 @@
 				Tweener.addTween(bubble_emailinstruct, { alpha: 0, time: 1 } );
 				Tweener.addTween(bubble_emailinstruct, { height: bubble_emailinstruct.height - 50, width: bubble_emailinstruct.width - 50, time: 1 } );
 			}
+			
+			if (SEND_BUBBLE_COMPLETE) {				
+				SEND_BUBBLE_COMPLETE = false;
+				Tweener.addTween(bubble_toscreen, { alpha: 0, time: 1 } );
+				Tweener.addTween(bubble_toscreen, { height: bubble_toscreen.height - 50, width: bubble_toscreen.width - 50, time: 1, onComplete: function () {
+					//SEND_BUBBLE_ON = false;
+					
+					cont_toscreen.addEventListener(TouchEvent.TOUCH_DOWN, toscreen_dwn, false, 0, true);
+					cont_toscreen.addEventListener(TouchEvent.TOUCH_UP, toscreen_up, false, 0, true);
+					bubble_toscreen.gotoAndStop(1);
+				} } );
+			}
 		}
 		
 		private function endsession_dwn(e:TouchEvent):void {
@@ -371,11 +396,23 @@
 		}
 		
 		private function toscreen_dwn(e:TouchEvent):void {
-			button_toscreen..gotoAndStop("down");
+			button_toscreen.gotoAndStop("down");
 		}
 		
 		private function toscreen_up(e:TouchEvent):void {
-			button_toscreen..gotoAndStop("up");
+			button_toscreen.gotoAndStop("up");
+			
+			cont_toscreen.removeEventListener(TouchEvent.TOUCH_DOWN, toscreen_dwn);
+			cont_toscreen.removeEventListener(TouchEvent.TOUCH_UP, toscreen_up);
+			
+			/*if (!SEND_BUBBLE_ON) {
+				SEND_BUBBLE_ON = true;*/
+				Tweener.addTween(bubble_toscreen, { alpha: 1, time: 1 } );
+				Tweener.addTween(bubble_toscreen, { height: bubble_toscreen.height + 50, width: bubble_toscreen.width + 50, 
+					time: 1, transition: "easeOutElastic", onComplete: function() { 
+						bubble_toscreen.gotoAndPlay("play");						
+					} } );
+			//}
 		}
 		
 		private function email_dwn(e:TouchEvent):void {
@@ -400,6 +437,7 @@
 				Tweener.addTween(softKeyboard, { height: softKeyboard.height + 100, width: softKeyboard.width + 100, delay: 0.5, time: 1, transition: "easeOutElastic" } );
 				dispatchEvent(new Event("shiftUp", true)); //move background up
 				
+				//timedBlocker(1.5);
 				blockerOn();
 				Tweener.addTween(cont_blocker_fullscreen, { y: cont_blocker_fullscreen.y + 300, time: 1 } );
 				Tweener.addTween(cont_blocker_fullscreen, { delay: 1.5, onComplete: blockerOff } );
@@ -495,16 +533,81 @@
 			softKeyboard.clearEmail();
 		}
 		
+		private function setMetadata(iTitle, iArtist, iBio, iDate, iProcess, iCredit):void{
+			var newline:String = "\n";
+			var oldTH:Number = text_metadata.textHeight;
+			var	oldWH:Number = window_metadata.height;
+			text_metadata.text = iArtist + newline + iBio + newline + newline + iTitle +
+								 newline + iDate + newline + newline + iProcess + newline + iCredit;
+			text_metadata.wordWrap = true;
+		
+			text_metadata.height += (text_metadata.textHeight - oldTH);
+			//window_metadata.height = text_metadata.textHeight + 14 * 2;
+			//window_metadata.y += (oldWH - window_metadata.height) / 2;
+			text_metadata.y = window_metadata.y - text_metadata.height / 2;
+			
+			Tweener.addTween(window_metadata, { time: 1, height: text_metadata.textHeight + 14 * 2, y: window_metadata.y + (oldWH - window_metadata.height) / 2 } );
+			Tweener.addTween(text_metadata, { time: 1, alpha: 1} );
+		}
+		
+		private function animateSwitch():void {
+			addChildAt(dummyPhoto, getChildIndex(photo) + 1);
+			photo.x += SLOT_WIDTH + 30;
+			
+			//fade out metadata
+			Tweener.addTween(text_metadata, { delay: 1, time: 1, alpha: 0, onComplete: function() { 
+				setMetadata(photo.title, photo.artist, photo.bio, photo.date, photo.process, photo.credit); 
+			}} );
+			
+			Tweener.addTween(button_star1, { time: 1, delay: 1, width: 10, height: 10, rotation: 90, alpha: 0 } );
+			Tweener.addTween(button_star2, { time: 1, delay: 1, width: 10, height: 10, rotation: 90, alpha: 0 } );
+			Tweener.addTween(button_star3, { time: 1, delay: 1, width: 10, height: 10, rotation: 90, alpha: 0 } );
+			Tweener.addTween(button_star4, { time: 1, delay: 1, width: 10, height: 10, rotation: 90, alpha: 0 } );
+			
+			Tweener.addTween(dummyPhoto, { delay: 1, x: dummyPhoto.x - SLOT_WIDTH - 30, time: 1.7 } );
+			Tweener.addTween(photo, { x: photo.x - SLOT_WIDTH - 30, delay: 1, time: 1.7, onComplete: function() {
+				removeChild(dummyPhoto);
+				dummyPhoto.id = photo.id;
+				dummyPhoto.x = photo_slot.x - photo_slot.width / 2;
+				dummyPhoto.y = photo_slot.y - photo_slot.height / 2;
+				
+				button_star1.rotation = button_star2.rotation = button_star3.rotation = button_star4.rotation = 0;
+				button_star1.alpha = button_star2.alpha = button_star3.alpha = button_star4.alpha = 1;
+				button_star1.width = button_star2.width = button_star3.width = button_star4.width = 81.8;
+				button_star1.height = button_star2.height = button_star3.height = button_star4.height = 77.8;
+				
+				/*button_star1.rotation = 0;
+				button_star1.alpha = 1;
+				button_star1.width = 200;
+				button_star1.height = 200;*/
+				
+				button_star1.gotoAndStop("up");
+				button_star2.gotoAndStop("up");
+				button_star3.gotoAndStop("up");
+				button_star4.gotoAndStop("up");
+				
+				button_star1.effect_starglow.gotoAndStop("off");
+				button_star2.effect_starglow.gotoAndStop("off");
+				button_star3.effect_starglow.gotoAndStop("off");
+				button_star4.effect_starglow.gotoAndStop("off");
+				
+				
+			} } );
+			
+			timedBlocker(2.7);
+			/*blockerOn();
+			Tweener.addTween(cont_blocker_fullscreen, { delay: 2.2, onComplete: blockerOff } );*/
+			photo.id = getNext();
+		}
+		
 		private function star1_dwn(e:TouchEvent):void {
 			button_star1.gotoAndStop("down");
 		}
 		
 		private function star1_up(e:TouchEvent):void {
-			button_star1.gotoAndStop("up");
-			
+			button_star1.effect_starglow.gotoAndPlay("on");
+			animateSwitch();
 			setRating(1);
-			photo.id = getNext();
-			setMetadata(photo.title, photo.artist, photo.bio, photo.date, photo.process, photo.credit);
 			
 			if (photoSent)
 				reactivateEmailButton();
@@ -516,12 +619,11 @@
 		}
 		
 		private function star2_up(e:TouchEvent):void {
-			button_star1.gotoAndStop("up");
-			button_star2.gotoAndStop("up");
+			button_star1.effect_starglow.gotoAndPlay("on");
+			button_star2.effect_starglow.gotoAndPlay("on");
 			
 			setRating(2);
-			photo.id = getNext();
-			setMetadata(photo.title, photo.artist, photo.bio, photo.date, photo.process, photo.credit);
+			animateSwitch();
 
 			if (photoSent)
 				reactivateEmailButton();
@@ -534,13 +636,12 @@
 		}
 		
 		private function star3_up(e:TouchEvent):void {
-			button_star1.gotoAndStop("up");
-			button_star2.gotoAndStop("up");
-			button_star3.gotoAndStop("up");
+			button_star1.effect_starglow.gotoAndPlay("on");
+			button_star2.effect_starglow.gotoAndPlay("on");
+			button_star3.effect_starglow.gotoAndPlay("on");
 			
 			setRating(3);
-			photo.id = getNext();
-			setMetadata(photo.title, photo.artist, photo.bio, photo.date, photo.process, photo.credit);
+			animateSwitch();
 
 			if (photoSent)
 				reactivateEmailButton();
@@ -554,17 +655,23 @@
 		}
 		
 		private function star4_up(e:TouchEvent):void {
-			button_star1.gotoAndStop("up");
-			button_star2.gotoAndStop("up");
-			button_star3.gotoAndStop("up");
-			button_star4.gotoAndStop("up");
+			button_star1.effect_starglow.gotoAndPlay("on");
+			button_star2.effect_starglow.gotoAndPlay("on");
+			button_star3.effect_starglow.gotoAndPlay("on");
+			button_star4.effect_starglow.gotoAndPlay("on");
 			
 			setRating(4);
-			photo.id = getNext();
-			setMetadata(photo.title, photo.artist, photo.bio, photo.date, photo.process, photo.credit);
+			animateSwitch();
 			
 			if (photoSent)
 				reactivateEmailButton();
+		}
+		
+		private function screen_bubble_done(e:TimelineEvent):void {
+			if (e.currentLabel === "done") {
+				trace("screen bubble complete");
+				SEND_BUBBLE_COMPLETE = true;
+			}
 		}
 		
 		public function shadeOn():void {
@@ -575,6 +682,11 @@
 		public function shadeOff():void {
 			//trace("call off shader");
 			Tweener.addTween(shader, { alpha: 0, time: 1, onComplete: function() { removeChild(cont_shader) } } );
+		}
+		
+		public function timedBlocker(duration:int):void {
+			blockerOn();
+			Tweener.addTween(cont_blocker_fullscreen, { delay: duration, onComplete: blockerOff } );
 		}
 		
 		public function blockerOn():void {
