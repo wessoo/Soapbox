@@ -1,15 +1,15 @@
 ﻿package com {
 	import flash.display.Stage;
-	import gl.events.GestureEvent;
+	//import gl.events.GestureEvent;
+	import flash.display.DisplayObject;	
 	import gl.events.TouchEvent;
 	import flash.events.Event;
 	import id.core.TouchComponent;
 	import id.element.BitmapLoader;
-	import flash.display.DisplayObject;
 	import id.core.TouchSprite;
 	import caurina.transitions.Tweener;
-	import flash.events.GestureEvent;
 	import flash.geom.Point;
+	import gl.touches.Touch;
 		
 	public class Photo extends TouchComponent{
 		//Variables this object is physically made up of
@@ -38,13 +38,14 @@
 		private var padding:Number = 35; //padding that should go around the images
 		private var viewPadding:Number = 40;
 		private var viewing:Boolean = false;  //Whether or not the image is currently zoomed in
-		private var stageWidth:Number = 1920;
-		private var stageHeight:Number = 1080;
+		
+		private static var black:Black;
+		private var cont_black:TouchSprite;
+		private var cont_blocker_fullscreen:TouchSprite;
 		
 		public function Photo(idValue:int){
 			_id = idValue;
 			blobContainerEnabled = false;
-			
 			createUI();
 			commitUI();
 		}
@@ -57,6 +58,7 @@
 		//Setter for this object's id
 		override public function set id(idValue:int):void{
 			_id = idValue;
+			//parent.setChildIndex(this, 0);
 			updateUI();
 		}
 		
@@ -104,10 +106,20 @@
 			iCredit = ImageParser.settings.Content.Source[_id - 1].credit;
 			
 			photo = new BitmapLoader();
-			//blobContainerEnabled = true;
-			addEventListener(TouchEvent.TOUCH_UP, touchHandler, false, 0, true);
 			addChild(photo);
 			
+			//shader
+			black = new Black();
+			cont_black = new TouchSprite();
+			cont_black.addChild(black);
+			black.x += black.width/2;
+			black.y += black.height/2;
+			cont_black.alpha = 0;
+			
+			//blocker
+			cont_blocker_fullscreen = new TouchSprite();
+			
+			addEventListener(TouchEvent.TOUCH_UP, touchHandler, false, 0, true);
 		}
 		
 		override protected function commitUI():void{
@@ -165,6 +177,8 @@
 		}
 		
 		public function setupViewingPhoto():void{
+			addChild(photo);
+			photo.alpha = 0;
 			var pw = photo.width + viewPadding * 2;
 			var ph = photo.height + viewPadding * 2;
 			var heightLongest:Boolean = false;
@@ -189,21 +203,55 @@
 			var localPoint:Point = globalToLocal(new Point(nextX,nextY));
 			photo.x = localPoint.x;
 			photo.y = localPoint.y;
+			Tweener.addTween(photo, {alpha: 1, time: .5, delay: .5});
 		}
 		
 		public function resetPhoto(){
 			photo.x = savedX;
 			photo.y = savedY;
 			photo.scaleX = photo.scaleY = savedScale;
+			photo.alpha = 1;
+		}
+		
+		public function blackOn():void {
+			addChild(cont_black);
+			var localPoint:Point = globalToLocal(new Point(0,0));
+			cont_black.x = localPoint.x;
+			cont_black.y = localPoint.y;
+			Tweener.addTween(cont_black, { alpha: 1, time: .5 } );
+		}
+		
+		public function blackOff():void {
+			Tweener.addTween(cont_black, { alpha: 0, time: .5, delay : .5, onComplete: function() { 
+							 if(contains(cont_black)){
+							 	removeChild(cont_black);
+							 }
+							 } } );
+		}
+		
+		public function blockerOn():void {
+			removeEventListener(TouchEvent.TOUCH_UP, touchHandler);
+		}
+		
+		public function blockerOff():void {
+			addEventListener(TouchEvent.TOUCH_UP, touchHandler, false, 0, true);
+
 		}
 		
 		private function touchHandler(e:TouchEvent):void{
 			if(!viewing){
+				parent.addChild(this);
+				blackOn();
 				setupViewingPhoto();
+				blockerOn();
+				Tweener.addTween(cont_blocker_fullscreen, { delay: 1, onComplete: function() { blockerOff(); } } );
 				viewing = true;
 			}
 			else{
-				resetPhoto();
+				Tweener.addTween(photo, {alpha: 0, time: .5, onComplete: function() { resetPhoto(); }});
+				blackOff();
+				blockerOn();
+				Tweener.addTween(cont_blocker_fullscreen, { delay: 1, onComplete: function() { blockerOff(); } } );
 				viewing = false;
 			}
 		}

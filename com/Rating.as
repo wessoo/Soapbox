@@ -551,6 +551,7 @@
 		}
 		
 		private function animateSwitch():void {
+			addChildAt(photo, getChildIndex(effect_insetbg) + 1);
 			addChildAt(dummyPhoto, getChildIndex(photo) + 1);
 			photo.x += SLOT_WIDTH + 30;
 			
