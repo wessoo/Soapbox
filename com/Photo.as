@@ -178,32 +178,40 @@
 		
 		public function setupViewingPhoto():void{
 			addChild(photo);
-			photo.alpha = 0;
+			//photo.alpha = 0;
 			var pw = photo.width + viewPadding * 2;
 			var ph = photo.height + viewPadding * 2;
 			var heightLongest:Boolean = false;
 			
+
+			var nxt_xScale;
+			var nxt_yScale;
+
 			//Find the longest side of this thumbnail
 			if(ph >= pw){
 				heightLongest = true;
 			}
 			
 			if(heightLongest){
-				photo.scaleX = photo.scaleY = stage.stageHeight/ph;
+				//photo.scaleX = photo.scaleY = stage.stageHeight/ph;
+				nxt_xScale = stage.stageHeight/ph;
+				nxt_yScale = stage.stageHeight/ph;
+				Tweener.addTween(photo, {scaleX: nxt_xScale, scaleY: nxt_yScale, time: 2, delay: .5});
 			}
 			else{
-				photo.scaleX = photo.scaleY = stage.stageWidth/pw;
+				
+				nxt_xScale = nxt_yScale = stage.stageWidth/pw;
 				//Correct the image if it is still too tall for the photo frame
-				if(photo.scaleY * ph > stage.stageHeight){
-					photo.scaleX = photo.scaleY = stage.stageHeight/ph;
+				if(nxt_yScale * ph > stage.stageHeight){
+					nxt_xScale = nxt_yScale = stage.stageHeight/ph;
 				}
+				Tweener.addTween(photo, {scaleX: nxt_xScale, scaleY: nxt_yScale, time: 2, delay: .5});
 			}
-			var nextX = (stage.stageWidth/2) - ((photo.width * photo.scaleX)/2);
-			var nextY = (stage.stageHeight/2) - ((photo.height * photo.scaleY)/2);
+			var nextX = (stage.stageWidth/2) - ((photo.width * nxt_xScale)/2);
+			var nextY = (stage.stageHeight/2) - ((photo.height * nxt_yScale)/2);
 			var localPoint:Point = globalToLocal(new Point(nextX,nextY));
-			photo.x = localPoint.x;
-			photo.y = localPoint.y;
-			Tweener.addTween(photo, {alpha: 1, time: .5, delay: .5});
+			Tweener.addTween(photo, {x: localPoint.x, y: localPoint.y, time: 2, delay: .5} );
+			//Tweener.addTween(photo, {alpha: 1, time: .5, delay: .5});
 		}
 		
 		public function resetPhoto(){
@@ -218,11 +226,11 @@
 			var localPoint:Point = globalToLocal(new Point(0,0));
 			cont_black.x = localPoint.x;
 			cont_black.y = localPoint.y;
-			Tweener.addTween(cont_black, { alpha: 1, time: .5 } );
+			Tweener.addTween(cont_black, { alpha: 1, time: 1.5 } );
 		}
 		
 		public function blackOff():void {
-			Tweener.addTween(cont_black, { alpha: 0, time: .5, delay : .5, onComplete: function() { 
+			Tweener.addTween(cont_black, { alpha: 0, time: 1, delay : .5, onComplete: function() { 
 							 if(contains(cont_black)){
 							 	removeChild(cont_black);
 							 }
@@ -242,16 +250,18 @@
 			if(!viewing){
 				parent.addChild(this);
 				blackOn();
+				
 				setupViewingPhoto();
 				blockerOn();
-				Tweener.addTween(cont_blocker_fullscreen, { delay: 1, onComplete: function() { blockerOff(); } } );
+				Tweener.addTween(cont_blocker_fullscreen, { delay: 2.5, onComplete: function() { blockerOff(); } } );
 				viewing = true;
 			}
 			else{
-				Tweener.addTween(photo, {alpha: 0, time: .5, onComplete: function() { resetPhoto(); }});
+				//Tweener.addTween(photo, {alpha: 0, time: .5, onComplete: function() { resetPhoto(); }});
+				Tweener.addTween(photo, {x: savedX, y: savedY, scaleX: savedScale, scaleY: savedScale, time: 1.5})
 				blackOff();
 				blockerOn();
-				Tweener.addTween(cont_blocker_fullscreen, { delay: 1, onComplete: function() { blockerOff(); } } );
+				Tweener.addTween(cont_blocker_fullscreen, { delay: 1.5, onComplete: function() { blockerOff(); } } );
 				viewing = false;
 			}
 		}

@@ -405,14 +405,12 @@
 			cont_toscreen.removeEventListener(TouchEvent.TOUCH_DOWN, toscreen_dwn);
 			cont_toscreen.removeEventListener(TouchEvent.TOUCH_UP, toscreen_up);
 			
-			/*if (!SEND_BUBBLE_ON) {
-				SEND_BUBBLE_ON = true;*/
-				Tweener.addTween(bubble_toscreen, { alpha: 1, time: 1 } );
-				Tweener.addTween(bubble_toscreen, { height: bubble_toscreen.height + 50, width: bubble_toscreen.width + 50, 
-					time: 1, transition: "easeOutElastic", onComplete: function() { 
-						bubble_toscreen.gotoAndPlay("play");						
-					} } );
-			//}
+			Tweener.addTween(bubble_toscreen, { alpha: 1, time: 1 } );
+			Tweener.addTween(bubble_toscreen, { height: bubble_toscreen.height + 50, width: bubble_toscreen.width + 50, 
+				time: 1, transition: "easeOutElastic", onComplete: function() { 
+					//bubble_toscreen.gotoAndPlay("play");						
+				} } );
+			bubble_toscreen.gotoAndPlay("play");
 		}
 		
 		private function email_dwn(e:TouchEvent):void {
