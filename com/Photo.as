@@ -253,7 +253,7 @@
 				
 				setupViewingPhoto();
 				blockerOn();
-				Tweener.addTween(cont_blocker_fullscreen, { delay: 2.5, onComplete: function() { blockerOff(); } } );
+				Tweener.addTween(cont_blocker_fullscreen, { delay: .5, onComplete: function() { blockerOff(); } } );
 				viewing = true;
 			}
 			else{

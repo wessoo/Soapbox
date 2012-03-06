@@ -180,6 +180,10 @@
 			addEventListener("okemail", okemail);
 			addEventListener("screen_bubble_done", screen_bubble_done);
 			
+			//badge numbers
+			txt_10.visible = txt_25.visible = txt_45.visible = txt_70.visible = txt_95.visible = txt_120.visible = false;
+			badge_10.grey.alpha = 1;
+
 			//other presets
 			button_email.text_emailimageto.alpha = 0; //turns off label
 			email_entered.text = '';
@@ -294,6 +298,7 @@
 				case badge1:
 					currentBadge = 1;
 					text_remaining_ratings.text = (badge2 - badge1).toString();
+					trace("badge 1 achieved!");
 					return true;
 				case badge2:
 					currentBadge = 2;
@@ -554,17 +559,17 @@
 			photo.x += SLOT_WIDTH + 30;
 			
 			//fade out metadata
-			Tweener.addTween(text_metadata, { delay: 1, time: 1, alpha: 0, onComplete: function() { 
+			Tweener.addTween(text_metadata, { delay: 0.7, time: 1, alpha: 0, onComplete: function() { 
 				setMetadata(photo.title, photo.artist, photo.bio, photo.date, photo.process, photo.credit); 
 			}} );
 			
-			Tweener.addTween(button_star1, { time: 1, delay: 1, width: 10, height: 10, rotation: 90, alpha: 0 } );
-			Tweener.addTween(button_star2, { time: 1, delay: 1, width: 10, height: 10, rotation: 90, alpha: 0 } );
-			Tweener.addTween(button_star3, { time: 1, delay: 1, width: 10, height: 10, rotation: 90, alpha: 0 } );
-			Tweener.addTween(button_star4, { time: 1, delay: 1, width: 10, height: 10, rotation: 90, alpha: 0 } );
+			Tweener.addTween(button_star1, { time: 1, delay: 0.7, width: 10, height: 10, rotation: 90, alpha: 0 } );
+			Tweener.addTween(button_star2, { time: 1, delay: 0.7, width: 10, height: 10, rotation: 90, alpha: 0 } );
+			Tweener.addTween(button_star3, { time: 1, delay: 0.7, width: 10, height: 10, rotation: 90, alpha: 0 } );
+			Tweener.addTween(button_star4, { time: 1, delay: 0.7, width: 10, height: 10, rotation: 90, alpha: 0 } );
 			
-			Tweener.addTween(dummyPhoto, { delay: 1, x: dummyPhoto.x - SLOT_WIDTH - 30, time: 1.7 } );
-			Tweener.addTween(photo, { x: photo.x - SLOT_WIDTH - 30, delay: 1, time: 1.7, onComplete: function() {
+			Tweener.addTween(dummyPhoto, { delay: 0.7, x: dummyPhoto.x - SLOT_WIDTH - 30, time: 1.7 } );
+			Tweener.addTween(photo, { x: photo.x - SLOT_WIDTH - 30, delay: 0.7, time: 1.7, onComplete: function() {
 				removeChild(dummyPhoto);
 				dummyPhoto.id = photo.id;
 				dummyPhoto.x = photo_slot.x - photo_slot.width / 2;
@@ -593,9 +598,9 @@
 				
 			} } );
 			
-			timedBlocker(2.7);
-			/*blockerOn();
-			Tweener.addTween(cont_blocker_fullscreen, { delay: 2.2, onComplete: blockerOff } );*/
+			//timedBlocker(2.8);
+			blockerOn();
+			Tweener.addTween(cont_blocker_fullscreen, { delay: 2.4, onComplete: blockerOff } );
 			photo.id = getNext();
 		}
 		
