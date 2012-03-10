@@ -63,6 +63,8 @@
 		public static var SEND_BUBBLE_COMPLETE:Boolean = false; //Whether send to screen button is done animating
 		public static var SLOT_WIDTH:int = 1201;
 		public static var SLOT_HEIGHT:int = 831;
+		public static var PHOTO_LOCX:int;
+		public static var PHOTO_LOCY:int;
 		
 		public function Rating() {
 			super();
@@ -233,10 +235,12 @@
 			photo = new Photo(getNext());			
 			photo.x = photo_slot.x - photo_slot.width/2;
 			photo.y = photo_slot.y - photo_slot.height/2;
+			/*trace("photo.x: " + photo.x);
+			trace("photo.y: " + photo.y);*/
 			addChildAt(photo, getChildIndex(effect_insetbg) + 1);
-			//photo.height = photo.height * 0.9;
-			//photo.width = photo.width * 0.9;
-			
+			PHOTO_LOCX = photo.x;
+			PHOTO_LOCY = photo.y;			
+
 			//dummy Photo object
 			dummyPhoto = new Photo(photo.id);
 			dummyPhoto.x = photo_slot.x - photo_slot.width/2;
@@ -596,9 +600,6 @@
 				shadeOff();
 			} });
 
-			blockerOn();
-			Tweener.addTween(cont_blocker_fullscreen, { delay: 2, onComplete: blockerOff } );
-
 			if(currentBadge == 1) {
 				Tweener.addTween(badge_1.color, { alpha: 1, time: 1, delay: 1.5 });
 				Tweener.addTween(badge1_glow, { delay: 1, onComplete: function() { badge1_glow.gotoAndPlay("play"); } } );
@@ -628,6 +629,9 @@
 				Tweener.addTween(badge_2.color, { alpha: 1, time: 1, delay: 1.5});
 				Tweener.addTween(badge2_glow, { delay: 1, onComplete: function() { badge2_glow.gotoAndPlay("play"); } } );
 			}*/
+
+			blockerOn();
+			Tweener.addTween(cont_blocker_fullscreen, { delay: 2, onComplete: blockerOff } );
 		}
 
 		private function badgeemail_dwn(e:TouchEvent):void {
@@ -714,9 +718,14 @@
 			text_metadata.wordWrap = true;
 		
 			text_metadata.height += (text_metadata.textHeight - oldTH);
+			
+			var next_height:int = text_metadata.textHeight + 14 * 2;
+			var next_y:int = window_metadata.y + (oldWH - next_y) / 2;
 			//window_metadata.height = text_metadata.textHeight + 14 * 2;
 			//window_metadata.y += (oldWH - window_metadata.height) / 2;
+			
 			text_metadata.y = window_metadata.y - text_metadata.height / 2;
+			//text_metadata.y = next_y - text_metadata.height / 2;
 			
 			Tweener.addTween(window_metadata, { time: 1, height: text_metadata.textHeight + 14 * 2, y: window_metadata.y + (oldWH - window_metadata.height) / 2 } );
 			Tweener.addTween(text_metadata, { time: 1, alpha: 1} );
@@ -750,10 +759,15 @@
 				button_star2.effect_starglow.gotoAndStop("off");
 				button_star3.effect_starglow.gotoAndStop("off");
 				button_star4.effect_starglow.gotoAndStop("off");
+
+				/*addChild(cont_star1);
+				addChild(cont_star2);
+				addChild(cont_star3);
+				addChild(cont_star4);*/
 			}} );
 			
-			Tweener.addTween(dummyPhoto, { delay: 0.7, x: dummyPhoto.x - SLOT_WIDTH - 30, time: 1.7 } );
-			Tweener.addTween(photo, { x: photo.x - SLOT_WIDTH - 30, delay: 0.7, time: 1.7, onComplete: function() {
+			Tweener.addTween(dummyPhoto, { delay: 0.7, x: PHOTO_LOCX - SLOT_WIDTH - 30, time: 1.7 } );
+			Tweener.addTween(photo, { x: PHOTO_LOCX, delay: 0.7, time: 1.7, onComplete: function() {
 				removeChild(dummyPhoto);
 				dummyPhoto.id = photo.id;
 				dummyPhoto.x = photo_slot.x - photo_slot.width / 2;
@@ -767,7 +781,7 @@
 		}
 
 		private function gotBadge(badgeNum:int):void {
-			trace("badge " + badgeNum + " achieved!");
+			//trace("badge " + badgeNum + " achieved!");
 			shadeOn();
 
 			if(currentBadge == 1) {

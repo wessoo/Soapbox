@@ -40,11 +40,11 @@
 		private var cont_shader:TouchSprite;
 		private var cont_blocker_fullscreen:TouchSprite;
 		
-		private static var SCREEN_HEIGHT = 1080;
-		private static var SCREEN_WIDTH = 1920;
-		private static var BG_START_POS = 1330;
-		private static var RATING_Y_POS = 540;
-		private static var RATING_X_POS = 960;
+		private static var SCREEN_HEIGHT:int = 1080;
+		private static var SCREEN_WIDTH:int = 1920;
+		private static var BG_START_POS:int = 1330;
+		private static var RATING_Y_POS:int = 540;
+		private static var RATING_X_POS:int = 960;
 
 		public function Main() {
 			settingsPath = "application.xml";
