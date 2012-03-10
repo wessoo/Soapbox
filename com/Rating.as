@@ -187,6 +187,23 @@
 			softKeyboard.height -= 100;
 			addChild(softKeyboard);
 			
+			//got badge modal window setup
+			window_gotbadge.x = 0;
+			window_gotbadge.y = -182.8;
+			window_gotbadge.alpha = 0;
+
+			cont_continue.alpha = 0;
+			button_continue.x = 70;
+			button_continue.y = 246.35;
+
+			cont_badgeemail.alpha = 0;
+			button_badgeemail.x = -70;
+			button_badgeemail.y = 246.35;
+
+			removeChild(window_gotbadge);
+			removeChild(cont_continue);
+			removeChild(cont_badgeemail);
+
 			//class event listeners
 			addEventListener(TouchEvent.TOUCH_DOWN, anyTouch); //registering any touch on the screen
 			addEventListener("okemail", okemail);
@@ -569,9 +586,12 @@
 			Tweener.addTween(cont_badgeemail, { alpha: 0, time: 1 });
 			Tweener.addTween(cont_continue, { alpha: 0, time: 1, onComplete: function() {
 				//just move 'em off screen
-				window_gotbadge.y = -1500;
+				/*window_gotbadge.y = -1500;
 				button_badgeemail.y = -700;
-				button_continue.y = -700;
+				button_continue.y = -700;*/
+				removeChild(window_gotbadge);
+				removeChild(cont_continue);
+				removeChild(cont_badgeemail);
 
 				shadeOff();
 			} });

@@ -10,6 +10,8 @@
 	import flash.utils.Timer;
 	import flash.events.MouseEvent;
 	import flash.events.Event;
+	import com.refunk.events.TimelineEvent;
+    import com.refunk.timeline.TimelineWatcher;
 	
 	import id.core.ApplicationGlobals;
 	import id.core.TouchSprite;
@@ -29,14 +31,21 @@
 		/* dynamic interface components */
 		private static var shader:Shade;
 		private static var blocker_fullscreen:Blocker;
-		
+		private var timelineWatcher:TimelineWatcher;	//Used to watch timeline for labels
+
 		/* button containers */
-		private var cont_toStats:TouchSprite;
-		private var cont_toRating:TouchSprite;
+		private var cont_tostats:TouchSprite;
+		private var cont_torating:TouchSprite;
 		private var cont_lang:TouchSprite;
 		private var cont_shader:TouchSprite;
 		private var cont_blocker_fullscreen:TouchSprite;
 		
+		private static var SCREEN_HEIGHT = 1080;
+		private static var SCREEN_WIDTH = 1920;
+		private static var BG_START_POS = 1330;
+		private static var RATING_Y_POS = 540;
+		private static var RATING_X_POS = 960;
+
 		public function Main() {
 			settingsPath = "application.xml";
 		}
@@ -44,13 +53,21 @@
 		override protected function initialize():void {
 			timeout = new Timer(45000, 1);
 			
-			cont_toStats = new TouchSprite();
-			cont_toRating = new TouchSprite();
+			cont_tostats = new TouchSprite();
+			cont_torating = new TouchSprite();
 			cont_lang = new TouchSprite();
 			
+			cont_tostats.addChild(button_tostats);
+			addChild(cont_tostats);
+			cont_torating.addChild(button_torating);
+			addChild(cont_torating);
 			cont_lang.addChild(button_lang);
 			addChild(cont_lang);
 			
+			cont_tostats.addEventListener(TouchEvent.TOUCH_DOWN, tostats_dwn, false, 0, true);
+			cont_tostats.addEventListener(TouchEvent.TOUCH_UP, tostats_up, false, 0, true);
+			cont_torating.addEventListener(TouchEvent.TOUCH_DOWN, torating_dwn, false, 0, true);
+			cont_torating.addEventListener(TouchEvent.TOUCH_UP, torating_up, false, 0, true);
 			cont_lang.addEventListener(TouchEvent.TOUCH_DOWN, lang_dwn, false, 0, true);
 			cont_lang.addEventListener(TouchEvent.TOUCH_UP, lang_up, false, 0, true);
 			
@@ -64,12 +81,10 @@
 			blocker_fullscreen = new Blocker();
 			cont_blocker_fullscreen = new TouchSprite();
 			cont_blocker_fullscreen.addChild(blocker_fullscreen);
-			
-			/*rating = new Rating();			
-			rating.x = 960; //Damn straight, hard coded screen positioning for Rating class, don't judge
-			rating.y = 540;			
-			addChild(rating);*/
-			
+
+			/*timelineWatcher = new TimelineWatcher(bubble_toscreen);
+            timelineWatcher.addEventListener(TimelineEvent.LABEL_REACHED, screen_bubble_done);*/
+
 			addEventListener("shiftUp", shiftUp);
 			addEventListener("shiftDown", shiftDown);
 			
@@ -96,6 +111,27 @@
 		/* -------------------------------------------- */
 		/* ------ Interface/Animation Functions ------- */
 		/* -------------------------------------------- */
+		private function torating_dwn(e:TouchEvent):void {
+			button_torating.gotoAndStop("down");
+		}	
+		
+		private function torating_up(e:TouchEvent):void {
+			button_torating.gotoAndStop("up");
+
+			Tweener.addTween(background_texture, {y: 1330 - 1080, time: 2});
+			Tweener.addTween(rating, {y: RATING_Y_POS, time: 2});
+			Tweener.addTween(button_torating, {y: 950.55 - SCREEN_HEIGHT, time: 2});
+			Tweener.addTween(button_tostats, {y: 952.2 - SCREEN_HEIGHT, time: 2});
+		}
+
+		private function tostats_dwn(e:TouchEvent):void {
+			button_tostats.gotoAndStop("down");
+		}	
+		
+		private function tostats_up(e:TouchEvent):void {
+			button_tostats.gotoAndStop("up");
+		}
+
 		private function lang_dwn(e:TouchEvent):void {
 			if ( language == 0) { //in English mode
 				button_lang.gotoAndStop("esp_down");
@@ -149,8 +185,8 @@
 			
 			rating = new Rating();
 			//Damn straight, hard coded screen positioning for Rating class, don't judge
-			rating.x = 960;
-			rating.y = 540;			
+			rating.x = RATING_X_POS;
+			rating.y = RATING_Y_POS + SCREEN_HEIGHT;			
 			addChild(rating);
 		}
 	}
