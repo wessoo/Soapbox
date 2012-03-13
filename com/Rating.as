@@ -55,12 +55,13 @@
 		private var cont_blocker_fullscreen:TouchSprite;
 		private var cont_removeemail:TouchSprite;
 		private var cont_continue:TouchSprite;
-		private var cont_badgeemail:TouchSprite;
+		//private var cont_badgeemail:TouchSprite;
 		
 		/* guidance cue booleans */
 		public static var EMAIL_ADDED:Boolean = false;
 		public static var SEND_BUBBLE_ON:Boolean = false;		//Whether send to screen button is displayed
 		public static var SEND_BUBBLE_COMPLETE:Boolean = false; //Whether send to screen button is done animating
+		public static var PACKAGED_COMPLETE:Boolean = false;	//Whether packaged bubble is done animating
 		public static var SLOT_WIDTH:int = 1201;
 		public static var SLOT_HEIGHT:int = 831;
 		public static var PHOTO_LOCX:int;
@@ -88,7 +89,7 @@
 			cont_okemail = new TouchSprite();
 			cont_removeemail = new TouchSprite();
 			cont_continue = new TouchSprite();
-			cont_badgeemail = new TouchSprite();
+			//cont_badgeemail = new TouchSprite();
 
 			cont_endsession.addChild(button_endsession);
 			addChild(cont_endsession);
@@ -109,8 +110,8 @@
 			cont_removeemail.addChild(button_removeemail); //no addChild() because invisible first
 			cont_continue.addChild(button_continue);
 			addChild(cont_continue);
-			cont_badgeemail.addChild(button_badgeemail);
-			addChild(cont_badgeemail);
+			/*cont_badgeemail.addChild(button_badgeemail);
+			addChild(cont_badgeemail);*/
 			
 			cont_endsession.addEventListener(TouchEvent.TOUCH_DOWN, endsession_dwn, false, 0, true);
 			cont_endsession.addEventListener(TouchEvent.TOUCH_UP, endsession_up, false, 0, true);
@@ -132,13 +133,15 @@
 			cont_removeemail.addEventListener(TouchEvent.TOUCH_UP, removeemail_up, false, 0, true);
 			cont_continue.addEventListener(TouchEvent.TOUCH_DOWN, continue_dwn, false, 0, true);
 			cont_continue.addEventListener(TouchEvent.TOUCH_UP, continue_up, false, 0, true);
-			cont_badgeemail.addEventListener(TouchEvent.TOUCH_DOWN, badgeemail_dwn, false, 0, true);
-			cont_badgeemail.addEventListener(TouchEvent.TOUCH_UP, badgeemail_up, false, 0, true);
+			/*cont_badgeemail.addEventListener(TouchEvent.TOUCH_DOWN, badgeemail_dwn, false, 0, true);
+			cont_badgeemail.addEventListener(TouchEvent.TOUCH_UP, badgeemail_up, false, 0, true);*/
 			
-			//timeline watcher for sending button
+			//timeline watcher for bubbles
 			timelineWatcher = new TimelineWatcher(bubble_toscreen);
             timelineWatcher.addEventListener(TimelineEvent.LABEL_REACHED, screen_bubble_done);
-			
+            timelineWatcher = new TimelineWatcher(bubble_packaged);
+			timelineWatcher.addEventListener(TimelineEvent.LABEL_REACHED, packaged_done);
+
 			//email window
 			button_okemail.alpha = 0;
 			window_email.text_invalidemail.alpha = 0;
@@ -150,6 +153,11 @@
 			bubble_emailinstruct.alpha = 0;
 			bubble_emailinstruct.height -= 50;
 			bubble_emailinstruct.width -= 50;
+
+			//packaged bubble
+			bubble_packaged.alpha = 0;
+			bubble_packaged.height -= 50;
+			bubble_packaged.width -= 50;
 			
 			//send to screen bubble
 			bubble_toscreen.alpha = 0;
@@ -195,16 +203,16 @@
 			window_gotbadge.alpha = 0;
 
 			cont_continue.alpha = 0;
-			button_continue.x = 70;
+			button_continue.x = 0;
 			button_continue.y = 246.35;
 
-			cont_badgeemail.alpha = 0;
+			/*cont_badgeemail.alpha = 0;
 			button_badgeemail.x = -70;
-			button_badgeemail.y = 246.35;
+			button_badgeemail.y = 246.35;*/
 
 			removeChild(window_gotbadge);
 			removeChild(cont_continue);
-			removeChild(cont_badgeemail);
+			//removeChild(cont_badgeemail);
 
 			//class event listeners
 			addEventListener(TouchEvent.TOUCH_DOWN, anyTouch); //registering any touch on the screen
@@ -221,8 +229,9 @@
 
 			//other presets
 			button_email.text_emailimageto.alpha = 0; //turns off email label
-			button_badgeemail.text_emailimageto.alpha = 0;
+			//button_badgeemail.text_emailimageto.alpha = 0;
 			email_entered.text = '';
+			graphic_fakebg.alpha = 0;
 			
 			//initialize arrays
 			for(var i:int = 1; i <= 120; ++i){
@@ -409,7 +418,9 @@
 		 * string length.
 		 */
 		private function getXpos():int {
-			return (email_entered.x + email_entered.width/2) - (8.2 * email.length) + 15;
+			//return (email_entered.x + email_entered.width/2) - (8.2 * email.length) + 15;
+			//trace(email_entered.textWidth);
+			return button_email.x - email_entered.textWidth/2 - 20;
 		}
 		
 		/* ------------------------------------------- */
@@ -431,6 +442,15 @@
 					cont_toscreen.addEventListener(TouchEvent.TOUCH_DOWN, toscreen_dwn, false, 0, true);
 					cont_toscreen.addEventListener(TouchEvent.TOUCH_UP, toscreen_up, false, 0, true);
 					bubble_toscreen.gotoAndStop(1);
+				} } );
+			}
+
+			if (PACKAGED_COMPLETE) {
+				PACKAGED_COMPLETE = false;
+
+				Tweener.addTween(bubble_packaged, { alpha: 0, time: 1 } );
+				Tweener.addTween(bubble_packaged, { height: bubble_packaged.height - 50, width: bubble_packaged.width - 50, time: 1, onComplete: function () {
+					bubble_packaged.gotoAndStop("stop");
 				} } );
 			}
 		}
@@ -492,6 +512,9 @@
 				
 				photoSent = true;
 				button_email.alpha = 0.5;
+				Tweener.addTween(bubble_packaged, { alpha: 1, time: 1 } );
+				Tweener.addTween(bubble_packaged, { height: bubble_packaged.height + 50, width: bubble_packaged.width + 50, time: 1 } );
+				bubble_packaged.gotoAndPlay("play");
 				cont_email.removeEventListener(TouchEvent.TOUCH_DOWN, email_dwn);
 				cont_email.removeEventListener(TouchEvent.TOUCH_UP, email_up);
 			}
@@ -528,9 +551,9 @@
 				softKeyboard.clearEmail();
 				exitEmail();
 				
-				trace(softKeyboard.emailText());
+				/*trace(softKeyboard.emailText());
 				trace(email);
-				trace(email_entered.text);
+				trace(email_entered.text);*/
 				
 				//crossfade action brahhhhhh
 				Tweener.addTween(button_email.text_emailimage, { alpha: 0, delay: 1, time: 1 } );
@@ -548,6 +571,7 @@
 		
 		private function exitEmail():void {
 			removeChild(cont_exitEmail); //put exit_email above shade
+			softKeyboard.clearEmail();
 			Tweener.addTween(cont_shader, { y: cont_shader.y - 300, time: 1 } );				
 			Tweener.addTween(this, { y: this.y + 300, time: 1 } );				
 			Tweener.addTween(button_okemail, { alpha: 0, time: 1 } );
@@ -587,7 +611,7 @@
 			button_continue.gotoAndStop("up");
 
 			Tweener.addTween(window_gotbadge, { height: window_gotbadge.height - 100, width: window_gotbadge.width - 100, alpha: 0, time: 1 });
-			Tweener.addTween(cont_badgeemail, { alpha: 0, time: 1 });
+			//Tweener.addTween(cont_badgeemail, { alpha: 0, time: 1 });
 			Tweener.addTween(cont_continue, { alpha: 0, time: 1, onComplete: function() {
 				//just move 'em off screen
 				/*window_gotbadge.y = -1500;
@@ -595,7 +619,7 @@
 				button_continue.y = -700;*/
 				removeChild(window_gotbadge);
 				removeChild(cont_continue);
-				removeChild(cont_badgeemail);
+				//removeChild(cont_badgeemail);
 
 				shadeOff();
 			} });
@@ -634,13 +658,13 @@
 			Tweener.addTween(cont_blocker_fullscreen, { delay: 2, onComplete: blockerOff } );
 		}
 
-		private function badgeemail_dwn(e:TouchEvent):void {
+		/*private function badgeemail_dwn(e:TouchEvent):void {
 			button_badgeemail.gotoAndStop("down");
 		}
 
 		private function badgeemail_up(e:TouchEvent):void {
 			button_badgeemail.gotoAndStop("up");
-		}
+		}*/
 		
 		private function star1_dwn(e:TouchEvent):void {
 			button_star1.gotoAndStop("down");
@@ -741,10 +765,10 @@
 				setMetadata(photo.title, photo.artist, photo.bio, photo.date, photo.process, photo.credit); 
 			}} );
 			
-			Tweener.addTween(button_star1, { time: 1, delay: 0.7, width: 10, height: 10, rotation: 90, alpha: 0 } );
-			Tweener.addTween(button_star2, { time: 1, delay: 0.7, width: 10, height: 10, rotation: 90, alpha: 0 } );
-			Tweener.addTween(button_star3, { time: 1, delay: 0.7, width: 10, height: 10, rotation: 90, alpha: 0 } );
-			Tweener.addTween(button_star4, { time: 1, delay: 0.7, width: 10, height: 10, rotation: 90, alpha: 0, onComplete: function() {
+			Tweener.addTween(button_star1, { time: 1.3, delay: 1, width: 10, height: 10, rotation: 90, alpha: 0 } );
+			Tweener.addTween(button_star2, { time: 1.3, delay: 1, width: 10, height: 10, rotation: 90, alpha: 0 } );
+			Tweener.addTween(button_star3, { time: 1.3, delay: 1, width: 10, height: 10, rotation: 90, alpha: 0 } );
+			Tweener.addTween(button_star4, { time: 1.3, delay: 1, width: 10, height: 10, rotation: 90, alpha: 0, onComplete: function() {
 				button_star1.rotation = button_star2.rotation = button_star3.rotation = button_star4.rotation = 0;
 				button_star1.alpha = button_star2.alpha = button_star3.alpha = button_star4.alpha = 1;
 				button_star1.width = button_star2.width = button_star3.width = button_star4.width = 81.8;
@@ -803,21 +827,21 @@
 			window_gotbadge.alpha = 0;
 
 			cont_continue.alpha = 0;
-			button_continue.x = 70;
+			button_continue.x = 0;
 			button_continue.y = 246.35;
 
-			cont_badgeemail.alpha = 0;
+			/*cont_badgeemail.alpha = 0;
 			button_badgeemail.x = -70;
-			button_badgeemail.y = 246.35;
+			button_badgeemail.y = 246.35;*/
 
 			addChild(window_gotbadge);
 			addChild(cont_continue);
-			addChild(cont_badgeemail);
+			//addChild(cont_badgeemail);
 
 			Tweener.addTween(window_gotbadge, { alpha: 1, time: 1, delay: 0.5 });
 			Tweener.addTween(window_gotbadge, { height: window_gotbadge.height + 100, width: window_gotbadge.width + 100, time: 1, transition: "easeOutElastic" });
 			Tweener.addTween(cont_continue, { alpha: 1, time: 0.7, delay: 0.8 });
-			Tweener.addTween(cont_badgeemail, { alpha: 1, time: 0.7, delay: 0.8 });
+			//Tweener.addTween(cont_badgeemail, { alpha: 1, time: 0.7, delay: 0.8 });
 
 			/*blockerOn();
 			Tweener.addTween(cont_blocker_fullscreen, { delay: 1.5, onComplete: blockerOff } );*/
@@ -827,6 +851,13 @@
 			if (e.currentLabel === "done") {
 				//trace("screen bubble complete");
 				SEND_BUBBLE_COMPLETE = true;
+			}
+		}
+
+		private function packaged_done(e:TimelineEvent):void {
+			if (e.currentLabel === "done") {
+				//trace("screen bubble complete");
+				PACKAGED_COMPLETE = true;
 			}
 		}
 		

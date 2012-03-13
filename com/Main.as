@@ -45,6 +45,8 @@
 		private static var BG_START_POS:int = 1330;
 		private static var RATING_Y_POS:int = 540;
 		private static var RATING_X_POS:int = 960;
+		private static var LANDINGTEXT_Y:int;
+		private static var LOGO_Y:int;
 
 		public function Main() {
 			settingsPath = "application.xml";
@@ -85,6 +87,9 @@
 			/*timelineWatcher = new TimelineWatcher(bubble_toscreen);
             timelineWatcher.addEventListener(TimelineEvent.LABEL_REACHED, screen_bubble_done);*/
 
+            LANDINGTEXT_Y = landing_text.y;
+            LOGO_Y = graphic_logo.y;
+
 			addEventListener("shiftUp", shiftUp);
 			addEventListener("shiftDown", shiftDown);
 			
@@ -122,6 +127,14 @@
 			Tweener.addTween(rating, {y: RATING_Y_POS, time: 2});
 			Tweener.addTween(button_torating, {y: 950.55 - SCREEN_HEIGHT, time: 2});
 			Tweener.addTween(button_tostats, {y: 952.2 - SCREEN_HEIGHT, time: 2});
+			Tweener.addTween(landing_text, {y: LANDINGTEXT_Y - SCREEN_HEIGHT, time: 2});
+			Tweener.addTween(graphic_logo, {y: LOGO_Y - SCREEN_HEIGHT, time: 2});
+
+			blockerOn();
+			Tweener.addTween(cont_blocker_fullscreen, { delay: 2, onComplete: function() {
+				blockerOff();
+				rating.graphic_fakebg.alpha = 1;
+			} } );
 		}
 
 		private function tostats_dwn(e:TouchEvent):void {
