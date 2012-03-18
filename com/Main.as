@@ -92,7 +92,8 @@
 
 			addEventListener("shiftUp", shiftUp);
 			addEventListener("shiftDown", shiftDown);
-			
+			addEventListener("endSession", endSession);
+
 			//Start parsing Soapbox.xml for its metadata
 			ImageParser.addEventListener(Event.COMPLETE, imageParserLoaded, false, 0, true);
 			ImageParser.settingsPath = "Soapbox.xml";
@@ -161,6 +162,17 @@
 				button_lang.gotoAndStop("esp_up");
 				changeLang(); //switch to English
 			}
+		}
+
+		private function endSession(e:Event):void {
+			/*Tweener.addTween(rating, {y: , time: 2});
+
+			Tweener.addTween(background_texture, {y: 1330 - 1080, time: 2});
+			Tweener.addTween(rating, {y: RATING_Y_POS, time: 2});
+			Tweener.addTween(button_torating, {y: 950.55 - SCREEN_HEIGHT, time: 2});
+			Tweener.addTween(button_tostats, {y: 952.2 - SCREEN_HEIGHT, time: 2});
+			Tweener.addTween(landing_text, {y: LANDINGTEXT_Y - SCREEN_HEIGHT, time: 2});
+			Tweener.addTween(graphic_logo, {y: LOGO_Y - SCREEN_HEIGHT, time: 2});*/
 		}
 
 		private function shiftUp(e:Event):void {

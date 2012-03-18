@@ -25,6 +25,7 @@
 		private var email:String;
 		private var currentBadge:int;	//The badge that the user currently has
 		private var photoSent:Boolean;	//whether current photo has been sent (e-mailed)
+		private var package_created:Boolean = false; 	//whether any images have been packaged
 		private static var badge1:int = 10;		//The badges that can be attained
 		private static var badge2:int = 25;
 		private static var badge3:int = 45;
@@ -55,6 +56,7 @@
 		private var cont_blocker_fullscreen:TouchSprite;
 		private var cont_removeemail:TouchSprite;
 		private var cont_continue:TouchSprite;
+		private var cont_endsession_modal:TouchSprite;
 		//private var cont_badgeemail:TouchSprite;
 		
 		/* guidance cue booleans */
@@ -89,6 +91,7 @@
 			cont_okemail = new TouchSprite();
 			cont_removeemail = new TouchSprite();
 			cont_continue = new TouchSprite();
+			cont_endsession_modal = new TouchSprite();
 			//cont_badgeemail = new TouchSprite();
 
 			cont_endsession.addChild(button_endsession);
@@ -110,6 +113,8 @@
 			cont_removeemail.addChild(button_removeemail); //no addChild() because invisible first
 			cont_continue.addChild(button_continue);
 			addChild(cont_continue);
+			cont_endsession_modal.addChild(window_endsession);
+			//addChild(cont_endsession_modal);
 			/*cont_badgeemail.addChild(button_badgeemail);
 			addChild(cont_badgeemail);*/
 			
@@ -199,16 +204,12 @@
 			
 			//got badge modal window setup
 			window_gotbadge.x = 0;
-			window_gotbadge.y = -182.8;
+			window_gotbadge.y = -120;
 			window_gotbadge.alpha = 0;
 
 			cont_continue.alpha = 0;
 			button_continue.x = 0;
 			button_continue.y = 246.35;
-
-			/*cont_badgeemail.alpha = 0;
-			button_badgeemail.x = -70;
-			button_badgeemail.y = 246.35;*/
 
 			removeChild(window_gotbadge);
 			removeChild(cont_continue);
@@ -232,7 +233,8 @@
 			//button_badgeemail.text_emailimageto.alpha = 0;
 			email_entered.text = '';
 			graphic_fakebg.alpha = 0;
-			
+			window_endsession.txt_invalid.alpha = 0;
+
 			//initialize arrays
 			for(var i:int = 1; i <= 120; ++i){
 				images.push(i);
@@ -422,7 +424,144 @@
 			//trace(email_entered.textWidth);
 			return button_email.x - email_entered.textWidth/2 - 20;
 		}
-		
+
+		/*
+		 * Prepares layout for end session modal window
+		 *
+		 */
+		private function setModalWindow():void {
+			//txt_endsession.visible = false;
+			/*txt_both.visible = false;
+			txt_imgsonly.visible = false;
+			txt_bdgsonly.visible = false;
+			txt_none.visible = false;*/
+			
+			window_endsession.txt_email.visible = false;
+			//txt_yes.visible = false;
+			//txt_no.visible = false;
+			window_endsession.txt_yesexp.visible = false;
+			window_endsession.txt_noexp.visible = false;
+			window_endsession.txt_continue.visible = false;
+			window_endsession.graphic_continuebg.visible = false;
+			window_endsession.txt_invalid.visible = false;
+
+			//window_endsession.button_yes.visible = false;
+			//window_endsession.button_no.visible = false;
+			window_endsession.button_maillist.visible = false;
+			window_endsession.button_continue.visible = false;
+			window_endsession.button_modal_removeemail.visible = false;
+			window_endsession.window_emailbg.visible = false;
+			
+			if(currentBadge == -1 && !package_created) { //if no images or badges earned
+				window_endsession.window_modal.height = 240;
+				window_endsession.window_modal.y = -(window_endsession.window_modal.height/2);
+
+				window_endsession.txt_endsession.y = -220;
+				window_endsession.txt_prompt.y = -180;
+				window_endsession.txt_prompt.text = "Are you sure you would like to end your session?";
+				
+				window_endsession.button_yes.visible = true;
+				window_endsession.button_yes.y = -90;
+				window_endsession.button_yes.x = -70;
+				
+				window_endsession.button_no.visible = true;
+				window_endsession.button_no.y = -90;
+				window_endsession.button_no.x = 70;
+				
+				window_endsession.txt_yes.x = -85;
+				window_endsession.txt_yes.y = -57;
+				window_endsession.txt_no.x = 56;
+				window_endsession.txt_no.y = -57;
+			} else if(true) {
+				window_endsession.window_modal.height = 395;
+				window_endsession.window_modal.y = -(window_endsession.window_modal.height/2);
+
+				window_endsession.txt_endsession.y = -375;
+				window_endsession.txt_prompt.y = -335;
+				
+				if(currentBadge != -1 && package_created) { //badges and images
+					window_endsession.txt_prompt.text = "Deliver badges and packaged images? \n\n Send to:";
+				} else if (currentBadge != -1 && !package_created) { //only earned badges
+					window_endsession.txt_prompt.text = "You have earned badges. Deliver badges? \n\n Send to:";
+				} else { //only packages images
+					window_endsession.txt_prompt.text = "You have packaged images. Deliver images? \n\n Send to:";
+				}
+
+				window_endsession.button_yes.visible = true;
+				window_endsession.button_yes.y = -110;
+				window_endsession.button_yes.x = -70;
+				
+				window_endsession.button_no.visible = true;
+				window_endsession.button_no.y = -110;
+				window_endsession.button_no.x = 70;
+
+				window_endsession.txt_yes.visible = true;
+				window_endsession.txt_yes.x = -85;
+				window_endsession.txt_yes.y = -77;
+				window_endsession.txt_no.visible = true;
+				window_endsession.txt_no.x = 56;
+				window_endsession.txt_no.y = -77;
+
+				window_endsession.txt_yesexp.visible = true;
+				window_endsession.txt_noexp.visible = true;
+
+				window_endsession.txt_email.visible = true;
+				window_endsession.txt_email.y = -254;
+
+				window_endsession.window_emailbg.visible = true;
+				window_endsession.window_emailbg.y = -240;
+
+				window_endsession.txt_invalid.visible = true;
+				window_endsession.txt_invalid.y = -219;
+
+				window_endsession.button_maillist.visible = true;
+				window_endsession.button_maillist.y = -175;
+
+				window_endsession.txt_continue.visible = window_endsession.graphic_continuebg.visible = true;
+				window_endsession.button_continue.visible = true;
+			} /*else if (true) {
+				window_endsession.window_modal.height = 395;
+				window_endsession.window_modal.y = -(window_endsession.window_modal.height/2);
+
+				window_endsession.txt_endsession.y = -375;
+				window_endsession.txt_prompt.y = -335;
+				window_endsession.txt_prompt.text = "You've earned badges. Deliver badges? \n\n Send to:";
+
+				window_endsession.button_yes.visible = true;
+				window_endsession.button_yes.y = -110;
+				window_endsession.button_yes.x = -70;
+				
+				window_endsession.button_no.visible = true;
+				window_endsession.button_no.y = -110;
+				window_endsession.button_no.x = 70;
+
+				window_endsession.txt_yes.visible = true;
+				window_endsession.txt_yes.x = -85;
+				window_endsession.txt_yes.y = -77;
+				window_endsession.txt_no.visible = true;
+				window_endsession.txt_no.x = 56;
+				window_endsession.txt_no.y = -77;
+
+				window_endsession.txt_yesexp.visible = true;
+				window_endsession.txt_noexp.visible = true;
+
+				window_endsession.txt_email.visible = true;
+				window_endsession.txt_email.y = -254;
+
+				window_endsession.window_emailbg.visible = true;
+				window_endsession.window_emailbg.y = -240;
+
+				window_endsession.txt_invalid.visible = true;
+				window_endsession.txt_invalid.y = -219;
+
+				window_endsession.button_maillist.visible = true;
+				window_endsession.button_maillist.y = -175;
+
+				window_endsession.txt_continue.visible = window_endsession.graphic_continuebg.visible = true;
+				window_endsession.button_continue.visible = true;
+			}*/
+		}
+
 		/* ------------------------------------------- */
 		/* ------ Interface/Animation Functions ------ */
 		/* ------------------------------------------- */
@@ -461,6 +600,13 @@
 		
 		private function endsession_up(e:TouchEvent):void {
 			button_endsession.gotoAndStop("up");
+			shadeOn();
+
+			setModalWindow();
+			//window_endsession.alpha = 0;
+			addChild(cont_endsession_modal);
+			//Tweener.addTween(window_endsession, {alpha: 1, time: 1, delay: 1});
+			//dispatchEvent(new Event("endSession", true));
 		}
 		
 		private function toscreen_dwn(e:TouchEvent):void {
@@ -509,12 +655,16 @@
 				Tweener.addTween(cont_blocker_fullscreen, { delay: 1.5, onComplete: blockerOff } );
 			} else if (!photoSent) { //e-mail already entered
 				/* code for sending e-mail */
-				
+				if(!package_created) {
+					package_created = true;
+				}
+
 				photoSent = true;
 				button_email.alpha = 0.5;
 				Tweener.addTween(bubble_packaged, { alpha: 1, time: 1 } );
 				Tweener.addTween(bubble_packaged, { height: bubble_packaged.height + 50, width: bubble_packaged.width + 50, time: 1 } );
 				bubble_packaged.gotoAndPlay("play");
+				
 				cont_email.removeEventListener(TouchEvent.TOUCH_DOWN, email_dwn);
 				cont_email.removeEventListener(TouchEvent.TOUCH_UP, email_up);
 			}
@@ -823,12 +973,12 @@
 			}
 
 			window_gotbadge.x = 0;
-			window_gotbadge.y = -182.8;
+			window_gotbadge.y = -120;
 			window_gotbadge.alpha = 0;
 
 			cont_continue.alpha = 0;
-			button_continue.x = 0;
-			button_continue.y = 246.35;
+			button_continue.x = 346.1;
+			button_continue.y = 249;
 
 			/*cont_badgeemail.alpha = 0;
 			button_badgeemail.x = -70;
