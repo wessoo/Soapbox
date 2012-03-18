@@ -57,6 +57,7 @@
 		private var cont_removeemail:TouchSprite;
 		private var cont_continue:TouchSprite;
 		private var cont_endsession_modal:TouchSprite;
+		private var cont_gotbadge_modal:TouchSprite;
 		//private var cont_badgeemail:TouchSprite;
 		
 		/* guidance cue booleans */
@@ -92,6 +93,7 @@
 			cont_removeemail = new TouchSprite();
 			cont_continue = new TouchSprite();
 			cont_endsession_modal = new TouchSprite();
+			cont_gotbadge_modal = new TouchSprite();
 			//cont_badgeemail = new TouchSprite();
 
 			cont_endsession.addChild(button_endsession);
@@ -111,10 +113,13 @@
 			cont_okemail.addChild(button_okemail);
 			addChild(cont_okemail);
 			cont_removeemail.addChild(button_removeemail); //no addChild() because invisible first
-			cont_continue.addChild(button_continue);
-			addChild(cont_continue);
+			cont_gotbadge_modal.addChild(window_gotbadge); //invisible at first
+			//addChild(cont_gotbadge_modal);
+			cont_continue.addChild(window_gotbadge.button_continue);
+			cont_gotbadge_modal.addChild(cont_continue);
 			cont_endsession_modal.addChild(window_endsession);
 			//addChild(cont_endsession_modal);
+			
 			/*cont_badgeemail.addChild(button_badgeemail);
 			addChild(cont_badgeemail);*/
 			
@@ -205,14 +210,12 @@
 			//got badge modal window setup
 			window_gotbadge.x = 0;
 			window_gotbadge.y = -120;
-			window_gotbadge.alpha = 0;
+			cont_gotbadge_modal.alpha = 0;
+			cont_gotbadge_modal.width -= 100;
+			cont_gotbadge_modal.height -= 100;
 
-			cont_continue.alpha = 0;
-			button_continue.x = 0;
-			button_continue.y = 246.35;
-
-			removeChild(window_gotbadge);
-			removeChild(cont_continue);
+			//removeChild(window_gotbadge);
+			//removeChild(cont_continue);
 			//removeChild(cont_badgeemail);
 
 			//class event listeners
@@ -223,10 +226,6 @@
 			//badge numbers
 			txt_10.alpha = txt_25.alpha = txt_45.alpha = txt_70.alpha = txt_95.alpha = txt_120.alpha = 0;
 			badge_1.grey.alpha = 1;
-
-			//badge modal window
-			window_gotbadge.width -= 100;
-			window_gotbadge.height -= 100;
 
 			//other presets
 			button_email.text_emailimageto.alpha = 0; //turns off email label
@@ -754,23 +753,14 @@
 		}
 
 		private function continue_dwn(e:TouchEvent):void {
-			button_continue.gotoAndStop("down");
+			window_gotbadge.button_continue.gotoAndStop("down");
 		}
 
 		private function continue_up(e:TouchEvent):void {
-			button_continue.gotoAndStop("up");
+			window_gotbadge.button_continue.gotoAndStop("up");
 
-			Tweener.addTween(window_gotbadge, { height: window_gotbadge.height - 100, width: window_gotbadge.width - 100, alpha: 0, time: 1 });
-			//Tweener.addTween(cont_badgeemail, { alpha: 0, time: 1 });
-			Tweener.addTween(cont_continue, { alpha: 0, time: 1, onComplete: function() {
-				//just move 'em off screen
-				/*window_gotbadge.y = -1500;
-				button_badgeemail.y = -700;
-				button_continue.y = -700;*/
-				removeChild(window_gotbadge);
-				removeChild(cont_continue);
-				//removeChild(cont_badgeemail);
-
+			Tweener.addTween(cont_gotbadge_modal, { height: cont_gotbadge_modal.height - 100, width: cont_gotbadge_modal.width - 100, alpha: 0, time: 1, onComplete: function() {
+				removeChild(cont_gotbadge_modal);
 				shadeOff();
 			} });
 
@@ -974,25 +964,12 @@
 
 			window_gotbadge.x = 0;
 			window_gotbadge.y = -120;
-			window_gotbadge.alpha = 0;
+			cont_gotbadge_modal.alpha = 0;
 
-			cont_continue.alpha = 0;
-			button_continue.x = 346.1;
-			button_continue.y = 249;
+			addChild(cont_gotbadge_modal);
 
-			/*cont_badgeemail.alpha = 0;
-			button_badgeemail.x = -70;
-			button_badgeemail.y = 246.35;*/
-
-			addChild(window_gotbadge);
-			addChild(cont_continue);
-			//addChild(cont_badgeemail);
-
-			Tweener.addTween(window_gotbadge, { alpha: 1, time: 1, delay: 0.5 });
-			Tweener.addTween(window_gotbadge, { height: window_gotbadge.height + 100, width: window_gotbadge.width + 100, time: 1, transition: "easeOutElastic" });
-			Tweener.addTween(cont_continue, { alpha: 1, time: 0.7, delay: 0.8 });
-			//Tweener.addTween(cont_badgeemail, { alpha: 1, time: 0.7, delay: 0.8 });
-
+			Tweener.addTween(cont_gotbadge_modal, { alpha: 1, height: cont_gotbadge_modal.height + 100, width: cont_gotbadge_modal.width + 100, time: 1, delay: 0.5, transition: "easeOutElastic" });
+			
 			/*blockerOn();
 			Tweener.addTween(cont_blocker_fullscreen, { delay: 1.5, onComplete: blockerOff } );*/
 		}
