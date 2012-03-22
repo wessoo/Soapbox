@@ -135,6 +135,7 @@
 			Tweener.addTween(cont_blocker_fullscreen, { delay: 2, onComplete: function() {
 				blockerOff();
 				rating.graphic_fakebg.alpha = 1;
+				rating.showInstructions();
 			} } );
 		}
 
