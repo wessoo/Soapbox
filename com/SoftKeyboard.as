@@ -60,7 +60,7 @@
 		private var keyAt:TouchSprite;
 		private var keyCom:TouchSprite;
 		
-		private var inputTxt:TextField; 
+		public var inputTxt:TextField; 
 		//private var outputTxt:TextField;
 		
 		public function SoftKeyboard(inputField:TextField) {

@@ -36,26 +36,17 @@
 			format.color = 0x666666;
 			format.size = 20;
 			format.bold = true;
-			
-			emailInputTxt.type = TextFieldType.INPUT; 
-			emailInputTxt.width = 365; 
-			emailInputTxt.height = 30;
-			emailInputTxt.border = false;
-			emailInputTxt.background = false;
-			emailInputTxt.defaultTextFormat = format;
 		}
 		
 		override protected function layoutUI():void{
-			//x = 0;
-			//y = 0;
 			keyboard.scaleX = keyboard.scaleY = 0.7;
-			emailInputTxt.x = 515;
-			emailInputTxt.y = 75;
-			addChild(emailInputTxt);
-			
-			//keyboard.y = touchName.y + touchName.height + 100;
-			//keyboard.alpha = 0;
-			
+		}
+
+		/* Sets input text field to a new text field
+		 *
+		 */
+		public function setInputTF(newInput:TextField):void {
+			keyboard.input = newInput;
 		}
 		
 		/*
@@ -71,11 +62,11 @@
 		}
 		
 		public function emailText():String{
-			return emailInputTxt.text;
+			return keyboard.inputTxt.text;
 		}
 		
 		public function clearEmail():void {
-			emailInputTxt.text = '';
+			keyboard.inputTxt.text = '';
 		}
 	}	
 }
