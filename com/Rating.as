@@ -868,9 +868,8 @@
 				blockerOn();
 				Tweener.addTween(cont_blocker_fullscreen, { delay: 2, onComplete: blockerOff } );
 			} else { //earned badges, so 'no' means end session without sending badges
-
+				resetSession();
 			}
-			resetSession();
 		}
 
 		private function es_yes_dwn(e:TouchEvent):void {
