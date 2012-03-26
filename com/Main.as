@@ -47,6 +47,11 @@
 		private static var RATING_X_POS:int = 960;
 		private static var LANDINGTEXT_Y:int;
 		private static var LOGO_Y:int;
+		private static var BG_YPOS:int;
+		private static var TORATING_YPOS:int;
+		private static var TOSTATS_YPOS:int;
+		private static var LANDTXT_YPOS:int;
+		private static var LOGO_YPOS:int;
 
 		public function Main() {
 			settingsPath = "application.xml";
@@ -81,6 +86,8 @@
 			
 			//blocker
 			blocker_fullscreen = new Blocker();
+			blocker_fullscreen.x = 1920/2;
+			blocker_fullscreen.y = 1080/2;
 			cont_blocker_fullscreen = new TouchSprite();
 			cont_blocker_fullscreen.addChild(blocker_fullscreen);
 
@@ -89,6 +96,11 @@
 
             LANDINGTEXT_Y = landing_text.y;
             LOGO_Y = graphic_logo.y;
+            BG_YPOS = background_texture.y;
+			TORATING_YPOS = button_torating.y;
+			TOSTATS_YPOS = button_tostats.y;
+			LANDTXT_YPOS = landing_text.y;
+			LOGO_YPOS = graphic_logo.y;
 
 			addEventListener("shiftUp", shiftUp);
 			addEventListener("shiftDown", shiftDown);
@@ -166,14 +178,16 @@
 		}
 
 		private function endSession(e:Event):void {
-			/*Tweener.addTween(rating, {y: , time: 2});
+			Tweener.addTween(rating, {y: RATING_Y_POS + SCREEN_HEIGHT, time: 2});
 
-			Tweener.addTween(background_texture, {y: 1330 - 1080, time: 2});
-			Tweener.addTween(rating, {y: RATING_Y_POS, time: 2});
-			Tweener.addTween(button_torating, {y: 950.55 - SCREEN_HEIGHT, time: 2});
-			Tweener.addTween(button_tostats, {y: 952.2 - SCREEN_HEIGHT, time: 2});
-			Tweener.addTween(landing_text, {y: LANDINGTEXT_Y - SCREEN_HEIGHT, time: 2});
-			Tweener.addTween(graphic_logo, {y: LOGO_Y - SCREEN_HEIGHT, time: 2});*/
+			Tweener.addTween(background_texture, {y: BG_YPOS, time: 2});
+			Tweener.addTween(button_torating, {y: TORATING_YPOS, time: 2});
+			Tweener.addTween(button_tostats, {y: TOSTATS_YPOS, time: 2});
+			Tweener.addTween(landing_text, {y: LANDTXT_YPOS, time: 2});
+			Tweener.addTween(graphic_logo, {y: LOGO_YPOS, time: 2});
+
+			blockerOn();
+			Tweener.addTween(cont_blocker_fullscreen, { delay: 2, onComplete: blockerOff } );
 		}
 
 		private function shiftUp(e:Event):void {

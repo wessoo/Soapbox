@@ -261,7 +261,7 @@
 				Tweener.addTween(photo, {x: savedX, y: savedY, scaleX: savedScale, scaleY: savedScale, time: 1.5})
 				blackOff();
 				blockerOn();
-				Tweener.addTween(cont_blocker_fullscreen, { delay: 1.5, onComplete: function() { blockerOff(); } } );
+				Tweener.addTween(cont_blocker_fullscreen, { delay: .5, onComplete: function() { blockerOff(); } } );
 				viewing = false;
 			}
 		}

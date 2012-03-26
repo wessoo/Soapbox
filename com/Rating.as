@@ -59,6 +59,7 @@
 		private var cont_shader:TouchSprite;
 		private var cont_instructions:TouchSprite;
 		private var cont_blocker_fullscreen:TouchSprite;
+		private var cont_blocker_photo:TouchSprite;
 		private var cont_removeemail:TouchSprite;
 		private var cont_continue:TouchSprite;
 		private var cont_endsession_modal:TouchSprite;
@@ -270,6 +271,10 @@
 			blocker_fullscreen = new Blocker();
 			cont_blocker_fullscreen = new TouchSprite();
 			cont_blocker_fullscreen.addChild(blocker_fullscreen);
+
+			//photo blocker
+			cont_blocker_photo = new TouchSprite();
+			cont_blocker_photo.addChild(blocker_photo);
 			
 			//keyboard
 			softKeyboard = new KeyboardController();
@@ -477,14 +482,64 @@
 		 * Resets the session. Returns currentLoc to -1, clears the ratings array.
 		 */
 		public function resetSession():void {
-			currentLoc = -1;
-			reachedEnd = false;
-			currentBadge = -1;
-			lastRated = -1;
 			
-			for (var i:int = 0; i < ratings.length; i++) {
-				ratings[i] = -1;
-			}
+			Tweener.addTween(this, { delay: 4, onComplete: function() { 
+				//LOGICAL
+				currentLoc = -1;
+				reachedEnd = false;
+				currentBadge = -1;
+				lastRated = -1;
+				photoSent = false;
+				maillist_opt = false;
+				email = '';
+
+				//VISUAL
+				//text
+				email_entered.text = '';
+				txt_email.text = '';
+				text_remaining_ratings.text = "10";
+				window_endsession.txt_email.text = '';
+				window_endsession.button_maillist.gotoAndStop("check");
+				
+				//share button
+				button_email.alpha = 1;
+				button_email.text_emailimage.alpha = 1;
+				button_email.text_emailimageto.alpha = 0;
+				button_removeemail.alpha = 0;
+				button_removeemail.width = button_removeemail.height = 6.4;
+				
+				//photo
+				photo.id = getNext();
+				dummyPhoto.id = photo.id;
+				/*addChildAt(photo, getChildIndex(effect_insetbg) + 1);
+				addChildAt(dummyPhoto, getChildIndex(photo) + 1);*/
+
+				//metadata
+				setMetadata(photo.title, photo.artist, photo.bio, photo.date, photo.process, photo.credit);
+
+				//badges
+				txt_10.alpha = txt_25.alpha = txt_45.alpha = txt_70.alpha = txt_95.alpha = txt_120.alpha = 0;
+				badge_1.grey.alpha = 1;
+				badge_2.grey.alpha = badge_3.grey.alpha = badge_3.grey.alpha = badge_4.grey.alpha = badge_5.grey.alpha = badge_6.grey.alpha = 0;
+				badge_1.color.alpha = badge_2.color.alpha = badge_3.color.alpha = badge_3.color.alpha = badge_4.color.alpha = badge_5.color.alpha = badge_6.color.alpha = 0;
+
+				for(var i:int = 1; i <= 120; ++i){
+					images.push(i);
+					ratings.push(-1);
+				}
+				shuffle();
+			}});
+			
+
+			Tweener.addTween(cont_endsession_modal, { height: cont_endsession_modal.height - 20, width: cont_endsession_modal.width - 50, alpha: 0, time: 1, onComplete: function() {
+				removeChild(cont_endsession_modal);
+				shadeOff();
+			} });
+
+			Tweener.addTween(this, {delay: 2, onComplete: function() { dispatchEvent(new Event("endSession", true)); }});
+
+			blockerOn();
+			Tweener.addTween(cont_blocker_fullscreen, { delay: 2, onComplete: blockerOff } );
 		}
 		
 		//gets the current badge
@@ -554,6 +609,7 @@
 		}
 		
 		public function showInstructions():void {
+			addChild(cont_instructions);
 			Tweener.addTween(cont_instructions, {alpha: 1, time: 1 } );
 		}
 
@@ -579,7 +635,6 @@
 			addChild(cont_endsession_modal);
 			Tweener.addTween(cont_endsession_modal, { alpha: 1, time: 1, delay: 0.5});
 			Tweener.addTween(cont_endsession_modal, { height: cont_endsession_modal.height + 20, width: cont_endsession_modal.width + 50, time: 1, delay: 0.5, transition: "easeOutElastic"});
-			//dispatchEvent(new Event("endSession", true));
 
 			blockerOn();
 			Tweener.addTween(cont_blocker_fullscreen, { delay: 1.5, onComplete: blockerOff } );
@@ -770,8 +825,8 @@
 			} else if(currentBadge == 5) {
 				Tweener.addTween(badge_5.color, { alpha: 1, time: 1, delay: 1.5});
 				Tweener.addTween(badge5_glow, { delay: 1, onComplete: function() { badge5_glow.gotoAndPlay("play"); } } );
-				Tweener.addTween(badge_6.grey, { alpha: 1, time: 1, delay: 1.5 });
-				Tweener.addTween(txt_95, { alpha: 1, time: 1, delay: 1.5 });
+				/*Tweener.addTween(badge_6.grey, { alpha: 1, time: 1, delay: 1.5 });
+				Tweener.addTween(txt_95, { alpha: 1, time: 1, delay: 1.5 });*/
 			} /*else if(currentBadge == 6) {
 				Tweener.addTween(badge_2.color, { alpha: 1, time: 1, delay: 1.5});
 				Tweener.addTween(badge2_glow, { delay: 1, onComplete: function() { badge2_glow.gotoAndPlay("play"); } } );
@@ -815,16 +870,7 @@
 			} else { //earned badges, so 'no' means end session without sending badges
 
 			}
-		}
-
-		private function es_maillist_up(e:TouchEvent):void {
-			if (maillist_opt) {
-				window_endsession.button_maillist.gotoAndStop("uncheck");
-				maillist_opt = false;
-			} else {
-				window_endsession.button_maillist.gotoAndStop("check");
-				maillist_opt = true;
-			}
+			resetSession();
 		}
 
 		private function es_yes_dwn(e:TouchEvent):void {
@@ -834,8 +880,21 @@
 		private function es_yes_up(e:TouchEvent):void {
 			window_endsession.button_yes.gotoAndStop("up");
 
-			if (currentBadge == -1 && !package_created) { //no badges or images, so 'no' means don't end session, continue rating
+			if (currentBadge == -1) { //no badges, so 'yes' means end session
 
+			} else { //earned badges, so 'yes' means send badges
+				
+			}
+			resetSession();
+		}
+
+		private function es_maillist_up(e:TouchEvent):void {
+			if (maillist_opt) {
+				window_endsession.button_maillist.gotoAndStop("uncheck");
+				maillist_opt = false;
+			} else {
+				window_endsession.button_maillist.gotoAndStop("check");
+				maillist_opt = true;
 			}
 		}
 
@@ -958,6 +1017,8 @@
 
 		private function es_esskip_up(e:TouchEvent):void {
 			window_endsession.button_esskip.gotoAndStop("up");
+
+			resetSession();
 		}
 		
 		private function es_email_up(e:TouchEvent):void {
@@ -1128,7 +1189,8 @@
 			addChildAt(photo, getChildIndex(effect_insetbg) + 1);
 			addChildAt(dummyPhoto, getChildIndex(photo) + 1);
 			photo.x += SLOT_WIDTH + 30;
-			
+			photo.id = getNext();
+
 			//fade out metadata
 			Tweener.addTween(text_metadata, { delay: 0.7, time: 1, alpha: 0, onComplete: function() { 
 				setMetadata(photo.title, photo.artist, photo.bio, photo.date, photo.process, photo.credit); 
@@ -1152,12 +1214,19 @@
 				button_star2.effect_starglow.gotoAndStop("off");
 				button_star3.effect_starglow.gotoAndStop("off");
 				button_star4.effect_starglow.gotoAndStop("off");
-
-				/*addChild(cont_star1);
-				addChild(cont_star2);
-				addChild(cont_star3);
-				addChild(cont_star4);*/
 			}} );
+
+			//reactivate stars
+			Tweener.addTween(this, {delay: 2.4, onComplete: function() {
+				cont_star1.addEventListener(TouchEvent.TOUCH_DOWN, star1_dwn, false, 0, true);
+				cont_star1.addEventListener(TouchEvent.TOUCH_UP, star1_up, false, 0, true);
+				cont_star2.addEventListener(TouchEvent.TOUCH_DOWN, star2_dwn, false, 0, true);
+				cont_star2.addEventListener(TouchEvent.TOUCH_UP, star2_up, false, 0, true);
+				cont_star3.addEventListener(TouchEvent.TOUCH_DOWN, star3_dwn, false, 0, true);
+				cont_star3.addEventListener(TouchEvent.TOUCH_UP, star3_up, false, 0, true);
+				cont_star4.addEventListener(TouchEvent.TOUCH_DOWN, star4_dwn, false, 0, true);
+				cont_star4.addEventListener(TouchEvent.TOUCH_UP, star4_up, false, 0, true);
+			}});				
 			
 			Tweener.addTween(dummyPhoto, { delay: 0.7, x: PHOTO_LOCX - SLOT_WIDTH - 30, time: 1.7 } );
 			Tweener.addTween(photo, { x: PHOTO_LOCX, delay: 0.7, time: 1.7, onComplete: function() {
@@ -1167,10 +1236,17 @@
 				dummyPhoto.y = photo_slot.y - photo_slot.height / 2;				
 			} } );
 			
-			//timedBlocker(2.8);
-			blockerOn();
-			Tweener.addTween(cont_blocker_fullscreen, { delay: 2.4, onComplete: blockerOff } );
-			photo.id = getNext();
+			cont_star1.removeEventListener(TouchEvent.TOUCH_DOWN, star1_dwn);
+			cont_star1.removeEventListener(TouchEvent.TOUCH_UP, star1_up);
+			cont_star2.removeEventListener(TouchEvent.TOUCH_DOWN, star2_dwn);
+			cont_star2.removeEventListener(TouchEvent.TOUCH_UP, star2_up);
+			cont_star3.removeEventListener(TouchEvent.TOUCH_DOWN, star3_dwn);
+			cont_star3.removeEventListener(TouchEvent.TOUCH_UP, star3_up);
+			cont_star4.removeEventListener(TouchEvent.TOUCH_DOWN, star4_dwn);
+			cont_star4.removeEventListener(TouchEvent.TOUCH_UP, star4_up);
+
+			photo_blockerOn();
+			Tweener.addTween(cont_blocker_photo, { delay: 2.4, onComplete: photo_blockerOff } );
 		}
 
 		/*
@@ -1295,7 +1371,8 @@
 
 			addChild(cont_gotbadge_modal);
 
-			Tweener.addTween(cont_gotbadge_modal, { alpha: 1, height: cont_gotbadge_modal.height + 50, width: cont_gotbadge_modal.width + 50, time: 1, delay: 0.5, transition: "easeOutElastic" });
+			Tweener.addTween(cont_gotbadge_modal, { alpha: 1, time: 1, delay: 0.5 } );
+			Tweener.addTween(cont_gotbadge_modal, { height: cont_gotbadge_modal.height + 50, width: cont_gotbadge_modal.width + 50, time: 1, delay: 0.5, transition: "easeOutElastic" });
 			
 			/*blockerOn();
 			Tweener.addTween(cont_blocker_fullscreen, { delay: 1.5, onComplete: blockerOff } );*/
@@ -1341,6 +1418,19 @@
 			//trace("blocker OFF");
 			removeChild(cont_blocker_fullscreen);
 			cont_blocker_fullscreen.visible = false;
+		}
+
+		public function photo_blockerOn():void {
+			//trace("blocker ON");
+			addChild(cont_blocker_photo);
+			/*setChildIndex(cont_blocker_photo, numChildren - 1);
+			cont_blocker_fullscreen.visible = true;*/
+		}
+		
+		public function photo_blockerOff():void {
+			//trace("blocker OFF");
+			removeChild(cont_blocker_photo);
+			//cont_blocker_photo.visible = false;
 		}
 	}
 	
