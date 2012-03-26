@@ -136,12 +136,12 @@
 		private function torating_up(e:TouchEvent):void {
 			button_torating.gotoAndStop("up");
 
-			Tweener.addTween(background_texture, {y: 1330 - 1080, time: 1.5});
-			Tweener.addTween(rating, {y: RATING_Y_POS, time: 1.5});
-			Tweener.addTween(button_torating, {y: 950.55 - SCREEN_HEIGHT, time: 1.5});
-			Tweener.addTween(button_tostats, {y: 952.2 - SCREEN_HEIGHT, time: 1.5});
-			Tweener.addTween(landing_text, {y: LANDINGTEXT_Y - SCREEN_HEIGHT, time: 1.5});
-			Tweener.addTween(graphic_logo, {y: LOGO_Y - SCREEN_HEIGHT, time: 1.5});
+			Tweener.addTween(background_texture, {y: 1330 - 1080, time: 1.5, transition: "easeInOutQuart" });
+			Tweener.addTween(rating, {y: RATING_Y_POS, time: 1.5, transition: "easeInOutQuart" });
+			Tweener.addTween(button_torating, {y: 950.55 - SCREEN_HEIGHT, time: 1.5, transition: "easeInOutQuart" });
+			Tweener.addTween(button_tostats, {y: 952.2 - SCREEN_HEIGHT, time: 1.5, transition: "easeInOutQuart" });
+			Tweener.addTween(landing_text, {y: LANDINGTEXT_Y - SCREEN_HEIGHT, time: 1.5, transition: "easeInOutQuart" });
+			Tweener.addTween(graphic_logo, {y: LOGO_Y - SCREEN_HEIGHT, time: 1.5, transition: "easeInOutQuart" });
 
 			blockerOn();
 			Tweener.addTween(cont_blocker_fullscreen, { delay: 1.5, onComplete: function() {
@@ -178,13 +178,13 @@
 		}
 
 		private function endSession(e:Event):void {
-			Tweener.addTween(rating, {y: RATING_Y_POS + SCREEN_HEIGHT, time: 2});
+			Tweener.addTween(rating, {y: RATING_Y_POS + SCREEN_HEIGHT, time: 2, transition: "easeInOutQuart" });
 
-			Tweener.addTween(background_texture, {y: BG_YPOS, time: 2});
-			Tweener.addTween(button_torating, {y: TORATING_YPOS, time: 2});
-			Tweener.addTween(button_tostats, {y: TOSTATS_YPOS, time: 2});
-			Tweener.addTween(landing_text, {y: LANDTXT_YPOS, time: 2});
-			Tweener.addTween(graphic_logo, {y: LOGO_YPOS, time: 2});
+			Tweener.addTween(background_texture, {y: BG_YPOS, time: 2, transition: "easeInOutQuart" });
+			Tweener.addTween(button_torating, {y: TORATING_YPOS, time: 2, transition: "easeInOutQuart" });
+			Tweener.addTween(button_tostats, {y: TOSTATS_YPOS, time: 2, transition: "easeInOutQuart" });
+			Tweener.addTween(landing_text, {y: LANDTXT_YPOS, time: 2, transition: "easeInOutQuart" });
+			Tweener.addTween(graphic_logo, {y: LOGO_YPOS, time: 2, transition: "easeInOutQuart" });
 
 			blockerOn();
 			Tweener.addTween(cont_blocker_fullscreen, { delay: 2, onComplete: blockerOff } );

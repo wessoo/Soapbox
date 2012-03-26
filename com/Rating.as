@@ -511,8 +511,6 @@
 				//photo
 				photo.id = getNext();
 				dummyPhoto.id = photo.id;
-				/*addChildAt(photo, getChildIndex(effect_insetbg) + 1);
-				addChildAt(dummyPhoto, getChildIndex(photo) + 1);*/
 
 				//metadata
 				setMetadata(photo.title, photo.artist, photo.bio, photo.date, photo.process, photo.credit);
@@ -529,7 +527,7 @@
 				}
 				shuffle();
 			}});
-			
+			graphic_fakebg.alpha = 0;
 
 			Tweener.addTween(cont_endsession_modal, { height: cont_endsession_modal.height - 20, width: cont_endsession_modal.width - 50, alpha: 0, time: 1, onComplete: function() {
 				removeChild(cont_endsession_modal);
@@ -1227,8 +1225,9 @@
 				cont_star4.addEventListener(TouchEvent.TOUCH_UP, star4_up, false, 0, true);
 			}});				
 			
-			Tweener.addTween(dummyPhoto, { delay: 0.7, x: PHOTO_LOCX - SLOT_WIDTH - 30, time: 1.7 } );
-			Tweener.addTween(photo, { x: PHOTO_LOCX, delay: 0.7, time: 1.7, onComplete: function() {
+			//photo transitions
+			Tweener.addTween(dummyPhoto, { delay: 0.7, x: PHOTO_LOCX - SLOT_WIDTH - 30, time: 1.7, transition: "easeInOutQuart" } );
+			Tweener.addTween(photo, { x: PHOTO_LOCX, delay: 0.7, time: 1.7, transition: "easeInOutQuart", onComplete: function() {
 				removeChild(dummyPhoto);
 				dummyPhoto.id = photo.id;
 				dummyPhoto.x = photo_slot.x - photo_slot.width / 2;
