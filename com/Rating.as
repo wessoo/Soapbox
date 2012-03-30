@@ -1057,6 +1057,7 @@
 			softKeyboard.x = -297;
 			softKeyboard.setInputTF(window_endsession.txt_email);
 			Tweener.addTween(softKeyboard, {alpha: 1, time: 1, delay: 0.5} );
+			softKeyboard.toDefault();
 			addChild(softKeyboard);
 
 			cont_es_mailbg.removeEventListener(TouchEvent.TOUCH_UP, es_email_up);
