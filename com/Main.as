@@ -27,7 +27,8 @@
 		public static var parserLoaded = false;  //Tells you whether the metadata is available or not.
 		public static var language:int = 0; //language mode. 0: English, 1: Spanish
 		public static var rating:Rating;
-		
+		public var screen:int = 1;
+
 		/* dynamic interface components */
 		private static var shader:Shade;
 		private static var blocker_fullscreen:Blocker;
@@ -47,6 +48,8 @@
 		private static var RATING_X_POS:int = 960;
 		private static var LANDINGTEXT_Y:int;
 		private static var LOGO_Y:int;
+		private static var LANDINGTEXT_X:int;
+		private static var LOGO_X:int;
 		private static var BG_YPOS:int;
 		private static var TORATING_YPOS:int;
 		private static var TOSTATS_YPOS:int;
@@ -96,6 +99,8 @@
 
             LANDINGTEXT_Y = landing_text.y;
             LOGO_Y = graphic_logo.y;
+            LANDINGTEXT_X = landing_text.x;
+            LOGO_X = graphic_logo.x;
             BG_YPOS = background_texture.y;
 			TORATING_YPOS = button_torating.y;
 			TOSTATS_YPOS = button_tostats.y;
@@ -142,6 +147,8 @@
 			Tweener.addTween(button_tostats, {y: 952.2 - SCREEN_HEIGHT, time: 1.5, transition: "easeInOutQuart" });
 			Tweener.addTween(landing_text, {y: LANDINGTEXT_Y - SCREEN_HEIGHT, time: 1.5, transition: "easeInOutQuart" });
 			Tweener.addTween(graphic_logo, {y: LOGO_Y - SCREEN_HEIGHT, time: 1.5, transition: "easeInOutQuart" });
+			Tweener.addTween(cont_lang, { alpha: 0, time: 0.5});
+			Tweener.addTween(cont_lang, { alpha: 1, time: 1, delay: 1.5});
 
 			blockerOn();
 			Tweener.addTween(cont_blocker_fullscreen, { delay: 1.5, onComplete: function() {
@@ -157,6 +164,37 @@
 		
 		private function tostats_up(e:TouchEvent):void {
 			button_tostats.gotoAndStop("up");
+
+			if(screen == 1) {
+				screen = 3;
+				Tweener.addTween(background_texture, {x: SCREEN_WIDTH, time: 1.5, transition: "easeInOutQuart" });
+				Tweener.addTween(button_torating, {x: 960 + SCREEN_WIDTH, time: 1.5, transition: "easeInOutQuart" });
+				Tweener.addTween(button_tostats, {x: 110 + SCREEN_WIDTH, time: 1.5, transition: "easeInOutQuart" });
+				Tweener.addTween(landing_text, {x: LANDINGTEXT_X + SCREEN_WIDTH, time: 1.5, transition: "easeInOutQuart" });
+				Tweener.addTween(graphic_logo, {x: LOGO_X + SCREEN_WIDTH, time: 1.5, transition: "easeInOutQuart" });
+				Tweener.addTween(ranking_mockup, {x: -956.75 + SCREEN_WIDTH, time: 1.5, transition: "easeInOutQuart" });
+				Tweener.addTween(cont_lang, { alpha: 0, time: 0.5, onComplete: function() {
+					button_lang.x = 75.9;
+					button_lang.y = 976.8;
+				} });
+				Tweener.addTween(cont_lang, { alpha: 1, time: 1, delay: 1.5});
+			} else if (screen == 3) {
+				screen = 1;
+				Tweener.addTween(background_texture, {x: 0, time: 1.5, transition: "easeInOutQuart" });
+				Tweener.addTween(button_torating, {x: 960, time: 1.5, transition: "easeInOutQuart" });
+				Tweener.addTween(button_tostats, {x: 110, time: 1.5, transition: "easeInOutQuart" });
+				Tweener.addTween(landing_text, {x: LANDINGTEXT_X, time: 1.5, transition: "easeInOutQuart" });
+				Tweener.addTween(graphic_logo, {x: LOGO_X, time: 1.5, transition: "easeInOutQuart" });
+				Tweener.addTween(ranking_mockup, {x: -956.75, time: 1.5, transition: "easeInOutQuart" });
+				Tweener.addTween(cont_lang, { alpha: 0, time: 0.5, onComplete: function() {
+					button_lang.x = 1832.35;
+					button_lang.y = 950.8;
+				} });
+				Tweener.addTween(cont_lang, { alpha: 1, time: 1, delay: 1.5});
+			}
+
+			blockerOn();
+			Tweener.addTween(cont_blocker_fullscreen, { delay: 1.5, onComplete: blockerOff } );
 		}
 
 		private function lang_dwn(e:TouchEvent):void {
@@ -185,6 +223,8 @@
 			Tweener.addTween(button_tostats, {y: TOSTATS_YPOS, time: 2, transition: "easeInOutQuart" });
 			Tweener.addTween(landing_text, {y: LANDTXT_YPOS, time: 2, transition: "easeInOutQuart" });
 			Tweener.addTween(graphic_logo, {y: LOGO_YPOS, time: 2, transition: "easeInOutQuart" });
+			Tweener.addTween(cont_lang, { alpha: 0, time: 0.5});
+			Tweener.addTween(cont_lang, { alpha: 1, time: 1, delay: 1.5});
 
 			blockerOn();
 			Tweener.addTween(cont_blocker_fullscreen, { delay: 2, onComplete: blockerOff } );

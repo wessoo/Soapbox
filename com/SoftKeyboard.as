@@ -72,6 +72,10 @@
 		
 		public function toDefault():void{
 			keyboardStates.gotoAndStop("keyboard_lc");
+			keyShift.alpha = 1;
+			key_symbols.gotoAndStop("default");
+			keyShift.addEventListener(TouchEvent.TOUCH_UP, shiftUpHandler);
+			keyShift.addEventListener(TouchEvent.TOUCH_DOWN, shiftDownHandler);
 		}
 		
 		public function set input(newInput:TextField):void{

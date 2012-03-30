@@ -91,7 +91,7 @@
 		private static var DEFAULT_ES_PROMPTY:int;
 		private static var DEFAULT_ES_EMAILY:int;
 		private static var DEFAULT_ES_INVALIDY:int;
-		private static var EXPAND_HEIGHT:int = 220;					//height to expand end session window to accomodate keyboard
+		private static var EXPAND_HEIGHT:int = 250;					//height to expand end session window to accomodate keyboard
 		private static var BUBBLE_EMAILINSTRUCT_HT:int;
 		private static var BUBBLE_EMAILINSTRUCT_WD:int;
 		private static var REMOVEEMAIL_SIZE:int;
@@ -278,8 +278,8 @@
 			
 			//keyboard
 			softKeyboard = new KeyboardController();
-			softKeyboard.x = 0;
-			softKeyboard.y = 590;
+			softKeyboard.x = -20;
+			softKeyboard.y = 570;
 			softKeyboard.alpha = 0;
 			softKeyboard.keyboard.width = 100;
 			softKeyboard.keyboard.height = 100;
@@ -349,8 +349,8 @@
 
 			//dummy Photo object
 			dummyPhoto = new Photo(photo.id);
-			dummyPhoto.x = photo_slot.x - photo_slot.width/2;
-			dummyPhoto.y = photo_slot.y - photo_slot.height/2;
+			dummyPhoto.x = photo.x;
+			dummyPhoto.y = photo.y;
 			addChildAt(dummyPhoto, getChildIndex(photo) + 1);
 			
 			setMetadata(photo.title, photo.artist, photo.bio, photo.date, photo.process, photo.credit);
@@ -677,9 +677,10 @@
 				Tweener.addTween(softKeyboard, { alpha: 1, delay: 0.5, time: 1 } );
 				addChild(txt_email);
 				txt_email.text = '';
-				softKeyboard.x = 0;
-				softKeyboard.y = 590;
+				softKeyboard.x = -140;
+				softKeyboard.y = 565;
 				softKeyboard.setInputTF(txt_email);
+				softKeyboard.toDefault();
 				
 				dispatchEvent(new Event("shiftUp", true)); //move background up
 				
@@ -696,7 +697,7 @@
 				photoSent = true;
 				button_email.alpha = 0.5;
 				Tweener.addTween(bubble_packaged, { alpha: 1, time: 1 } );
-				Tweener.addTween(bubble_packaged, { height: bubble_packaged.height + 50, width: bubble_packaged.width + 50, time: 1 } );
+				Tweener.addTween(bubble_packaged, { height: 112.25, width: 157.55, time: 1 } );
 				bubble_packaged.gotoAndPlay("play");
 				
 				cont_email.removeEventListener(TouchEvent.TOUCH_DOWN, email_dwn);
@@ -949,6 +950,7 @@
 				Tweener.addTween(window_endsession.txt_invalid, { alpha: 1, time: 0.5 } );
 				Tweener.addTween(window_endsession.txt_invalid, { alpha: 0, delay: 2, time: 0.5 } );
 			} else { //e-mail valid				
+				cont_es_mailbg.addEventListener(TouchEvent.TOUCH_UP, es_email_up, false, 0, true);
 				email_entered.text = softKeyboard.emailText();
 				email_entered.alpha = 0;
 				//softKeyboard.clearEmail();
@@ -1051,17 +1053,20 @@
 
 			//show keyboard
 			softKeyboard.alpha = 0;
-			softKeyboard.y = -110;
-			softKeyboard.x = -210;
+			softKeyboard.y = -160;
+			softKeyboard.x = -297;
 			softKeyboard.setInputTF(window_endsession.txt_email);
 			Tweener.addTween(softKeyboard, {alpha: 1, time: 1, delay: 0.5} );
 			addChild(softKeyboard);
+
+			cont_es_mailbg.removeEventListener(TouchEvent.TOUCH_UP, es_email_up);
 
 			blockerOn();
 			Tweener.addTween(cont_blocker_fullscreen, { delay: 1.5, onComplete: blockerOff } );
 		}
 
 		private function es_exitKeyboard_up(e:TouchEvent):void {
+			cont_es_mailbg.addEventListener(TouchEvent.TOUCH_UP, es_email_up, false, 0, true);
 			removeChild(cont_es_exitKeyboard);
 			window_endsession.txt_email.text = 'enter e-mail here';
 
@@ -1098,6 +1103,7 @@
 		}
 		
 		private function star1_up(e:TouchEvent):void {
+			button_star1.gotoAndStop("down");
 			button_star1.effect_starglow.gotoAndPlay("on");
 			animateSwitch();
 			setRating(1);
@@ -1112,6 +1118,8 @@
 		}
 		
 		private function star2_up(e:TouchEvent):void {
+			button_star1.gotoAndStop("down");
+			button_star2.gotoAndStop("down");
 			button_star1.effect_starglow.gotoAndPlay("on");
 			button_star2.effect_starglow.gotoAndPlay("on");
 			
@@ -1129,6 +1137,9 @@
 		}
 		
 		private function star3_up(e:TouchEvent):void {
+			button_star1.gotoAndStop("down");
+			button_star2.gotoAndStop("down");
+			button_star3.gotoAndStop("down");
 			button_star1.effect_starglow.gotoAndPlay("on");
 			button_star2.effect_starglow.gotoAndPlay("on");
 			button_star3.effect_starglow.gotoAndPlay("on");
@@ -1148,6 +1159,10 @@
 		}
 		
 		private function star4_up(e:TouchEvent):void {
+			button_star1.gotoAndStop("down");
+			button_star2.gotoAndStop("down");
+			button_star3.gotoAndStop("down");
+			button_star4.gotoAndStop("down");
 			button_star1.effect_starglow.gotoAndPlay("on");
 			button_star2.effect_starglow.gotoAndPlay("on");
 			button_star3.effect_starglow.gotoAndPlay("on");
@@ -1272,6 +1287,7 @@
 			cont_endsession_modal.addChild(cont_es_mailbg);
 			cont_endsession_modal.addChild(cont_es_removeemail);
 
+			//if(false) { //testing
 			if(currentBadge == -1) { //if no badges earned
 				window_endsession.window_modal.height = 240;
 				window_endsession.window_modal.y = -(window_endsession.window_modal.height/2);
@@ -1369,8 +1385,9 @@
 
 			addChild(cont_gotbadge_modal);
 
+
 			Tweener.addTween(cont_gotbadge_modal, { alpha: 1, time: 1, delay: 0.5 } );
-			Tweener.addTween(cont_gotbadge_modal, { height: cont_gotbadge_modal.height + 50, width: cont_gotbadge_modal.width + 50, time: 1, delay: 0.5, transition: "easeOutElastic" });
+			Tweener.addTween(cont_gotbadge_modal, { height: 697, width: 727.5, time: 1, delay: 0.5, transition: "easeOutElastic" });
 			
 			/*blockerOn();
 			Tweener.addTween(cont_blocker_fullscreen, { delay: 1.5, onComplete: blockerOff } );*/

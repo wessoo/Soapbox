@@ -39,7 +39,7 @@
 		}
 		
 		override protected function layoutUI():void{
-			keyboard.scaleX = keyboard.scaleY = 0.7;
+			keyboard.scaleX = keyboard.scaleY = 0.85;
 		}
 
 		/* Sets input text field to a new text field
@@ -61,6 +61,10 @@
 			return email_REGEX.test(address);
 		}
 		
+		public function toDefault():void {
+			keyboard.toDefault();
+		}
+
 		public function emailText():String{
 			return keyboard.inputTxt.text;
 		}
