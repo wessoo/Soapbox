@@ -28,6 +28,7 @@
 		private var package_created:Boolean = false; 	//whether any images have been packaged
 		private var maillist_opt:Boolean = true;		//opting in/out of MOPA mail list. Default opt in.
 		public var sendBadges:Boolean = false;			//whether to send badges, used to determine animation
+		private var aboutShowing:Boolean = false;
 		private static var badge1:int = 10;		//The badges that can be attained
 		private static var badge2:int = 25;
 		private static var badge3:int = 45;
@@ -50,6 +51,7 @@
 		private var cont_endsession:TouchSprite;
 		private var cont_toscreen:TouchSprite;
 		private var cont_email:TouchSprite;
+		private var cont_about:TouchSprite;
 		private var cont_star1:TouchSprite;
 		private var cont_star2:TouchSprite;
 		private var cont_star3:TouchSprite;
@@ -112,6 +114,7 @@
 			cont_endsession = new TouchSprite();
 			cont_toscreen = new TouchSprite();
 			cont_email = new TouchSprite();
+			cont_about = new TouchSprite();
 			cont_star1 = new TouchSprite();
 			cont_star2 = new TouchSprite();
 			cont_star3 = new TouchSprite();
@@ -136,6 +139,8 @@
 			addChild(cont_toscreen);
 			cont_email.addChild(button_email);
 			addChild(cont_email);
+			cont_about.addChild(button_about);
+			addChild(cont_about);
 			cont_star1.addChild(button_star1);
 			addChild(cont_star1);
 			cont_star2.addChild(button_star2);
@@ -175,6 +180,8 @@
 			cont_toscreen.addEventListener(TouchEvent.TOUCH_UP, toscreen_up, false, 0, true);
 			cont_email.addEventListener(TouchEvent.TOUCH_DOWN, email_dwn, false, 0, true);
 			cont_email.addEventListener(TouchEvent.TOUCH_UP, email_up, false, 0, true);
+			cont_about.addEventListener(TouchEvent.TOUCH_DOWN, about_dwn, false, 0, true);
+			cont_about.addEventListener(TouchEvent.TOUCH_UP, about_up, false, 0, true);
 			cont_star1.addEventListener(TouchEvent.TOUCH_DOWN, star1_dwn, false, 0, true);
 			cont_star1.addEventListener(TouchEvent.TOUCH_UP, star1_up, false, 0, true);
 			cont_star2.addEventListener(TouchEvent.TOUCH_DOWN, star2_dwn, false, 0, true);
@@ -313,8 +320,10 @@
 			button_email.text_emailimageto.alpha = 0; //turns off email label
 			email_entered.text = '';
 			graphic_fakebg.alpha = 0;
+			window_about.alpha = 0;
 			
 			//end session positioning presets
+			window_gotbadge.button_continue.y = window_gotbadge.button_continue.y - 120;
 			ES_LOCY = window_endsession.y;		//used to normalize positioning when nesting containers that are offset from origin
 			DEFAULT_ES_MODALBG_Y = window_endsession.window_modal.y;
 			DEFAULT_ES_MODALBG_HEIGHT = window_endsession.window_modal.height;
@@ -497,6 +506,7 @@
 				maillist_opt = false;
 				email = '';
 				sendBadges = false;
+				aboutShowing = false;
 
 				//VISUAL
 				//text
@@ -505,6 +515,7 @@
 				text_remaining_ratings.text = "10";
 				window_endsession.txt_email.text = '';
 				window_endsession.button_maillist.gotoAndStop("check");
+				window_about.alpha = 0;
 				
 				//share button
 				button_email.alpha = 1;
@@ -806,7 +817,23 @@
 			cont_email.addEventListener(TouchEvent.TOUCH_DOWN, email_dwn, false, 0, true);
 			cont_email.addEventListener(TouchEvent.TOUCH_UP, email_up, false, 0, true);
 		}
-		
+
+		private function about_dwn(e:TouchEvent):void {
+			button_about.gotoAndStop("down");
+		}
+
+		private function about_up(e:TouchEvent):void {
+			button_about.gotoAndStop("up");
+
+			if(!aboutShowing) {
+				Tweener.addTween(window_about, {alpha: 1, time: 1});
+				aboutShowing = true;
+			} else {
+				Tweener.addTween(window_about, {alpha: 0, time: 1});
+				aboutShowing = false;
+			}
+		}
+
 		private function exitEmail_up(e:TouchEvent):void {
 			exitEmail();
 		}
