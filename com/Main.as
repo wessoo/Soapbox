@@ -183,8 +183,9 @@
 		private function startCountdown(e:TimerEvent):void {
 			trace("starting countdown");
 			shadeOn();
+			txt_timeout.txt_counter.text = 10;
 			addChild(txt_timeout);
-			Tweener.addTween(txt_timeout, { alpha: 1, time: 1} );
+			Tweener.addTween(txt_timeout, { alpha: 1, time: 1, delay: 1} );
 			countdown.start();
 		}		
 
@@ -319,7 +320,7 @@
 
 		private function reset_animate(e:Event):void {
 			addChild(cont_resetanimation);
-			Tweener.addTween(effect_resetanimation, {alpha: 1, time: 2, delay: 1});
+			Tweener.addTween(effect_resetanimation, {alpha: 1, time: 3.5, delay: 1});
 			
 			effect_resetanimation.badge1.gotoAndStop("on");
 			effect_resetanimation.badge2.gotoAndStop("on");

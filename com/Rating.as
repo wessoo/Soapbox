@@ -926,22 +926,22 @@
 			if(currentBadge == 1) {
 				Tweener.addTween(badge_1.color, { alpha: 1, time: 1, delay: 1.5 });
 				Tweener.addTween(badge1_glow, { delay: 1, onComplete: function() { badge1_glow.gotoAndPlay("play"); } } );
-				Tweener.addTween(badge_2.grey, { alpha: 1, time: 1, delay: 1.5 });
+				Tweener.addTween(badge_2.grey, { alpha: 1, time: 2, delay: 1.5 });
 				Tweener.addTween(txt_10, { alpha: 1, time: 1, delay: 1.5 });
 			} else if(currentBadge == 2) {
 				Tweener.addTween(badge_2.color, { alpha: 1, time: 1, delay: 1.5});
 				Tweener.addTween(badge2_glow, { delay: 1, onComplete: function() { badge2_glow.gotoAndPlay("play"); } } );
-				Tweener.addTween(badge_3.grey, { alpha: 1, time: 1, delay: 1.5 });
+				Tweener.addTween(badge_3.grey, { alpha: 1, time: 2, delay: 1.5 });
 				Tweener.addTween(txt_25, { alpha: 1, time: 1, delay: 1.5 });
 			} else if(currentBadge == 3) {
 				Tweener.addTween(badge_3.color, { alpha: 1, time: 1, delay: 1.5});
 				Tweener.addTween(badge3_glow, { delay: 1, onComplete: function() { badge3_glow.gotoAndPlay("play"); } } );
-				Tweener.addTween(badge_4.grey, { alpha: 1, time: 1, delay: 1.5 });
+				Tweener.addTween(badge_4.grey, { alpha: 1, time: 2, delay: 1.5 });
 				Tweener.addTween(txt_45, { alpha: 1, time: 1, delay: 1.5 });
 			} else if(currentBadge == 4) {
 				Tweener.addTween(badge_4.color, { alpha: 1, time: 1, delay: 1.5});
 				Tweener.addTween(badge4_glow, { delay: 1, onComplete: function() { badge4_glow.gotoAndPlay("play"); } } );
-				Tweener.addTween(badge_5.grey, { alpha: 1, time: 1, delay: 1.5 });
+				Tweener.addTween(badge_5.grey, { alpha: 1, time: 2, delay: 1.5 });
 				Tweener.addTween(txt_70, { alpha: 1, time: 1, delay: 1.5 });
 			} else if(currentBadge == 5) {
 				Tweener.addTween(badge_5.color, { alpha: 1, time: 1, delay: 1.5});
