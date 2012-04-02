@@ -23,10 +23,11 @@
 		private var lastRated:int;		//tells you the last image rated
 		private var reachedEnd:Boolean; //tells you if you've reached the end of the array
 		private var email:String;
-		private var currentBadge:int;	//The badge that the user currently has
+		public var currentBadge:int;	//The badge that the user currently has
 		private var photoSent:Boolean;	//whether current photo has been sent (e-mailed)
 		private var package_created:Boolean = false; 	//whether any images have been packaged
 		private var maillist_opt:Boolean = true;		//opting in/out of MOPA mail list. Default opt in.
+		public var sendBadges:Boolean = false;			//whether to send badges, used to determine animation
 		private static var badge1:int = 10;		//The badges that can be attained
 		private static var badge2:int = 25;
 		private static var badge3:int = 45;
@@ -194,9 +195,11 @@
 			cont_es_no.addEventListener(TouchEvent.TOUCH_UP, es_no_up, false, 0, true);
 			cont_es_yes.addEventListener(TouchEvent.TOUCH_DOWN, es_yes_dwn, false, 0, true);
 			cont_es_yes.addEventListener(TouchEvent.TOUCH_UP, es_yes_up, false, 0, true);
+			cont_es_maillist.addEventListener(TouchEvent.TOUCH_DOWN, es_maillist_dwn, false, 0, true);
 			cont_es_maillist.addEventListener(TouchEvent.TOUCH_UP, es_maillist_up, false, 0, true);
 			cont_es_removeemail.addEventListener(TouchEvent.TOUCH_DOWN, es_removeemail_dwn, false, 0, true);
 			cont_es_removeemail.addEventListener(TouchEvent.TOUCH_UP, es_removeemail_up, false, 0, true);
+			cont_es_mailbg.addEventListener(TouchEvent.TOUCH_DOWN, es_email_dwn, false, 0, true);
 			cont_es_mailbg.addEventListener(TouchEvent.TOUCH_UP, es_email_up, false, 0, true);
 			cont_es_okemail.addEventListener(TouchEvent.TOUCH_DOWN, es_okemail_dwn, false, 0, true);
 			cont_es_okemail.addEventListener(TouchEvent.TOUCH_UP, es_okemail_up, false, 0, true);
@@ -366,9 +369,9 @@
 			
 		}
 		
-		/* ----------------------------------- */
-		/* -------- Logical Functions -------- */
-		/* ----------------------------------- */
+		/* ------------------------------------------- */
+		/* ------------ Logical Functions ------------ */
+		/* ------------------------------------------- */
 		
 		//Randomly shuffles the images in the images array		
 		private function shuffle():void{
@@ -482,7 +485,8 @@
 		 * Resets the session. Returns currentLoc to -1, clears the ratings array.
 		 */
 		public function resetSession():void {
-			
+			dispatchEvent(new Event("reset_animate", true));//RETURN HERE
+
 			Tweener.addTween(this, { delay: 4, onComplete: function() { 
 				//LOGICAL
 				currentLoc = -1;
@@ -492,6 +496,7 @@
 				photoSent = false;
 				maillist_opt = false;
 				email = '';
+				sendBadges = false;
 
 				//VISUAL
 				//text
@@ -612,16 +617,31 @@
 		}
 
 		private function instructions_up(e:TouchEvent):void {
-			Tweener.addTween(cont_instructions, {alpha: 0, time: 1.5, onComplete: function () {
+			Tweener.addTween(cont_instructions, {alpha: 0, time: 0.5, onComplete: function () {
 				removeChild(cont_instructions);
 			}})
 
 			blockerOn();
-			Tweener.addTween(cont_blocker_fullscreen, { delay: 1.5, onComplete: blockerOff } );
+			Tweener.addTween(cont_blocker_fullscreen, { delay: 0.5, onComplete: blockerOff } );
 		}
 
 		private function endsession_dwn(e:TouchEvent):void {
 			button_endsession.gotoAndStop("down");
+
+			cont_toscreen.removeEventListener(TouchEvent.TOUCH_DOWN, toscreen_dwn);
+			cont_toscreen.removeEventListener(TouchEvent.TOUCH_UP, toscreen_up);
+			cont_email.removeEventListener(TouchEvent.TOUCH_DOWN, email_dwn);
+			cont_email.removeEventListener(TouchEvent.TOUCH_UP, email_up);
+			cont_star1.removeEventListener(TouchEvent.TOUCH_DOWN, star1_dwn);
+			cont_star1.removeEventListener(TouchEvent.TOUCH_UP, star1_up);
+			cont_star2.removeEventListener(TouchEvent.TOUCH_DOWN, star2_dwn);
+			cont_star2.removeEventListener(TouchEvent.TOUCH_UP, star2_up);
+			cont_star3.removeEventListener(TouchEvent.TOUCH_DOWN, star3_dwn);
+			cont_star3.removeEventListener(TouchEvent.TOUCH_UP, star3_up);
+			cont_star4.removeEventListener(TouchEvent.TOUCH_DOWN, star4_dwn);
+			cont_star4.removeEventListener(TouchEvent.TOUCH_UP, star4_up);
+			dispatchEvent(new Event("deactivateLang", true));
+			photo_blockerOn();
 		}
 		
 		private function endsession_up(e:TouchEvent):void {
@@ -634,12 +654,42 @@
 			Tweener.addTween(cont_endsession_modal, { alpha: 1, time: 1, delay: 0.5});
 			Tweener.addTween(cont_endsession_modal, { height: cont_endsession_modal.height + 20, width: cont_endsession_modal.width + 50, time: 1, delay: 0.5, transition: "easeOutElastic"});
 
+			cont_toscreen.addEventListener(TouchEvent.TOUCH_DOWN, toscreen_dwn, false, 0, true);
+			cont_toscreen.addEventListener(TouchEvent.TOUCH_UP, toscreen_up, false, 0, true);
+			cont_email.addEventListener(TouchEvent.TOUCH_DOWN, email_dwn, false, 0, true);
+			cont_email.addEventListener(TouchEvent.TOUCH_UP, email_up, false, 0, true);
+			cont_star1.addEventListener(TouchEvent.TOUCH_DOWN, star1_dwn, false, 0, true);
+			cont_star1.addEventListener(TouchEvent.TOUCH_UP, star1_up, false, 0, true);
+			cont_star2.addEventListener(TouchEvent.TOUCH_DOWN, star2_dwn, false, 0, true);
+			cont_star2.addEventListener(TouchEvent.TOUCH_UP, star2_up, false, 0, true);
+			cont_star3.addEventListener(TouchEvent.TOUCH_DOWN, star3_dwn, false, 0, true);
+			cont_star3.addEventListener(TouchEvent.TOUCH_UP, star3_up, false, 0, true);
+			cont_star4.addEventListener(TouchEvent.TOUCH_DOWN, star4_dwn, false, 0, true);
+			cont_star4.addEventListener(TouchEvent.TOUCH_UP, star4_up, false, 0, true);
+			dispatchEvent(new Event("activateLang", true));
+			photo_blockerOff();
+
 			blockerOn();
 			Tweener.addTween(cont_blocker_fullscreen, { delay: 1.5, onComplete: blockerOff } );
 		}
 		
 		private function toscreen_dwn(e:TouchEvent):void {
 			button_toscreen.gotoAndStop("down");
+
+			cont_endsession.removeEventListener(TouchEvent.TOUCH_DOWN, endsession_dwn);
+			cont_endsession.removeEventListener(TouchEvent.TOUCH_UP, endsession_up);
+			cont_email.removeEventListener(TouchEvent.TOUCH_DOWN, email_dwn);
+			cont_email.removeEventListener(TouchEvent.TOUCH_UP, email_up);
+			cont_star1.removeEventListener(TouchEvent.TOUCH_DOWN, star1_dwn);
+			cont_star1.removeEventListener(TouchEvent.TOUCH_UP, star1_up);
+			cont_star2.removeEventListener(TouchEvent.TOUCH_DOWN, star2_dwn);
+			cont_star2.removeEventListener(TouchEvent.TOUCH_UP, star2_up);
+			cont_star3.removeEventListener(TouchEvent.TOUCH_DOWN, star3_dwn);
+			cont_star3.removeEventListener(TouchEvent.TOUCH_UP, star3_up);
+			cont_star4.removeEventListener(TouchEvent.TOUCH_DOWN, star4_dwn);
+			cont_star4.removeEventListener(TouchEvent.TOUCH_UP, star4_up);
+			dispatchEvent(new Event("deactivateLang", true));
+			photo_blockerOn();
 		}
 		
 		private function toscreen_up(e:TouchEvent):void {
@@ -654,15 +704,60 @@
 					//bubble_toscreen.gotoAndPlay("play");						
 				} } );
 			bubble_toscreen.gotoAndPlay("play");
+
+			cont_endsession.addEventListener(TouchEvent.TOUCH_DOWN, endsession_dwn, false, 0, true);
+			cont_endsession.addEventListener(TouchEvent.TOUCH_UP, endsession_up, false, 0, true);
+			cont_email.addEventListener(TouchEvent.TOUCH_DOWN, email_dwn, false, 0, true);
+			cont_email.addEventListener(TouchEvent.TOUCH_UP, email_up, false, 0, true);
+			cont_star1.addEventListener(TouchEvent.TOUCH_DOWN, star1_dwn, false, 0, true);
+			cont_star1.addEventListener(TouchEvent.TOUCH_UP, star1_up, false, 0, true);
+			cont_star2.addEventListener(TouchEvent.TOUCH_DOWN, star2_dwn, false, 0, true);
+			cont_star2.addEventListener(TouchEvent.TOUCH_UP, star2_up, false, 0, true);
+			cont_star3.addEventListener(TouchEvent.TOUCH_DOWN, star3_dwn, false, 0, true);
+			cont_star3.addEventListener(TouchEvent.TOUCH_UP, star3_up, false, 0, true);
+			cont_star4.addEventListener(TouchEvent.TOUCH_DOWN, star4_dwn, false, 0, true);
+			cont_star4.addEventListener(TouchEvent.TOUCH_UP, star4_up, false, 0, true);
+			dispatchEvent(new Event("activateLang", true));
+			photo_blockerOff();
 		}
 		
 		private function email_dwn(e:TouchEvent):void {
 			button_email.gotoAndStop("down");
+
+			cont_endsession.removeEventListener(TouchEvent.TOUCH_DOWN, endsession_dwn);
+			cont_endsession.removeEventListener(TouchEvent.TOUCH_UP, endsession_up);
+			cont_toscreen.removeEventListener(TouchEvent.TOUCH_DOWN, toscreen_dwn);
+			cont_toscreen.removeEventListener(TouchEvent.TOUCH_UP, toscreen_up);
+			cont_star1.removeEventListener(TouchEvent.TOUCH_DOWN, star1_dwn);
+			cont_star1.removeEventListener(TouchEvent.TOUCH_UP, star1_up);
+			cont_star2.removeEventListener(TouchEvent.TOUCH_DOWN, star2_dwn);
+			cont_star2.removeEventListener(TouchEvent.TOUCH_UP, star2_up);
+			cont_star3.removeEventListener(TouchEvent.TOUCH_DOWN, star3_dwn);
+			cont_star3.removeEventListener(TouchEvent.TOUCH_UP, star3_up);
+			cont_star4.removeEventListener(TouchEvent.TOUCH_DOWN, star4_dwn);
+			cont_star4.removeEventListener(TouchEvent.TOUCH_UP, star4_up);
+			dispatchEvent(new Event("deactivateLang", true));
+			photo_blockerOn();
 		}
 		
 		private function email_up(e:TouchEvent):void {
 			button_email.gotoAndStop("up");
 			
+			cont_endsession.addEventListener(TouchEvent.TOUCH_DOWN, endsession_dwn, false, 0, true);
+			cont_endsession.addEventListener(TouchEvent.TOUCH_UP, endsession_up, false, 0, true);
+			cont_toscreen.addEventListener(TouchEvent.TOUCH_DOWN, toscreen_dwn, false, 0, true);
+			cont_toscreen.addEventListener(TouchEvent.TOUCH_UP, toscreen_up, false, 0, true);
+			cont_star1.addEventListener(TouchEvent.TOUCH_DOWN, star1_dwn, false, 0, true);
+			cont_star1.addEventListener(TouchEvent.TOUCH_UP, star1_up, false, 0, true);
+			cont_star2.addEventListener(TouchEvent.TOUCH_DOWN, star2_dwn, false, 0, true);
+			cont_star2.addEventListener(TouchEvent.TOUCH_UP, star2_up, false, 0, true);
+			cont_star3.addEventListener(TouchEvent.TOUCH_DOWN, star3_dwn, false, 0, true);
+			cont_star3.addEventListener(TouchEvent.TOUCH_UP, star3_up, false, 0, true);
+			cont_star4.addEventListener(TouchEvent.TOUCH_DOWN, star4_dwn, false, 0, true);
+			cont_star4.addEventListener(TouchEvent.TOUCH_UP, star4_up, false, 0, true);
+			dispatchEvent(new Event("activateLang", true));
+			photo_blockerOff();
+
 			if (email == '') { //if no e-mail entered yet
 				shadeOn();
 				addChild(cont_exitEmail); //put exit_email above shade
@@ -837,6 +932,21 @@
 
 		private function es_continue_dwn(e:TouchEvent):void {
 			window_endsession.button_continue.gotoAndStop("down");
+
+			cont_es_no.removeEventListener(TouchEvent.TOUCH_DOWN, es_no_dwn);
+			cont_es_no.removeEventListener(TouchEvent.TOUCH_UP, es_no_up);
+			cont_es_yes.removeEventListener(TouchEvent.TOUCH_DOWN, es_yes_dwn);
+			cont_es_yes.removeEventListener(TouchEvent.TOUCH_UP, es_yes_up);
+			cont_es_maillist.removeEventListener(TouchEvent.TOUCH_DOWN, es_maillist_dwn);
+			cont_es_maillist.removeEventListener(TouchEvent.TOUCH_UP, es_maillist_up);
+			cont_es_removeemail.removeEventListener(TouchEvent.TOUCH_DOWN, es_removeemail_dwn);
+			cont_es_removeemail.removeEventListener(TouchEvent.TOUCH_UP, es_removeemail_up);
+			cont_es_mailbg.removeEventListener(TouchEvent.TOUCH_DOWN, es_email_dwn);
+			cont_es_mailbg.removeEventListener(TouchEvent.TOUCH_UP, es_email_up);
+			cont_es_esskip.removeEventListener(TouchEvent.TOUCH_DOWN, es_esskip_dwn);
+			cont_es_esskip.removeEventListener(TouchEvent.TOUCH_UP, es_esskip_up);
+
+			//RETURN HERE
 		}
 
 		private function es_continue_up(e:TouchEvent):void {
@@ -847,12 +957,34 @@
 				shadeOff();
 			} });
 
+			cont_es_no.addEventListener(TouchEvent.TOUCH_DOWN, es_no_dwn, false, 0, true);
+			cont_es_no.addEventListener(TouchEvent.TOUCH_UP, es_no_up, false, 0, true);
+			cont_es_yes.addEventListener(TouchEvent.TOUCH_DOWN, es_yes_dwn, false, 0, true);
+			cont_es_yes.addEventListener(TouchEvent.TOUCH_UP, es_yes_up, false, 0, true);
+			cont_es_maillist.addEventListener(TouchEvent.TOUCH_DOWN, es_maillist_dwn, false, 0, true);
+			cont_es_maillist.addEventListener(TouchEvent.TOUCH_UP, es_maillist_up, false, 0, true);
+			cont_es_removeemail.addEventListener(TouchEvent.TOUCH_DOWN, es_removeemail_dwn, false, 0, true);
+			cont_es_removeemail.addEventListener(TouchEvent.TOUCH_UP, es_removeemail_up, false, 0, true);
+			cont_es_mailbg.addEventListener(TouchEvent.TOUCH_DOWN, es_email_dwn, false, 0, true);
+			cont_es_mailbg.addEventListener(TouchEvent.TOUCH_UP, es_email_up, false, 0, true);
+			cont_es_esskip.addEventListener(TouchEvent.TOUCH_DOWN, es_esskip_dwn, false, 0, true);
+			cont_es_esskip.addEventListener(TouchEvent.TOUCH_UP, es_esskip_up, false, 0, true);
+
 			blockerOn();
 			Tweener.addTween(cont_blocker_fullscreen, { delay: 2, onComplete: blockerOff } );
 		}
 
 		private function es_no_dwn(e:TouchEvent):void {
 			window_endsession.button_no.gotoAndStop("down");
+
+			cont_es_continue.removeEventListener(TouchEvent.TOUCH_DOWN, es_continue_dwn);
+			cont_es_continue.removeEventListener(TouchEvent.TOUCH_UP, es_continue_up);
+			cont_es_yes.removeEventListener(TouchEvent.TOUCH_DOWN, es_yes_dwn);
+			cont_es_yes.removeEventListener(TouchEvent.TOUCH_UP, es_yes_up);
+			cont_es_maillist.removeEventListener(TouchEvent.TOUCH_DOWN, es_maillist_dwn);
+			cont_es_maillist.removeEventListener(TouchEvent.TOUCH_UP, es_maillist_up);
+			cont_es_removeemail.removeEventListener(TouchEvent.TOUCH_DOWN, es_removeemail_dwn);
+			cont_es_removeemail.removeEventListener(TouchEvent.TOUCH_UP, es_removeemail_up);
 		}
 
 		private function es_no_up(e:TouchEvent):void {
@@ -869,21 +1001,54 @@
 			} else { //earned badges, so 'no' means end session without sending badges
 				resetSession();
 			}
+
+			cont_es_continue.addEventListener(TouchEvent.TOUCH_DOWN, es_continue_dwn, false, 0, true);
+			cont_es_continue.addEventListener(TouchEvent.TOUCH_UP, es_continue_up, false, 0, true);
+			cont_es_yes.addEventListener(TouchEvent.TOUCH_DOWN, es_yes_dwn, false, 0, true);
+			cont_es_yes.addEventListener(TouchEvent.TOUCH_UP, es_yes_up, false, 0, true);
+			cont_es_maillist.addEventListener(TouchEvent.TOUCH_DOWN, es_maillist_dwn, false, 0, true);
+			cont_es_maillist.addEventListener(TouchEvent.TOUCH_UP, es_maillist_up, false, 0, true);
+			cont_es_removeemail.addEventListener(TouchEvent.TOUCH_DOWN, es_removeemail_dwn, false, 0, true);
+			cont_es_removeemail.addEventListener(TouchEvent.TOUCH_UP, es_removeemail_up, false, 0, true);
 		}
 
 		private function es_yes_dwn(e:TouchEvent):void {
 			window_endsession.button_yes.gotoAndStop("down");
+
+			cont_es_continue.removeEventListener(TouchEvent.TOUCH_DOWN, es_continue_dwn);
+			cont_es_continue.removeEventListener(TouchEvent.TOUCH_UP, es_continue_up);
+			cont_es_no.removeEventListener(TouchEvent.TOUCH_DOWN, es_no_dwn);
+			cont_es_no.removeEventListener(TouchEvent.TOUCH_UP, es_no_up);
+			cont_es_maillist.removeEventListener(TouchEvent.TOUCH_DOWN, es_maillist_dwn);
+			cont_es_maillist.removeEventListener(TouchEvent.TOUCH_UP, es_maillist_up);
+			cont_es_removeemail.removeEventListener(TouchEvent.TOUCH_DOWN, es_removeemail_dwn);
+			cont_es_removeemail.removeEventListener(TouchEvent.TOUCH_UP, es_removeemail_up);
 		}
 
 		private function es_yes_up(e:TouchEvent):void {
 			window_endsession.button_yes.gotoAndStop("up");
 
-			if (currentBadge == -1) { //no badges, so 'yes' means end session
+			if (currentBadge == -1) { //no badges, so 'yes' means just end session
 
-			} else { //earned badges, so 'yes' means send badges
-				
+			} else { //earned badges, so 'yes' means send badges and then end session
+				//call some function that send request
+				sendBadges = true;
 			}
+
+			cont_es_continue.addEventListener(TouchEvent.TOUCH_DOWN, es_continue_dwn, false, 0, true);
+			cont_es_continue.addEventListener(TouchEvent.TOUCH_UP, es_continue_up, false, 0, true);
+			cont_es_no.addEventListener(TouchEvent.TOUCH_DOWN, es_no_dwn, false, 0, true);
+			cont_es_no.addEventListener(TouchEvent.TOUCH_UP, es_no_up, false, 0, true);
+			cont_es_maillist.addEventListener(TouchEvent.TOUCH_DOWN, es_maillist_dwn, false, 0, true);
+			cont_es_maillist.addEventListener(TouchEvent.TOUCH_UP, es_maillist_up, false, 0, true);
+			cont_es_removeemail.addEventListener(TouchEvent.TOUCH_DOWN, es_removeemail_dwn, false, 0, true);
+			cont_es_removeemail.addEventListener(TouchEvent.TOUCH_UP, es_removeemail_up, false, 0, true);
+			
 			resetSession();
+		}
+
+		private function es_maillist_dwn(e:TouchEvent):void {
+
 		}
 
 		private function es_maillist_up(e:TouchEvent):void {
@@ -898,6 +1063,15 @@
 
 		private function es_removeemail_dwn(e:TouchEvent):void {
 			window_endsession.button_removeemail.gotoAndStop("down");
+
+			cont_es_continue.removeEventListener(TouchEvent.TOUCH_DOWN, es_continue_dwn);
+			cont_es_continue.removeEventListener(TouchEvent.TOUCH_UP, es_continue_up);
+			cont_es_no.removeEventListener(TouchEvent.TOUCH_DOWN, es_no_dwn);
+			cont_es_no.removeEventListener(TouchEvent.TOUCH_UP, es_no_up);
+			cont_es_yes.removeEventListener(TouchEvent.TOUCH_DOWN, es_yes_dwn);
+			cont_es_yes.removeEventListener(TouchEvent.TOUCH_UP, es_yes_up);
+			cont_es_maillist.removeEventListener(TouchEvent.TOUCH_DOWN, es_maillist_dwn);
+			cont_es_maillist.removeEventListener(TouchEvent.TOUCH_UP, es_maillist_up);
 		}
 
 		private function es_removeemail_up(e:TouchEvent):void {
@@ -934,6 +1108,15 @@
 
 			window_endsession.button_maillist.gotoAndStop("check");
 			maillist_opt = true;
+
+			cont_es_continue.addEventListener(TouchEvent.TOUCH_DOWN, es_continue_dwn, false, 0, true);
+			cont_es_continue.addEventListener(TouchEvent.TOUCH_UP, es_continue_up, false, 0, true);
+			cont_es_no.addEventListener(TouchEvent.TOUCH_DOWN, es_no_dwn, false, 0, true);
+			cont_es_no.addEventListener(TouchEvent.TOUCH_UP, es_no_up, false, 0, true);
+			cont_es_yes.addEventListener(TouchEvent.TOUCH_DOWN, es_yes_dwn, false, 0, true);
+			cont_es_yes.addEventListener(TouchEvent.TOUCH_UP, es_yes_up, false, 0, true);
+			cont_es_maillist.addEventListener(TouchEvent.TOUCH_DOWN, es_maillist_dwn, false, 0, true);
+			cont_es_maillist.addEventListener(TouchEvent.TOUCH_UP, es_maillist_up, false, 0, true);
 
 			blockerOn();
 			Tweener.addTween(cont_blocker_fullscreen, { delay: 1, onComplete: blockerOff } );
@@ -1012,14 +1195,31 @@
 
 		private function es_esskip_dwn(e:TouchEvent):void {
 			window_endsession.button_esskip.gotoAndStop("down");
+
+			cont_es_continue.removeEventListener(TouchEvent.TOUCH_DOWN, es_continue_dwn);
+			cont_es_continue.removeEventListener(TouchEvent.TOUCH_UP, es_continue_up);
+			cont_es_mailbg.removeEventListener(TouchEvent.TOUCH_DOWN, es_email_dwn);
+			cont_es_mailbg.removeEventListener(TouchEvent.TOUCH_UP, es_email_up);
 		}
 
 		private function es_esskip_up(e:TouchEvent):void {
 			window_endsession.button_esskip.gotoAndStop("up");
 
+			cont_es_continue.addEventListener(TouchEvent.TOUCH_DOWN, es_continue_dwn, false, 0, true);
+			cont_es_continue.addEventListener(TouchEvent.TOUCH_UP, es_continue_up, false, 0, true);
+			cont_es_mailbg.addEventListener(TouchEvent.TOUCH_DOWN, es_email_dwn, false, 0, true);
+			cont_es_mailbg.addEventListener(TouchEvent.TOUCH_UP, es_email_up, false, 0, true);
+
 			resetSession();
 		}
 		
+		private function es_email_dwn(e:TouchEvent):void {
+			cont_es_continue.removeEventListener(TouchEvent.TOUCH_DOWN, es_continue_dwn);
+			cont_es_continue.removeEventListener(TouchEvent.TOUCH_UP, es_continue_up);
+			cont_es_esskip.removeEventListener(TouchEvent.TOUCH_DOWN, es_esskip_dwn);
+			cont_es_esskip.removeEventListener(TouchEvent.TOUCH_UP, es_esskip_up);
+		}
+
 		private function es_email_up(e:TouchEvent):void {
 			var target_height:int = window_endsession.window_modal.height + EXPAND_HEIGHT;
 			var target_ypos:int = window_endsession.window_modal.y - (target_height - window_endsession.window_modal.height)/2;
@@ -1062,6 +1262,11 @@
 
 			cont_es_mailbg.removeEventListener(TouchEvent.TOUCH_UP, es_email_up);
 
+			cont_es_continue.addEventListener(TouchEvent.TOUCH_DOWN, es_continue_dwn, false, 0, true);
+			cont_es_continue.addEventListener(TouchEvent.TOUCH_UP, es_continue_up, false, 0, true);
+			cont_es_esskip.addEventListener(TouchEvent.TOUCH_DOWN, es_esskip_dwn, false, 0, true);
+			cont_es_esskip.addEventListener(TouchEvent.TOUCH_UP, es_esskip_up, false, 0, true);
+
 			blockerOn();
 			Tweener.addTween(cont_blocker_fullscreen, { delay: 1.5, onComplete: blockerOff } );
 		}
@@ -1101,6 +1306,21 @@
 		
 		private function star1_dwn(e:TouchEvent):void {
 			button_star1.gotoAndStop("down");
+
+			cont_endsession.removeEventListener(TouchEvent.TOUCH_DOWN, endsession_dwn);
+			cont_endsession.removeEventListener(TouchEvent.TOUCH_UP, endsession_up);
+			cont_toscreen.removeEventListener(TouchEvent.TOUCH_DOWN, toscreen_dwn);
+			cont_toscreen.removeEventListener(TouchEvent.TOUCH_UP, toscreen_up);
+			cont_email.removeEventListener(TouchEvent.TOUCH_DOWN, email_dwn);
+			cont_email.removeEventListener(TouchEvent.TOUCH_UP, email_up);
+			cont_star2.removeEventListener(TouchEvent.TOUCH_DOWN, star2_dwn);
+			cont_star2.removeEventListener(TouchEvent.TOUCH_UP, star2_up);
+			cont_star3.removeEventListener(TouchEvent.TOUCH_DOWN, star3_dwn);
+			cont_star3.removeEventListener(TouchEvent.TOUCH_UP, star3_up);
+			cont_star4.removeEventListener(TouchEvent.TOUCH_DOWN, star4_dwn);
+			cont_star4.removeEventListener(TouchEvent.TOUCH_UP, star4_up);
+			dispatchEvent(new Event("deactivateLang", true));
+			photo_blockerOn();
 		}
 		
 		private function star1_up(e:TouchEvent):void {
@@ -1108,6 +1328,22 @@
 			button_star1.effect_starglow.gotoAndPlay("on");
 			animateSwitch();
 			setRating(1);
+
+			Tweener.addTween(this, {delay: 2.4, onComplete: function() { 
+				cont_endsession.addEventListener(TouchEvent.TOUCH_DOWN, endsession_dwn, false, 0, true);
+				cont_endsession.addEventListener(TouchEvent.TOUCH_UP, endsession_up, false, 0, true);
+				cont_toscreen.addEventListener(TouchEvent.TOUCH_DOWN, toscreen_dwn, false, 0, true);
+				cont_toscreen.addEventListener(TouchEvent.TOUCH_UP, toscreen_up, false, 0, true);
+				cont_email.addEventListener(TouchEvent.TOUCH_DOWN, email_dwn, false, 0, true);
+				cont_email.addEventListener(TouchEvent.TOUCH_UP, email_up, false, 0, true);
+				cont_star2.addEventListener(TouchEvent.TOUCH_DOWN, star2_dwn, false, 0, true);
+				cont_star2.addEventListener(TouchEvent.TOUCH_UP, star2_up, false, 0, true);
+				cont_star3.addEventListener(TouchEvent.TOUCH_DOWN, star3_dwn, false, 0, true);
+				cont_star3.addEventListener(TouchEvent.TOUCH_UP, star3_up, false, 0, true);
+				cont_star4.addEventListener(TouchEvent.TOUCH_DOWN, star4_dwn, false, 0, true);
+				cont_star4.addEventListener(TouchEvent.TOUCH_UP, star4_up, false, 0, true);
+				dispatchEvent(new Event("activateLang", true));
+			}});			
 			
 			if (photoSent)
 				reactivateEmailButton();
@@ -1116,6 +1352,21 @@
 		private function star2_dwn(e:TouchEvent):void {
 			button_star1.gotoAndStop("down");
 			button_star2.gotoAndStop("down");
+
+			cont_endsession.removeEventListener(TouchEvent.TOUCH_DOWN, endsession_dwn);
+			cont_endsession.removeEventListener(TouchEvent.TOUCH_UP, endsession_up);
+			cont_toscreen.removeEventListener(TouchEvent.TOUCH_DOWN, toscreen_dwn);
+			cont_toscreen.removeEventListener(TouchEvent.TOUCH_UP, toscreen_up);
+			cont_email.removeEventListener(TouchEvent.TOUCH_DOWN, email_dwn);
+			cont_email.removeEventListener(TouchEvent.TOUCH_UP, email_up);
+			cont_star1.removeEventListener(TouchEvent.TOUCH_DOWN, star1_dwn);
+			cont_star1.removeEventListener(TouchEvent.TOUCH_UP, star1_up);
+			cont_star3.removeEventListener(TouchEvent.TOUCH_DOWN, star3_dwn);
+			cont_star3.removeEventListener(TouchEvent.TOUCH_UP, star3_up);
+			cont_star4.removeEventListener(TouchEvent.TOUCH_DOWN, star4_dwn);
+			cont_star4.removeEventListener(TouchEvent.TOUCH_UP, star4_up);
+			dispatchEvent(new Event("deactivateLang", true));
+			photo_blockerOn();
 		}
 		
 		private function star2_up(e:TouchEvent):void {
@@ -1127,6 +1378,22 @@
 			setRating(2);
 			animateSwitch();
 
+			Tweener.addTween(this, {delay: 2.4, onComplete: function() {
+				cont_endsession.addEventListener(TouchEvent.TOUCH_DOWN, endsession_dwn, false, 0, true);
+				cont_endsession.addEventListener(TouchEvent.TOUCH_UP, endsession_up, false, 0, true);
+				cont_toscreen.addEventListener(TouchEvent.TOUCH_DOWN, toscreen_dwn, false, 0, true);
+				cont_toscreen.addEventListener(TouchEvent.TOUCH_UP, toscreen_up, false, 0, true);
+				cont_email.addEventListener(TouchEvent.TOUCH_DOWN, email_dwn, false, 0, true);
+				cont_email.addEventListener(TouchEvent.TOUCH_UP, email_up, false, 0, true);
+				cont_star1.addEventListener(TouchEvent.TOUCH_DOWN, star1_dwn, false, 0, true);
+				cont_star1.addEventListener(TouchEvent.TOUCH_UP, star1_up, false, 0, true);
+				cont_star3.addEventListener(TouchEvent.TOUCH_DOWN, star3_dwn, false, 0, true);
+				cont_star3.addEventListener(TouchEvent.TOUCH_UP, star3_up, false, 0, true);
+				cont_star4.addEventListener(TouchEvent.TOUCH_DOWN, star4_dwn, false, 0, true);
+				cont_star4.addEventListener(TouchEvent.TOUCH_UP, star4_up, false, 0, true);
+				dispatchEvent(new Event("activateLang", true));
+			}});
+
 			if (photoSent)
 				reactivateEmailButton();
 		}
@@ -1135,6 +1402,21 @@
 			button_star1.gotoAndStop("down");
 			button_star2.gotoAndStop("down");
 			button_star3.gotoAndStop("down");
+
+			cont_endsession.removeEventListener(TouchEvent.TOUCH_DOWN, endsession_dwn);
+			cont_endsession.removeEventListener(TouchEvent.TOUCH_UP, endsession_up);
+			cont_toscreen.removeEventListener(TouchEvent.TOUCH_DOWN, toscreen_dwn);
+			cont_toscreen.removeEventListener(TouchEvent.TOUCH_UP, toscreen_up);
+			cont_email.removeEventListener(TouchEvent.TOUCH_DOWN, email_dwn);
+			cont_email.removeEventListener(TouchEvent.TOUCH_UP, email_up);
+			cont_star1.removeEventListener(TouchEvent.TOUCH_DOWN, star1_dwn);
+			cont_star1.removeEventListener(TouchEvent.TOUCH_UP, star1_up);
+			cont_star2.removeEventListener(TouchEvent.TOUCH_DOWN, star2_dwn);
+			cont_star2.removeEventListener(TouchEvent.TOUCH_UP, star2_up);
+			cont_star4.removeEventListener(TouchEvent.TOUCH_DOWN, star4_dwn);
+			cont_star4.removeEventListener(TouchEvent.TOUCH_UP, star4_up);
+			dispatchEvent(new Event("deactivateLang", true));
+			photo_blockerOn();
 		}
 		
 		private function star3_up(e:TouchEvent):void {
@@ -1147,6 +1429,22 @@
 			
 			setRating(3);
 			animateSwitch();
+			
+			Tweener.addTween(this, {delay: 2.4, onComplete: function() {
+				cont_endsession.addEventListener(TouchEvent.TOUCH_DOWN, endsession_dwn, false, 0, true);
+				cont_endsession.addEventListener(TouchEvent.TOUCH_UP, endsession_up, false, 0, true);
+				cont_toscreen.addEventListener(TouchEvent.TOUCH_DOWN, toscreen_dwn, false, 0, true);
+				cont_toscreen.addEventListener(TouchEvent.TOUCH_UP, toscreen_up, false, 0, true);
+				cont_email.addEventListener(TouchEvent.TOUCH_DOWN, email_dwn, false, 0, true);
+				cont_email.addEventListener(TouchEvent.TOUCH_UP, email_up, false, 0, true);
+				cont_star1.addEventListener(TouchEvent.TOUCH_DOWN, star1_dwn, false, 0, true);
+				cont_star1.addEventListener(TouchEvent.TOUCH_UP, star1_up, false, 0, true);
+				cont_star2.addEventListener(TouchEvent.TOUCH_DOWN, star2_dwn, false, 0, true);
+				cont_star2.addEventListener(TouchEvent.TOUCH_UP, star2_up, false, 0, true);
+				cont_star4.addEventListener(TouchEvent.TOUCH_DOWN, star4_dwn, false, 0, true);
+				cont_star4.addEventListener(TouchEvent.TOUCH_UP, star4_up, false, 0, true);
+				dispatchEvent(new Event("activateLang", true));
+			}});
 
 			if (photoSent)
 				reactivateEmailButton();
@@ -1157,6 +1455,21 @@
 			button_star2.gotoAndStop("down");
 			button_star3.gotoAndStop("down");
 			button_star4.gotoAndStop("down");
+
+			cont_endsession.removeEventListener(TouchEvent.TOUCH_DOWN, endsession_dwn);
+			cont_endsession.removeEventListener(TouchEvent.TOUCH_UP, endsession_up);
+			cont_toscreen.removeEventListener(TouchEvent.TOUCH_DOWN, toscreen_dwn);
+			cont_toscreen.removeEventListener(TouchEvent.TOUCH_UP, toscreen_up);
+			cont_email.removeEventListener(TouchEvent.TOUCH_DOWN, email_dwn);
+			cont_email.removeEventListener(TouchEvent.TOUCH_UP, email_up);
+			cont_star1.removeEventListener(TouchEvent.TOUCH_DOWN, star1_dwn);
+			cont_star1.removeEventListener(TouchEvent.TOUCH_UP, star1_up);
+			cont_star2.removeEventListener(TouchEvent.TOUCH_DOWN, star2_dwn);
+			cont_star2.removeEventListener(TouchEvent.TOUCH_UP, star2_up);
+			cont_star3.removeEventListener(TouchEvent.TOUCH_DOWN, star3_dwn);
+			cont_star3.removeEventListener(TouchEvent.TOUCH_UP, star3_up);
+			dispatchEvent(new Event("deactivateLang", true));
+			photo_blockerOn();
 		}
 		
 		private function star4_up(e:TouchEvent):void {
@@ -1171,6 +1484,22 @@
 			
 			setRating(4);
 			animateSwitch();
+
+			Tweener.addTween(this, {delay: 2.4, onComplete: function() {
+				cont_endsession.addEventListener(TouchEvent.TOUCH_DOWN, endsession_dwn, false, 0, true);
+				cont_endsession.addEventListener(TouchEvent.TOUCH_UP, endsession_up, false, 0, true);
+				cont_toscreen.addEventListener(TouchEvent.TOUCH_DOWN, toscreen_dwn, false, 0, true);
+				cont_toscreen.addEventListener(TouchEvent.TOUCH_UP, toscreen_up, false, 0, true);
+				cont_email.addEventListener(TouchEvent.TOUCH_DOWN, email_dwn, false, 0, true);
+				cont_email.addEventListener(TouchEvent.TOUCH_UP, email_up, false, 0, true);
+				cont_star1.addEventListener(TouchEvent.TOUCH_DOWN, star1_dwn, false, 0, true);
+				cont_star1.addEventListener(TouchEvent.TOUCH_UP, star1_up, false, 0, true);
+				cont_star2.addEventListener(TouchEvent.TOUCH_DOWN, star2_dwn, false, 0, true);
+				cont_star2.addEventListener(TouchEvent.TOUCH_UP, star2_up, false, 0, true);
+				cont_star3.addEventListener(TouchEvent.TOUCH_DOWN, star3_dwn, false, 0, true);
+				cont_star3.addEventListener(TouchEvent.TOUCH_UP, star3_up, false, 0, true);
+				dispatchEvent(new Event("activateLang", true));
+			}});
 			
 			if (photoSent)
 				reactivateEmailButton();

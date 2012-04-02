@@ -488,7 +488,7 @@
 					keyboardStates.gotoAndStop("keyboard_lc");
 					break;
 				case "keyboard_symnum":
-					inputTxt.appendText("~");
+					inputTxt.appendText("_");
 					inputTxt.setSelection(inputTxt.length, inputTxt.length);
 					key_a.gotoAndStop("default");
 					break;

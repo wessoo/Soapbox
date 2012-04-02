@@ -23,11 +23,13 @@
 	public class Main extends Application {
 		private var timeout:Timer; //timer for idle
 		private var timeoutWarn:Timer; //timer for notifying time out
+		private var countdown:Timer;
 		
 		public static var parserLoaded = false;  //Tells you whether the metadata is available or not.
 		public static var language:int = 0; //language mode. 0: English, 1: Spanish
 		public static var rating:Rating;
-		public var screen:int = 1;
+		public var screen:int = 1; //1: home. 2: rating. 3: ranking.
+		public var countdown_sec:int = 10;
 
 		/* dynamic interface components */
 		private static var shader:Shade;
@@ -40,6 +42,7 @@
 		private var cont_lang:TouchSprite;
 		private var cont_shader:TouchSprite;
 		private var cont_blocker_fullscreen:TouchSprite;
+		private var cont_resetanimation:TouchSprite;
 		
 		private static var SCREEN_HEIGHT:int = 1080;
 		private static var SCREEN_WIDTH:int = 1920;
@@ -61,8 +64,14 @@
 		}
 		//testing
 		override protected function initialize():void {
-			timeout = new Timer(45000, 1);
-			
+			timeout = new Timer(21000, 1); //NOTE: Set to 21 seconds for testing
+			timeoutWarn = new Timer(10000, 1);
+			countdown = new Timer(1000, 10);
+
+			timeout.addEventListener(TimerEvent.TIMER, timeout_reset);
+			timeoutWarn.addEventListener(TimerEvent.TIMER, startCountdown);
+			countdown.addEventListener(TimerEvent.TIMER, count_down);
+
 			cont_tostats = new TouchSprite();
 			cont_torating = new TouchSprite();
 			cont_lang = new TouchSprite();
@@ -85,7 +94,11 @@
 			shader = new Shade();
 			cont_shader = new TouchSprite();
 			cont_shader.addChild(shader);
+			shader.x = 1920/2;
+			shader.y = 1080/2;
 			shader.alpha = 0;
+			cont_shader.addEventListener(TouchEvent.TOUCH_DOWN, shader_dwn, false, 0, true);
+			cont_shader.addEventListener(TouchEvent.TOUCH_UP, shader_up, false, 0, true);
 			
 			//blocker
 			blocker_fullscreen = new Blocker();
@@ -93,6 +106,16 @@
 			blocker_fullscreen.y = 1080/2;
 			cont_blocker_fullscreen = new TouchSprite();
 			cont_blocker_fullscreen.addChild(blocker_fullscreen);
+
+			//reset animation
+			cont_resetanimation = new TouchSprite();
+			cont_resetanimation.addChild(effect_resetanimation);
+			timelineWatcher = new TimelineWatcher(effect_resetanimation);
+            timelineWatcher.addEventListener(TimelineEvent.LABEL_REACHED, resetanim_done);
+
+			//other presets
+			txt_timeout.alpha = 0;
+			effect_resetanimation.alpha = 0;
 
 			/*timelineWatcher = new TimelineWatcher(bubble_toscreen);
             timelineWatcher.addEventListener(TimelineEvent.LABEL_REACHED, screen_bubble_done);*/
@@ -107,9 +130,13 @@
 			LANDTXT_YPOS = landing_text.y;
 			LOGO_YPOS = graphic_logo.y;
 
+			addEventListener(TouchEvent.TOUCH_DOWN, anyTouch); //registering any touch on the screen
 			addEventListener("shiftUp", shiftUp);
 			addEventListener("shiftDown", shiftDown);
 			addEventListener("endSession", endSession);
+			addEventListener("reset_animate", reset_animate);
+			addEventListener("deactivateLang", deactivateLang);
+			addEventListener("activateLang", activateLang);
 
 			//Start parsing Soapbox.xml for its metadata
 			ImageParser.addEventListener(Event.COMPLETE, imageParserLoaded, false, 0, true);
@@ -134,12 +161,58 @@
 		/* -------------------------------------------- */
 		/* ------ Interface/Animation Functions ------- */
 		/* -------------------------------------------- */
+		private function anyTouch(e:TouchEvent):void {
+			if(screen == 2) {
+				timeoutWarn.reset();
+				timeoutWarn.start();
+				timeout.reset();
+				timeout.start();
+			}
+		}
+
+		private function timeout_reset(e:TimerEvent):void {
+			trace("reset");
+		}
+
+		private function count_down(e:TimerEvent):void {
+			//trace(countdown_sec);
+			txt_timeout.txt_counter.text = countdown_sec;
+			countdown_sec--;
+		}
+
+		private function startCountdown(e:TimerEvent):void {
+			trace("starting countdown");
+			shadeOn();
+			addChild(txt_timeout);
+			Tweener.addTween(txt_timeout, { alpha: 1, time: 1} );
+			countdown.start();
+		}		
+
+		private function shader_dwn(e:TouchEvent):void {
+
+		}
+
+		private function shader_up(e:TouchEvent):void {
+			Tweener.addTween(shader, { alpha: 0, time: 0.5, onComplete: shadeOff});
+			Tweener.addTween(txt_timeout, { alpha: 0, time: 1} );
+			countdown.reset();
+			countdown_sec = 10;
+		}
+
 		private function torating_dwn(e:TouchEvent):void {
 			button_torating.gotoAndStop("down");
+
+			cont_tostats.removeEventListener(TouchEvent.TOUCH_DOWN, tostats_dwn);
+			cont_tostats.removeEventListener(TouchEvent.TOUCH_UP, tostats_up);
+			cont_lang.removeEventListener(TouchEvent.TOUCH_DOWN, lang_dwn);
+			cont_lang.removeEventListener(TouchEvent.TOUCH_UP, lang_up);
 		}	
 		
 		private function torating_up(e:TouchEvent):void {
 			button_torating.gotoAndStop("up");
+			timeout.start();
+			timeoutWarn.start();
+			screen = 2;
 
 			Tweener.addTween(background_texture, {y: 1330 - 1080, time: 1.5, transition: "easeInOutQuart" });
 			Tweener.addTween(rating, {y: RATING_Y_POS, time: 1.5, transition: "easeInOutQuart" });
@@ -149,6 +222,13 @@
 			Tweener.addTween(graphic_logo, {y: LOGO_Y - SCREEN_HEIGHT, time: 1.5, transition: "easeInOutQuart" });
 			Tweener.addTween(cont_lang, { alpha: 0, time: 0.5});
 			Tweener.addTween(cont_lang, { alpha: 1, time: 1, delay: 1.5});
+
+			Tweener.addTween(this, {delay: 1.5, onComplete: function() { 
+				cont_tostats.addEventListener(TouchEvent.TOUCH_DOWN, tostats_dwn, false, 0, true);
+				cont_tostats.addEventListener(TouchEvent.TOUCH_UP, tostats_up, false, 0, true);
+				cont_lang.addEventListener(TouchEvent.TOUCH_DOWN, lang_dwn, false, 0, true);
+				cont_lang.addEventListener(TouchEvent.TOUCH_UP, lang_up, false, 0, true);
+			}});
 
 			blockerOn();
 			Tweener.addTween(cont_blocker_fullscreen, { delay: 1.5, onComplete: function() {
@@ -160,10 +240,22 @@
 
 		private function tostats_dwn(e:TouchEvent):void {
 			button_tostats.gotoAndStop("down");
+
+			cont_torating.removeEventListener(TouchEvent.TOUCH_DOWN, torating_dwn);
+			cont_torating.removeEventListener(TouchEvent.TOUCH_UP, torating_up);
+			cont_lang.removeEventListener(TouchEvent.TOUCH_DOWN, lang_dwn);
+			cont_lang.removeEventListener(TouchEvent.TOUCH_UP, lang_up);
 		}	
 		
 		private function tostats_up(e:TouchEvent):void {
 			button_tostats.gotoAndStop("up");
+
+			Tweener.addTween(this, {delay: 1.5, onComplete: function() { 
+				cont_torating.addEventListener(TouchEvent.TOUCH_DOWN, torating_dwn, false, 0, true);
+				cont_torating.addEventListener(TouchEvent.TOUCH_UP, torating_up, false, 0, true);
+				cont_lang.addEventListener(TouchEvent.TOUCH_DOWN, lang_dwn, false, 0, true);
+				cont_lang.addEventListener(TouchEvent.TOUCH_UP, lang_up, false, 0, true);
+			}});
 
 			if(screen == 1) {
 				screen = 3;
@@ -174,8 +266,8 @@
 				Tweener.addTween(graphic_logo, {x: LOGO_X + SCREEN_WIDTH, time: 1.5, transition: "easeInOutQuart" });
 				Tweener.addTween(ranking_mockup, {x: -956.75 + SCREEN_WIDTH, time: 1.5, transition: "easeInOutQuart" });
 				Tweener.addTween(cont_lang, { alpha: 0, time: 0.5, onComplete: function() {
-					button_lang.x = 75.9;
-					button_lang.y = 976.8;
+					button_lang.x = 57.75;
+					button_lang.y = 985.95;
 				} });
 				Tweener.addTween(cont_lang, { alpha: 1, time: 1, delay: 1.5});
 			} else if (screen == 3) {
@@ -188,7 +280,7 @@
 				Tweener.addTween(ranking_mockup, {x: -956.75, time: 1.5, transition: "easeInOutQuart" });
 				Tweener.addTween(cont_lang, { alpha: 0, time: 0.5, onComplete: function() {
 					button_lang.x = 1832.35;
-					button_lang.y = 950.8;
+					button_lang.y = 955;
 				} });
 				Tweener.addTween(cont_lang, { alpha: 1, time: 1, delay: 1.5});
 			}
@@ -203,6 +295,11 @@
 			} else {
 				button_lang.gotoAndStop("eng_down");
 			}
+
+			cont_torating.removeEventListener(TouchEvent.TOUCH_DOWN, torating_dwn);
+			cont_torating.removeEventListener(TouchEvent.TOUCH_UP, torating_up);
+			cont_tostats.removeEventListener(TouchEvent.TOUCH_DOWN, tostats_dwn);
+			cont_tostats.removeEventListener(TouchEvent.TOUCH_UP, tostats_up);
 		}	
 		
 		private function lang_up(e:TouchEvent):void {
@@ -213,10 +310,177 @@
 				button_lang.gotoAndStop("esp_up");
 				changeLang(); //switch to English
 			}
+
+			cont_torating.addEventListener(TouchEvent.TOUCH_DOWN, torating_dwn, false, 0, true);
+			cont_torating.addEventListener(TouchEvent.TOUCH_UP, torating_up, false, 0, true);
+			cont_tostats.addEventListener(TouchEvent.TOUCH_DOWN, tostats_dwn, false, 0, true);
+			cont_tostats.addEventListener(TouchEvent.TOUCH_UP, tostats_up, false, 0, true);
+		}
+
+		private function reset_animate(e:Event):void {
+			addChild(cont_resetanimation);
+			Tweener.addTween(effect_resetanimation, {alpha: 1, time: 2, delay: 1});
+			
+			effect_resetanimation.badge1.gotoAndStop("on");
+			effect_resetanimation.badge2.gotoAndStop("on");
+			effect_resetanimation.badge3.gotoAndStop("on");
+			effect_resetanimation.badge4.gotoAndStop("on");
+			effect_resetanimation.badge5.gotoAndStop("on");
+			effect_resetanimation.badge6.gotoAndStop("on");
+			
+			//turn on/off badges
+			if(rating.currentBadge == 1) {
+				effect_resetanimation.badge2.gotoAndStop("off");
+				effect_resetanimation.badge3.gotoAndStop("off");
+				effect_resetanimation.badge4.gotoAndStop("off");
+				effect_resetanimation.badge5.gotoAndStop("off");
+				effect_resetanimation.badge6.gotoAndStop("off");
+			} else if (rating.currentBadge == 2) {
+				effect_resetanimation.badge3.gotoAndStop("off");
+				effect_resetanimation.badge4.gotoAndStop("off");
+				effect_resetanimation.badge5.gotoAndStop("off");
+				effect_resetanimation.badge6.gotoAndStop("off");
+			} else if (rating.currentBadge == 3) {
+				effect_resetanimation.badge4.gotoAndStop("off");
+				effect_resetanimation.badge5.gotoAndStop("off");
+				effect_resetanimation.badge6.gotoAndStop("off");
+			} else if (rating.currentBadge == 4) {
+				effect_resetanimation.badge5.gotoAndStop("off");
+				effect_resetanimation.badge6.gotoAndStop("off");
+			} else if (rating.currentBadge == 5) {
+				effect_resetanimation.badge6.gotoAndStop("off");
+			}
+
+			//where to skip to
+			if(rating.sendBadges) {
+				Tweener.addTween(this, {delay: 2, onComplete: function() { effect_resetanimation.gotoAndPlay("play"); }});
+			} else {
+				effect_resetanimation.gotoAndStop("thanks");
+				Tweener.addTween(this, {delay: 2, onComplete: function() { effect_resetanimation.gotoAndPlay("thanks"); }});
+			}
+		}
+
+		private function resetanim_done(e:TimelineEvent):void {
+			if (e.currentLabel === "end") {
+				Tweener.addTween(effect_resetanimation, {alpha: 0, time: 2, onComplete: function() { 
+					effect_resetanimation.gotoAndStop(1);
+					effect_resetanimation.badge1.gotoAndStop("on");
+					effect_resetanimation.badge2.gotoAndStop("on");
+					effect_resetanimation.badge3.gotoAndStop("on");
+					effect_resetanimation.badge4.gotoAndStop("on");
+					effect_resetanimation.badge5.gotoAndStop("on");
+					effect_resetanimation.badge6.gotoAndStop("on");
+					removeChild(cont_resetanimation); 
+				}});
+			} else if (e.currentLabel === "step1") {
+				if(rating.currentBadge == 1) {
+					effect_resetanimation.badge2.gotoAndStop("off");
+					effect_resetanimation.badge3.gotoAndStop("off");
+					effect_resetanimation.badge4.gotoAndStop("off");
+					effect_resetanimation.badge5.gotoAndStop("off");
+					effect_resetanimation.badge6.gotoAndStop("off");
+				} else if (rating.currentBadge == 2) {
+					effect_resetanimation.badge3.gotoAndStop("off");
+					effect_resetanimation.badge4.gotoAndStop("off");
+					effect_resetanimation.badge5.gotoAndStop("off");
+					effect_resetanimation.badge6.gotoAndStop("off");
+				} else if (rating.currentBadge == 3) {
+					effect_resetanimation.badge4.gotoAndStop("off");
+					effect_resetanimation.badge5.gotoAndStop("off");
+					effect_resetanimation.badge6.gotoAndStop("off");
+				} else if (rating.currentBadge == 4) {
+					effect_resetanimation.badge5.gotoAndStop("off");
+					effect_resetanimation.badge6.gotoAndStop("off");
+				} else if (rating.currentBadge == 5) {
+					effect_resetanimation.badge6.gotoAndStop("off");
+				}
+			} else if (e.currentLabel === "step2") {
+				if(rating.currentBadge == 1) {
+					effect_resetanimation.badge2.gotoAndStop("off");
+					effect_resetanimation.badge3.gotoAndStop("off");
+					effect_resetanimation.badge4.gotoAndStop("off");
+					effect_resetanimation.badge5.gotoAndStop("off");
+					effect_resetanimation.badge6.gotoAndStop("off");
+				} else if (rating.currentBadge == 2) {
+					effect_resetanimation.badge3.gotoAndStop("off");
+					effect_resetanimation.badge4.gotoAndStop("off");
+					effect_resetanimation.badge5.gotoAndStop("off");
+					effect_resetanimation.badge6.gotoAndStop("off");
+				} else if (rating.currentBadge == 3) {
+					effect_resetanimation.badge4.gotoAndStop("off");
+					effect_resetanimation.badge5.gotoAndStop("off");
+					effect_resetanimation.badge6.gotoAndStop("off");
+				} else if (rating.currentBadge == 4) {
+					effect_resetanimation.badge5.gotoAndStop("off");
+					effect_resetanimation.badge6.gotoAndStop("off");
+				} else if (rating.currentBadge == 5) {
+					effect_resetanimation.badge6.gotoAndStop("off");
+				}
+			} else if (e.currentLabel === "step3") {
+				if(rating.currentBadge == 1) {
+					effect_resetanimation.badge2.gotoAndStop("off");
+					effect_resetanimation.badge3.gotoAndStop("off");
+					effect_resetanimation.badge4.gotoAndStop("off");
+					effect_resetanimation.badge5.gotoAndStop("off");
+					effect_resetanimation.badge6.gotoAndStop("off");
+				} else if (rating.currentBadge == 2) {
+					effect_resetanimation.badge3.gotoAndStop("off");
+					effect_resetanimation.badge4.gotoAndStop("off");
+					effect_resetanimation.badge5.gotoAndStop("off");
+					effect_resetanimation.badge6.gotoAndStop("off");
+				} else if (rating.currentBadge == 3) {
+					effect_resetanimation.badge4.gotoAndStop("off");
+					effect_resetanimation.badge5.gotoAndStop("off");
+					effect_resetanimation.badge6.gotoAndStop("off");
+				} else if (rating.currentBadge == 4) {
+					effect_resetanimation.badge5.gotoAndStop("off");
+					effect_resetanimation.badge6.gotoAndStop("off");
+				} else if (rating.currentBadge == 5) {
+					effect_resetanimation.badge6.gotoAndStop("off");
+				}
+			} else if (e.currentLabel === "step4") {
+				if(rating.currentBadge == 1) {
+					effect_resetanimation.badge2.gotoAndStop("off");
+
+					effect_resetanimation.badge3.gotoAndStop("off");
+					effect_resetanimation.badge4.gotoAndStop("off");
+					effect_resetanimation.badge5.gotoAndStop("off");
+					effect_resetanimation.badge6.gotoAndStop("off");
+				} else if (rating.currentBadge == 2) {
+					effect_resetanimation.badge3.gotoAndStop("off");
+					effect_resetanimation.badge4.gotoAndStop("off");
+					effect_resetanimation.badge5.gotoAndStop("off");
+					effect_resetanimation.badge6.gotoAndStop("off");
+				} else if (rating.currentBadge == 3) {
+					effect_resetanimation.badge4.gotoAndStop("off");
+					effect_resetanimation.badge5.gotoAndStop("off");
+					effect_resetanimation.badge6.gotoAndStop("off");
+				} else if (rating.currentBadge == 4) {
+					effect_resetanimation.badge5.gotoAndStop("off");
+					effect_resetanimation.badge6.gotoAndStop("off");
+				} else if (rating.currentBadge == 5) {
+					effect_resetanimation.badge6.gotoAndStop("off");
+				}
+			}
+		}
+
+		private function deactivateLang(e:Event):void {
+			cont_lang.removeEventListener(TouchEvent.TOUCH_DOWN, lang_dwn);
+			cont_lang.removeEventListener(TouchEvent.TOUCH_UP, lang_up);
+		}
+
+		private function activateLang(e:Event):void {
+			cont_lang.addEventListener(TouchEvent.TOUCH_DOWN, lang_dwn, false, 0, true);
+			cont_lang.addEventListener(TouchEvent.TOUCH_UP, lang_up, false, 0, true);
 		}
 
 		private function endSession(e:Event):void {
 			Tweener.addTween(rating, {y: RATING_Y_POS + SCREEN_HEIGHT, time: 2, transition: "easeInOutQuart" });
+			screen = 1;
+
+			timeout.reset();
+			timeoutWarn.reset();
+			countdown.reset();
 
 			Tweener.addTween(background_texture, {y: BG_YPOS, time: 2, transition: "easeInOutQuart" });
 			Tweener.addTween(button_torating, {y: TORATING_YPOS, time: 2, transition: "easeInOutQuart" });
@@ -246,8 +510,8 @@
 		}
 		
 		public function shadeOff():void {
-			trace("call off shader");
-			Tweener.addTween(shader, { delay: 1, alpha: 0, time: 0.5, onComplete: function() { removeChild(cont_shader) } } );
+			//Tweener.addTween(shader, { delay: 1, alpha: 0, time: 0.5, onComplete: function() { removeChild(cont_shader); } } );
+			removeChild(cont_shader);
 		}
 		
 		public function blockerOn():void {
