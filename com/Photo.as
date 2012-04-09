@@ -247,7 +247,6 @@
 		}
 		
 		private function touchHandler(e:TouchEvent):void{
-			trace("BAM");
 			if(!viewing){
 				parent.addChild(this);
 				blackOn();
