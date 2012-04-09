@@ -18,6 +18,8 @@
 
 	public class Rating extends TouchComponent {
 		private var images:Array;     	//the array of randomized image id's
+		private var emails:Array;		//the array of user emails
+		private var packages:Array;		//the array of packages of images associated with the emails array
 		private var ratings:Array; 		//the array of ratings of each image
 		private var currentLoc:int;		//current location in the array
 		private var lastRated:int;		//tells you the last image rated
@@ -35,6 +37,8 @@
 		private static var badge4:int = 70;
 		private static var badge5:int = 95;
 		private static var badge6:int = 120;
+		private static var debugSpeed:int = 1; //The debugging speed for rating images (1 means normal, 2 mean 2x, etc...)
+											   //Keep the debug speed a multiple of 120!!
 		
 		/* dyanmic interface components */
 		private static var hitarea_exitEmail:ExitEmail;	//hit area outside of email box and keyboard to return to Rating screen
@@ -105,6 +109,8 @@
 			//initialize vars 
 			images = new Array();
 			ratings = new Array();
+			emails = new Array();
+			packages = new Array();
 			currentLoc = -1;
 			reachedEnd = false;
 			currentBadge = -1;
@@ -416,11 +422,11 @@
 		
 		//gets the next images to rate
 		public function getNext():int{
-			++currentLoc;
+			currentLoc = currentLoc + debugSpeed;
 			
 			if(currentLoc > (images.length -1)){
 				reachedEnd = true;
-				--currentLoc;
+				currentLoc = 119;  //used to be --
 			}
 			
 			return images[currentLoc];
@@ -438,10 +444,16 @@
 			}else{
 				ratings[currentLoc] = r;
 				lastRated = currentLoc;
+				sendToDatabase(photo.ext, r);
 				text_remaining_ratings.text = (int(text_remaining_ratings.text) - 1).toString();
 				badgeCheck();
 				return true;
 			}
+		}
+		
+		private function sendToDatabase(ext:String, rating:int):void{
+			//trace("Image: " + ext + ", Rating: " + rating);
+			//Add actual HTTP request once Alejandro finishes adding the database
 		}
 		
 		//checks, based on the current location if you have gotten a badge or not
@@ -677,6 +689,8 @@
 		 */
 		private function storeEmail(address:String):void {
 			email = address;
+			emails.push(address);
+			//trace("Stored: " + address);
 		}
 		
 		/*
@@ -906,9 +920,14 @@
 			} else if (!photoSent) { //e-mail already entered
 				/* code for sending e-mail */
 				if(!package_created) {
+					storeEmail(email);
+					//trace("Added empty array to packages for new email");
+					packages.push(new Array());
 					package_created = true;
 				}
-
+				
+				//trace("Packaged " + photo.ext + " with email: " + emails[emails.length - 1]);
+				packages[emails.length - 1].push(photo.ext);
 				photoSent = true;
 				button_email.alpha = 0.5;
 				Tweener.addTween(bubble_packaged, { alpha: 1, time: 1 } );
@@ -1651,13 +1670,10 @@
 		
 			text_metadata.height += (text_metadata.textHeight - oldTH);
 			
-			var next_height:int = text_metadata.textHeight + 14 * 2;
-			var next_y:int = window_metadata.y + (oldWH - next_y) / 2;
-			//window_metadata.height = text_metadata.textHeight + 14 * 2;
-			//window_metadata.y += (oldWH - window_metadata.height) / 2;
+			//var next_height:int = text_metadata.textHeight + 14 * 2;
+			//var next_y:int = window_metadata.y + (oldWH - next_y) / 2;
 			
 			text_metadata.y = window_metadata.y - text_metadata.height / 2;
-			//text_metadata.y = next_y - text_metadata.height / 2;
 			
 			Tweener.addTween(window_metadata, { time: 1, height: text_metadata.textHeight + 14 * 2, y: window_metadata.y + (oldWH - window_metadata.height) / 2 } );
 			Tweener.addTween(text_metadata, { time: 1, alpha: 1} );
