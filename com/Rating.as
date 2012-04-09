@@ -555,6 +555,115 @@
 			blockerOn();
 			Tweener.addTween(cont_blocker_fullscreen, { delay: 2, onComplete: blockerOff } );
 		}
+
+		public function timeoutReset():void {
+			//dispatchEvent(new Event("reset_animate", true));//RETURN HERE
+			
+			//VISUAL
+			graphic_fakebg.alpha = 0;
+			
+			//shader
+			if(shader.alpha == 1)
+				shadeOff();
+			
+			//instructional
+			if(cont_instructions.alpha == 1)
+				Tweener.addTween(cont_instructions, {alpha: 0, time: 1, onComplete: function() { removeChild(cont_instructions); }});
+
+			//end session
+			if(cont_endsession_modal.alpha == 1) {
+				Tweener.addTween(cont_endsession_modal, { height: cont_endsession_modal.height - 20, width: cont_endsession_modal.width - 50, alpha: 0, time: 1, onComplete: function() {
+					removeChild(cont_endsession_modal);
+				} });
+			}
+
+			//got badge modal
+			if(cont_gotbadge_modal.alpha == 1) {
+				Tweener.addTween(cont_gotbadge_modal, { height: cont_gotbadge_modal.height - 100, width: cont_gotbadge_modal.width - 100, alpha: 0, time: 1, onComplete: function() {
+					removeChild(cont_gotbadge_modal);
+				} });
+			}
+
+			//in keyboard mode
+			if(window_email.alpha == 1) {
+				//removeChild(cont_exitEmail);
+				exitEmail();
+			}
+
+			//keyboard visible
+			if(softKeyboard.alpha == 1) {
+				Tweener.addTween(softKeyboard, { alpha: 0, time: 1 } );
+			}
+
+			//viewing photo
+			//trace(photo.viewing);
+			/*if(photo.viewing) {
+				trace("exit viewing");*/
+				photo.exitViewing();
+			//}
+			
+			Tweener.addTween(this, {delay: 2, onComplete: function() { dispatchEvent(new Event("endSession", true)); }});
+
+			Tweener.addTween(this, { delay: 4, onComplete: function() { 
+				//LOGICAL
+				currentLoc = -1;
+				reachedEnd = false;
+				currentBadge = -1;
+				lastRated = -1;
+				photoSent = false;
+				maillist_opt = false;
+				email = '';
+				sendBadges = false;
+				aboutShowing = false;
+
+				//VISUAL
+				//text
+				email_entered.text = '';
+				txt_email.text = '';
+				text_remaining_ratings.text = "10";
+				window_endsession.txt_email.text = '';
+				window_endsession.button_maillist.gotoAndStop("check");
+				window_about.alpha = 0;
+				
+				//share button
+				button_email.alpha = 1;
+				button_email.text_emailimage.alpha = 1;
+				button_email.text_emailimageto.alpha = 0;
+				button_removeemail.alpha = 0;
+				button_removeemail.width = button_removeemail.height = 6.4;
+				
+				//photo
+				photo.id = getNext();
+				dummyPhoto.id = photo.id;
+
+				//shader
+				cont_shader.y = 0;
+
+				//instructional
+				cont_instructions.alpha = 0;
+
+				//metadata
+				setMetadata(photo.title, photo.artist, photo.bio, photo.date, photo.process, photo.credit);
+
+				//badges
+				txt_10.alpha = txt_25.alpha = txt_45.alpha = txt_70.alpha = txt_95.alpha = txt_120.alpha = 0;
+				badge_1.grey.alpha = 1;
+				badge_2.grey.alpha = badge_3.grey.alpha = badge_3.grey.alpha = badge_4.grey.alpha = badge_5.grey.alpha = badge_6.grey.alpha = 0;
+				badge_1.color.alpha = badge_2.color.alpha = badge_3.color.alpha = badge_3.color.alpha = badge_4.color.alpha = badge_5.color.alpha = badge_6.color.alpha = 0;
+
+				//bubbles
+				//RETURN HERE
+
+				for(var i:int = 1; i <= 120; ++i){
+					images.push(i);
+					ratings.push(-1);
+				}
+				shuffle();
+			}});
+			
+			blockerOn();
+			Tweener.addTween(cont_blocker_fullscreen, { delay: 2, onComplete: blockerOff } );
+		}
 		
 		//gets the current badge
 		public function getCurrentBadge():int{
@@ -838,6 +947,24 @@
 			exitEmail();
 		}
 
+		private function exitEmail():void {
+			removeChild(cont_exitEmail); //put exit_email above shade
+			softKeyboard.clearEmail();
+			Tweener.addTween(cont_shader, { y: cont_shader.y - 300, time: 1 } );				
+			Tweener.addTween(this, { y: this.y + 300, time: 1 } );				
+			Tweener.addTween(button_okemail, { alpha: 0, time: 1 } );
+			Tweener.addTween(window_email, { alpha: 0, time: 1 } );
+			Tweener.addTween(window_email, { height: window_email.height - 100, width: window_email.width - 100, time: 1, transition: "easeOutElastic" } );
+			Tweener.addTween(softKeyboard, { alpha: 0, time: 1 } );
+			Tweener.addTween(softKeyboard, { height: softKeyboard.height - 100, width: softKeyboard.width - 100, time: 1, transition: "easeOutElastic" } );
+			dispatchEvent(new Event("shiftDown", true)); //move background down
+			shadeOff();
+			
+			blockerOn();
+			Tweener.addTween(cont_blocker_fullscreen, { y: cont_blocker_fullscreen.y - 300, time: 1 } );
+			Tweener.addTween(cont_blocker_fullscreen, { delay: 1.5, onComplete: blockerOff } );
+		}
+
 		private function okemail_dwn(e:TouchEvent):void {
 			button_okemail.gotoAndStop("down");
 		}
@@ -870,24 +997,6 @@
 				Tweener.addTween(button_removeemail, { height: REMOVEEMAIL_SIZE, width: REMOVEEMAIL_SIZE, delay: 1, time: 1, transition: "easeOutElastic" } );
 				EMAIL_ADDED = true; //bubble is on
 			}
-		}
-		
-		private function exitEmail():void {
-			removeChild(cont_exitEmail); //put exit_email above shade
-			softKeyboard.clearEmail();
-			Tweener.addTween(cont_shader, { y: cont_shader.y - 300, time: 1 } );				
-			Tweener.addTween(this, { y: this.y + 300, time: 1 } );				
-			Tweener.addTween(button_okemail, { alpha: 0, time: 1 } );
-			Tweener.addTween(window_email, { alpha: 0, time: 1 } );
-			Tweener.addTween(window_email, { height: window_email.height - 100, width: window_email.width - 100, time: 1, transition: "easeOutElastic" } );
-			Tweener.addTween(softKeyboard, { alpha: 0, time: 1 } );
-			Tweener.addTween(softKeyboard, { height: softKeyboard.height - 100, width: softKeyboard.width - 100, time: 1, transition: "easeOutElastic" } );
-			dispatchEvent(new Event("shiftDown", true)); //move background down
-			shadeOff();
-			
-			blockerOn();
-			Tweener.addTween(cont_blocker_fullscreen, { y: cont_blocker_fullscreen.y - 300, time: 1 } );
-			Tweener.addTween(cont_blocker_fullscreen, { delay: 1.5, onComplete: blockerOff } );
 		}
 		
 		private function removeemail_dwn(e:TouchEvent):void {

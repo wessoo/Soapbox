@@ -37,7 +37,7 @@
 		private var frameHeight:Number = 831;
 		private var padding:Number = 35; //padding that should go around the images
 		private var viewPadding:Number = 40;
-		private var viewing:Boolean = false;  //Whether or not the image is currently zoomed in
+		public var viewing:Boolean = false;  //Whether or not the image is currently zoomed in
 		
 		private static var black:Black;
 		private var cont_black:TouchSprite;
@@ -247,6 +247,7 @@
 		}
 		
 		private function touchHandler(e:TouchEvent):void{
+			trace("BAM");
 			if(!viewing){
 				parent.addChild(this);
 				blackOn();
@@ -266,6 +267,24 @@
 			}
 		}
 		
+		public function exitViewing():void {
+			trace("EXIT ME");
+			removeChild(photo);
+			removeChild(cont_black);
+			Tweener.addTween(photo, {x: 100, y: 100, time: 1});
+			//Tweener.addTween(photo, {x: savedX, y: savedY, scaleX: savedScale, scaleY: savedScale, time: 1.5})
+			//blackOff();
+			/*Tweener.addTween(cont_black, { alpha: 0, time: 1, delay : .5, onComplete: function() { 
+				 if(contains(cont_black)) {
+				 	removeChild(cont_black);
+				 }
+			} } );*/
+
+			blockerOn();
+			Tweener.addTween(cont_blocker_fullscreen, { delay: .5, onComplete: function() { blockerOff(); } } );
+			viewing = false;
+		}
+
 		override public function Dispose():void{
 			removeChild(photo);
 			photo.Dispose();

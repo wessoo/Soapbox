@@ -64,9 +64,11 @@
 		}
 		//testing
 		override protected function initialize():void {
-			timeout = new Timer(21000, 1); //NOTE: Set to 21 seconds for testing
-			timeoutWarn = new Timer(10000, 1);
+			timeout = new Timer(46000, 1); //NOTE: Set to 21 seconds for testing
+			timeoutWarn = new Timer(35000, 1);
 			countdown = new Timer(1000, 10);
+			/*timeout = new Timer(16000, 1); 
+			timeoutWarn = new Timer(5000, 1);*/
 
 			timeout.addEventListener(TimerEvent.TIMER, timeout_reset);
 			timeoutWarn.addEventListener(TimerEvent.TIMER, startCountdown);
@@ -141,6 +143,11 @@
 			//Start parsing Soapbox.xml for its metadata
 			ImageParser.addEventListener(Event.COMPLETE, imageParserLoaded, false, 0, true);
 			ImageParser.settingsPath = "Soapbox.xml";
+
+			/*rating = new Rating();
+			rating.x = RATING_X_POS;
+			rating.y = RATING_Y_POS + SCREEN_HEIGHT;			
+			addChild(rating);*/
 		}
 		
 		/* -------------------------------------------- */
@@ -148,6 +155,7 @@
 		/* -------------------------------------------- */
 		public function resetSession():void {
 			rating.resetSession();
+
 		}
 		
 		public function changeLang():void {
@@ -172,6 +180,14 @@
 
 		private function timeout_reset(e:TimerEvent):void {
 			trace("reset");
+
+			//rating.resetSession();
+			rating.timeoutReset();
+
+			Tweener.addTween(shader, { alpha: 0, time: 0.5, onComplete: shadeOff});
+			Tweener.addTween(txt_timeout, { alpha: 0, time: 1} );
+			countdown.reset();
+			countdown_sec = 10;
 		}
 
 		private function count_down(e:TimerEvent):void {
@@ -442,7 +458,6 @@
 			} else if (e.currentLabel === "step4") {
 				if(rating.currentBadge == 1) {
 					effect_resetanimation.badge2.gotoAndStop("off");
-
 					effect_resetanimation.badge3.gotoAndStop("off");
 					effect_resetanimation.badge4.gotoAndStop("off");
 					effect_resetanimation.badge5.gotoAndStop("off");
@@ -478,11 +493,11 @@
 		private function endSession(e:Event):void {
 			Tweener.addTween(rating, {y: RATING_Y_POS + SCREEN_HEIGHT, time: 2, transition: "easeInOutQuart" });
 			screen = 1;
-
+			
 			timeout.reset();
 			timeoutWarn.reset();
 			countdown.reset();
-
+			
 			Tweener.addTween(background_texture, {y: BG_YPOS, time: 2, transition: "easeInOutQuart" });
 			Tweener.addTween(button_torating, {y: TORATING_YPOS, time: 2, transition: "easeInOutQuart" });
 			Tweener.addTween(button_tostats, {y: TOSTATS_YPOS, time: 2, transition: "easeInOutQuart" });
@@ -490,7 +505,7 @@
 			Tweener.addTween(graphic_logo, {y: LOGO_YPOS, time: 2, transition: "easeInOutQuart" });
 			Tweener.addTween(cont_lang, { alpha: 0, time: 0.5});
 			Tweener.addTween(cont_lang, { alpha: 1, time: 1, delay: 1.5});
-
+			
 			blockerOn();
 			Tweener.addTween(cont_blocker_fullscreen, { delay: 2, onComplete: blockerOff } );
 		}
