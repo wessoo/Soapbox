@@ -67,8 +67,8 @@
 			timeout = new Timer(46000, 1); //NOTE: Set to 21 seconds for testing
 			timeoutWarn = new Timer(35000, 1);
 			countdown = new Timer(1000, 10);
-			/*timeout = new Timer(16000, 1); 
-			timeoutWarn = new Timer(5000, 1);*/
+			//timeout = new Timer(16000, 1); 
+			//timeoutWarn = new Timer(5000, 1);
 
 			timeout.addEventListener(TimerEvent.TIMER, timeout_reset);
 			timeoutWarn.addEventListener(TimerEvent.TIMER, startCountdown);
@@ -139,6 +139,8 @@
 			addEventListener("reset_animate", reset_animate);
 			addEventListener("deactivateLang", deactivateLang);
 			addEventListener("activateLang", activateLang);
+			addEventListener("suspend_timeout", suspend_timeout);
+			addEventListener("resume_timeout", resume_timeout);
 
 			//Start parsing Soapbox.xml for its metadata
 			ImageParser.addEventListener(Event.COMPLETE, imageParserLoaded, false, 0, true);
@@ -181,13 +183,17 @@
 		private function timeout_reset(e:TimerEvent):void {
 			trace("reset");
 
-			//rating.resetSession();
-			rating.timeoutReset();
+			if(screen == 2) {
+				rating.timeoutReset();
 
-			Tweener.addTween(shader, { alpha: 0, time: 0.5, onComplete: shadeOff});
-			Tweener.addTween(txt_timeout, { alpha: 0, time: 1} );
-			countdown.reset();
-			countdown_sec = 10;
+				Tweener.addTween(shader, { alpha: 0, time: 0.5, onComplete: shadeOff});
+				Tweener.addTween(txt_timeout, { alpha: 0, time: 1} );
+				countdown.reset();
+				countdown_sec = 10;
+			} else if (screen == 3) {
+				
+			}
+
 		}
 
 		private function count_down(e:TimerEvent):void {
@@ -488,6 +494,16 @@
 		private function activateLang(e:Event):void {
 			cont_lang.addEventListener(TouchEvent.TOUCH_DOWN, lang_dwn, false, 0, true);
 			cont_lang.addEventListener(TouchEvent.TOUCH_UP, lang_up, false, 0, true);
+		}
+
+		private function suspend_timeout(e:Event):void {
+			timeout.reset();
+			timeoutWarn.reset();
+		}
+
+		private function resume_timeout(e:Event):void {
+			timeout.start();
+			timeoutWarn.start();
 		}
 
 		private function endSession(e:Event):void {

@@ -8,6 +8,7 @@
 	import flash.geom.Point;
 	import com.refunk.events.TimelineEvent;
     import com.refunk.timeline.TimelineWatcher;
+    import fl.video.*;
 	
 	import gl.events.GestureEvent;
 	import gl.events.TouchEvent;
@@ -79,6 +80,12 @@
 		private var cont_es_removeemail:TouchSprite;
 		private var cont_es_okemail:TouchSprite;
 		private var cont_es_esskip:TouchSprite;
+		private var cont_video1:TouchSprite;
+		private var cont_video2:TouchSprite;
+		private var cont_video3:TouchSprite;
+		private var cont_video4:TouchSprite;
+		private var cont_video5:TouchSprite;
+		private var cont_video6:TouchSprite;
 		//private var cont_badgeemail:TouchSprite;
 		
 		/* guidance cue booleans */
@@ -138,6 +145,12 @@
 			cont_es_mailbg = new TouchSprite();
 			cont_es_okemail = new TouchSprite();
 			cont_es_esskip = new TouchSprite();
+			cont_video1 = new TouchSprite();
+			cont_video2 = new TouchSprite();
+			cont_video3 = new TouchSprite();
+			cont_video4 = new TouchSprite();
+			cont_video5 = new TouchSprite();
+			cont_video6 = new TouchSprite();
 
 			cont_endsession.addChild(button_endsession);
 			addChild(cont_endsession);
@@ -179,6 +192,12 @@
 			cont_endsession_modal.addChild(cont_es_okemail);
 			cont_es_esskip.addChild(window_endsession.button_esskip);
 			cont_endsession_modal.addChild(cont_es_esskip);
+			cont_video1.addChild(video1);
+			cont_video2.addChild(video2);
+			cont_video3.addChild(video3);
+			cont_video4.addChild(video4);
+			cont_video5.addChild(video5);
+			cont_video6.addChild(video6);
 			
 			cont_endsession.addEventListener(TouchEvent.TOUCH_DOWN, endsession_dwn, false, 0, true);
 			cont_endsession.addEventListener(TouchEvent.TOUCH_UP, endsession_up, false, 0, true);
@@ -218,6 +237,18 @@
 			cont_es_okemail.addEventListener(TouchEvent.TOUCH_UP, es_okemail_up, false, 0, true);
 			cont_es_esskip.addEventListener(TouchEvent.TOUCH_DOWN, es_esskip_dwn, false, 0, true);
 			cont_es_esskip.addEventListener(TouchEvent.TOUCH_UP, es_esskip_up, false, 0, true);
+			cont_video1.addEventListener(TouchEvent.TOUCH_DOWN, video1_dwn, false, 0, true);
+			cont_video1.addEventListener(TouchEvent.TOUCH_UP, video1_up, false, 0, true);
+			cont_video2.addEventListener(TouchEvent.TOUCH_DOWN, video2_dwn, false, 0, true);
+			cont_video2.addEventListener(TouchEvent.TOUCH_UP, video2_up, false, 0, true);
+			cont_video3.addEventListener(TouchEvent.TOUCH_DOWN, video3_dwn, false, 0, true);
+			cont_video3.addEventListener(TouchEvent.TOUCH_UP, video3_up, false, 0, true);
+			cont_video4.addEventListener(TouchEvent.TOUCH_DOWN, video4_dwn, false, 0, true);
+			cont_video4.addEventListener(TouchEvent.TOUCH_UP, video4_up, false, 0, true);
+			cont_video5.addEventListener(TouchEvent.TOUCH_DOWN, video5_dwn, false, 0, true);
+			cont_video5.addEventListener(TouchEvent.TOUCH_UP, video5_up, false, 0, true);
+			cont_video6.addEventListener(TouchEvent.TOUCH_DOWN, video6_dwn, false, 0, true);
+			cont_video6.addEventListener(TouchEvent.TOUCH_UP, video6_up, false, 0, true);
 			
 			//timeline watcher for bubbles
 			timelineWatcher = new TimelineWatcher(bubble_toscreen);
@@ -229,31 +260,26 @@
 			button_okemail.alpha = 0;
 			window_email.text_invalidemail.alpha = 0;
 			window_email.alpha = 0;
-			window_email.height -= 100;
-			window_email.width -= 100;
+			window_email.scaleX = window_email.scaleY = 0.8;
 			
 			//email instructions
 			BUBBLE_EMAILINSTRUCT_HT = bubble_emailinstruct.height;
 			BUBBLE_EMAILINSTRUCT_WD = bubble_emailinstruct.width;
 			bubble_emailinstruct.alpha = 0;
-			bubble_emailinstruct.height -= 30;
-			bubble_emailinstruct.width -= 50;
+			bubble_emailinstruct.scaleX = bubble_emailinstruct.scaleY = 0.8;
 
 			//packaged bubble
 			bubble_packaged.alpha = 0;
-			bubble_packaged.height -= 50;
-			bubble_packaged.width -= 50;
+			bubble_packaged.scaleX = bubble_packaged.scaleY = 0.8;
 			
 			//send to screen bubble
 			bubble_toscreen.alpha = 0;
-			bubble_toscreen.height -= 50;
-			bubble_toscreen.width -= 50;
+			bubble_toscreen.scaleX = bubble_toscreen.scaleY = 0.8;
 			
 			//email remove button
 			REMOVEEMAIL_SIZE = button_removeemail.width;
 			button_removeemail.alpha = 0;
-			button_removeemail.width -= 20;
-			button_removeemail.height -= 20;			
+			button_removeemail.scaleX = button_removeemail.scaleY = 0.8;
 			
 			//exit email blocker
 			hitarea_exitEmail = new ExitEmail();
@@ -305,13 +331,11 @@
 			window_gotbadge.x = 0;
 			window_gotbadge.y = -120;
 			cont_gotbadge_modal.alpha = 0;
-			cont_gotbadge_modal.width -= 50;
-			cont_gotbadge_modal.height -= 50;
+			cont_gotbadge_modal.scaleX = cont_gotbadge_modal.scaleY = 0.8;
 
 			//end session modal setup
 			cont_endsession_modal.alpha = 0;
-			cont_endsession_modal.width -= 50;
-			cont_endsession_modal.height -= 20;
+			cont_endsession_modal.scaleY = cont_endsession_modal.scaleY = 0.8;
 
 			//class event listeners
 			addEventListener(TouchEvent.TOUCH_DOWN, anyTouch); //registering any touch on the screen
@@ -321,6 +345,17 @@
 			//badge numbers
 			txt_10.alpha = txt_25.alpha = txt_45.alpha = txt_70.alpha = txt_95.alpha = txt_120.alpha = 0;
 			badge_1.grey.alpha = 1;
+
+			//badge videos
+			video1.video.addEventListener(VideoEvent.COMPLETE, video1_complete);
+			video2.video.addEventListener(VideoEvent.COMPLETE, video2_complete);
+			video3.video.addEventListener(VideoEvent.COMPLETE, video3_complete);
+			video4.video.addEventListener(VideoEvent.COMPLETE, video4_complete);
+			video5.video.addEventListener(VideoEvent.COMPLETE, video5_complete);
+			video6.video.addEventListener(VideoEvent.COMPLETE, video6_complete);
+			video1.video.autoRewind = video2.video.autoRewind = video3.video.autoRewind = video4.video.autoRewind = video5.video.autoRewind = video6.video.autoRewind = true;
+			video1.video.fullScreenTakeOver = video2.video.fullScreenTakeOver = video3.video.fullScreenTakeOver = video4.video.fullScreenTakeOver = video5.video.fullScreenTakeOver = video6.video.fullScreenTakeOver = false;
+			cont_video1.alpha = cont_video2.alpha = cont_video3.alpha = cont_video4.alpha = cont_video5.alpha = cont_video6.alpha = 0;
 
 			//OTHER presets
 			button_email.text_emailimageto.alpha = 0; //turns off email label
@@ -534,11 +569,22 @@
 				button_email.text_emailimage.alpha = 1;
 				button_email.text_emailimageto.alpha = 0;
 				button_removeemail.alpha = 0;
-				button_removeemail.width = button_removeemail.height = 6.4;
-				
+				//button_removeemail.width = button_removeemail.height = 6.4;
+				button_removeemail.scaleX = button_removeemail.scaleY = 0.8;
+
 				//photo
 				photo.id = getNext();
 				dummyPhoto.id = photo.id;
+
+				//bubbles
+				bubble_packaged.scaleX = bubble_packaged.scaleY = 0.8;
+				bubble_toscreen.scaleX = bubble_toscreen.scaleY = 0.8;
+				bubble_emailinstruct.scaleX = bubble_emailinstruct.scaleY = 0.8;
+				window_email.scaleX = window_email.scaleY = 0.8;
+				bubble_packaged.alpha = 0;
+				bubble_toscreen.alpha = 0;
+				bubble_emailinstruct.alpha = 0;
+				window_email.alpha = 0;
 
 				//metadata
 				setMetadata(photo.title, photo.artist, photo.bio, photo.date, photo.process, photo.credit);
@@ -557,7 +603,8 @@
 			}});
 			graphic_fakebg.alpha = 0;
 
-			Tweener.addTween(cont_endsession_modal, { height: cont_endsession_modal.height - 20, width: cont_endsession_modal.width - 50, alpha: 0, time: 1, onComplete: function() {
+			//Tweener.addTween(cont_endsession_modal, { height: cont_endsession_modal.height - 20, width: cont_endsession_modal.width - 50, alpha: 0, time: 1, onComplete: function() {
+			Tweener.addTween(cont_endsession_modal, { scaleX: 0.8, scaleY: 0.8, alpha: 0, time: 1, onComplete: function() {
 				removeChild(cont_endsession_modal);
 				shadeOff();
 			} });
@@ -583,17 +630,25 @@
 				Tweener.addTween(cont_instructions, {alpha: 0, time: 1, onComplete: function() { removeChild(cont_instructions); }});
 
 			//end session
-			if(cont_endsession_modal.alpha == 1) {
-				Tweener.addTween(cont_endsession_modal, { height: cont_endsession_modal.height - 20, width: cont_endsession_modal.width - 50, alpha: 0, time: 1, onComplete: function() {
+			if(contains(cont_endsession_modal)) {
+				//Tweener.addTween(cont_endsession_modal, { height: cont_endsession_modal.height - 20, width: cont_endsession_modal.width - 50, alpha: 0, time: 1, onComplete: function() {
+				Tweener.addTween(cont_endsession_modal, { scaleX: 0.8, scaleY: 0.8, alpha: 0, time: 1, onComplete: function() {
 					removeChild(cont_endsession_modal);
 				} });
 			}
 
 			//got badge modal
 			if(cont_gotbadge_modal.alpha == 1) {
-				Tweener.addTween(cont_gotbadge_modal, { height: cont_gotbadge_modal.height - 100, width: cont_gotbadge_modal.width - 100, alpha: 0, time: 1, onComplete: function() {
+				//Tweener.addTween(cont_gotbadge_modal, { height: cont_gotbadge_modal.height - 100, width: cont_gotbadge_modal.width - 100, alpha: 0, time: 1, onComplete: function() {
+				Tweener.addTween(cont_gotbadge_modal, { scaleX: 0.8, scaleY: 0.8, alpha: 0, time: 1, onComplete: function() {
 					removeChild(cont_gotbadge_modal);
 				} });
+				Tweener.addTween(cont_video2, {alpha: 0, time: 1, onComplete: function() { removeChild(cont_video2); }});
+				if(video2.video.playing) {
+					Tweener.addTween(video2.graphic_videoblack, {alpha: 1, time: 1});
+					Tweener.addTween(video2.graphic_play, {alpha: 1, time: 1});
+					video2.video.stop();
+				}
 			}
 
 			//in keyboard mode
@@ -608,13 +663,12 @@
 			}
 
 			//viewing photo
-			//trace(photo.viewing);
-			/*if(photo.viewing) {
-				trace("exit viewing");*/
+			if(dummyPhoto.viewing || photo.viewing) {
+				dummyPhoto.exitViewing();
 				photo.exitViewing();
-			//}
+			}
 			
-			Tweener.addTween(this, {delay: 2, onComplete: function() { dispatchEvent(new Event("endSession", true)); }});
+			Tweener.addTween(this, {delay: 1, onComplete: function() { dispatchEvent(new Event("endSession", true)); }});
 
 			Tweener.addTween(this, { delay: 4, onComplete: function() { 
 				//LOGICAL
@@ -642,11 +696,21 @@
 				button_email.text_emailimage.alpha = 1;
 				button_email.text_emailimageto.alpha = 0;
 				button_removeemail.alpha = 0;
-				button_removeemail.width = button_removeemail.height = 6.4;
+				button_removeemail.scaleX = button_removeemail.scaleY = 0.8;
 				
 				//photo
 				photo.id = getNext();
 				dummyPhoto.id = photo.id;
+
+				//bubbles
+				bubble_packaged.scaleX = bubble_packaged.scaleY = 0.8;
+				bubble_toscreen.scaleX = bubble_toscreen.scaleY = 0.8;
+				bubble_emailinstruct.scaleX = bubble_emailinstruct.scaleY = 0.8;
+				window_email.scaleX = window_email.scaleY = 0.8;
+				bubble_packaged.alpha = 0;
+				bubble_toscreen.alpha = 0;
+				bubble_emailinstruct.alpha = 0;
+				window_email.alpha = 0;
 
 				//shader
 				cont_shader.y = 0;
@@ -705,7 +769,7 @@
 			var xpos:int;
 
 			if(which == 1) {
-				xpos = button_email.x - email_entered.textWidth/2 - 20;
+				xpos = button_email.x - email_entered.textWidth/2 - 25;
 			} else if (which == 2) {
 				xpos =  window_endsession.window_emailbg.x - window_endsession.txt_email.textWidth/2 - 25;
 			}
@@ -720,13 +784,15 @@
 			if (EMAIL_ADDED) {
 				EMAIL_ADDED = false;
 				Tweener.addTween(bubble_emailinstruct, { alpha: 0, time: 1 } );
-				Tweener.addTween(bubble_emailinstruct, { height: bubble_emailinstruct.height - 30, width: bubble_emailinstruct.width - 50, time: 1 } );
+				//Tweener.addTween(bubble_emailinstruct, { height: bubble_emailinstruct.height - 30, width: bubble_emailinstruct.width - 50, time: 1 } );
+				Tweener.addTween(bubble_emailinstruct, { scaleX: 0.8, scaleY: 0.8, time: 1 } );
 			}
 			
 			if (SEND_BUBBLE_COMPLETE) {				
 				SEND_BUBBLE_COMPLETE = false;
 				Tweener.addTween(bubble_toscreen, { alpha: 0, time: 1 } );
-				Tweener.addTween(bubble_toscreen, { height: bubble_toscreen.height - 50, width: bubble_toscreen.width - 50, time: 1, onComplete: function () {
+				//Tweener.addTween(bubble_toscreen, { height: bubble_toscreen.height - 50, width: bubble_toscreen.width - 50, time: 1, onComplete: function () {
+				Tweener.addTween(bubble_toscreen, { scaleX: 0.8, scaleY: 0.8, time: 1, onComplete: function () {
 					//SEND_BUBBLE_ON = false;
 					
 					cont_toscreen.addEventListener(TouchEvent.TOUCH_DOWN, toscreen_dwn, false, 0, true);
@@ -739,7 +805,8 @@
 				PACKAGED_COMPLETE = false;
 
 				Tweener.addTween(bubble_packaged, { alpha: 0, time: 1 } );
-				Tweener.addTween(bubble_packaged, { height: bubble_packaged.height - 50, width: bubble_packaged.width - 50, time: 1, onComplete: function () {
+				//Tweener.addTween(bubble_packaged, { height: bubble_packaged.height - 50, width: bubble_packaged.width - 50, time: 1, onComplete: function () {
+				Tweener.addTween(bubble_packaged, { scaleX: 0.8, scaleY: 0.8, time: 1, onComplete: function () {
 					bubble_packaged.gotoAndStop("stop");
 				} } );
 			}
@@ -786,7 +853,8 @@
 			cont_endsession_modal.alpha = 0;
 			addChild(cont_endsession_modal);
 			Tweener.addTween(cont_endsession_modal, { alpha: 1, time: 1, delay: 0.5});
-			Tweener.addTween(cont_endsession_modal, { height: cont_endsession_modal.height + 20, width: cont_endsession_modal.width + 50, time: 1, delay: 0.5, transition: "easeOutElastic"});
+			//Tweener.addTween(cont_endsession_modal, { height: cont_endsession_modal.height + 20, width: cont_endsession_modal.width + 50, time: 1, delay: 0.5, transition: "easeOutElastic"});
+			Tweener.addTween(cont_endsession_modal, { scaleX: 1, scaleY: 1, time: 1, delay: 0.5, transition: "easeOutElastic"});
 
 			cont_toscreen.addEventListener(TouchEvent.TOUCH_DOWN, toscreen_dwn, false, 0, true);
 			cont_toscreen.addEventListener(TouchEvent.TOUCH_UP, toscreen_up, false, 0, true);
@@ -833,7 +901,8 @@
 			cont_toscreen.removeEventListener(TouchEvent.TOUCH_UP, toscreen_up);
 			
 			Tweener.addTween(bubble_toscreen, { alpha: 1, time: 1 } );
-			Tweener.addTween(bubble_toscreen, { height: bubble_toscreen.height + 50, width: bubble_toscreen.width + 50, 
+			//Tweener.addTween(bubble_toscreen, { height: bubble_toscreen.height + 50, width: bubble_toscreen.width + 50, 
+			Tweener.addTween(bubble_toscreen, { scaleX: 1, scaleY: 1, 
 				time: 1, transition: "easeOutElastic", onComplete: function() { 
 					//bubble_toscreen.gotoAndPlay("play");						
 				} } );
@@ -902,7 +971,8 @@
 				Tweener.addTween(this, { y: this.y - 300, time: 1 } );				
 				Tweener.addTween(button_okemail, { alpha: 1, delay: 0.5, time: 1 } );
 				Tweener.addTween(window_email, { alpha: 1, delay: 0.5, time: 1 } );
-				Tweener.addTween(window_email, { height: window_email.height + 100, width: window_email.width + 100, delay: 0.5, time: 1, transition: "easeOutElastic" } );
+				//Tweener.addTween(window_email, { height: window_email.height + 100, width: window_email.width + 100, delay: 0.5, time: 1, transition: "easeOutElastic" } );
+				Tweener.addTween(window_email, { scaleX: 1, scaleY: 1, delay: 0.5, time: 1, transition: "easeOutElastic" } );
 				Tweener.addTween(softKeyboard, { alpha: 1, delay: 0.5, time: 1 } );
 				addChild(txt_email);
 				txt_email.text = '';
@@ -931,7 +1001,8 @@
 				photoSent = true;
 				button_email.alpha = 0.5;
 				Tweener.addTween(bubble_packaged, { alpha: 1, time: 1 } );
-				Tweener.addTween(bubble_packaged, { height: 112.25, width: 157.55, time: 1 } );
+				//Tweener.addTween(bubble_packaged, { height: 112.25, width: 157.55, time: 1 } );
+				Tweener.addTween(bubble_packaged, { scaleX: 1, scaleY: 1, time: 1 } );
 				bubble_packaged.gotoAndPlay("play");
 				
 				cont_email.removeEventListener(TouchEvent.TOUCH_DOWN, email_dwn);
@@ -973,7 +1044,8 @@
 			Tweener.addTween(this, { y: this.y + 300, time: 1 } );				
 			Tweener.addTween(button_okemail, { alpha: 0, time: 1 } );
 			Tweener.addTween(window_email, { alpha: 0, time: 1 } );
-			Tweener.addTween(window_email, { height: window_email.height - 100, width: window_email.width - 100, time: 1, transition: "easeOutElastic" } );
+			//Tweener.addTween(window_email, { height: window_email.height - 100, width: window_email.width - 100, time: 1, transition: "easeOutElastic" } );
+			Tweener.addTween(window_email, { scaleX: 0.8, scaleY: 0.8, time: 1, transition: "easeOutElastic" } );
 			Tweener.addTween(softKeyboard, { alpha: 0, time: 1 } );
 			Tweener.addTween(softKeyboard, { height: softKeyboard.height - 100, width: softKeyboard.width - 100, time: 1, transition: "easeOutElastic" } );
 			dispatchEvent(new Event("shiftDown", true)); //move background down
@@ -1009,11 +1081,13 @@
 				Tweener.addTween(button_email.text_emailimageto, { alpha: 1, delay: 1, time: 1 } );
 				Tweener.addTween(email_entered, { alpha: 1, delay: 1, time: 1 } );
 				Tweener.addTween(bubble_emailinstruct, { alpha: 1, delay: 1, time: 1 } );
-				Tweener.addTween(bubble_emailinstruct, { height: BUBBLE_EMAILINSTRUCT_HT, width: BUBBLE_EMAILINSTRUCT_WD, delay: 1, time: 1, transition: "easeOutElastic" } );
+				//Tweener.addTween(bubble_emailinstruct, { height: BUBBLE_EMAILINSTRUCT_HT, width: BUBBLE_EMAILINSTRUCT_WD, delay: 1, time: 1, transition: "easeOutElastic" } );
+				Tweener.addTween(bubble_emailinstruct, { scaleX: 1, scaleY: 1, delay: 1, time: 1, transition: "easeOutElastic" } );
 				addChild(cont_removeemail);
 				button_removeemail.x = getXpos(1);
 				Tweener.addTween(button_removeemail, { alpha: 1, delay: 1, time: 1 } );
-				Tweener.addTween(button_removeemail, { height: REMOVEEMAIL_SIZE, width: REMOVEEMAIL_SIZE, delay: 1, time: 1, transition: "easeOutElastic" } );
+				//Tweener.addTween(button_removeemail, { height: REMOVEEMAIL_SIZE, width: REMOVEEMAIL_SIZE, delay: 1, time: 1, transition: "easeOutElastic" } );
+				Tweener.addTween(button_removeemail, { scaleX: 1, scaleY: 1, delay: 1, time: 1, transition: "easeOutElastic" } );
 				EMAIL_ADDED = true; //bubble is on
 			}
 		}
@@ -1027,7 +1101,8 @@
 			Tweener.addTween(button_email.text_emailimage, { alpha: 1, time: 1 } );
 			Tweener.addTween(button_email.text_emailimageto, { alpha: 0, time: 1 } );
 			Tweener.addTween(button_removeemail, { alpha: 0, time: 1 } );
-			Tweener.addTween(button_removeemail, { height: button_removeemail.height - 20, width: button_removeemail.width - 20, time: 1 } );
+			//Tweener.addTween(button_removeemail, { height: button_removeemail.height - 20, width: button_removeemail.width - 20, time: 1 } );
+			Tweener.addTween(button_removeemail, { scaleX: 0.8, scaleY: 0.8, time: 1 } );
 			Tweener.addTween(email_entered, { alpha: 0, time: 1 } );
 			Tweener.addTween(button_email, { alpha: 1, time: 1 } )
 
@@ -1046,7 +1121,8 @@
 		private function continue_up(e:TouchEvent):void {
 			window_gotbadge.button_continue.gotoAndStop("up");
 
-			Tweener.addTween(cont_gotbadge_modal, { height: cont_gotbadge_modal.height - 100, width: cont_gotbadge_modal.width - 100, alpha: 0, time: 1, onComplete: function() {
+			//Tweener.addTween(cont_gotbadge_modal, { height: cont_gotbadge_modal.height - 100, width: cont_gotbadge_modal.width - 100, alpha: 0, time: 1, onComplete: function() {
+			Tweener.addTween(cont_gotbadge_modal, { scaleX: 0.8, scaleY: 0.8, alpha: 0, time: 1, onComplete: function() {
 				removeChild(cont_gotbadge_modal);
 				shadeOff();
 			} });
@@ -1056,26 +1132,54 @@
 				Tweener.addTween(badge1_glow, { delay: 1, onComplete: function() { badge1_glow.gotoAndPlay("play"); } } );
 				Tweener.addTween(badge_2.grey, { alpha: 1, time: 2, delay: 1.5 });
 				Tweener.addTween(txt_10, { alpha: 1, time: 1, delay: 1.5 });
+				Tweener.addTween(cont_video1, {alpha: 0, time: 1, onComplete: function() { removeChild(cont_video1); }});
+				if(video1.video.playing) {
+					Tweener.addTween(video1.graphic_videoblack, {alpha: 1, time: 1});
+					Tweener.addTween(video1.graphic_play, {alpha: 1, time: 1});
+					video1.video.stop();
+				}
 			} else if(currentBadge == 2) {
 				Tweener.addTween(badge_2.color, { alpha: 1, time: 1, delay: 1.5});
 				Tweener.addTween(badge2_glow, { delay: 1, onComplete: function() { badge2_glow.gotoAndPlay("play"); } } );
 				Tweener.addTween(badge_3.grey, { alpha: 1, time: 2, delay: 1.5 });
 				Tweener.addTween(txt_25, { alpha: 1, time: 1, delay: 1.5 });
+				Tweener.addTween(cont_video2, {alpha: 0, time: 1, onComplete: function() { removeChild(cont_video2); }});
+				if(video2.video.playing) {
+					Tweener.addTween(video2.graphic_videoblack, {alpha: 1, time: 1});
+					Tweener.addTween(video2.graphic_play, {alpha: 1, time: 1});
+					video2.video.stop();
+				}
 			} else if(currentBadge == 3) {
 				Tweener.addTween(badge_3.color, { alpha: 1, time: 1, delay: 1.5});
 				Tweener.addTween(badge3_glow, { delay: 1, onComplete: function() { badge3_glow.gotoAndPlay("play"); } } );
 				Tweener.addTween(badge_4.grey, { alpha: 1, time: 2, delay: 1.5 });
 				Tweener.addTween(txt_45, { alpha: 1, time: 1, delay: 1.5 });
+				Tweener.addTween(cont_video3, {alpha: 0, time: 1, onComplete: function() { removeChild(cont_video3); }});
+				if(video3.video.playing) {
+					Tweener.addTween(video3.graphic_videoblack, {alpha: 1, time: 1});
+					Tweener.addTween(video3.graphic_play, {alpha: 1, time: 1});
+					video3.video.stop();
+				}
 			} else if(currentBadge == 4) {
 				Tweener.addTween(badge_4.color, { alpha: 1, time: 1, delay: 1.5});
 				Tweener.addTween(badge4_glow, { delay: 1, onComplete: function() { badge4_glow.gotoAndPlay("play"); } } );
 				Tweener.addTween(badge_5.grey, { alpha: 1, time: 2, delay: 1.5 });
 				Tweener.addTween(txt_70, { alpha: 1, time: 1, delay: 1.5 });
+				Tweener.addTween(cont_video4, {alpha: 0, time: 1, onComplete: function() { removeChild(cont_video4); }});
+				if(video4.video.playing) {
+					Tweener.addTween(video4.graphic_videoblack, {alpha: 1, time: 1});
+					Tweener.addTween(video4.graphic_play, {alpha: 1, time: 1});
+					video4.video.stop();
+				}
 			} else if(currentBadge == 5) {
 				Tweener.addTween(badge_5.color, { alpha: 1, time: 1, delay: 1.5});
 				Tweener.addTween(badge5_glow, { delay: 1, onComplete: function() { badge5_glow.gotoAndPlay("play"); } } );
-				/*Tweener.addTween(badge_6.grey, { alpha: 1, time: 1, delay: 1.5 });
-				Tweener.addTween(txt_95, { alpha: 1, time: 1, delay: 1.5 });*/
+				Tweener.addTween(cont_video5, {alpha: 0, time: 1, onComplete: function() { removeChild(cont_video4); }});
+				if(video5.video.playing) {
+					Tweener.addTween(video5.graphic_videoblack, {alpha: 1, time: 1});
+					Tweener.addTween(video5.graphic_play, {alpha: 1, time: 1});
+					video5.video.stop();
+				}
 			} /*else if(currentBadge == 6) {
 				Tweener.addTween(badge_2.color, { alpha: 1, time: 1, delay: 1.5});
 				Tweener.addTween(badge2_glow, { delay: 1, onComplete: function() { badge2_glow.gotoAndPlay("play"); } } );
@@ -1107,7 +1211,8 @@
 		private function es_continue_up(e:TouchEvent):void {
 			window_endsession.button_continue.gotoAndStop("up");
 
-			Tweener.addTween(cont_endsession_modal, { height: cont_endsession_modal.height - 20, width: cont_endsession_modal.width - 50, alpha: 0, time: 1, onComplete: function() {
+			//Tweener.addTween(cont_endsession_modal, { height: cont_endsession_modal.height - 20, width: cont_endsession_modal.width - 50, alpha: 0, time: 1, onComplete: function() {
+			Tweener.addTween(cont_endsession_modal, { scaleX: 0.8, scaleY: 0.8, alpha: 0, time: 1, onComplete: function() {
 				removeChild(cont_endsession_modal);
 				shadeOff();
 			} });
@@ -1146,7 +1251,8 @@
 			window_endsession.button_no.gotoAndStop("up");
 
 			if (currentBadge == -1) { //no badges, so 'no' means don't end session, continue rating
-				Tweener.addTween(cont_endsession_modal, { height: cont_endsession_modal.height - 20, width: cont_endsession_modal.width - 50, alpha: 0, time: 1, onComplete: function() {
+				//Tweener.addTween(cont_endsession_modal, { height: cont_endsession_modal.height - 20, width: cont_endsession_modal.width - 50, alpha: 0, time: 1, onComplete: function() {
+				Tweener.addTween(cont_endsession_modal, { scaleX: 0.8, scaleY: 0.8, alpha: 0, time: 1, onComplete: function() {
 					removeChild(cont_endsession_modal);
 					shadeOff();
 				} });
@@ -1253,7 +1359,8 @@
 			Tweener.addTween(button_email.text_emailimage, { alpha: 1, time: 1 } );
 			Tweener.addTween(button_email.text_emailimageto, { alpha: 0, time: 1 } );
 			Tweener.addTween(button_removeemail, { alpha: 0, time: 1 } );
-			Tweener.addTween(button_removeemail, { height: button_removeemail.height - 20, width: button_removeemail.width - 20, time: 1 } );
+			//Tweener.addTween(button_removeemail, { height: button_removeemail.height - 20, width: button_removeemail.width - 20, time: 1 } );
+			Tweener.addTween(button_removeemail, { scaleX: 0.8, scaleY: 0.8, time: 1 } );
 			Tweener.addTween(email_entered, { alpha: 0, time: 1 } );
 			Tweener.addTween(button_email, { alpha: 1, time: 1 } )
 			photoSent = false;
@@ -1340,7 +1447,7 @@
 
 				button_removeemail.x = getXpos(1);
 				Tweener.addTween(button_removeemail, { alpha: 1, delay: 1, time: 1 } );
-				Tweener.addTween(button_removeemail, { height: REMOVEEMAIL_SIZE, width: REMOVEEMAIL_SIZE, delay: 1, time: 1, transition: "easeOutElastic" } );
+				Tweener.addTween(button_removeemail, { scaleX: 1, scaleY: 1, delay: 1, time: 1, transition: "easeOutElastic" } );
 				EMAIL_ADDED = true; //bubble is on
 
 				blockerOn();
@@ -1458,7 +1565,171 @@
 			blockerOn();
 			Tweener.addTween(cont_blocker_fullscreen, { delay: 1.5, onComplete: blockerOff } );
 		}
+
+		private function video1_dwn(e:TouchEvent):void {
+		}
 		
+		private function video1_up(e:TouchEvent):void {
+			//if(video1.video.playheadTime == 0) {
+				Tweener.addTween(video1.graphic_videoblack, {alpha: 0, time: 1});
+				Tweener.addTween(video1.graphic_play, {alpha: 0, time: 1});
+			//}
+
+			if(!video1.video.playing) {
+				video1.video.play();
+				Tweener.addTween(video1.graphic_play, {alpha: 0, time: 1});
+				Tweener.addTween(video1.graphic_videoblack, {alpha: 0, time: 1});
+				dispatchEvent(new Event("suspend_timeout", true));
+			} else {
+				video1.video.pause();
+				Tweener.addTween(video1.graphic_play, {alpha: 1, time: 1});
+				Tweener.addTween(video1.graphic_videoblack, {alpha: 0.5, time: 1});
+				dispatchEvent(new Event("resume_timeout", true));
+			}
+		}
+
+		private function video1_complete(e:VideoEvent):void {
+			video1.video.stop();
+			Tweener.addTween(video1.graphic_videoblack, {alpha: 1, time: 1});
+			Tweener.addTween(video1.graphic_play, {alpha: 1, time: 1});
+			dispatchEvent(new Event("resume_timeout", true));
+		}
+
+		private function video2_dwn(e:TouchEvent):void {
+		}
+		
+		private function video2_up(e:TouchEvent):void {
+			//if(video1.video.playheadTime == 0) {
+				Tweener.addTween(video2.graphic_videoblack, {alpha: 0, time: 1});
+				Tweener.addTween(video2.graphic_play, {alpha: 0, time: 1});
+			//}
+
+			if(!video2.video.playing) {
+				video2.video.play();
+				Tweener.addTween(video2.graphic_play, {alpha: 0, time: 1});
+				dispatchEvent(new Event("suspend_timeout", true));
+			} else {
+				video2.video.pause();
+				Tweener.addTween(video2.graphic_play, {alpha: 1, time: 1});
+				dispatchEvent(new Event("resume_timeout", true));
+			}
+		}
+
+		private function video2_complete(e:VideoEvent):void {
+			video2.video.stop();
+			Tweener.addTween(video2.graphic_videoblack, {alpha: 1, time: 1});
+			Tweener.addTween(video2.graphic_play, {alpha: 1, time: 1});
+			dispatchEvent(new Event("resume_timeout", true));
+		}
+
+		private function video3_dwn(e:TouchEvent):void {
+		}
+		
+		private function video3_up(e:TouchEvent):void {
+			//if(video1.video.playheadTime == 0) {
+				Tweener.addTween(video3.graphic_videoblack, {alpha: 0, time: 1});
+				Tweener.addTween(video3.graphic_play, {alpha: 0, time: 1});
+			//}
+
+			if(!video3.video.playing) {
+				video3.video.play();
+				Tweener.addTween(video3.graphic_play, {alpha: 0, time: 1});
+				dispatchEvent(new Event("suspend_timeout", true));
+			} else {
+				video3.video.pause();
+				Tweener.addTween(video3.graphic_play, {alpha: 1, time: 1});
+				dispatchEvent(new Event("resume_timeout", true));
+			}
+		}
+
+		private function video3_complete(e:VideoEvent):void {
+			video3.video.stop();
+			Tweener.addTween(video3.graphic_videoblack, {alpha: 1, time: 1});
+			Tweener.addTween(video3.graphic_play, {alpha: 1, time: 1});
+			dispatchEvent(new Event("resume_timeout", true));
+		}
+
+		private function video4_dwn(e:TouchEvent):void {
+		}
+		
+		private function video4_up(e:TouchEvent):void {
+			//if(video1.video.playheadTime == 0) {
+				Tweener.addTween(video4.graphic_videoblack, {alpha: 0, time: 1});
+				Tweener.addTween(video4.graphic_play, {alpha: 0, time: 1});
+			//}
+
+			if(!video4.video.playing) {
+				video4.video.play();
+				Tweener.addTween(video4.graphic_play, {alpha: 0, time: 1});
+				dispatchEvent(new Event("suspend_timeout", true));
+			} else {
+				video4.video.pause();
+				Tweener.addTween(video4.graphic_play, {alpha: 1, time: 1});
+				dispatchEvent(new Event("resume_timeout", true));
+			}
+		}
+
+		private function video4_complete(e:VideoEvent):void {
+			video4.video.stop();
+			Tweener.addTween(video4.graphic_videoblack, {alpha: 1, time: 1});
+			Tweener.addTween(video4.graphic_play, {alpha: 1, time: 1});
+			dispatchEvent(new Event("resume_timeout", true));
+		}
+
+		private function video5_dwn(e:TouchEvent):void {
+		}
+		
+		private function video5_up(e:TouchEvent):void {
+			//if(video1.video.playheadTime == 0) {
+				Tweener.addTween(video5.graphic_videoblack, {alpha: 0, time: 1});
+				Tweener.addTween(video5.graphic_play, {alpha: 0, time: 1});
+			//}
+
+			if(!video5.video.playing) {
+				video5.video.play();
+				Tweener.addTween(video5.graphic_play, {alpha: 0, time: 1});
+				dispatchEvent(new Event("suspend_timeout", true));
+			} else {
+				video5.video.pause();
+				Tweener.addTween(video5.graphic_play, {alpha: 1, time: 1});
+				dispatchEvent(new Event("resume_timeout", true));
+			}
+		}
+
+		private function video5_complete(e:VideoEvent):void {
+			video5.video.stop();
+			Tweener.addTween(video5.graphic_videoblack, {alpha: 1, time: 1});
+			Tweener.addTween(video5.graphic_play, {alpha: 1, time: 1});
+			dispatchEvent(new Event("resume_timeout", true));
+		}
+
+		private function video6_dwn(e:TouchEvent):void {
+		}
+		
+		private function video6_up(e:TouchEvent):void {
+			//if(video1.video.playheadTime == 0) {
+				Tweener.addTween(video6.graphic_videoblack, {alpha: 0, time: 1});
+				Tweener.addTween(video6.graphic_play, {alpha: 0, time: 1});
+			//}
+
+			if(!video6.video.playing) {
+				video6.video.play();
+				Tweener.addTween(video6.graphic_play, {alpha: 0, time: 1});
+				dispatchEvent(new Event("suspend_timeout", true));
+			} else {
+				video6.video.pause();
+				Tweener.addTween(video6.graphic_play, {alpha: 1, time: 1});
+				dispatchEvent(new Event("resume_timeout", true));
+			}
+		}
+
+		private function video6_complete(e:VideoEvent):void {
+			video6.video.stop();
+			Tweener.addTween(video6.graphic_videoblack, {alpha: 1, time: 1});
+			Tweener.addTween(video6.graphic_play, {alpha: 1, time: 1});
+			dispatchEvent(new Event("resume_timeout", true));
+		}
+
 		private function star1_dwn(e:TouchEvent):void {
 			button_star1.gotoAndStop("down");
 
@@ -1846,31 +2117,42 @@
 		private function gotBadge(badgeNum:int):void {
 			//trace("badge " + badgeNum + " achieved!");
 			shadeOn();
+			addChild(cont_gotbadge_modal);
 
 			if(currentBadge == 1) {
 				window_gotbadge.gotoAndStop("badge1");
+				addChild(cont_video1);
+				Tweener.addTween(cont_video1, {alpha: 1, time: 1, delay: 0.5});
 			} else if(currentBadge == 2) {
 				window_gotbadge.gotoAndStop("badge2");
+				addChild(cont_video2);
+				Tweener.addTween(cont_video2, {alpha: 1, time: 1, delay: 0.5});
 			} else if(currentBadge == 3) {
 				window_gotbadge.gotoAndStop("badge3");
+				addChild(cont_video3);
+				Tweener.addTween(cont_video3, {alpha: 1, time: 1, delay: 0.5});
 			} else if(currentBadge == 4) {
 				window_gotbadge.gotoAndStop("badge4");
+				addChild(cont_video4);
+				Tweener.addTween(cont_video4, {alpha: 1, time: 1, delay: 0.5});
 			} else if(currentBadge == 5) {
 				window_gotbadge.gotoAndStop("badge5");
+				addChild(cont_video5);
+				Tweener.addTween(cont_video5, {alpha: 1, time: 1, delay: 0.5});
 			} else if(currentBadge == 6) {
 				window_gotbadge.gotoAndStop("badge6");
+				addChild(cont_video6);
+				Tweener.addTween(cont_video6, {alpha: 1, time: 1, delay: 0.5});
 			}
 
 			window_gotbadge.x = 0;
 			window_gotbadge.y = -120;
 			cont_gotbadge_modal.alpha = 0;
 
-			addChild(cont_gotbadge_modal);
-
-
 			Tweener.addTween(cont_gotbadge_modal, { alpha: 1, time: 1, delay: 0.5 } );
-			Tweener.addTween(cont_gotbadge_modal, { height: 697, width: 727.5, time: 1, delay: 0.5, transition: "easeOutElastic" });
-			
+			//Tweener.addTween(cont_gotbadge_modal, { height: 697, width: 727.5, time: 1, delay: 0.5, transition: "easeOutElastic" });
+			Tweener.addTween(cont_gotbadge_modal, { scaleX: 1, scaleY: 1, time: 1, delay: 0.5, transition: "easeOutElastic" });
+
 			/*blockerOn();
 			Tweener.addTween(cont_blocker_fullscreen, { delay: 1.5, onComplete: blockerOff } );*/
 		}
