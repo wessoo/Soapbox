@@ -258,27 +258,18 @@
 			}
 			else{
 				//Tweener.addTween(photo, {alpha: 0, time: .5, onComplete: function() { resetPhoto(); }});
-				Tweener.addTween(photo, {x: savedX, y: savedY, scaleX: savedScale, scaleY: savedScale, time: 1.5})
+				/*Tweener.addTween(photo, {x: savedX, y: savedY, scaleX: savedScale, scaleY: savedScale, time: 1.5})
 				blackOff();
 				blockerOn();
 				Tweener.addTween(cont_blocker_fullscreen, { delay: .5, onComplete: function() { blockerOff(); } } );
-				viewing = false;
+				viewing = false;*/
+				exitViewing();
 			}
 		}
 		
 		public function exitViewing():void {
-			trace("EXIT ME");
-			removeChild(photo);
-			removeChild(cont_black);
-			Tweener.addTween(photo, {x: 100, y: 100, time: 1});
-			//Tweener.addTween(photo, {x: savedX, y: savedY, scaleX: savedScale, scaleY: savedScale, time: 1.5})
-			//blackOff();
-			/*Tweener.addTween(cont_black, { alpha: 0, time: 1, delay : .5, onComplete: function() { 
-				 if(contains(cont_black)) {
-				 	removeChild(cont_black);
-				 }
-			} } );*/
-
+			Tweener.addTween(photo, {x: savedX, y: savedY, scaleX: savedScale, scaleY: savedScale, time: 1.5})
+			blackOff();
 			blockerOn();
 			Tweener.addTween(cont_blocker_fullscreen, { delay: .5, onComplete: function() { blockerOff(); } } );
 			viewing = false;
