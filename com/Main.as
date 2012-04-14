@@ -28,6 +28,7 @@
 		public static var parserLoaded = false;  //Tells you whether the metadata is available or not.
 		public static var language:int = 0; //language mode. 0: English, 1: Spanish
 		public static var rating:Rating;
+		public static var ranking:Ranking;
 		public var screen:int = 1; //1: home. 2: rating. 3: ranking.
 		public var countdown_sec:int = 10;
 
@@ -49,6 +50,8 @@
 		private static var BG_START_POS:int = 1330;
 		private static var RATING_Y_POS:int = 540;
 		private static var RATING_X_POS:int = 960;
+		private static var RANKING_X_POS:Number = -956.75;
+		private static var RANKING_Y_POS:Number = 535.15;
 		private static var LANDINGTEXT_Y:int;
 		private static var LOGO_Y:int;
 		private static var LANDINGTEXT_X:int;
@@ -281,7 +284,7 @@
 				Tweener.addTween(button_tostats, {x: 110 + SCREEN_WIDTH, time: 1.5, transition: "easeInOutQuart" });
 				Tweener.addTween(landing_text, {x: LANDINGTEXT_X + SCREEN_WIDTH, time: 1.5, transition: "easeInOutQuart" });
 				Tweener.addTween(graphic_logo, {x: LOGO_X + SCREEN_WIDTH, time: 1.5, transition: "easeInOutQuart" });
-				Tweener.addTween(ranking_mockup, {x: -956.75 + SCREEN_WIDTH, time: 1.5, transition: "easeInOutQuart" });
+				Tweener.addTween(ranking, {x: -956.75 + SCREEN_WIDTH, time: 1.5, transition: "easeInOutQuart" });
 				Tweener.addTween(cont_lang, { alpha: 0, time: 0.5, onComplete: function() {
 					button_lang.x = 57.75;
 					button_lang.y = 985.95;
@@ -294,7 +297,7 @@
 				Tweener.addTween(button_tostats, {x: 110, time: 1.5, transition: "easeInOutQuart" });
 				Tweener.addTween(landing_text, {x: LANDINGTEXT_X, time: 1.5, transition: "easeInOutQuart" });
 				Tweener.addTween(graphic_logo, {x: LOGO_X, time: 1.5, transition: "easeInOutQuart" });
-				Tweener.addTween(ranking_mockup, {x: -956.75, time: 1.5, transition: "easeInOutQuart" });
+				Tweener.addTween(ranking, {x: -956.75, time: 1.5, transition: "easeInOutQuart" });
 				Tweener.addTween(cont_lang, { alpha: 0, time: 0.5, onComplete: function() {
 					button_lang.x = 1832.35;
 					button_lang.y = 955;
@@ -542,6 +545,11 @@
 		
 		private function imageParserLoaded(e:Event):void{
 			parserLoaded = true;
+			
+			ranking = new Ranking();
+			ranking.x = RANKING_X_POS;
+			ranking.y = RANKING_Y_POS;
+			addChildAt(ranking, getChildIndex(cont_tostats) - 1);
 			
 			rating = new Rating();
 			//Damn straight, hard coded screen positioning for Rating class, don't judge
