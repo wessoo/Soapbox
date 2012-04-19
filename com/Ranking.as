@@ -54,7 +54,7 @@
 			}
 			
 			for(var j:int = 0; j < 8; ++j){
-				addChild(list[j]);
+				addChildAt(list[j], getChildIndex(graphic_headfoot) - 1);
 				displayed.push(list[j]);
 			}
 			
@@ -89,7 +89,7 @@
 			scrollS.alpha = 0;
 			
 			cont_scroll.addChild(scrollS);
-			addChild(cont_scroll);
+			addChildAt(cont_scroll, getChildIndex(graphic_headfoot) - 1);
 			
 			cont_scroll.addEventListener(GestureEvent.GESTURE_DRAG_1 , dragHandler, false, 0, true);
 			//cont_scroll.addEventListener(TouchEvent.TOUCH_UP , touchUpHandler, false, 0, true);
@@ -162,10 +162,10 @@
 				}
 												
 				if((displayed[0].y >= vy + paddingH1 - 7) && (displayed[0].id > 0)){
-						addChild(list[displayed[0].id - 4]);
-						addChild(list[displayed[0].id - 3]);
-						addChild(list[displayed[0].id - 2]);
-						addChild(list[displayed[0].id - 1]);
+						addChildAt(list[displayed[0].id - 4], getChildIndex(cont_scroll) - 1);
+						addChildAt(list[displayed[0].id - 3], getChildIndex(cont_scroll) - 1);
+						addChildAt(list[displayed[0].id - 2], getChildIndex(cont_scroll) - 1);
+						addChildAt(list[displayed[0].id - 1], getChildIndex(cont_scroll) - 1);
 						displayed.splice(0,0, list[displayed[0].id - 1]);
 						displayed.splice(0,0, list[displayed[0].id - 1]);
 						displayed.splice(0,0, list[displayed[0].id - 1]);
@@ -174,10 +174,10 @@
 				}
 				
 				if((lastT1.y <= vy + vheight - paddingH1 - 15) && (lastT1.id + 1 < totalAmount)){
-						addChild(list[lastT1.id + 1]);
-						addChild(list[lastT1.id + 2]);
-						addChild(list[lastT1.id + 3]);
-						addChild(list[lastT1.id + 4]);
+						addChildAt(list[lastT1.id + 1], getChildIndex(cont_scroll) - 1);
+						addChildAt(list[lastT1.id + 2], getChildIndex(cont_scroll) - 1);
+						addChildAt(list[lastT1.id + 3], getChildIndex(cont_scroll) - 1);
+						addChildAt(list[lastT1.id + 4], getChildIndex(cont_scroll) - 1);
 						displayed.push(list[lastT1.id + 1]);
 						displayed.push(list[lastT1.id + 2]);
 						displayed.push(list[lastT1.id + 3]);
