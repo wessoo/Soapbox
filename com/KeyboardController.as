@@ -60,6 +60,12 @@
 			
 			return email_REGEX.test(address);
 		}
+
+		public function validateName(address:String):Boolean {
+			var email_REGEX:RegExp = /^[0-9a-zA-Z][-._a-zA-Z0-9]*@([0-9a-zA-Z][-._0-9a-zA-Z]*\.)+[a-zA-Z]{2,4}$/;
+			
+			return email_REGEX.test(address);
+		}
 		
 		public function toDefault():void {
 			keyboard.toDefault();

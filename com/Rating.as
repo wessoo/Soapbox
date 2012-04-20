@@ -382,7 +382,7 @@
 			email_entered.text = '';
 			graphic_fakebg.alpha = 0;
 			window_about.alpha = 0;
-			window_gotbadge.txt_inputname.alpha = window_gotbadge.window_name.alpha = window_gotbadge.txt_invalid.alpha = window_gotbadge.txt_thanks.alpha = window_gotbadge.txt_thanks.alpha = 0;
+			window_gotbadge.txt_inputname.alpha = window_gotbadge.window_name.alpha = window_gotbadge.txt_invalid.alpha = window_gotbadge.txt_name.alpha = window_gotbadge.txt_thanks.alpha = 0;
 			
 			//end session positioning presets
 			window_gotbadge.button_continue.y = window_gotbadge.button_continue.y - 120;
@@ -519,8 +519,8 @@
 		
 		//checks, based on the current location if you have gotten a badge or not
 		public function badgeCheck():Boolean{
-			//switch(currentLoc + 1){
-			switch(120){ //TESTING AT 120
+			switch(currentLoc + 1){
+			//switch(120){ //TESTING AT 120
 				case badge1:
 					currentBadge = 1;
 					text_remaining_ratings.text = (badge2 - badge1).toString();
@@ -564,70 +564,92 @@
 			}
 		}
 		
+		public function logicalReset():void {
+			//LOGICAL
+			currentLoc = -1;
+			reachedEnd = false;
+			currentBadge = -1;
+			lastRated = -1;
+			photoSent = false;
+			maillist_opt = false;
+			email = '';
+			sendBadges = false;
+			aboutShowing = false;
+
+			//VISUAL
+			//text
+			email_entered.text = '';
+			txt_email.text = '';
+			text_remaining_ratings.text = "10";
+			window_endsession.txt_email.text = '';
+			window_endsession.button_maillist.gotoAndStop("check");
+			window_about.alpha = 0;
+			
+			//share button
+			button_email.alpha = 1;
+			button_email.text_emailimage.alpha = 1;
+			button_email.text_emailimageto.alpha = 0;
+			button_removeemail.alpha = 0;
+			button_removeemail.scaleX = button_removeemail.scaleY = 0.8;
+			
+			//photo
+			photo.id = getNext();
+			dummyPhoto.id = photo.id;
+
+			//bubbles
+			bubble_packaged.scaleX = bubble_packaged.scaleY = 0.8;
+			bubble_toscreen.scaleX = bubble_toscreen.scaleY = 0.8;
+			bubble_emailinstruct.scaleX = bubble_emailinstruct.scaleY = 0.8;
+			window_email.scaleX = window_email.scaleY = 0.8;
+			bubble_packaged.alpha = 0;
+			bubble_toscreen.alpha = 0;
+			bubble_emailinstruct.alpha = 0;
+			window_email.alpha = 0;
+
+			cont_shader.y = 0; //shader
+			cont_instructions.alpha = 0;//instructional
+			setMetadata(photo.title, photo.artist, photo.bio, photo.date, photo.process, photo.credit); //metadata
+
+			//got badge window
+			if(cont_gotbadge_modal.contains(cont_okname)) {
+				cont_gotbadge_modal.removeChild(cont_okname);
+			}
+			if(cont_gotbadge_modal.contains(cont_skip)) {
+				cont_gotbadge_modal.removeChild(cont_skip);
+			}
+			window_gotbadge.graphic_continuebg.alpha = 1;
+			window_gotbadge.txt_inputname.alpha = window_gotbadge.window_name.alpha = window_gotbadge.txt_invalid.alpha = window_gotbadge.txt_name.alpha = window_gotbadge.txt_thanks.alpha = 0;
+			window_gotbadge.txt_name.alpha = 0;
+			cont_gotbadge_modal.addChild(cont_continue);
+			window_gotbadge.window_modal.height = 692.9;
+			window_gotbadge.window_modal.y = 70;
+
+			//badges
+			txt_10.alpha = txt_25.alpha = txt_45.alpha = txt_70.alpha = txt_95.alpha = txt_120.alpha = 0;
+			badge_1.grey.alpha = 1;
+			badge_2.grey.alpha = badge_3.grey.alpha = badge_3.grey.alpha = badge_4.grey.alpha = badge_5.grey.alpha = badge_6.grey.alpha = 0;
+			badge_1.color.alpha = badge_2.color.alpha = badge_3.color.alpha = badge_3.color.alpha = badge_4.color.alpha = badge_5.color.alpha = badge_6.color.alpha = 0;
+
+			//OTHER presets
+			button_email.text_emailimageto.alpha = 0; //turns off email label
+			email_entered.text = '';
+			graphic_fakebg.alpha = 0;
+			window_about.alpha = 0;
+
+			for(var i:int = 1; i <= 120; ++i){
+				images.push(i);
+				ratings.push(-1);
+			}
+			shuffle();
+		}
+
 		/*
 		 * Resets the session. Returns currentLoc to -1, clears the ratings array.
 		 */
 		public function resetSession():void {
 			dispatchEvent(new Event("reset_animate", true));
 
-			Tweener.addTween(this, { delay: 4, onComplete: function() { 
-				//LOGICAL
-				currentLoc = -1;
-				reachedEnd = false;
-				currentBadge = -1;
-				lastRated = -1;
-				photoSent = false;
-				maillist_opt = false;
-				email = '';
-				sendBadges = false;
-				aboutShowing = false;
-
-				//VISUAL
-				//text
-				email_entered.text = '';
-				txt_email.text = '';
-				text_remaining_ratings.text = "10";
-				window_endsession.txt_email.text = '';
-				window_endsession.button_maillist.gotoAndStop("check");
-				window_about.alpha = 0;
-				
-				//share button
-				button_email.alpha = 1;
-				button_email.text_emailimage.alpha = 1;
-				button_email.text_emailimageto.alpha = 0;
-				button_removeemail.alpha = 0;
-				//button_removeemail.width = button_removeemail.height = 6.4;
-				button_removeemail.scaleX = button_removeemail.scaleY = 0.8;
-
-				//photo
-				photo.id = getNext();
-				dummyPhoto.id = photo.id;
-
-				//bubbles
-				bubble_packaged.scaleX = bubble_packaged.scaleY = 0.8;
-				bubble_toscreen.scaleX = bubble_toscreen.scaleY = 0.8;
-				bubble_emailinstruct.scaleX = bubble_emailinstruct.scaleY = 0.8;
-				window_email.scaleX = window_email.scaleY = 0.8;
-				bubble_packaged.alpha = 0;
-				bubble_toscreen.alpha = 0;
-				bubble_emailinstruct.alpha = 0;
-				window_email.alpha = 0;
-
-				//metadata
-				setMetadata(photo.title, photo.artist, photo.bio, photo.date, photo.process, photo.credit);
-
-				//badges
-				txt_10.alpha = txt_25.alpha = txt_45.alpha = txt_70.alpha = txt_95.alpha = txt_120.alpha = 0;
-				badge_1.grey.alpha = 1;
-				badge_2.grey.alpha = badge_3.grey.alpha = badge_3.grey.alpha = badge_4.grey.alpha = badge_5.grey.alpha = badge_6.grey.alpha = 0;
-				badge_1.color.alpha = badge_2.color.alpha = badge_3.color.alpha = badge_3.color.alpha = badge_4.color.alpha = badge_5.color.alpha = badge_6.color.alpha = 0;
-
-				for(var i:int = 1; i <= 120; ++i){
-					images.push(i);
-					ratings.push(-1);
-				}
-				shuffle();
-			}});
+			Tweener.addTween(this, { delay: 4, onComplete: logicalReset});
 			graphic_fakebg.alpha = 0;
 
 			//Tweener.addTween(cont_endsession_modal, { height: cont_endsession_modal.height - 20, width: cont_endsession_modal.width - 50, alpha: 0, time: 1, onComplete: function() {
@@ -697,7 +719,7 @@
 				}	
 			}
 
-			//in keyboard mode
+			//in e-mail keyboard mode
 			if(window_email.alpha == 1) {
 				//removeChild(cont_exitEmail);
 				exitEmail();
@@ -715,70 +737,7 @@
 			}
 			
 			Tweener.addTween(this, {delay: 1, onComplete: function() { dispatchEvent(new Event("endSession", true)); }});
-
-			Tweener.addTween(this, { delay: 4, onComplete: function() { 
-				//LOGICAL
-				currentLoc = -1;
-				reachedEnd = false;
-				currentBadge = -1;
-				lastRated = -1;
-				photoSent = false;
-				maillist_opt = false;
-				email = '';
-				sendBadges = false;
-				aboutShowing = false;
-
-				//VISUAL
-				//text
-				email_entered.text = '';
-				txt_email.text = '';
-				text_remaining_ratings.text = "10";
-				window_endsession.txt_email.text = '';
-				window_endsession.button_maillist.gotoAndStop("check");
-				window_about.alpha = 0;
-				
-				//share button
-				button_email.alpha = 1;
-				button_email.text_emailimage.alpha = 1;
-				button_email.text_emailimageto.alpha = 0;
-				button_removeemail.alpha = 0;
-				button_removeemail.scaleX = button_removeemail.scaleY = 0.8;
-				
-				//photo
-				photo.id = getNext();
-				dummyPhoto.id = photo.id;
-
-				//bubbles
-				bubble_packaged.scaleX = bubble_packaged.scaleY = 0.8;
-				bubble_toscreen.scaleX = bubble_toscreen.scaleY = 0.8;
-				bubble_emailinstruct.scaleX = bubble_emailinstruct.scaleY = 0.8;
-				window_email.scaleX = window_email.scaleY = 0.8;
-				bubble_packaged.alpha = 0;
-				bubble_toscreen.alpha = 0;
-				bubble_emailinstruct.alpha = 0;
-				window_email.alpha = 0;
-
-				//shader
-				cont_shader.y = 0;
-
-				//instructional
-				cont_instructions.alpha = 0;
-
-				//metadata
-				setMetadata(photo.title, photo.artist, photo.bio, photo.date, photo.process, photo.credit);
-
-				//badges
-				txt_10.alpha = txt_25.alpha = txt_45.alpha = txt_70.alpha = txt_95.alpha = txt_120.alpha = 0;
-				badge_1.grey.alpha = 1;
-				badge_2.grey.alpha = badge_3.grey.alpha = badge_3.grey.alpha = badge_4.grey.alpha = badge_5.grey.alpha = badge_6.grey.alpha = 0;
-				badge_1.color.alpha = badge_2.color.alpha = badge_3.color.alpha = badge_3.color.alpha = badge_4.color.alpha = badge_5.color.alpha = badge_6.color.alpha = 0;
-
-				for(var i:int = 1; i <= 120; ++i){
-					images.push(i);
-					ratings.push(-1);
-				}
-				shuffle();
-			}});
+			Tweener.addTween(this, { delay: 4, onComplete: logicalReset});
 			
 			blockerOn();
 			Tweener.addTween(cont_blocker_fullscreen, { delay: 2, onComplete: blockerOff } );
@@ -912,10 +871,12 @@
 			cont_star4.addEventListener(TouchEvent.TOUCH_DOWN, star4_dwn, false, 0, true);
 			cont_star4.addEventListener(TouchEvent.TOUCH_UP, star4_up, false, 0, true);
 			dispatchEvent(new Event("activateLang", true));
-			photo_blockerOff();
+			if(currentBadge != 6)
+				photo_blockerOff();
 
 			blockerOn();
-			Tweener.addTween(cont_blocker_fullscreen, { delay: 1.5, onComplete: blockerOff } );
+			if(currentBadge != 6)
+				Tweener.addTween(cont_blocker_fullscreen, { delay: 1.5, onComplete: blockerOff } );
 		}
 		
 		private function toscreen_dwn(e:TouchEvent):void {
@@ -1164,7 +1125,7 @@
 		private function continue_up(e:TouchEvent):void {
 			window_gotbadge.button_continue.gotoAndStop("up");
 
-			//Tweener.addTween(cont_gotbadge_modal, { height: cont_gotbadge_modal.height - 100, width: cont_gotbadge_modal.width - 100, alpha: 0, time: 1, onComplete: function() {
+			//Tweener.addTween(cont_gotbadge_modal, { heiokght: cont_gotbadge_modal.height - 100, width: cont_gotbadge_modal.width - 100, alpha: 0, time: 1, onComplete: function() {
 			Tweener.addTween(cont_gotbadge_modal, { scaleX: 0.8, scaleY: 0.8, alpha: 0, time: 1, onComplete: function() {
 				removeChild(cont_gotbadge_modal);
 				shadeOff();
@@ -1577,47 +1538,27 @@
 
 		private function es_exitKeyboard_up(e:TouchEvent):void {
 			removeChild(cont_es_exitKeyboard);
-			if(contains(cont_endsession_modal)) {
-				cont_es_mailbg.addEventListener(TouchEvent.TOUCH_UP, es_email_up, false, 0, true);
-				window_endsession.txt_email.text = 'enter e-mail here';
+			
+			cont_es_mailbg.addEventListener(TouchEvent.TOUCH_UP, es_email_up, false, 0, true);
+			window_endsession.txt_email.text = 'enter e-mail here';
 
-				//shift down to hide keyboard
-				Tweener.addTween(window_endsession.window_modal, { height: 395, y: -197.5, time: 1});
-				Tweener.addTween(window_endsession.window_emailbg, { y: 51, time: 1});
-				Tweener.addTween(window_endsession.txt_endsession, { y: -375, time: 1});
-				Tweener.addTween(window_endsession.txt_prompt, { y: -335, time: 1});
-				Tweener.addTween(window_endsession.txt_email, { y: 34, time: 1});
-				//Tweener.addTween(window_endsession.txt_invalid, { y: -219, time: 1});
-				//NOTE: coordinates get distorted somehow, so just hardcoded
+			//shift down to hide keyboard
+			Tweener.addTween(window_endsession.window_modal, { height: 395, y: -197.5, time: 1});
+			Tweener.addTween(window_endsession.window_emailbg, { y: 51, time: 1});
+			Tweener.addTween(window_endsession.txt_endsession, { y: -375, time: 1});
+			Tweener.addTween(window_endsession.txt_prompt, { y: -335, time: 1});
+			Tweener.addTween(window_endsession.txt_email, { y: 34, time: 1});
+			//Tweener.addTween(window_endsession.txt_invalid, { y: -219, time: 1});
+			//NOTE: coordinates get distorted somehow, so just hardcoded
 
-				//reactivate end session
-				cont_endsession_modal.addChild(cont_es_esskip);
-				Tweener.addTween(cont_es_esskip, {alpha: 1, time: 1} );
-				Tweener.addTween(cont_es_continue, {alpha: 1, time: 1} );
+			//reactivate end session
+			cont_endsession_modal.addChild(cont_es_esskip);
+			Tweener.addTween(cont_es_esskip, {alpha: 1, time: 1} );
+			Tweener.addTween(cont_es_continue, {alpha: 1, time: 1} );
 
-				//ok button disappears
-				Tweener.addTween(cont_es_okemail, { alpha: 0, time: 1, onComplete: function() { cont_endsession_modal.removeChild(cont_es_okemail); }} );
-				//cont_endsession_modal.removeChild(cont_es_okemail);
-
-			} else if (contains(cont_gotbadge_modal)) {
-				//cont_namebg.addEventListener(TouchEvent.TOUCH_UP, namebg_up, false, 0, true);
-				window_gotbadge.txt_name.text = 'enter full name here';
-
-				//shift down to hide keyboard
-				Tweener.addTween(window_gotbadge.window_modal, { height: 765.4, y: 33.5, time: 1});
-				Tweener.addTween(window_gotbadge.window_name, { y: -104.9, time: 1});
-				Tweener.addTween(window_gotbadge.txt_name, { y: -121.9, time: 1});
-				Tweener.addTween(window_gotbadge.graphic_bellows, { y: -245.2, time: 1});
-				Tweener.addTween(window_gotbadge.txt_congrats, { y: -162, time: 1});
-				Tweener.addTween(window_gotbadge.txt_120prompt, { y: -123.95, time: 1});
-
-				//replace video
-				addChild(cont_video6);
-				Tweener.addTween(cont_video6, {alpha: 1, time: 1, delay: 0.5});
-
-				//ok button disappears
-				Tweener.addTween(cont_okname, { alpha: 0, time: 1, onComplete: function() { cont_gotbadge_modal.removeChild(cont_okname); }} );
-			}
+			//ok button disappears
+			Tweener.addTween(cont_es_okemail, { alpha: 0, time: 1, onComplete: function() { cont_endsession_modal.removeChild(cont_es_okemail); }} );
+			//cont_endsession_modal.removeChild(cont_es_okemail);
 
 			//hide keyboard
 			Tweener.addTween(softKeyboard, {alpha: 0, time: 1, onComplete: function() { 
@@ -1636,10 +1577,73 @@
 		private function okname_up(e:TouchEvent):void {
 			window_gotbadge.button_okname.gotoAndStop("up");
 
-			window_gotbadge.txt_inputname.text = softKeyboard.emailText() + ",";
-			fullname = softKeyboard.emailText();
+			if(!contains(cont_video6)) {
+				window_gotbadge.txt_inputname.text = softKeyboard.emailText() + ",";
+				fullname = softKeyboard.emailText();
+	
+				var target_height:int = window_gotbadge.window_modal.height - 215;
+				var target_ypos:int = window_gotbadge.window_modal.y - (target_height - window_gotbadge.window_modal.height)/2;
+	
+				//fade out
+				Tweener.addTween(window_gotbadge.window_modal, { height: target_height, y: target_ypos, time: 1});
+				Tweener.addTween(window_gotbadge.window_name, { alpha: 0, time: 1});
+				Tweener.addTween(window_gotbadge.txt_name, { alpha: 0, time: 1});
+				Tweener.addTween(window_gotbadge.graphic_bellows, { alpha: 0, time: 1});
+				Tweener.addTween(window_gotbadge.txt_congrats, { alpha: 0, time: 1});
+				Tweener.addTween(window_gotbadge.txt_120prompt, { alpha: 0, time: 1});
+				Tweener.addTween(cont_skip, { alpha: 0, time: 1, onComplete: function() { cont_gotbadge_modal.removeChild(cont_skip); }});
+				Tweener.addTween(window_gotbadge.graphic_continuebg , { alpha: 0, time: 0.5});
+	
+				//hide keyboard
+				Tweener.addTween(softKeyboard, {alpha: 0, time: 1, onComplete: function() { 
+					softKeyboard.y = 0;
+					softKeyboard.x = 590;
+				}} );
+	
+				//fade in
+				//Tweener.addTween(window_gotbadge.txt_inputname, { alpha: 1, time: 1});
+				Tweener.addTween(window_gotbadge.txt_inputname, { alpha: 1, time: 1, delay: 0.5});
+				Tweener.addTween(window_gotbadge.txt_thanks, { alpha: 1, time: 1, delay: 1.5});
+				addChild(cont_video6);
+				Tweener.addTween(cont_video6, {alpha: 1, time: 1, delay: 2});
+				Tweener.addTween(cont_video6, {delay: 2.5, onComplete: function() { video6_up(e); }});
+	
+				blockerOn();
+				Tweener.addTween(cont_blocker_fullscreen, { delay: 3, onComplete: blockerOff } );
+			} else if (contains(cont_video6)) {
+				trace("OK GO!");
 
-			var target_height:int = window_gotbadge.window_modal.height - 215;
+				Tweener.addTween(cont_gotbadge_modal, { scaleX: 0.8, scaleY: 0.8, alpha: 0, time: 1, onComplete: function() {
+					removeChild(cont_gotbadge_modal);
+				} });
+
+				Tweener.addTween(badge_6.color, { alpha: 1, time: 1, delay: 1.5});
+				Tweener.addTween(badge6_glow, { delay: 1, onComplete: function() { badge6_glow.gotoAndPlay("play"); } } );
+				Tweener.addTween(txt_120, { alpha: 1, time: 1, delay: 1.5 });
+				Tweener.addTween(cont_video6, {alpha: 0, time: 1, onComplete: function() { removeChild(cont_video6); }});
+				if(video6.video.playing) {
+					Tweener.addTween(video6.graphic_videoblack, {alpha: 1, time: 1});
+					Tweener.addTween(video6.graphic_play, {alpha: 1, time: 1});
+					video6.video.stop();
+				}
+
+				Tweener.addTween(cont_gotbadge_modal, { delay: 1.5, onComplete: function() { endsession_up(e); } });
+
+				blockerOn();
+				Tweener.addTween(cont_blocker_fullscreen, { delay: 3, onComplete: blockerOff } );
+			}
+		}
+
+		private function skip_dwn(e:TouchEvent):void {
+			window_gotbadge.button_skip.gotoAndStop("down");
+		}
+		
+		private function skip_up(e:TouchEvent):void {
+			window_gotbadge.button_skip.gotoAndStop("up");
+
+			window_gotbadge.txt_inputname.text = "";
+
+			var target_height:int = window_gotbadge.window_modal.height - 240;
 			var target_ypos:int = window_gotbadge.window_modal.y - (target_height - window_gotbadge.window_modal.height)/2;
 
 			//fade out
@@ -1659,23 +1663,13 @@
 			}} );
 
 			//fade in
-			//Tweener.addTween(window_gotbadge.txt_inputname, { alpha: 1, time: 1});
-			Tweener.addTween(window_gotbadge.txt_inputname, { alpha: 1, time: 1, delay: 0.5});
-			Tweener.addTween(window_gotbadge.txt_thanks, { alpha: 1, time: 1, delay: 1.5});
+			Tweener.addTween(window_gotbadge.txt_thanks, { alpha: 1, time: 1, delay: 0.5});
 			addChild(cont_video6);
-			Tweener.addTween(cont_video6, {alpha: 1, time: 1, delay: 2});
-			Tweener.addTween(cont_video6, {delay: 2.5, onComplete: function() { video6_up(e); }});
+			Tweener.addTween(cont_video6, {alpha: 1, time: 1, delay: 1});
+			Tweener.addTween(cont_video6, {delay: 1.5, onComplete: function() { video6_up(e); }});
 
 			blockerOn();
 			Tweener.addTween(cont_blocker_fullscreen, { delay: 3, onComplete: blockerOff } );
-		}
-
-		private function skip_dwn(e:TouchEvent):void {
-			window_gotbadge.button_skip.gotoAndStop("down");
-		}
-		
-		private function skip_up(e:TouchEvent):void {
-			window_gotbadge.button_skip.gotoAndStop("up");
 		}
 
 
@@ -2283,6 +2277,14 @@
 
 				window_endsession.txt_continue.visible = window_endsession.graphic_continuebg.visible = true;
 				window_endsession.button_continue.visible = true;
+
+				if(currentBadge == 6) {
+					if(cont_endsession_modal.contains(cont_es_continue)) {
+						cont_endsession_modal.removeChild(cont_es_continue);
+					}
+					window_endsession.graphic_continuebg.visible = false;
+					window_endsession.txt_continue.visible = false;
+				}
 			}
 		}
 
@@ -2315,22 +2317,24 @@
 				Tweener.addTween(cont_video5, {alpha: 1, time: 1, delay: 0.5});
 			} else if(currentBadge == 6) {
 				window_gotbadge.gotoAndStop("badge6");
-				/*addChild(cont_video6);
-				Tweener.addTween(cont_video6, {alpha: 1, time: 1, delay: 0.5});*/
-				//cont_gotbadge_modal.addChild(cont_namebg); //RETURN HERE
+				
+				//layout
+				window_gotbadge.txt_120prompt.alpha = window_gotbadge.graphic_bellows.alpha = window_gotbadge.graphic_continuebg.alpha = window_gotbadge.txt_congrats.alpha = 1;
+				window_gotbadge.window_modal.height = 796.7;
+				window_gotbadge.window_modal.y = 18;
 				window_gotbadge.txt_name.alpha = 1;
 				window_gotbadge.txt_name.text = '';
 				cont_gotbadge_modal.addChild(window_gotbadge.txt_name); //in order to keep e-mail above white bg
 				cont_gotbadge_modal.removeChild(cont_continue);
-				//window_gotbadge.graphic_continuebg.visible = false;
 				window_gotbadge.txt_continuerating.visible = false;
 				window_gotbadge.window_name.alpha = 1;
 
+				//show keyboard
 				softKeyboard.alpha = 0;
 				softKeyboard.y = -85;
 				softKeyboard.x = -297;
 				softKeyboard.setInputTF(window_gotbadge.txt_name);
-				Tweener.addTween(softKeyboard, {alpha: 1, time: 1, delay: 0.5} );
+				Tweener.addTween(softKeyboard, {alpha: 1, time: 1, delay: 1} );
 				softKeyboard.toDefault();
 				addChild(softKeyboard);
 
@@ -2351,8 +2355,8 @@
 			//Tweener.addTween(cont_gotbadge_modal, { height: 697, width: 727.5, time: 1, delay: 0.5, transition: "easeOutElastic" });
 			Tweener.addTween(cont_gotbadge_modal, { scaleX: 1, scaleY: 1, time: 1, delay: 0.5, transition: "easeOutElastic" });
 
-			/*blockerOn();
-			Tweener.addTween(cont_blocker_fullscreen, { delay: 1.5, onComplete: blockerOff } );*/
+			blockerOn();
+			Tweener.addTween(cont_blocker_fullscreen, { delay: 1.5, onComplete: blockerOff } );
 		}
 
 		private function screen_bubble_done(e:TimelineEvent):void {
