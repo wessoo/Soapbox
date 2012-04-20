@@ -39,7 +39,7 @@
 		private static var badge4:int = 70;
 		private static var badge5:int = 95;
 		private static var badge6:int = 120;
-		private static var debugSpeed:int = 5; //The debugging speed for rating images (1 means normal, 2 mean 2x, etc...)
+		private static var debugSpeed:int = 1; //The debugging speed for rating images (1 means normal, 2 mean 2x, etc...)
 											   //Keep the debug speed a multiple of 120!!
 		
 		/* dyanmic interface components */
@@ -355,7 +355,7 @@
 
 			//end session modal setup
 			cont_endsession_modal.alpha = 0;
-			cont_endsession_modal.scaleY = cont_endsession_modal.scaleY = 0.8;
+			cont_endsession_modal.scaleX = cont_endsession_modal.scaleY = 0.8;
 
 			//class event listeners
 			addEventListener(TouchEvent.TOUCH_DOWN, anyTouch); //registering any touch on the screen
@@ -573,6 +573,7 @@
 			photoSent = false;
 			maillist_opt = false;
 			email = '';
+			fullname = '';
 			sendBadges = false;
 			aboutShowing = false;
 
@@ -617,7 +618,7 @@
 			if(cont_gotbadge_modal.contains(cont_skip)) {
 				cont_gotbadge_modal.removeChild(cont_skip);
 			}
-			window_gotbadge.graphic_continuebg.alpha = 1;
+			window_gotbadge.graphic_continuebg.alpha = window_gotbadge.graphic_prompt.alpha = 1;
 			window_gotbadge.txt_inputname.alpha = window_gotbadge.window_name.alpha = window_gotbadge.txt_invalid.alpha = window_gotbadge.txt_name.alpha = window_gotbadge.txt_thanks.alpha = 0;
 			window_gotbadge.txt_name.alpha = 0;
 			cont_gotbadge_modal.addChild(cont_continue);
@@ -629,6 +630,16 @@
 			badge_1.grey.alpha = 1;
 			badge_2.grey.alpha = badge_3.grey.alpha = badge_3.grey.alpha = badge_4.grey.alpha = badge_5.grey.alpha = badge_6.grey.alpha = 0;
 			badge_1.color.alpha = badge_2.color.alpha = badge_3.color.alpha = badge_3.color.alpha = badge_4.color.alpha = badge_5.color.alpha = badge_6.color.alpha = 0;
+
+			//videos
+			video1.video.stop();
+			video2.video.stop();
+			video3.video.stop();
+			video4.video.stop();
+			video5.video.stop();
+			video6.video.stop();
+			video1.graphic_videoblack.alpha = video2.graphic_videoblack.alpha = video3.graphic_videoblack.alpha = video4.graphic_videoblack.alpha = video5.graphic_videoblack.alpha = video6.graphic_videoblack.alpha = 1
+			video1.graphic_play.alpha = video2.graphic_play.alpha = video3.graphic_play.alpha = video4.graphic_play.alpha = video5.graphic_play.alpha = video6.graphic_play.alpha = 1;
 
 			//OTHER presets
 			button_email.text_emailimageto.alpha = 0; //turns off email label
@@ -1578,41 +1589,43 @@
 			window_gotbadge.button_okname.gotoAndStop("up");
 
 			if(!contains(cont_video6)) {
-				window_gotbadge.txt_inputname.text = softKeyboard.emailText() + ",";
-				fullname = softKeyboard.emailText();
-	
-				var target_height:int = window_gotbadge.window_modal.height - 215;
-				var target_ypos:int = window_gotbadge.window_modal.y - (target_height - window_gotbadge.window_modal.height)/2;
-	
-				//fade out
-				Tweener.addTween(window_gotbadge.window_modal, { height: target_height, y: target_ypos, time: 1});
-				Tweener.addTween(window_gotbadge.window_name, { alpha: 0, time: 1});
-				Tweener.addTween(window_gotbadge.txt_name, { alpha: 0, time: 1});
-				Tweener.addTween(window_gotbadge.graphic_bellows, { alpha: 0, time: 1});
-				Tweener.addTween(window_gotbadge.txt_congrats, { alpha: 0, time: 1});
-				Tweener.addTween(window_gotbadge.txt_120prompt, { alpha: 0, time: 1});
-				Tweener.addTween(cont_skip, { alpha: 0, time: 1, onComplete: function() { cont_gotbadge_modal.removeChild(cont_skip); }});
-				Tweener.addTween(window_gotbadge.graphic_continuebg , { alpha: 0, time: 0.5});
-	
-				//hide keyboard
-				Tweener.addTween(softKeyboard, {alpha: 0, time: 1, onComplete: function() { 
-					softKeyboard.y = 0;
-					softKeyboard.x = 590;
-				}} );
-	
-				//fade in
-				//Tweener.addTween(window_gotbadge.txt_inputname, { alpha: 1, time: 1});
-				Tweener.addTween(window_gotbadge.txt_inputname, { alpha: 1, time: 1, delay: 0.5});
-				Tweener.addTween(window_gotbadge.txt_thanks, { alpha: 1, time: 1, delay: 1.5});
-				addChild(cont_video6);
-				Tweener.addTween(cont_video6, {alpha: 1, time: 1, delay: 2});
-				Tweener.addTween(cont_video6, {delay: 2.5, onComplete: function() { video6_up(e); }});
-	
-				blockerOn();
-				Tweener.addTween(cont_blocker_fullscreen, { delay: 3, onComplete: blockerOff } );
+				if ( !softKeyboard.validateName(softKeyboard.emailText()) ) { //name invalid
+					Tweener.addTween( window_gotbadge.txt_invalid, { alpha: 1, time: 0.5 } );
+					Tweener.addTween( window_gotbadge.txt_invalid, { alpha: 0, delay: 2, time: 0.5 } );
+					trace("invalid");
+				} else { 
+					window_gotbadge.txt_inputname.text = softKeyboard.emailText() + ",";
+					fullname = softKeyboard.emailText();
+		
+					var target_height:int = window_gotbadge.window_modal.height - 225;
+					var target_ypos:int = window_gotbadge.window_modal.y - (target_height - window_gotbadge.window_modal.height)/2;
+		
+					//fade out
+					Tweener.addTween(window_gotbadge.window_modal, { height: target_height, y: target_ypos, time: 1});
+					Tweener.addTween(window_gotbadge.window_name, { alpha: 0, time: 1});
+					Tweener.addTween(window_gotbadge.txt_name, { alpha: 0, time: 1});
+					Tweener.addTween(window_gotbadge.graphic_prompt, { alpha: 0, time: 1});
+					Tweener.addTween(cont_skip, { alpha: 0, time: 1, onComplete: function() { cont_gotbadge_modal.removeChild(cont_skip); }});
+					Tweener.addTween(window_gotbadge.graphic_continuebg , { alpha: 0, time: 0.5});
+		
+					//hide keyboard
+					Tweener.addTween(softKeyboard, {alpha: 0, time: 1, onComplete: function() { 
+						softKeyboard.y = 0;
+						softKeyboard.x = 590;
+					}} );
+		
+					//fade in
+					//Tweener.addTween(window_gotbadge.txt_inputname, { alpha: 1, time: 1});
+					Tweener.addTween(window_gotbadge.txt_inputname, { alpha: 1, time: 1, delay: 0.5});
+					Tweener.addTween(window_gotbadge.txt_thanks, { alpha: 1, time: 1, delay: 1.5});
+					addChild(cont_video6);
+					Tweener.addTween(cont_video6, {alpha: 1, time: 1, delay: 2});
+					Tweener.addTween(cont_video6, {delay: 2.5, onComplete: function() { video6_up(e); }});
+		
+					blockerOn();
+					Tweener.addTween(cont_blocker_fullscreen, { delay: 3, onComplete: blockerOff } );
+				}
 			} else if (contains(cont_video6)) {
-				trace("OK GO!");
-
 				Tweener.addTween(cont_gotbadge_modal, { scaleX: 0.8, scaleY: 0.8, alpha: 0, time: 1, onComplete: function() {
 					removeChild(cont_gotbadge_modal);
 				} });
@@ -1630,7 +1643,7 @@
 				Tweener.addTween(cont_gotbadge_modal, { delay: 1.5, onComplete: function() { endsession_up(e); } });
 
 				blockerOn();
-				Tweener.addTween(cont_blocker_fullscreen, { delay: 3, onComplete: blockerOff } );
+				Tweener.addTween(cont_blocker_fullscreen, { delay: 2.5, onComplete: blockerOff } );
 			}
 		}
 
@@ -1650,9 +1663,7 @@
 			Tweener.addTween(window_gotbadge.window_modal, { height: target_height, y: target_ypos, time: 1});
 			Tweener.addTween(window_gotbadge.window_name, { alpha: 0, time: 1});
 			Tweener.addTween(window_gotbadge.txt_name, { alpha: 0, time: 1});
-			Tweener.addTween(window_gotbadge.graphic_bellows, { alpha: 0, time: 1});
-			Tweener.addTween(window_gotbadge.txt_congrats, { alpha: 0, time: 1});
-			Tweener.addTween(window_gotbadge.txt_120prompt, { alpha: 0, time: 1});
+			Tweener.addTween(window_gotbadge.graphic_prompt, { alpha: 0, time: 1});
 			Tweener.addTween(cont_skip, { alpha: 0, time: 1, onComplete: function() { cont_gotbadge_modal.removeChild(cont_skip); }});
 			Tweener.addTween(window_gotbadge.graphic_continuebg , { alpha: 0, time: 0.5});
 
@@ -2296,45 +2307,44 @@
 			//if(cont_gotbadge_modal.contains(cont_namebg))
 
 			if(currentBadge == 1) {
-				window_gotbadge.gotoAndStop("badge1");
+				window_gotbadge.graphic_prompt.gotoAndStop("badge1");
 				addChild(cont_video1);
 				Tweener.addTween(cont_video1, {alpha: 1, time: 1, delay: 0.5});
 			} else if(currentBadge == 2) {
-				window_gotbadge.gotoAndStop("badge2");
+				window_gotbadge.graphic_prompt.gotoAndStop("badge2");
 				addChild(cont_video2);
 				Tweener.addTween(cont_video2, {alpha: 1, time: 1, delay: 0.5});
 			} else if(currentBadge == 3) {
-				window_gotbadge.gotoAndStop("badge3");
+				window_gotbadge.graphic_prompt.gotoAndStop("badge3");
 				addChild(cont_video3);
 				Tweener.addTween(cont_video3, {alpha: 1, time: 1, delay: 0.5});
 			} else if(currentBadge == 4) {
-				window_gotbadge.gotoAndStop("badge4");
+				window_gotbadge.graphic_prompt.gotoAndStop("badge4");
 				addChild(cont_video4);
 				Tweener.addTween(cont_video4, {alpha: 1, time: 1, delay: 0.5});
 			} else if(currentBadge == 5) {
-				window_gotbadge.gotoAndStop("badge5");
+				window_gotbadge.graphic_prompt.gotoAndStop("badge5");
 				addChild(cont_video5);
 				Tweener.addTween(cont_video5, {alpha: 1, time: 1, delay: 0.5});
 			} else if(currentBadge == 6) {
-				window_gotbadge.gotoAndStop("badge6");
+				window_gotbadge.graphic_prompt.gotoAndStop("badge6");
 				
 				//layout
-				window_gotbadge.txt_120prompt.alpha = window_gotbadge.graphic_bellows.alpha = window_gotbadge.graphic_continuebg.alpha = window_gotbadge.txt_congrats.alpha = 1;
-				window_gotbadge.window_modal.height = 796.7;
-				window_gotbadge.window_modal.y = 18;
-				window_gotbadge.txt_name.alpha = 1;
+				window_gotbadge.graphic_continuebg.alpha = 1;
+				window_gotbadge.window_modal.height = 820;
+				window_gotbadge.window_modal.y = 7;
+				window_gotbadge.txt_name.alpha = window_gotbadge.window_name.alpha = 1;
 				window_gotbadge.txt_name.text = '';
 				cont_gotbadge_modal.addChild(window_gotbadge.txt_name); //in order to keep e-mail above white bg
 				cont_gotbadge_modal.removeChild(cont_continue);
 				window_gotbadge.txt_continuerating.visible = false;
-				window_gotbadge.window_name.alpha = 1;
 
 				//show keyboard
 				softKeyboard.alpha = 0;
-				softKeyboard.y = -85;
+				softKeyboard.y = -120;
 				softKeyboard.x = -297;
 				softKeyboard.setInputTF(window_gotbadge.txt_name);
-				Tweener.addTween(softKeyboard, {alpha: 1, time: 1, delay: 1} );
+				Tweener.addTween(softKeyboard, {alpha: 1, time: 1, delay: 0.7} );
 				softKeyboard.toDefault();
 				addChild(softKeyboard);
 
@@ -2352,7 +2362,6 @@
 			cont_gotbadge_modal.alpha = 0;
 
 			Tweener.addTween(cont_gotbadge_modal, { alpha: 1, time: 1, delay: 0.5 } );
-			//Tweener.addTween(cont_gotbadge_modal, { height: 697, width: 727.5, time: 1, delay: 0.5, transition: "easeOutElastic" });
 			Tweener.addTween(cont_gotbadge_modal, { scaleX: 1, scaleY: 1, time: 1, delay: 0.5, transition: "easeOutElastic" });
 
 			blockerOn();

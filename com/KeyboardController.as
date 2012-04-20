@@ -62,9 +62,11 @@
 		}
 
 		public function validateName(address:String):Boolean {
-			var email_REGEX:RegExp = /^[0-9a-zA-Z][-._a-zA-Z0-9]*@([0-9a-zA-Z][-._0-9a-zA-Z]*\.)+[a-zA-Z]{2,4}$/;
-			
-			return email_REGEX.test(address);
+			//var name_REGEX:RegExp = /^[A-Z]'?[- a-zA-Z]( [a-zA-Z])*$/;
+			//var name_REGEX:RegExp = /^[A-Z]'?[- a-zA-Z]( [a-zA-Z])*$/;
+
+			//return name_REGEX.test(address);
+			return (address != '');
 		}
 		
 		public function toDefault():void {
