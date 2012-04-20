@@ -15,6 +15,10 @@
 	import id.core.TouchComponent;
 	import id.core.TouchSprite;
 	
+	import flash.text.StyleSheet;
+	import flash.text.TextFieldAutoSize;
+	import flash.text.TextField;
+	
 	import caurina.transitions.Tweener;	
 
 	public class Rating extends TouchComponent {
@@ -2024,13 +2028,22 @@
 		}
 		
 		private function setMetadata(iTitle, iArtist, iBio, iDate, iProcess, iCredit):void{
-			var newline:String = "\n";
+			var newline:String = "<br>";
 			var oldTH:Number = text_metadata.textHeight;
 			var	oldWH:Number = window_metadata.height;
-			text_metadata.text = iArtist + newline + iBio + newline + newline + iTitle +
-								 newline + iDate + newline + newline + iProcess + newline + iCredit;
+			
+			/*var ss:StyleSheet = new StyleSheet();
+			var myItalic:Object = {fontFamily:"Calibri Italic", letterSpacing:0, fontSize:16, color:"#CCCCCC"};
+			ss.setStyle(".myItalic", myItalic);
+			text_metadata.styleSheet = ss;
+			text_metadata.embedFonts = true;*/
+			
+			text_metadata.autoSize = TextFieldAutoSize.LEFT;
+			text_metadata.htmlText = bold(iArtist) + newline + iBio + newline + newline + bold(iTitle) +
+								     newline + iDate + newline + iProcess + newline + newline + iCredit;
 			text_metadata.wordWrap = true;
-		
+			text_metadata.multiline = true;
+			
 			text_metadata.height += (text_metadata.textHeight - oldTH);
 			
 			//var next_height:int = text_metadata.textHeight + 14 * 2;
@@ -2040,6 +2053,10 @@
 			
 			Tweener.addTween(window_metadata, { time: 1, height: text_metadata.textHeight + 14 * 2, y: window_metadata.y + (oldWH - window_metadata.height) / 2 } );
 			Tweener.addTween(text_metadata, { time: 1, alpha: 1} );
+		}
+		
+		private function bold(input:String):String{
+			return "<B>" + input + "</B>";
 		}
 		
 		private function animateSwitch():void {

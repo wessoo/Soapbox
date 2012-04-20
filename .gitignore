@@ -1,6 +1,7 @@
 #Ignore Flash files
 *.fla
 *.swf
+*.swz
 
 #Ignore executables
 *.exe
