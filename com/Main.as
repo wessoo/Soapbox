@@ -175,7 +175,7 @@
 		/* ------ Interface/Animation Functions ------- */
 		/* -------------------------------------------- */
 		private function anyTouch(e:TouchEvent):void {
-			if(screen == 2) {
+			if(screen == 2 || screen == 3) {
 				timeoutWarn.reset();
 				timeoutWarn.start();
 				timeout.reset();
@@ -194,7 +194,26 @@
 				countdown.reset();
 				countdown_sec = 10;
 			} else if (screen == 3) {
+				Tweener.addTween(shader, { alpha: 0, time: 0.5, onComplete: shadeOff});
+				Tweener.addTween(txt_timeout, { alpha: 0, time: 1} );
+				countdown.reset();
+				countdown_sec = 10;
+
+				timeoutWarn.reset();
+				timeout.reset();
 				
+				screen = 1;
+				Tweener.addTween(background_texture, {x: 0, time: 1.5, transition: "easeInOutQuart" });
+				Tweener.addTween(button_torating, {x: 960, time: 1.5, transition: "easeInOutQuart" });
+				Tweener.addTween(button_tostats, {x: 110, time: 1.5, transition: "easeInOutQuart" });
+				Tweener.addTween(landing_text, {x: LANDINGTEXT_X, time: 1.5, transition: "easeInOutQuart" });
+				Tweener.addTween(graphic_logo, {x: LOGO_X, time: 1.5, transition: "easeInOutQuart" });
+				Tweener.addTween(ranking, {x: -956.75, time: 1.5, transition: "easeInOutQuart" });
+				Tweener.addTween(cont_lang, { alpha: 0, time: 0.5, onComplete: function() {
+					button_lang.x = 1832.35;
+					button_lang.y = 955;
+				} });
+				Tweener.addTween(cont_lang, { alpha: 1, time: 1, delay: 1.5});
 			}
 
 		}
@@ -284,6 +303,10 @@
 			}});
 
 			if(screen == 1) {
+				timeout.start();
+				timeoutWarn.start();
+				screen = 3;
+
 				screen = 3;
 				Tweener.addTween(background_texture, {x: SCREEN_WIDTH, time: 1.5, transition: "easeInOutQuart" });
 				Tweener.addTween(button_torating, {x: 960 + SCREEN_WIDTH, time: 1.5, transition: "easeInOutQuart" });
@@ -297,6 +320,9 @@
 				} });
 				Tweener.addTween(cont_lang, { alpha: 1, time: 1, delay: 1.5});
 			} else if (screen == 3) {
+				timeoutWarn.reset();
+				timeout.reset();
+
 				screen = 1;
 				Tweener.addTween(background_texture, {x: 0, time: 1.5, transition: "easeInOutQuart" });
 				Tweener.addTween(button_torating, {x: 960, time: 1.5, transition: "easeInOutQuart" });

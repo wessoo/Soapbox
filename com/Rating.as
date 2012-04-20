@@ -88,6 +88,7 @@
 		private var cont_okname:TouchSprite;
 		//private var cont_namebg:TouchSprite;
 		private var cont_skip:TouchSprite;
+		private var cont_help:TouchSprite;
 		private var cont_video1:TouchSprite;
 		private var cont_video2:TouchSprite;
 		private var cont_video3:TouchSprite;
@@ -158,6 +159,7 @@
 			cont_okname = new TouchSprite();
 			//cont_namebg = new TouchSprite();
 			cont_skip = new TouchSprite();
+			cont_help = new TouchSprite();
 			cont_video1 = new TouchSprite();
 			cont_video2 = new TouchSprite();
 			cont_video3 = new TouchSprite();
@@ -205,6 +207,8 @@
 			cont_endsession_modal.addChild(cont_es_okemail);
 			cont_es_esskip.addChild(window_endsession.button_esskip);
 			cont_endsession_modal.addChild(cont_es_esskip);
+			cont_help.addChild(button_help);
+			addChild(cont_help);
 			cont_video1.addChild(video1);
 			cont_video2.addChild(video2);
 			cont_video3.addChild(video3);
@@ -261,6 +265,8 @@
 			//cont_namebg.addEventListener(TouchEvent.TOUCH_UP, namebg_up, false, 0, true);
 			cont_skip.addEventListener(TouchEvent.TOUCH_DOWN, skip_dwn, false, 0, true);
 			cont_skip.addEventListener(TouchEvent.TOUCH_UP, skip_up, false, 0, true);
+			cont_help.addEventListener(TouchEvent.TOUCH_DOWN, help_dwn, false, 0, true);
+			cont_help.addEventListener(TouchEvent.TOUCH_UP, help_up, false, 0, true);
 			cont_video1.addEventListener(TouchEvent.TOUCH_DOWN, video1_dwn, false, 0, true);
 			cont_video1.addEventListener(TouchEvent.TOUCH_UP, video1_up, false, 0, true);
 			cont_video2.addEventListener(TouchEvent.TOUCH_DOWN, video2_dwn, false, 0, true);
@@ -1735,6 +1741,16 @@
 			
 			blockerOn();
 			Tweener.addTween(cont_blocker_fullscreen, { delay: 1.5, onComplete: blockerOff } );
+		}
+
+		private function help_dwn(e:TouchEvent):void {
+			button_help.gotoAndStop("down");
+		}
+		
+		private function help_up(e:TouchEvent):void {
+			button_help.gotoAndStop("up");
+
+			showInstructions();			
 		}
 
 		private function video1_dwn(e:TouchEvent):void {
