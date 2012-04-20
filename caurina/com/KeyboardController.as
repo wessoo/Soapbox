@@ -60,14 +60,6 @@
 			
 			return email_REGEX.test(address);
 		}
-
-		public function validateName(address:String):Boolean {
-			//var name_REGEX:RegExp = /^[A-Z]'?[- a-zA-Z]( [a-zA-Z])*$/;
-			//var name_REGEX:RegExp = /^[A-Z]'?[- a-zA-Z]( [a-zA-Z])*$/;
-
-			//return name_REGEX.test(address);
-			return (address != '');
-		}
 		
 		public function toDefault():void {
 			keyboard.toDefault();
