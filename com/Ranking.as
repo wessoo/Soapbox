@@ -54,7 +54,7 @@
 			}
 			
 			for(var j:int = 0; j < 8; ++j){
-				addChildAt(list[j], getChildIndex(graphic_headfoot) - 1);
+				addChildAt(list[j], getChildIndex(graphic_headfoot));
 				displayed.push(list[j]);
 			}
 			
