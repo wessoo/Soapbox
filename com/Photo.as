@@ -141,12 +141,14 @@
 			iProcess = ImageParser.settings.Content.Source[_id - 1].process;
 			iCredit = ImageParser.settings.Content.Source[_id - 1].credit;
 			
+			photo.removeEventListener(TouchEvent.TOUCH_UP, touchHandler);
 			removeChild(photo);
 			photo.Dispose();
 			photo = new BitmapLoader();
 			photo.blobContainerEnabled = false;
 			photo.url = iUrl;
 			addChild(photo);
+			photo.addEventListener(TouchEvent.TOUCH_UP, touchHandler, false, 0, true);
 			
 			setupPhoto();
 		}
@@ -276,6 +278,12 @@
 		}
 
 		override public function Dispose():void{
+			removeChild(photo);
+			photo.Dispose();
+			photo = null;
+			
+			//Data variables
+			iUrl = iExt = iArtist = iBio = iTitle = iDate = iProcess = iCredit = null;
 
 		}
 		
