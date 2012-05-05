@@ -119,7 +119,7 @@
 			//blocker
 			cont_blocker_fullscreen = new TouchSprite();
 			
-			addEventListener(TouchEvent.TOUCH_UP, touchHandler, false, 0, true);
+			photo.addEventListener(TouchEvent.TOUCH_UP, touchHandler, false, 0, true);
 		}
 		
 		override protected function commitUI():void{
@@ -238,11 +238,11 @@
 		}
 		
 		public function blockerOn():void {
-			removeEventListener(TouchEvent.TOUCH_UP, touchHandler);
+			photo.removeEventListener(TouchEvent.TOUCH_UP, touchHandler);
 		}
 		
 		public function blockerOff():void {
-			addEventListener(TouchEvent.TOUCH_UP, touchHandler, false, 0, true);
+			photo.addEventListener(TouchEvent.TOUCH_UP, touchHandler, false, 0, true);
 
 		}
 		
@@ -276,12 +276,6 @@
 		}
 
 		override public function Dispose():void{
-			removeChild(photo);
-			photo.Dispose();
-			photo = null;
-			
-			//Data variables
-			iUrl = iExt = iArtist = iBio = iTitle = iDate = iProcess = iCredit = null;
 
 		}
 		

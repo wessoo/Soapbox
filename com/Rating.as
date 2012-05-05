@@ -43,7 +43,7 @@
 		private static var badge4:int = 70;
 		private static var badge5:int = 95;
 		private static var badge6:int = 120;
-		private static var debugSpeed:int = 1; //The debugging speed for rating images (1 means normal, 2 mean 2x, etc...)
+		private static var debugSpeed:int = 5; //The debugging speed for rating images (1 means normal, 2 mean 2x, etc...)
 											   //Keep the debug speed a multiple of 120!!
 		
 		/* dyanmic interface components */
@@ -495,7 +495,7 @@
 		public function getNext():int{
 			currentLoc = currentLoc + debugSpeed;
 			
-			if(currentLoc > (images.length -1)){
+			if(currentLoc >= (images.length -1)){
 				reachedEnd = true;
 				currentLoc = 119;  //used to be --
 			}
@@ -575,6 +575,9 @@
 		}
 		
 		public function logicalReset():void {
+			//Randomize images
+			shuffle();
+			
 			//LOGICAL
 			currentLoc = -1;
 			reachedEnd = false;
@@ -586,6 +589,8 @@
 			fullname = '';
 			sendBadges = false;
 			aboutShowing = false;
+			emails.splice();
+			packages.splice();
 
 			//VISUAL
 			//text
@@ -656,12 +661,6 @@
 			email_entered.text = '';
 			graphic_fakebg.alpha = 0;
 			window_about.alpha = 0;
-
-			for(var i:int = 1; i <= 120; ++i){
-				images.push(i);
-				ratings.push(-1);
-			}
-			shuffle();
 		}
 
 		/*
@@ -1949,8 +1948,8 @@
 		private function star1_up(e:TouchEvent):void {
 			button_star1.gotoAndStop("down");
 			button_star1.effect_starglow.gotoAndPlay("on");
-			animateSwitch();
 			setRating(1);
+			animateSwitch();
 
 			Tweener.addTween(this, {delay: 2.4, onComplete: function() { 
 				cont_endsession.addEventListener(TouchEvent.TOUCH_DOWN, endsession_dwn, false, 0, true);
@@ -2161,68 +2160,70 @@
 		}
 		
 		private function animateSwitch():void {
-			addChildAt(photo, getChildIndex(effect_insetbg) + 1);
-			addChildAt(dummyPhoto, getChildIndex(photo) + 1);
-			photo.x += SLOT_WIDTH + 30;
-			photo.id = getNext();
-
-			//fade out metadata
-			Tweener.addTween(text_metadata, { delay: 0.7, time: 1, alpha: 0, onComplete: function() { 
-				setMetadata(photo.title, photo.artist, photo.bio, photo.date, photo.process, photo.credit); 
-			}} );
-			
-			Tweener.addTween(button_star1, { time: 1.3, delay: 1, width: 10, height: 10, rotation: 90, alpha: 0 } );
-			Tweener.addTween(button_star2, { time: 1.3, delay: 1, width: 10, height: 10, rotation: 90, alpha: 0 } );
-			Tweener.addTween(button_star3, { time: 1.3, delay: 1, width: 10, height: 10, rotation: 90, alpha: 0 } );
-			Tweener.addTween(button_star4, { time: 1.3, delay: 1, width: 10, height: 10, rotation: 90, alpha: 0, onComplete: function() {
-				button_star1.rotation = button_star2.rotation = button_star3.rotation = button_star4.rotation = 0;
-				button_star1.alpha = button_star2.alpha = button_star3.alpha = button_star4.alpha = 1;
-				button_star1.width = button_star2.width = button_star3.width = button_star4.width = 81.8;
-				button_star1.height = button_star2.height = button_star3.height = button_star4.height = 77.8;
+			if(!reachedEnd){
+				addChildAt(photo, getChildIndex(effect_insetbg) + 1);
+				addChildAt(dummyPhoto, getChildIndex(photo) + 1);
+				photo.x += SLOT_WIDTH + 30;
+				photo.id = getNext();
+	
+				//fade out metadata
+				Tweener.addTween(text_metadata, { delay: 0.7, time: 1, alpha: 0, onComplete: function() { 
+					setMetadata(photo.title, photo.artist, photo.bio, photo.date, photo.process, photo.credit); 
+				}} );
 				
-				button_star1.gotoAndStop("up");
-				button_star2.gotoAndStop("up");
-				button_star3.gotoAndStop("up");
-				button_star4.gotoAndStop("up");
+				Tweener.addTween(button_star1, { time: 1.3, delay: 1, width: 10, height: 10, rotation: 90, alpha: 0 } );
+				Tweener.addTween(button_star2, { time: 1.3, delay: 1, width: 10, height: 10, rotation: 90, alpha: 0 } );
+				Tweener.addTween(button_star3, { time: 1.3, delay: 1, width: 10, height: 10, rotation: 90, alpha: 0 } );
+				Tweener.addTween(button_star4, { time: 1.3, delay: 1, width: 10, height: 10, rotation: 90, alpha: 0, onComplete: function() {
+					button_star1.rotation = button_star2.rotation = button_star3.rotation = button_star4.rotation = 0;
+					button_star1.alpha = button_star2.alpha = button_star3.alpha = button_star4.alpha = 1;
+					button_star1.width = button_star2.width = button_star3.width = button_star4.width = 81.8;
+					button_star1.height = button_star2.height = button_star3.height = button_star4.height = 77.8;
+					
+					button_star1.gotoAndStop("up");
+					button_star2.gotoAndStop("up");
+					button_star3.gotoAndStop("up");
+					button_star4.gotoAndStop("up");
+					
+					button_star1.effect_starglow.gotoAndStop("off");
+					button_star2.effect_starglow.gotoAndStop("off");
+					button_star3.effect_starglow.gotoAndStop("off");
+					button_star4.effect_starglow.gotoAndStop("off");
+				}} );
+	
+				//reactivate stars
+				Tweener.addTween(this, {delay: 2.4, onComplete: function() {
+					cont_star1.addEventListener(TouchEvent.TOUCH_DOWN, star1_dwn, false, 0, true);
+					cont_star1.addEventListener(TouchEvent.TOUCH_UP, star1_up, false, 0, true);
+					cont_star2.addEventListener(TouchEvent.TOUCH_DOWN, star2_dwn, false, 0, true);
+					cont_star2.addEventListener(TouchEvent.TOUCH_UP, star2_up, false, 0, true);
+					cont_star3.addEventListener(TouchEvent.TOUCH_DOWN, star3_dwn, false, 0, true);
+					cont_star3.addEventListener(TouchEvent.TOUCH_UP, star3_up, false, 0, true);
+					cont_star4.addEventListener(TouchEvent.TOUCH_DOWN, star4_dwn, false, 0, true);
+					cont_star4.addEventListener(TouchEvent.TOUCH_UP, star4_up, false, 0, true);
+				}});				
 				
-				button_star1.effect_starglow.gotoAndStop("off");
-				button_star2.effect_starglow.gotoAndStop("off");
-				button_star3.effect_starglow.gotoAndStop("off");
-				button_star4.effect_starglow.gotoAndStop("off");
-			}} );
-
-			//reactivate stars
-			Tweener.addTween(this, {delay: 2.4, onComplete: function() {
-				cont_star1.addEventListener(TouchEvent.TOUCH_DOWN, star1_dwn, false, 0, true);
-				cont_star1.addEventListener(TouchEvent.TOUCH_UP, star1_up, false, 0, true);
-				cont_star2.addEventListener(TouchEvent.TOUCH_DOWN, star2_dwn, false, 0, true);
-				cont_star2.addEventListener(TouchEvent.TOUCH_UP, star2_up, false, 0, true);
-				cont_star3.addEventListener(TouchEvent.TOUCH_DOWN, star3_dwn, false, 0, true);
-				cont_star3.addEventListener(TouchEvent.TOUCH_UP, star3_up, false, 0, true);
-				cont_star4.addEventListener(TouchEvent.TOUCH_DOWN, star4_dwn, false, 0, true);
-				cont_star4.addEventListener(TouchEvent.TOUCH_UP, star4_up, false, 0, true);
-			}});				
-			
-			//photo transitions
-			Tweener.addTween(dummyPhoto, { delay: 0.7, x: PHOTO_LOCX - SLOT_WIDTH - 30, time: 1.7, transition: "easeInOutQuart" } );
-			Tweener.addTween(photo, { x: PHOTO_LOCX, delay: 0.7, time: 1.7, transition: "easeInOutQuart", onComplete: function() {
-				removeChild(dummyPhoto);
-				dummyPhoto.id = photo.id;
-				dummyPhoto.x = photo_slot.x - photo_slot.width / 2;
-				dummyPhoto.y = photo_slot.y - photo_slot.height / 2;				
-			} } );
-			
-			cont_star1.removeEventListener(TouchEvent.TOUCH_DOWN, star1_dwn);
-			cont_star1.removeEventListener(TouchEvent.TOUCH_UP, star1_up);
-			cont_star2.removeEventListener(TouchEvent.TOUCH_DOWN, star2_dwn);
-			cont_star2.removeEventListener(TouchEvent.TOUCH_UP, star2_up);
-			cont_star3.removeEventListener(TouchEvent.TOUCH_DOWN, star3_dwn);
-			cont_star3.removeEventListener(TouchEvent.TOUCH_UP, star3_up);
-			cont_star4.removeEventListener(TouchEvent.TOUCH_DOWN, star4_dwn);
-			cont_star4.removeEventListener(TouchEvent.TOUCH_UP, star4_up);
-
-			photo_blockerOn();
-			Tweener.addTween(cont_blocker_photo, { delay: 2.4, onComplete: photo_blockerOff } );
+				//photo transitions
+				Tweener.addTween(dummyPhoto, { delay: 0.7, x: PHOTO_LOCX - SLOT_WIDTH - 30, time: 1.7, transition: "easeInOutQuart" } );
+				Tweener.addTween(photo, { x: PHOTO_LOCX, delay: 0.7, time: 1.7, transition: "easeInOutQuart", onComplete: function() {
+					removeChild(dummyPhoto);
+					dummyPhoto.id = photo.id;
+					dummyPhoto.x = photo_slot.x - photo_slot.width / 2;
+					dummyPhoto.y = photo_slot.y - photo_slot.height / 2;				
+				} } );
+				
+				cont_star1.removeEventListener(TouchEvent.TOUCH_DOWN, star1_dwn);
+				cont_star1.removeEventListener(TouchEvent.TOUCH_UP, star1_up);
+				cont_star2.removeEventListener(TouchEvent.TOUCH_DOWN, star2_dwn);
+				cont_star2.removeEventListener(TouchEvent.TOUCH_UP, star2_up);
+				cont_star3.removeEventListener(TouchEvent.TOUCH_DOWN, star3_dwn);
+				cont_star3.removeEventListener(TouchEvent.TOUCH_UP, star3_up);
+				cont_star4.removeEventListener(TouchEvent.TOUCH_DOWN, star4_dwn);
+				cont_star4.removeEventListener(TouchEvent.TOUCH_UP, star4_up);
+	
+				photo_blockerOn();
+				Tweener.addTween(cont_blocker_photo, { delay: 2.4, onComplete: photo_blockerOff } );
+			}
 		}
 
 		/*
