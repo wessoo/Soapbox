@@ -6,6 +6,7 @@
 	import flash.utils.Timer;
 	import flash.display.MovieClip;
 	import flash.geom.Point;
+	import flash.net.*;
 	import com.refunk.events.TimelineEvent;
     import com.refunk.timeline.TimelineWatcher;
     import fl.video.*;
@@ -37,6 +38,10 @@
 		private var maillist_opt:Boolean = true;		//opting in/out of MOPA mail list. Default opt in.
 		public var sendBadges:Boolean = false;			//whether to send badges, used to determine animation
 		private var aboutShowing:Boolean = false;
+		private var request:URLRequest;
+		private var variables:URLVariables;
+		private var loader:URLLoader;
+		private var now:Date; 			//used to differentiate requests of same time
 		private static var badge1:int = 10;		//The badges that can be attained
 		private static var badge2:int = 25;
 		private static var badge3:int = 45;
@@ -120,10 +125,15 @@
 		private static var BUBBLE_EMAILINSTRUCT_HT:int;
 		private static var BUBBLE_EMAILINSTRUCT_WD:int;
 		private static var REMOVEEMAIL_SIZE:int;
+		private static var SCREEN_URL:String = "http://localhost:4100/show?image=";
 
 		public function Rating() {
 			super();
 			
+			request = new URLRequest(SCREEN_URL);
+			variables = new URLVariables();
+			loader = new URLLoader();
+
 			//initialize vars 
 			images = new Array();
 			ratings = new Array();
@@ -924,7 +934,18 @@
 			
 			cont_toscreen.removeEventListener(TouchEvent.TOUCH_DOWN, toscreen_dwn);
 			cont_toscreen.removeEventListener(TouchEvent.TOUCH_UP, toscreen_up);
-			
+
+			//HTTP Request
+			try {
+                //loader.load(request);
+                now = new Date();
+           		request.url = SCREEN_URL + photo.ext + "&time=" + now.minutes + now.seconds;
+           		loader.load(request);
+                trace(request.url);
+            } catch (error:Error) {
+                trace("Unable to load requested document.");
+            }
+
 			Tweener.addTween(bubble_toscreen, { alpha: 1, time: 1 } );
 			//Tweener.addTween(bubble_toscreen, { height: bubble_toscreen.height + 50, width: bubble_toscreen.width + 50, 
 			Tweener.addTween(bubble_toscreen, { scaleX: 1, scaleY: 1, 
