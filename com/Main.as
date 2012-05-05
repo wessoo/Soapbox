@@ -170,6 +170,10 @@
 				language = 0;
 			}
 		}
+
+		private function bold(input:String):String{
+			return "<B>" + input + "</B>";
+		}
 		
 		/* -------------------------------------------- */
 		/* ------ Interface/Animation Functions ------- */
@@ -220,7 +224,7 @@
 
 		private function count_down(e:TimerEvent):void {
 			//trace(countdown_sec);
-			txt_timeout.txt_counter.text = countdown_sec;
+			txt_timeout.txt_counter.htmlText = bold(countdown_sec.toString());
 			countdown_sec--;
 		}
 

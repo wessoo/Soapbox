@@ -516,7 +516,7 @@
 				ratings[currentLoc] = r;
 				lastRated = currentLoc;
 				sendToDatabase(photo.ext, r);
-				text_remaining_ratings.text = (int(text_remaining_ratings.text) - 1).toString();
+				text_remaining_ratings.htmlText = bold((int(text_remaining_ratings.text) - 1).toString());
 				badgeCheck();
 				return true;
 			}
@@ -533,32 +533,32 @@
 			//switch(120){ //TESTING AT 120
 				case badge1:
 					currentBadge = 1;
-					text_remaining_ratings.text = (badge2 - badge1).toString();
+					text_remaining_ratings.htmlText = bold((badge2 - badge1).toString());
 					gotBadge(1);
 					return true;
 				case badge2:
 					currentBadge = 2;
-					text_remaining_ratings.text = (badge3 - badge2).toString();
+					text_remaining_ratings.htmlText = bold((badge3 - badge2).toString());
 					gotBadge(2);
 					return true;
 				case badge3:
 					currentBadge = 3;
-					text_remaining_ratings.text = (badge4 - badge3).toString();
+					text_remaining_ratings.htmlText = bold((badge4 - badge3).toString());
 					gotBadge(3);
 					return true;
 				case badge4:
 					currentBadge = 4;
-					text_remaining_ratings.text = (badge5 - badge4).toString();
+					text_remaining_ratings.htmlText = bold((badge5 - badge4).toString());
 					gotBadge(4);
 					return true;
 				case badge5:
 					currentBadge = 5;
-					text_remaining_ratings.text = (badge6 - badge5).toString();
+					text_remaining_ratings.htmlText = bold((badge6 - badge5).toString());
 					gotBadge(5);
 					return true;
 				case badge6:
 					currentBadge = 6;
-					text_remaining_ratings.text = "0";
+					text_remaining_ratings.htmlText = bold("0");
 					gotBadge(6);
 					return true;
 				default:
@@ -591,7 +591,7 @@
 			//text
 			email_entered.text = '';
 			txt_email.text = '';
-			text_remaining_ratings.text = "10";
+			text_remaining_ratings.htmlText = bold("10");
 			window_endsession.txt_email.text = '';
 			window_endsession.button_maillist.gotoAndStop("check");
 			window_about.alpha = 0;
@@ -2140,7 +2140,7 @@
 			text_metadata.embedFonts = true;*/
 			
 			text_metadata.autoSize = TextFieldAutoSize.LEFT;
-			text_metadata.htmlText = bold(iArtist) + newline + iBio + newline + newline + bold(iTitle) +
+			text_metadata.htmlText = bold(iArtist) + newline + iBio + newline + newline + italic(iTitle) +
 								     newline + iDate + newline + iProcess + newline + newline + iCredit;
 			text_metadata.wordWrap = true;
 			text_metadata.multiline = true;
@@ -2158,6 +2158,10 @@
 		
 		private function bold(input:String):String{
 			return "<B>" + input + "</B>";
+		}
+
+		private function italic(input:String):String{
+			return "<I>" + input + "</I>";
 		}
 		
 		private function animateSwitch():void {
