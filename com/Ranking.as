@@ -2,6 +2,7 @@
 {
 	import gl.events.GestureEvent;
 	import gl.events.TouchEvent;
+	import flash.events.Event;
 	import id.core.TouchComponent;
 	import flash.display.Shape;
 	import flash.display.Graphics;
@@ -22,6 +23,10 @@
 		private var vheight:Number = 849;
 		private var vy:Number = -446;
 		private var correctV:Number = 25;
+		
+		//Flick variables
+		private var friction:Number = 0.955;
+        private var dy:Number = 0;
 		
 		//Variables used for bounce effect
 		private var resist:Number = .15;
@@ -106,8 +111,10 @@
 			cont_scroll.addChild(scrollS);
 			addChildAt(cont_scroll, getChildIndex(displayed[7]) + 1)
 
-			cont_scroll.addEventListener(GestureEvent.GESTURE_DRAG_1 , dragHandler, false, 0, true);
+			cont_scroll.addEventListener(GestureEvent.GESTURE_DRAG , dragHandler, false, 0, true);
 			cont_scroll.addEventListener(TouchEvent.TOUCH_UP , touchUpHandler, false, 0, true);
+			cont_scroll.addEventListener(TouchEvent.TOUCH_DOWN , touchDownHandler, false, 0, true);
+			cont_scroll.addEventListener(GestureEvent.GESTURE_FLICK, flickHandler, false, 0, true);
 
 
 			cont_scroll.blobContainerEnabled = true;
@@ -264,6 +271,10 @@
 				bounceBottom = false;
 			}
 		}
+		
+		private function touchDownHandler(e:TouchEvent):void{
+			dy = 0;
+		}
 
 		private function updateTop():void
 		{
@@ -304,5 +315,125 @@
 			displayed[11].x = prevID4.x;
 			displayed[11].y = prevID4.y + vpadding;
 		}
+		
+		private function flickHandler(e:GestureEvent):void{
+			dy = e.velocityY
+            addEventListener(Event.ENTER_FRAME, onEnterFrameHandler);
+		}
+		
+		private function onEnterFrameHandler(e:Event):void {
+            if (Math.abs(dy) <= 1) {
+                dy = 0;
+                removeEventListener(Event.ENTER_FRAME, onEnterFrameHandler);
+            }
+			
+			var paddingH1:Number = ((vheight - list[0].height * 2)/3) + list[0].height/2;
+			if (! tweening)
+			{
+				var lastT1 = displayed[displayed.length - 1];
+				if ((lastT1.id != (totalAmount - 1)) && (displayed[0].id != 0))
+				{
+					for each (var i in displayed)
+					{
+						i.y +=  dy;
+					}
+				}
+				else
+				{
+					if (displayed[0].id == 0)
+					{
+						bounceTop = false;
+						if ((displayed[0].y <= vy + paddingH1 - correctV && (displayed[0].y + dy) <= vy + paddingH1 - correctV) || dy < 0)
+						{
+							for each (var j in displayed)
+							{
+								j.y +=  dy;
+							}
+						}else if(displayed[0].y <= vy + paddingH1 + maximumStretch)
+						{
+							for each (var l in displayed)
+							{
+								l.y += (dy * resist);
+							}
+						}
+						if(displayed[0].y >= vy + paddingH1 - correctV){
+							bounceTop = true;
+						}
+					}
+					else
+					{
+						bounceBottom = false;
+						if ((lastT1.y >= (vy + vheight - paddingH1) && (lastT1.y + dy) >= (vy + vheight - paddingH1)) || dy > 0)
+						{
+							for each (var k in displayed)
+							{
+								k.y +=  dy;
+							}
+							bounceBottom = false;
+						}
+						else if(lastT1.y >= vy + vheight - paddingH1 - maximumStretch){
+							for each (var m in displayed)
+							{
+								m.y += (dy * resist);
+							}
+						}
+						
+						if(lastT1.y <= vy + vheight - paddingH1){
+							bounceBottom = true;
+						}
+					}
+				}
+
+				if ((displayed[0].y) < vy - paddingH1 + 10)
+				{
+					//trace(displayed[0].y + " " + (vy - paddingH1 + 10)); 
+					removeChild(displayed[0]);
+					removeChild(displayed[1]);
+					removeChild(displayed[2]);
+					removeChild(displayed[3]);
+					displayed.splice(0,4);
+				}
+
+				if (lastT1.y > vy + vheight + paddingH1 + 30) //- 20)
+				{
+					removeChild(displayed[displayed.length - 1]);
+					removeChild(displayed[displayed.length - 2]);
+					removeChild(displayed[displayed.length - 3]);
+					removeChild(displayed[displayed.length - 4]);
+					displayed.splice(displayed.length - 4, 4);
+				}
+
+				if ((displayed[0].y >= vy + paddingH1 - 7) && (displayed[0].id > 0))
+				{
+					addChildAt(list[displayed[0].id - 4], getChildIndex(cont_scroll) - 1);
+					addChildAt(list[displayed[0].id - 3], getChildIndex(cont_scroll) - 1);
+					addChildAt(list[displayed[0].id - 2], getChildIndex(cont_scroll) - 1);
+					addChildAt(list[displayed[0].id - 1], getChildIndex(cont_scroll) - 1);
+					displayed.splice(0,0, list[displayed[0].id - 1]);
+					displayed.splice(0,0, list[displayed[0].id - 1]);
+					displayed.splice(0,0, list[displayed[0].id - 1]);
+					displayed.splice(0,0, list[displayed[0].id - 1]);
+					updateTop();
+				}
+
+				if ((lastT1.y <= vy + vheight - paddingH1 - 15) && (lastT1.id + 1 < totalAmount))
+				{
+					addChildAt(list[lastT1.id + 1], getChildIndex(cont_scroll) - 1);
+					addChildAt(list[lastT1.id + 2], getChildIndex(cont_scroll) - 1);
+					addChildAt(list[lastT1.id + 3], getChildIndex(cont_scroll) - 1);
+					addChildAt(list[lastT1.id + 4], getChildIndex(cont_scroll) - 1);
+					displayed.push(list[lastT1.id + 1]);
+					displayed.push(list[lastT1.id + 2]);
+					displayed.push(list[lastT1.id + 3]);
+					displayed.push(list[lastT1.id + 4]);
+					updateBottom();
+				}
+			}
+			
+			dy *= friction;
+        }
+		
+		
+		
 	}
 }
