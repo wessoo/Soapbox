@@ -399,7 +399,7 @@
 
 			//OTHER presets
 			button_email.text_emailimageto.alpha = 0; //turns off email label
-			email_entered.text = '';
+			email_entered.htmlText = bold('');
 			graphic_fakebg.alpha = 0;
 			window_about.alpha = 0;
 			window_gotbadge.txt_inputname.alpha = window_gotbadge.window_name.alpha = window_gotbadge.txt_invalid.alpha = window_gotbadge.txt_name.alpha = window_gotbadge.txt_thanks.alpha = 0;
@@ -604,7 +604,7 @@
 
 			//VISUAL
 			//text
-			email_entered.text = '';
+			email_entered.htmlText = bold('');
 			txt_email.text = '';
 			text_remaining_ratings.htmlText = bold("10");
 			window_endsession.txt_email.text = '';
@@ -668,7 +668,7 @@
 
 			//OTHER presets
 			button_email.text_emailimageto.alpha = 0; //turns off email label
-			email_entered.text = '';
+			email_entered.htmlText = bold('');
 			graphic_fakebg.alpha = 0;
 			window_about.alpha = 0;
 		}
@@ -797,7 +797,7 @@
 		 */
 		private function getXpos(which:int):int {
 			//return (email_entered.x + email_entered.width/2) - (8.2 * email.length) + 15;
-			//trace(email_entered.textWidth);
+			//trace(email_entered.htmlTextWidth);
 			var xpos:int;
 
 			if(which == 1) {
@@ -1116,7 +1116,7 @@
 				Tweener.addTween( window_email.text_invalidemail, { alpha: 0, delay: 2, time: 0.5 } );
 			} else { //e-mail valid				
 				email = softKeyboard.emailText();
-				email_entered.text = softKeyboard.emailText();
+				email_entered.htmlText = bold(softKeyboard.emailText());
 				email_entered.alpha = 0;
 				softKeyboard.clearEmail();
 				exitEmail();
@@ -1440,7 +1440,7 @@
 				Tweener.addTween(window_endsession.txt_invalid, { alpha: 0, delay: 2, time: 0.5 } );
 			} else { //e-mail valid				
 				cont_es_mailbg.addEventListener(TouchEvent.TOUCH_UP, es_email_up, false, 0, true);
-				email_entered.text = softKeyboard.emailText();
+				email_entered.htmlText = bold(softKeyboard.emailText());
 				email_entered.alpha = 0;
 				//softKeyboard.clearEmail();
 				email = softKeyboard.emailText();
