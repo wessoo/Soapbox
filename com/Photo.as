@@ -119,6 +119,7 @@
 			//blocker
 			cont_blocker_fullscreen = new TouchSprite();
 			
+			photo.addEventListener(TouchEvent.TOUCH_DOWN, touch_dwn, false, 0, true);
 			photo.addEventListener(TouchEvent.TOUCH_UP, touchHandler, false, 0, true);
 		}
 		
@@ -248,6 +249,12 @@
 
 		}
 		
+		private function touch_dwn(e:TouchEvent):void{
+			if(!viewing) {
+				dispatchEvent(new Event("deactivate_enterphoto", true));
+			}
+		}
+
 		private function touchHandler(e:TouchEvent):void{
 			if(!viewing){
 				parent.addChild(this);
@@ -273,7 +280,10 @@
 			Tweener.addTween(photo, {x: savedX, y: savedY, scaleX: savedScale, scaleY: savedScale, time: 1.5})
 			blackOff();
 			blockerOn();
-			Tweener.addTween(cont_blocker_fullscreen, { delay: .5, onComplete: function() { blockerOff(); } } );
+			Tweener.addTween(cont_blocker_fullscreen, { delay: .5, onComplete: function() { 
+				blockerOff();
+				dispatchEvent(new Event("activate_exitphoto", true));
+			}});
 			viewing = false;
 		}
 

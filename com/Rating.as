@@ -289,6 +289,9 @@
 			cont_video5.addEventListener(TouchEvent.TOUCH_UP, video5_up, false, 0, true);
 			cont_video6.addEventListener(TouchEvent.TOUCH_DOWN, video6_dwn, false, 0, true);
 			cont_video6.addEventListener(TouchEvent.TOUCH_UP, video6_up, false, 0, true);
+
+			addEventListener("deactivate_enterphoto", deactivate_enterphoto);
+			addEventListener("activate_exitphoto", activate_exitphoto);
 			
 			//timeline watcher for bubbles
 			timelineWatcher = new TimelineWatcher(bubble_toscreen);
@@ -399,7 +402,7 @@
 
 			//OTHER presets
 			button_email.text_emailimageto.alpha = 0; //turns off email label
-			email_entered.text = '';
+			email_entered.htmlText = bold('');
 			graphic_fakebg.alpha = 0;
 			window_about.alpha = 0;
 			window_gotbadge.txt_inputname.alpha = window_gotbadge.window_name.alpha = window_gotbadge.txt_invalid.alpha = window_gotbadge.txt_name.alpha = window_gotbadge.txt_thanks.alpha = 0;
@@ -604,7 +607,7 @@
 
 			//VISUAL
 			//text
-			email_entered.text = '';
+			email_entered.htmlText = bold('');
 			txt_email.text = '';
 			text_remaining_ratings.htmlText = bold("10");
 			window_endsession.txt_email.text = '';
@@ -668,7 +671,7 @@
 
 			//OTHER presets
 			button_email.text_emailimageto.alpha = 0; //turns off email label
-			email_entered.text = '';
+			email_entered.htmlText = bold('');
 			graphic_fakebg.alpha = 0;
 			window_about.alpha = 0;
 		}
@@ -797,7 +800,7 @@
 		 */
 		private function getXpos(which:int):int {
 			//return (email_entered.x + email_entered.width/2) - (8.2 * email.length) + 15;
-			//trace(email_entered.textWidth);
+			//trace(email_entered.htmlTextWidth);
 			var xpos:int;
 
 			if(which == 1) {
@@ -1116,7 +1119,7 @@
 				Tweener.addTween( window_email.text_invalidemail, { alpha: 0, delay: 2, time: 0.5 } );
 			} else { //e-mail valid				
 				email = softKeyboard.emailText();
-				email_entered.text = softKeyboard.emailText();
+				email_entered.htmlText = bold(softKeyboard.emailText());
 				email_entered.alpha = 0;
 				softKeyboard.clearEmail();
 				exitEmail();
@@ -1440,7 +1443,7 @@
 				Tweener.addTween(window_endsession.txt_invalid, { alpha: 0, delay: 2, time: 0.5 } );
 			} else { //e-mail valid				
 				cont_es_mailbg.addEventListener(TouchEvent.TOUCH_UP, es_email_up, false, 0, true);
-				email_entered.text = softKeyboard.emailText();
+				email_entered.htmlText = bold(softKeyboard.emailText());
 				email_entered.alpha = 0;
 				//softKeyboard.clearEmail();
 				email = softKeyboard.emailText();
@@ -2146,6 +2149,42 @@
 			
 			if (photoSent)
 				reactivateEmailButton();
+		}
+
+		private function deactivate_enterphoto(e:Event):void {
+			cont_endsession.removeEventListener(TouchEvent.TOUCH_DOWN, endsession_dwn);
+			cont_endsession.removeEventListener(TouchEvent.TOUCH_UP, endsession_up);
+			cont_toscreen.removeEventListener(TouchEvent.TOUCH_DOWN, toscreen_dwn);
+			cont_toscreen.removeEventListener(TouchEvent.TOUCH_UP, toscreen_up);
+			cont_email.removeEventListener(TouchEvent.TOUCH_DOWN, email_dwn);
+			cont_email.removeEventListener(TouchEvent.TOUCH_UP, email_up);
+			cont_star1.removeEventListener(TouchEvent.TOUCH_DOWN, star1_dwn);
+			cont_star1.removeEventListener(TouchEvent.TOUCH_UP, star1_up);
+			cont_star2.removeEventListener(TouchEvent.TOUCH_DOWN, star2_dwn);
+			cont_star2.removeEventListener(TouchEvent.TOUCH_UP, star2_up);
+			cont_star3.removeEventListener(TouchEvent.TOUCH_DOWN, star3_dwn);
+			cont_star3.removeEventListener(TouchEvent.TOUCH_UP, star3_up);
+			cont_star4.removeEventListener(TouchEvent.TOUCH_DOWN, star4_dwn);
+			cont_star4.removeEventListener(TouchEvent.TOUCH_UP, star4_up);
+			dispatchEvent(new Event("deactivateLang", true));
+		}
+
+		private function activate_exitphoto(e:Event):void {
+			cont_endsession.addEventListener(TouchEvent.TOUCH_DOWN, endsession_dwn, false, 0, true);
+			cont_endsession.addEventListener(TouchEvent.TOUCH_UP, endsession_up, false, 0, true);
+			cont_toscreen.addEventListener(TouchEvent.TOUCH_DOWN, toscreen_dwn, false, 0, true);
+			cont_toscreen.addEventListener(TouchEvent.TOUCH_UP, toscreen_up, false, 0, true);
+			cont_email.addEventListener(TouchEvent.TOUCH_DOWN, email_dwn, false, 0, true);
+			cont_email.addEventListener(TouchEvent.TOUCH_UP, email_up, false, 0, true);
+			cont_star1.addEventListener(TouchEvent.TOUCH_DOWN, star1_dwn, false, 0, true);
+			cont_star1.addEventListener(TouchEvent.TOUCH_UP, star1_up, false, 0, true);
+			cont_star2.addEventListener(TouchEvent.TOUCH_DOWN, star2_dwn, false, 0, true);
+			cont_star2.addEventListener(TouchEvent.TOUCH_UP, star2_up, false, 0, true);
+			cont_star3.addEventListener(TouchEvent.TOUCH_DOWN, star3_dwn, false, 0, true);
+			cont_star3.addEventListener(TouchEvent.TOUCH_UP, star3_up, false, 0, true);
+			cont_star4.addEventListener(TouchEvent.TOUCH_DOWN, star4_dwn, false, 0, true);
+			cont_star4.addEventListener(TouchEvent.TOUCH_UP, star4_up, false, 0, true);
+			dispatchEvent(new Event("activateLang", true));
 		}
 		
 		private function setMetadata(iTitle, iArtist, iBio, iDate, iProcess, iCredit):void{
