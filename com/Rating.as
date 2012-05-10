@@ -289,6 +289,9 @@
 			cont_video5.addEventListener(TouchEvent.TOUCH_UP, video5_up, false, 0, true);
 			cont_video6.addEventListener(TouchEvent.TOUCH_DOWN, video6_dwn, false, 0, true);
 			cont_video6.addEventListener(TouchEvent.TOUCH_UP, video6_up, false, 0, true);
+
+			addEventListener("deactivate_enterphoto", deactivate_enterphoto);
+			addEventListener("activate_exitphoto", activate_exitphoto);
 			
 			//timeline watcher for bubbles
 			timelineWatcher = new TimelineWatcher(bubble_toscreen);
@@ -2146,6 +2149,42 @@
 			
 			if (photoSent)
 				reactivateEmailButton();
+		}
+
+		private function deactivate_enterphoto(e:Event):void {
+			cont_endsession.removeEventListener(TouchEvent.TOUCH_DOWN, endsession_dwn);
+			cont_endsession.removeEventListener(TouchEvent.TOUCH_UP, endsession_up);
+			cont_toscreen.removeEventListener(TouchEvent.TOUCH_DOWN, toscreen_dwn);
+			cont_toscreen.removeEventListener(TouchEvent.TOUCH_UP, toscreen_up);
+			cont_email.removeEventListener(TouchEvent.TOUCH_DOWN, email_dwn);
+			cont_email.removeEventListener(TouchEvent.TOUCH_UP, email_up);
+			cont_star1.removeEventListener(TouchEvent.TOUCH_DOWN, star1_dwn);
+			cont_star1.removeEventListener(TouchEvent.TOUCH_UP, star1_up);
+			cont_star2.removeEventListener(TouchEvent.TOUCH_DOWN, star2_dwn);
+			cont_star2.removeEventListener(TouchEvent.TOUCH_UP, star2_up);
+			cont_star3.removeEventListener(TouchEvent.TOUCH_DOWN, star3_dwn);
+			cont_star3.removeEventListener(TouchEvent.TOUCH_UP, star3_up);
+			cont_star4.removeEventListener(TouchEvent.TOUCH_DOWN, star4_dwn);
+			cont_star4.removeEventListener(TouchEvent.TOUCH_UP, star4_up);
+			dispatchEvent(new Event("deactivateLang", true));
+		}
+
+		private function activate_exitphoto(e:Event):void {
+			cont_endsession.addEventListener(TouchEvent.TOUCH_DOWN, endsession_dwn, false, 0, true);
+			cont_endsession.addEventListener(TouchEvent.TOUCH_UP, endsession_up, false, 0, true);
+			cont_toscreen.addEventListener(TouchEvent.TOUCH_DOWN, toscreen_dwn, false, 0, true);
+			cont_toscreen.addEventListener(TouchEvent.TOUCH_UP, toscreen_up, false, 0, true);
+			cont_email.addEventListener(TouchEvent.TOUCH_DOWN, email_dwn, false, 0, true);
+			cont_email.addEventListener(TouchEvent.TOUCH_UP, email_up, false, 0, true);
+			cont_star1.addEventListener(TouchEvent.TOUCH_DOWN, star1_dwn, false, 0, true);
+			cont_star1.addEventListener(TouchEvent.TOUCH_UP, star1_up, false, 0, true);
+			cont_star2.addEventListener(TouchEvent.TOUCH_DOWN, star2_dwn, false, 0, true);
+			cont_star2.addEventListener(TouchEvent.TOUCH_UP, star2_up, false, 0, true);
+			cont_star3.addEventListener(TouchEvent.TOUCH_DOWN, star3_dwn, false, 0, true);
+			cont_star3.addEventListener(TouchEvent.TOUCH_UP, star3_up, false, 0, true);
+			cont_star4.addEventListener(TouchEvent.TOUCH_DOWN, star4_dwn, false, 0, true);
+			cont_star4.addEventListener(TouchEvent.TOUCH_UP, star4_up, false, 0, true);
+			dispatchEvent(new Event("activateLang", true));
 		}
 		
 		private function setMetadata(iTitle, iArtist, iBio, iDate, iProcess, iCredit):void{
