@@ -259,32 +259,34 @@
 		
 		private function torating_up(e:TouchEvent):void {
 			button_torating.gotoAndStop("up");
-			timeout.start();
-			timeoutWarn.start();
-			screen = 2;
+			if(screen == 1) {
+				timeout.start();
+				timeoutWarn.start();
+				screen = 2;
 
-			Tweener.addTween(background_texture, {y: 1330 - 1080, time: 1.5, transition: "easeInOutQuart" });
-			Tweener.addTween(rating, {y: RATING_Y_POS, time: 1.5, transition: "easeInOutQuart" });
-			Tweener.addTween(button_torating, {y: 950.55 - SCREEN_HEIGHT, time: 1.5, transition: "easeInOutQuart" });
-			Tweener.addTween(button_tostats, {y: 952.2 - SCREEN_HEIGHT, time: 1.5, transition: "easeInOutQuart" });
-			Tweener.addTween(landing_text, {y: LANDINGTEXT_Y - SCREEN_HEIGHT, time: 1.5, transition: "easeInOutQuart" });
-			Tweener.addTween(graphic_logo, {y: LOGO_Y - SCREEN_HEIGHT, time: 1.5, transition: "easeInOutQuart" });
-			Tweener.addTween(cont_lang, { alpha: 0, time: 0.5});
-			Tweener.addTween(cont_lang, { alpha: 1, time: 1, delay: 1.5});
+				Tweener.addTween(background_texture, {y: 1330 - 1080, time: 1.5, transition: "easeInOutQuart" });
+				Tweener.addTween(rating, {y: RATING_Y_POS, time: 1.5, transition: "easeInOutQuart" });
+				Tweener.addTween(button_torating, {y: 950.55 - SCREEN_HEIGHT, time: 1.5, transition: "easeInOutQuart" });
+				Tweener.addTween(button_tostats, {y: 952.2 - SCREEN_HEIGHT, time: 1.5, transition: "easeInOutQuart" });
+				Tweener.addTween(landing_text, {y: LANDINGTEXT_Y - SCREEN_HEIGHT, time: 1.5, transition: "easeInOutQuart" });
+				Tweener.addTween(graphic_logo, {y: LOGO_Y - SCREEN_HEIGHT, time: 1.5, transition: "easeInOutQuart" });
+				Tweener.addTween(cont_lang, { alpha: 0, time: 0.5});
+				Tweener.addTween(cont_lang, { alpha: 1, time: 1, delay: 1.5});
 
-			Tweener.addTween(this, {delay: 1.5, onComplete: function() { 
-				cont_tostats.addEventListener(TouchEvent.TOUCH_DOWN, tostats_dwn, false, 0, true);
-				cont_tostats.addEventListener(TouchEvent.TOUCH_UP, tostats_up, false, 0, true);
-				cont_lang.addEventListener(TouchEvent.TOUCH_DOWN, lang_dwn, false, 0, true);
-				cont_lang.addEventListener(TouchEvent.TOUCH_UP, lang_up, false, 0, true);
-			}});
+				Tweener.addTween(this, {delay: 1.5, onComplete: function() { 
+					cont_tostats.addEventListener(TouchEvent.TOUCH_DOWN, tostats_dwn, false, 0, true);
+					cont_tostats.addEventListener(TouchEvent.TOUCH_UP, tostats_up, false, 0, true);
+					cont_lang.addEventListener(TouchEvent.TOUCH_DOWN, lang_dwn, false, 0, true);
+					cont_lang.addEventListener(TouchEvent.TOUCH_UP, lang_up, false, 0, true);
+				}});
 
-			blockerOn();
-			Tweener.addTween(cont_blocker_fullscreen, { delay: 1.5, onComplete: function() {
-				blockerOff();
-				rating.graphic_fakebg.alpha = 1;
-				rating.showInstructions();
-			} } );
+				blockerOn();
+				Tweener.addTween(cont_blocker_fullscreen, { delay: 1.5, onComplete: function() {
+					blockerOff();
+					rating.graphic_fakebg.alpha = 1;
+					rating.showInstructions();
+				} } );
+			}
 		}
 
 		private function tostats_dwn(e:TouchEvent):void {
