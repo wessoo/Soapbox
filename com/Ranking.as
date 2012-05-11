@@ -349,15 +349,9 @@
 							{
 								j.y +=  dy;
 							}
-						}else if(displayed[0].y <= vy + paddingH1 + maximumStretch)
-						{
-							for each (var l in displayed)
-							{
-								l.y += (dy * resist);
-							}
 						}
-						if(displayed[0].y >= vy + paddingH1 - correctV){
-							bounceTop = true;
+						else{
+							dy = 0;
 						}
 					}
 					else
@@ -371,15 +365,8 @@
 							}
 							bounceBottom = false;
 						}
-						else if(lastT1.y >= vy + vheight - paddingH1 - maximumStretch){
-							for each (var m in displayed)
-							{
-								m.y += (dy * resist);
-							}
-						}
-						
-						if(lastT1.y <= vy + vheight - paddingH1){
-							bounceBottom = true;
+						else{
+							dy = 0;
 						}
 					}
 				}

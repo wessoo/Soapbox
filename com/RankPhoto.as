@@ -22,6 +22,7 @@
 		private var iArtist:String;
 		private var iTitle:String;
 		private var iDate:String;
+		private var iCopyright:String;
 
 		public function RankPhoto(inputID:int, photoID:int) {
 			_id = inputID;
@@ -45,6 +46,7 @@
 			iArtist = ImageParser.settings.Content.Source[_photoID - 1].artist;
 			iTitle = ImageParser.settings.Content.Source[_photoID -1].title;
 			iDate = ImageParser.settings.Content.Source[_photoID - 1].date;
+			iCopyright = ImageParser.settings.Content.Source[_photoID - 1].copyright;
 			
 			photo = new BitmapLoader();
 			addChild(photo);
@@ -56,7 +58,7 @@
 			var newline:String = "<br>";
 			txt_metadata.wordWrap = true;
 			txt_metadata.multiline = true;
-			txt_metadata.htmlText = bold(iArtist) + newline + bold(iTitle) + newline + iDate;
+			txt_metadata.htmlText = bold(iArtist) + newline + bold(iTitle) + newline + iDate + newline + iCopyright;
 		}
 		
 		override protected function layoutUI():void{
