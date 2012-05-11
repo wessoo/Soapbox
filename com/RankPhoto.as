@@ -58,7 +58,7 @@
 			var newline:String = "<br>";
 			txt_metadata.wordWrap = true;
 			txt_metadata.multiline = true;
-			txt_metadata.htmlText = bold(iArtist) + newline + bold(iTitle) + newline + iDate + newline + iCopyright;
+			txt_metadata.htmlText = bold(iArtist) + newline + italic(iTitle) + newline + iDate + newline + iCopyright;
 		}
 		
 		override protected function layoutUI():void{
@@ -70,6 +70,10 @@
 		/* ------------------------------------------- */
 		private function bold(input:String):String{
 			return "<B>" + input + "</B>";
+		}
+		
+		private function italic(input:String):String{
+			return "<I>" + input + "</I>";
 		}
 		
 		private function setupPhoto():void{
