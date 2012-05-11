@@ -64,6 +64,12 @@
 		override protected function layoutUI():void{
 			setupPhoto();
 		}
+		
+		override public function Dispose():void{
+			removeChild(photo);
+			photo.Dispose();
+			photo = null;
+		}
 
 		/* ------------------------------------------- */
 		/* ------------ Logical Functions ------------ */

@@ -3,6 +3,7 @@
 	import gl.events.GestureEvent;
 	import gl.events.TouchEvent;
 	import flash.events.Event;
+	import flash.net.*;
 	import id.core.TouchComponent;
 	import flash.display.Shape;
 	import flash.display.Graphics;
@@ -11,12 +12,14 @@
 	import flash.text.engine.EastAsianJustifier;
 
 	import caurina.transitions.Tweener;
+	import flash.utils.Dictionary;
 
 	public class Ranking extends TouchComponent
 	{
 		private var ranks:Array;
 		private var list:Array;
 		private var displayed:Array;
+		private var dict:Dictionary;
 
 
 		private var totalAmount:int = 40;
@@ -54,10 +57,17 @@
 			displayed = new Array();
 			scrollS = new Shape();
 			cont_scroll = new TouchSprite();
-
-			getRankings();
-			createUI();
-			commitUI();
+			dict = new Dictionary();
+			
+			setupDict();
+			getInitialRankings();
+		}
+		
+		private function setupDict():void{
+			for(var i:int = 0; i < 120; ++i){
+				var ext:String = ImageParser.settings.Content.Source[i].ext;
+				dict[ext] = i + 1;
+			}
 		}
 
 		override protected function createUI():void
@@ -131,13 +141,39 @@
 		/* ------------ Logical Functions ------------ */
 		/* ------------------------------------------- */
 		//Get ranks from database
-		private function getRankings():void
+		private function getInitialRankings():void
 		{
-			//change this when database is up
-			for (var i:int = 1; i <= 40; ++i)
-			{
-				ranks.push(i);
+			var uR:URLRequest = new URLRequest("http://localhost/soapbox.php");
+            var uV:URLVariables = new URLVariables();
+			
+			var now:Date = new Date();
+            uV.date = now.toString();
+                        
+            uR.data = uV;
+			
+			var uL:URLLoader = new URLLoader(uR);
+			uL.addEventListener(Event.COMPLETE, loaderCompleteHandler);
+                        
+			function loaderCompleteHandler(e:Event):void{
+				var data:String = uL.data;
+				var returned:Array = data.split(",");
+				for each(var extension:String in returned){
+					ranks.push(dict[extension]);
+				}
+				createUI();
+				commitUI();
 			}
+		}
+		
+		public function updateRatings():void{
+			ranks.splice();
+			for each(var listed:RankPhoto in list){
+				listed.Dispose();
+			}
+			for each(var item:RankPhoto in displayed){
+				item.Dispose();
+			}
+			trace("size of ranks for reset: " + ranks.length);
 		}
 
 
