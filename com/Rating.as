@@ -456,7 +456,7 @@
 			dummyPhoto.y = photo.y;
 			addChildAt(dummyPhoto, getChildIndex(photo) + 1);
 			
-			setMetadata(photo.title, photo.artist, photo.bio, photo.date, photo.process, photo.credit);
+			setMetadata(photo.title, photo.artist, photo.bio, photo.date, photo.process, photo.credit, photo.copyright);
 			
 		}
 		
@@ -638,7 +638,7 @@
 
 			cont_shader.y = 0; //shader
 			cont_instructions.alpha = 0;//instructional
-			setMetadata(photo.title, photo.artist, photo.bio, photo.date, photo.process, photo.credit); //metadata
+			setMetadata(photo.title, photo.artist, photo.bio, photo.date, photo.process, photo.credit, photo.copyright); //metadata
 
 			//got badge window
 			if(cont_gotbadge_modal.contains(cont_okname)) {
@@ -2189,7 +2189,7 @@
 			dispatchEvent(new Event("activateLang", true));
 		}
 		
-		private function setMetadata(iTitle, iArtist, iBio, iDate, iProcess, iCredit):void{
+		private function setMetadata(iTitle, iArtist, iBio, iDate, iProcess, iCredit, iCopyright):void{
 			var newline:String = "<br>";
 			var oldTH:Number = text_metadata.textHeight;
 			var	oldWH:Number = window_metadata.height;
@@ -2202,7 +2202,8 @@
 			
 			text_metadata.autoSize = TextFieldAutoSize.LEFT;
 			text_metadata.htmlText = bold(iArtist) + newline + iBio + newline + newline + italic(iTitle) +
-								     newline + iDate + newline + iProcess + newline + newline + iCredit;
+								     newline + iDate + newline + iProcess + newline + newline + iCredit +
+									 newline + iCopyright;
 			text_metadata.wordWrap = true;
 			text_metadata.multiline = true;
 			
@@ -2275,7 +2276,7 @@
 	
 				//fade out metadata
 				Tweener.addTween(text_metadata, { delay: 0.7, time: 1, alpha: 0, onComplete: function() { 
-					setMetadata(photo.title, photo.artist, photo.bio, photo.date, photo.process, photo.credit); 
+					setMetadata(photo.title, photo.artist, photo.bio, photo.date, photo.process, photo.credit, photo.copyright); 
 				}} );
 				
 				//photo transitions

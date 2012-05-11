@@ -24,6 +24,7 @@
 		private var iDate:String;
 		private var iProcess:String;
 		private var iCredit:String;
+		private var iCopyright:String;
 
 		//Other variables
 		private var _id:int;
@@ -94,6 +95,10 @@
 			return iCredit;
 		}
 		
+		public function get copyright():String{
+			return iCopyright;
+		}
+		
 		override protected function createUI():void{
 			//Data
 			iUrl = ImageParser.settings.Content.Source[_id - 1].url1;
@@ -104,6 +109,7 @@
 			iDate = ImageParser.settings.Content.Source[_id - 1].date;
 			iProcess = ImageParser.settings.Content.Source[_id - 1].process;
 			iCredit = ImageParser.settings.Content.Source[_id - 1].credit;
+			iCopyright = ImageParser.settings.Content.Source[_id - 1].copyright;
 			
 			photo = new BitmapLoader();
 			addChild(photo);
@@ -141,6 +147,7 @@
 			iDate = ImageParser.settings.Content.Source[_id - 1].date;
 			iProcess = ImageParser.settings.Content.Source[_id - 1].process;
 			iCredit = ImageParser.settings.Content.Source[_id - 1].credit;
+			iCopyright = ImageParser.settings.Content.Source[_id - 1].copyright;
 			
 			photo.removeEventListener(TouchEvent.TOUCH_UP, touchHandler);
 			removeChild(photo);
