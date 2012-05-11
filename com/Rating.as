@@ -402,6 +402,10 @@
 			video1.video.fullScreenTakeOver = video2.video.fullScreenTakeOver = video3.video.fullScreenTakeOver = video4.video.fullScreenTakeOver = video5.video.fullScreenTakeOver = video6.video.fullScreenTakeOver = false;
 			cont_video1.alpha = cont_video2.alpha = cont_video3.alpha = cont_video4.alpha = cont_video5.alpha = cont_video6.alpha = 0;
 
+			//coming soon bubble COMING SOON TEMP
+            bubble_comingsoon.alpha = 0;
+            bubble_comingsoon.scaleX = bubble_comingsoon.scaleY = 0.8;
+
 			//OTHER presets
 			button_email.text_emailimageto.alpha = 0; //turns off email label
 			email_entered.htmlText = bold('');
@@ -857,6 +861,12 @@
 					bubble_packaged.gotoAndStop("stop");
 				} } );
 			}
+
+			//COMING SOON TEMP
+			/*if(bubble_comingsoon.alpha == 1) {
+				Tweener.addTween(bubble_comingsoon, { alpha: 0, time: 1 } );
+				Tweener.addTween(bubble_comingsoon, { scaleX: 0.8, scaleY: 0.8, time: 1 } );
+			}*/
 		}
 		
 		public function showInstructions():void {
@@ -1022,6 +1032,15 @@
 			photo_blockerOff();
 
 			if (email == '') { //if no e-mail entered yet
+				//COMING SOON TEMP
+				/*bubble_comingsoon.x = 719.7;
+				bubble_comingsoon.y = 436.85;
+				Tweener.addTween(bubble_comingsoon, { alpha: 1, time: 1 } );
+				Tweener.addTween(bubble_comingsoon, { scaleX: 1, scaleY: 1, time: 1, transition: "easeOutElastic" } );
+
+				Tweener.addTween(bubble_comingsoon, { alpha: 0, time: 1, delay: 4 } );
+				Tweener.addTween(bubble_comingsoon, { scaleX: 0.8, scaleY: 0.8, time: 1, delay: 4 } );*/
+
 				shadeOn();
 				addChild(cont_exitEmail); //put exit_email above shade
 				addChild(window_email); //put window_email above shade
@@ -1031,7 +1050,6 @@
 				Tweener.addTween(this, { y: this.y - 300, time: 1 } );				
 				Tweener.addTween(button_okemail, { alpha: 1, delay: 0.5, time: 1 } );
 				Tweener.addTween(window_email, { alpha: 1, delay: 0.5, time: 1 } );
-				//Tweener.addTween(window_email, { height: window_email.height + 100, width: window_email.width + 100, delay: 0.5, time: 1, transition: "easeOutElastic" } );
 				Tweener.addTween(window_email, { scaleX: 1, scaleY: 1, delay: 0.5, time: 1, transition: "easeOutElastic" } );
 				Tweener.addTween(softKeyboard, { alpha: 1, delay: 0.5, time: 1 } );
 				addChild(txt_email);
@@ -1176,11 +1194,37 @@
 
 		private function continue_dwn(e:TouchEvent):void {
 			window_gotbadge.button_continue.gotoAndStop("down");
+
+			cont_video1.removeEventListener(TouchEvent.TOUCH_DOWN, video1_dwn);
+			cont_video1.removeEventListener(TouchEvent.TOUCH_UP, video1_up);
+			cont_video2.removeEventListener(TouchEvent.TOUCH_DOWN, video2_dwn);
+			cont_video2.removeEventListener(TouchEvent.TOUCH_UP, video2_up);
+			cont_video3.removeEventListener(TouchEvent.TOUCH_DOWN, video3_dwn);
+			cont_video3.removeEventListener(TouchEvent.TOUCH_UP, video3_up);
+			cont_video4.removeEventListener(TouchEvent.TOUCH_DOWN, video4_dwn);
+			cont_video4.removeEventListener(TouchEvent.TOUCH_UP, video4_up);
+			cont_video5.removeEventListener(TouchEvent.TOUCH_DOWN, video5_dwn);
+			cont_video5.removeEventListener(TouchEvent.TOUCH_UP, video5_up);
+			cont_video6.removeEventListener(TouchEvent.TOUCH_DOWN, video6_dwn);
+			cont_video6.removeEventListener(TouchEvent.TOUCH_UP, video6_up);
 		}
 
 		private function continue_up(e:TouchEvent):void {
 			window_gotbadge.button_continue.gotoAndStop("up");
 			gotBadge_bool = false;
+
+			cont_video1.addEventListener(TouchEvent.TOUCH_DOWN, video1_dwn, false, 0, true);
+			cont_video1.addEventListener(TouchEvent.TOUCH_UP, video1_up, false, 0, true);
+			cont_video2.addEventListener(TouchEvent.TOUCH_DOWN, video2_dwn, false, 0, true);
+			cont_video2.addEventListener(TouchEvent.TOUCH_UP, video2_up, false, 0, true);
+			cont_video3.addEventListener(TouchEvent.TOUCH_DOWN, video3_dwn, false, 0, true);
+			cont_video3.addEventListener(TouchEvent.TOUCH_UP, video3_up, false, 0, true);
+			cont_video4.addEventListener(TouchEvent.TOUCH_DOWN, video4_dwn, false, 0, true);
+			cont_video4.addEventListener(TouchEvent.TOUCH_UP, video4_up, false, 0, true);
+			cont_video5.addEventListener(TouchEvent.TOUCH_DOWN, video5_dwn, false, 0, true);
+			cont_video5.addEventListener(TouchEvent.TOUCH_UP, video5_up, false, 0, true);
+			cont_video6.addEventListener(TouchEvent.TOUCH_DOWN, video6_dwn, false, 0, true);
+			cont_video6.addEventListener(TouchEvent.TOUCH_UP, video6_up, false, 0, true);
 
 			//Tweener.addTween(cont_gotbadge_modal, { heiokght: cont_gotbadge_modal.height - 100, width: cont_gotbadge_modal.width - 100, alpha: 0, time: 1, onComplete: function() {
 			Tweener.addTween(cont_gotbadge_modal, { scaleX: 0.8, scaleY: 0.8, alpha: 0, time: 1, onComplete: function() {
@@ -1543,6 +1587,22 @@
 		}
 
 		private function es_email_up(e:TouchEvent):void {
+			//COMING SOON TEMP
+			/*addChild(bubble_comingsoon);
+			bubble_comingsoon.x = 150;
+			bubble_comingsoon.y = 150;
+
+			Tweener.addTween(bubble_comingsoon, { alpha: 1, time: 1 } );
+			Tweener.addTween(bubble_comingsoon, { scaleX: 1, scaleY: 1, time: 1, transition: "easeOutElastic" } );
+
+			Tweener.addTween(bubble_comingsoon, { alpha: 0, time: 1, delay: 4 } );
+			Tweener.addTween(bubble_comingsoon, { scaleX: 0.8, scaleY: 0.8, time: 1, delay: 4 } );
+
+			cont_es_continue.addEventListener(TouchEvent.TOUCH_DOWN, es_continue_dwn, false, 0, true);
+			cont_es_continue.addEventListener(TouchEvent.TOUCH_UP, es_continue_up, false, 0, true);
+			cont_es_esskip.addEventListener(TouchEvent.TOUCH_DOWN, es_esskip_dwn, false, 0, true);
+			cont_es_esskip.addEventListener(TouchEvent.TOUCH_UP, es_esskip_up, false, 0, true);*/
+			
 			var target_height:int = window_endsession.window_modal.height + EXPAND_HEIGHT;
 			var target_ypos:int = window_endsession.window_modal.y - (target_height - window_endsession.window_modal.height)/2;
 			
@@ -1798,16 +1858,18 @@
 				Tweener.addTween(video1.graphic_play, {alpha: 0, time: 1});
 			//}
 
-			if(!video1.video.playing) {
-				video1.video.play();
-				Tweener.addTween(video1.graphic_play, {alpha: 0, time: 1});
-				Tweener.addTween(video1.graphic_videoblack, {alpha: 0, time: 1});
-				dispatchEvent(new Event("suspend_timeout", true));
-			} else {
-				video1.video.pause();
-				Tweener.addTween(video1.graphic_play, {alpha: 1, time: 1});
-				Tweener.addTween(video1.graphic_videoblack, {alpha: 0.5, time: 1});
-				dispatchEvent(new Event("resume_timeout", true));
+			if(contains(cont_gotbadge_modal)) {
+				if(!video1.video.playing) {
+					video1.video.play();
+					Tweener.addTween(video1.graphic_play, {alpha: 0, time: 1});
+					Tweener.addTween(video1.graphic_videoblack, {alpha: 0, time: 1});
+					dispatchEvent(new Event("suspend_timeout", true));
+				} else {
+					video1.video.pause();
+					Tweener.addTween(video1.graphic_play, {alpha: 1, time: 1});
+					Tweener.addTween(video1.graphic_videoblack, {alpha: 0.5, time: 1});
+					dispatchEvent(new Event("resume_timeout", true));
+				}
 			}
 		}
 
@@ -1827,16 +1889,18 @@
 				Tweener.addTween(video2.graphic_play, {alpha: 0, time: 1});
 			//}
 
-			if(!video2.video.playing) {
-				video2.video.play();
-				Tweener.addTween(video2.graphic_play, {alpha: 0, time: 1});
-				Tweener.addTween(video2.graphic_videoblack, {alpha: 0, time: 1});
-				dispatchEvent(new Event("suspend_timeout", true));
-			} else {
-				video2.video.pause();
-				Tweener.addTween(video2.graphic_play, {alpha: 1, time: 1});
-				Tweener.addTween(video2.graphic_videoblack, {alpha: 0.5, time: 1});
-				dispatchEvent(new Event("resume_timeout", true));
+			if(contains(cont_gotbadge_modal)) {
+				if(!video2.video.playing) {
+					video2.video.play();
+					Tweener.addTween(video2.graphic_play, {alpha: 0, time: 1});
+					Tweener.addTween(video2.graphic_videoblack, {alpha: 0, time: 1});
+					dispatchEvent(new Event("suspend_timeout", true));
+				} else {
+					video2.video.pause();
+					Tweener.addTween(video2.graphic_play, {alpha: 1, time: 1});
+					Tweener.addTween(video2.graphic_videoblack, {alpha: 0.5, time: 1});
+					dispatchEvent(new Event("resume_timeout", true));
+				}
 			}
 		}
 
@@ -1856,16 +1920,18 @@
 				Tweener.addTween(video3.graphic_play, {alpha: 0, time: 1});
 			//}
 
-			if(!video3.video.playing) {
-				video3.video.play();
-				Tweener.addTween(video3.graphic_play, {alpha: 0, time: 1});
-				Tweener.addTween(video3.graphic_videoblack, {alpha: 0, time: 1});
-				dispatchEvent(new Event("suspend_timeout", true));
-			} else {
-				video3.video.pause();
-				Tweener.addTween(video3.graphic_play, {alpha: 1, time: 1});
-				Tweener.addTween(video3.graphic_videoblack, {alpha: 0.5, time: 1});
-				dispatchEvent(new Event("resume_timeout", true));
+			if(contains(cont_gotbadge_modal)) {
+				if(!video3.video.playing) {
+					video3.video.play();
+					Tweener.addTween(video3.graphic_play, {alpha: 0, time: 1});
+					Tweener.addTween(video3.graphic_videoblack, {alpha: 0, time: 1});
+					dispatchEvent(new Event("suspend_timeout", true));
+				} else {
+					video3.video.pause();
+					Tweener.addTween(video3.graphic_play, {alpha: 1, time: 1});
+					Tweener.addTween(video3.graphic_videoblack, {alpha: 0.5, time: 1});
+					dispatchEvent(new Event("resume_timeout", true));
+				}
 			}
 		}
 
@@ -1885,16 +1951,18 @@
 				Tweener.addTween(video4.graphic_play, {alpha: 0, time: 1});
 			//}
 
-			if(!video4.video.playing) {
-				video4.video.play();
-				Tweener.addTween(video4.graphic_play, {alpha: 0, time: 1});
-				Tweener.addTween(video4.graphic_videoblack, {alpha: 0, time: 1});
-				dispatchEvent(new Event("suspend_timeout", true));
-			} else {
-				video4.video.pause();
-				Tweener.addTween(video4.graphic_play, {alpha: 1, time: 1});
-				Tweener.addTween(video4.graphic_videoblack, {alpha: 0.5, time: 1});
-				dispatchEvent(new Event("resume_timeout", true));
+			if(contains(cont_gotbadge_modal)) {
+				if(!video4.video.playing) {
+					video4.video.play();
+					Tweener.addTween(video4.graphic_play, {alpha: 0, time: 1});
+					Tweener.addTween(video4.graphic_videoblack, {alpha: 0, time: 1});
+					dispatchEvent(new Event("suspend_timeout", true));
+				} else {
+					video4.video.pause();
+					Tweener.addTween(video4.graphic_play, {alpha: 1, time: 1});
+					Tweener.addTween(video4.graphic_videoblack, {alpha: 0.5, time: 1});
+					dispatchEvent(new Event("resume_timeout", true));
+				}
 			}
 		}
 
@@ -1914,16 +1982,18 @@
 				Tweener.addTween(video5.graphic_play, {alpha: 0, time: 1});
 			//}
 
-			if(!video5.video.playing) {
-				video5.video.play();
-				Tweener.addTween(video5.graphic_play, {alpha: 0, time: 1});
-				Tweener.addTween(video5.graphic_videoblack, {alpha: 0, time: 1});
-				dispatchEvent(new Event("suspend_timeout", true));
-			} else {
-				video5.video.pause();
-				Tweener.addTween(video5.graphic_play, {alpha: 1, time: 1});
-				Tweener.addTween(video5.graphic_videoblack, {alpha: 0.5, time: 1});
-				dispatchEvent(new Event("resume_timeout", true));
+			if(contains(cont_gotbadge_modal)) {
+				if(!video5.video.playing) {
+					video5.video.play();
+					Tweener.addTween(video5.graphic_play, {alpha: 0, time: 1});
+					Tweener.addTween(video5.graphic_videoblack, {alpha: 0, time: 1});
+					dispatchEvent(new Event("suspend_timeout", true));
+				} else {
+					video5.video.pause();
+					Tweener.addTween(video5.graphic_play, {alpha: 1, time: 1});
+					Tweener.addTween(video5.graphic_videoblack, {alpha: 0.5, time: 1});
+					dispatchEvent(new Event("resume_timeout", true));
+				}
 			}
 		}
 
@@ -1943,16 +2013,18 @@
 				Tweener.addTween(video6.graphic_play, {alpha: 0, time: 1});
 			//}
 
-			if(!video6.video.playing) {
-				video6.video.play();
-				Tweener.addTween(video6.graphic_play, {alpha: 0, time: 1});
-				Tweener.addTween(video6.graphic_videoblack, {alpha: 0, time: 1});
-				dispatchEvent(new Event("suspend_timeout", true));
-			} else {
-				video6.video.pause();
-				Tweener.addTween(video6.graphic_play, {alpha: 1, time: 1});
-				Tweener.addTween(video6.graphic_videoblack, {alpha: 0.5, time: 1});
-				dispatchEvent(new Event("resume_timeout", true));
+			if(contains(cont_gotbadge_modal)) {
+				if(!video6.video.playing) {
+					video6.video.play();
+					Tweener.addTween(video6.graphic_play, {alpha: 0, time: 1});
+					Tweener.addTween(video6.graphic_videoblack, {alpha: 0, time: 1});
+					dispatchEvent(new Event("suspend_timeout", true));
+				} else {
+					video6.video.pause();
+					Tweener.addTween(video6.graphic_play, {alpha: 1, time: 1});
+					Tweener.addTween(video6.graphic_videoblack, {alpha: 0.5, time: 1});
+					dispatchEvent(new Event("resume_timeout", true));
+				}
 			}
 		}
 

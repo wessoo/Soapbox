@@ -67,6 +67,10 @@
 		}
 		//testing
 		override protected function initialize():void {
+			/*stage.scaleMode=StageScaleMode.NO_SCALE;
+			stage.displayState=StageDisplayState.FULL_SCREEN;
+			stage.align = StageAlign.TOP_LEFT;*/
+
 			timeout = new Timer(46000, 1); //NOTE: Set to 21 seconds for testing
 			timeoutWarn = new Timer(35000, 1);
 			countdown = new Timer(1000, 10);
@@ -117,6 +121,10 @@
 			cont_resetanimation.addChild(effect_resetanimation);
 			timelineWatcher = new TimelineWatcher(effect_resetanimation);
             timelineWatcher.addEventListener(TimelineEvent.LABEL_REACHED, resetanim_done);
+
+            //coming soon bubble COMING SOON TEMP
+            bubble_comingsoon.alpha = 0;
+            bubble_comingsoon.scaleX = bubble_comingsoon.scaleY = 0.8;
 
 			//other presets
 			txt_timeout.alpha = 0;
@@ -185,6 +193,12 @@
 				timeout.reset();
 				timeout.start();
 			}
+
+			//COMING SOON TEMP
+			/*if(bubble_comingsoon.alpha == 1) {
+				Tweener.addTween(bubble_comingsoon, { alpha: 0, time: 1 } );
+				Tweener.addTween(bubble_comingsoon, { scaleX: 0.8, scaleY: 0.8, time: 1 } );
+			}*/
 		}
 
 		private function timeout_reset(e:TimerEvent):void {
@@ -259,32 +273,34 @@
 		
 		private function torating_up(e:TouchEvent):void {
 			button_torating.gotoAndStop("up");
-			timeout.start();
-			timeoutWarn.start();
-			screen = 2;
+			if(screen == 1) {
+				timeout.start();
+				timeoutWarn.start();
+				screen = 2;
 
-			Tweener.addTween(background_texture, {y: 1330 - 1080, time: 1.5, transition: "easeInOutQuart" });
-			Tweener.addTween(rating, {y: RATING_Y_POS, time: 1.5, transition: "easeInOutQuart" });
-			Tweener.addTween(button_torating, {y: 950.55 - SCREEN_HEIGHT, time: 1.5, transition: "easeInOutQuart" });
-			Tweener.addTween(button_tostats, {y: 952.2 - SCREEN_HEIGHT, time: 1.5, transition: "easeInOutQuart" });
-			Tweener.addTween(landing_text, {y: LANDINGTEXT_Y - SCREEN_HEIGHT, time: 1.5, transition: "easeInOutQuart" });
-			Tweener.addTween(graphic_logo, {y: LOGO_Y - SCREEN_HEIGHT, time: 1.5, transition: "easeInOutQuart" });
-			Tweener.addTween(cont_lang, { alpha: 0, time: 0.5});
-			Tweener.addTween(cont_lang, { alpha: 1, time: 1, delay: 1.5});
+				Tweener.addTween(background_texture, {y: 1330 - 1080, time: 1.5, transition: "easeInOutQuart" });
+				Tweener.addTween(rating, {y: RATING_Y_POS, time: 1.5, transition: "easeInOutQuart" });
+				Tweener.addTween(button_torating, {y: 950.55 - SCREEN_HEIGHT, time: 1.5, transition: "easeInOutQuart" });
+				Tweener.addTween(button_tostats, {y: 952.2 - SCREEN_HEIGHT, time: 1.5, transition: "easeInOutQuart" });
+				Tweener.addTween(landing_text, {y: LANDINGTEXT_Y - SCREEN_HEIGHT, time: 1.5, transition: "easeInOutQuart" });
+				Tweener.addTween(graphic_logo, {y: LOGO_Y - SCREEN_HEIGHT, time: 1.5, transition: "easeInOutQuart" });
+				Tweener.addTween(cont_lang, { alpha: 0, time: 0.5});
+				Tweener.addTween(cont_lang, { alpha: 1, time: 1, delay: 1.5});
 
-			Tweener.addTween(this, {delay: 1.5, onComplete: function() { 
-				cont_tostats.addEventListener(TouchEvent.TOUCH_DOWN, tostats_dwn, false, 0, true);
-				cont_tostats.addEventListener(TouchEvent.TOUCH_UP, tostats_up, false, 0, true);
-				cont_lang.addEventListener(TouchEvent.TOUCH_DOWN, lang_dwn, false, 0, true);
-				cont_lang.addEventListener(TouchEvent.TOUCH_UP, lang_up, false, 0, true);
-			}});
+				Tweener.addTween(this, {delay: 1.5, onComplete: function() { 
+					cont_tostats.addEventListener(TouchEvent.TOUCH_DOWN, tostats_dwn, false, 0, true);
+					cont_tostats.addEventListener(TouchEvent.TOUCH_UP, tostats_up, false, 0, true);
+					cont_lang.addEventListener(TouchEvent.TOUCH_DOWN, lang_dwn, false, 0, true);
+					cont_lang.addEventListener(TouchEvent.TOUCH_UP, lang_up, false, 0, true);
+				}});
 
-			blockerOn();
-			Tweener.addTween(cont_blocker_fullscreen, { delay: 1.5, onComplete: function() {
-				blockerOff();
-				rating.graphic_fakebg.alpha = 1;
-				rating.showInstructions();
-			} } );
+				blockerOn();
+				Tweener.addTween(cont_blocker_fullscreen, { delay: 1.5, onComplete: function() {
+					blockerOff();
+					rating.graphic_fakebg.alpha = 1;
+					rating.showInstructions();
+				} } );
+			}
 		}
 
 		private function tostats_dwn(e:TouchEvent):void {
@@ -321,6 +337,9 @@
 				Tweener.addTween(cont_lang, { alpha: 0, time: 0.5, onComplete: function() {
 					button_lang.x = 57.75;
 					button_lang.y = 985.95;
+					addChild(bubble_comingsoon);
+					bubble_comingsoon.y = 1010;
+					bubble_comingsoon.x = 220;
 				} });
 				Tweener.addTween(cont_lang, { alpha: 1, time: 1, delay: 1.5});
 			} else if (screen == 3) {
@@ -337,6 +356,8 @@
 				Tweener.addTween(cont_lang, { alpha: 0, time: 0.5, onComplete: function() {
 					button_lang.x = 1832.35;
 					button_lang.y = 955;
+					bubble_comingsoon.x = 1680.5;
+					bubble_comingsoon.y = 977.6;
 				} });
 				Tweener.addTween(cont_lang, { alpha: 1, time: 1, delay: 1.5});
 			}
@@ -352,10 +373,11 @@
 				button_lang.gotoAndStop("eng_down");
 			}
 
-			cont_torating.removeEventListener(TouchEvent.TOUCH_DOWN, torating_dwn);
+			//COMING SOON TEMP
+			/*cont_torating.removeEventListener(TouchEvent.TOUCH_DOWN, torating_dwn);
 			cont_torating.removeEventListener(TouchEvent.TOUCH_UP, torating_up);
 			cont_tostats.removeEventListener(TouchEvent.TOUCH_DOWN, tostats_dwn);
-			cont_tostats.removeEventListener(TouchEvent.TOUCH_UP, tostats_up);
+			cont_tostats.removeEventListener(TouchEvent.TOUCH_UP, tostats_up);*/
 		}	
 		
 		private function lang_up(e:TouchEvent):void {
@@ -367,10 +389,18 @@
 				changeLang(); //switch to English
 			}
 
+			//COMING SOON TEMP
+			/*button_lang.gotoAndStop("esp_up");
+			Tweener.addTween(bubble_comingsoon, { alpha: 1, time: 1 } );
+			Tweener.addTween(bubble_comingsoon, { scaleX: 1, scaleY: 1, time: 1, transition: "easeOutElastic" } );
+
+			Tweener.addTween(bubble_comingsoon, { alpha: 0, time: 1, delay: 4 } );
+			Tweener.addTween(bubble_comingsoon, { scaleX: 0.8, scaleY: 0.8, time: 1, delay: 4 } );
+
 			cont_torating.addEventListener(TouchEvent.TOUCH_DOWN, torating_dwn, false, 0, true);
 			cont_torating.addEventListener(TouchEvent.TOUCH_UP, torating_up, false, 0, true);
 			cont_tostats.addEventListener(TouchEvent.TOUCH_DOWN, tostats_dwn, false, 0, true);
-			cont_tostats.addEventListener(TouchEvent.TOUCH_UP, tostats_up, false, 0, true);
+			cont_tostats.addEventListener(TouchEvent.TOUCH_UP, tostats_up, false, 0, true);*/
 		}
 
 		private function reset_animate(e:Event):void {
