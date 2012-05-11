@@ -118,6 +118,10 @@
 			timelineWatcher = new TimelineWatcher(effect_resetanimation);
             timelineWatcher.addEventListener(TimelineEvent.LABEL_REACHED, resetanim_done);
 
+            //coming soon bubble COMING SOON TEMP
+            bubble_comingsoon.alpha = 0;
+            bubble_comingsoon.scaleX = bubble_comingsoon.scaleY = 0.8;
+
 			//other presets
 			txt_timeout.alpha = 0;
 			effect_resetanimation.alpha = 0;
@@ -185,6 +189,12 @@
 				timeout.reset();
 				timeout.start();
 			}
+
+			//COMING SOON TEMP
+			/*if(bubble_comingsoon.alpha == 1) {
+				Tweener.addTween(bubble_comingsoon, { alpha: 0, time: 1 } );
+				Tweener.addTween(bubble_comingsoon, { scaleX: 0.8, scaleY: 0.8, time: 1 } );
+			}*/
 		}
 
 		private function timeout_reset(e:TimerEvent):void {
@@ -323,6 +333,9 @@
 				Tweener.addTween(cont_lang, { alpha: 0, time: 0.5, onComplete: function() {
 					button_lang.x = 57.75;
 					button_lang.y = 985.95;
+					addChild(bubble_comingsoon);
+					bubble_comingsoon.y = 1010;
+					bubble_comingsoon.x = 220;
 				} });
 				Tweener.addTween(cont_lang, { alpha: 1, time: 1, delay: 1.5});
 			} else if (screen == 3) {
@@ -339,6 +352,8 @@
 				Tweener.addTween(cont_lang, { alpha: 0, time: 0.5, onComplete: function() {
 					button_lang.x = 1832.35;
 					button_lang.y = 955;
+					bubble_comingsoon.x = 1680.5;
+					bubble_comingsoon.y = 977.6;
 				} });
 				Tweener.addTween(cont_lang, { alpha: 1, time: 1, delay: 1.5});
 			}
@@ -354,10 +369,11 @@
 				button_lang.gotoAndStop("eng_down");
 			}
 
-			cont_torating.removeEventListener(TouchEvent.TOUCH_DOWN, torating_dwn);
+			//COMING SOON TEMP
+			/*cont_torating.removeEventListener(TouchEvent.TOUCH_DOWN, torating_dwn);
 			cont_torating.removeEventListener(TouchEvent.TOUCH_UP, torating_up);
 			cont_tostats.removeEventListener(TouchEvent.TOUCH_DOWN, tostats_dwn);
-			cont_tostats.removeEventListener(TouchEvent.TOUCH_UP, tostats_up);
+			cont_tostats.removeEventListener(TouchEvent.TOUCH_UP, tostats_up);*/
 		}	
 		
 		private function lang_up(e:TouchEvent):void {
@@ -369,10 +385,18 @@
 				changeLang(); //switch to English
 			}
 
+			//COMING SOON TEMP
+			/*button_lang.gotoAndStop("esp_up");
+			Tweener.addTween(bubble_comingsoon, { alpha: 1, time: 1 } );
+			Tweener.addTween(bubble_comingsoon, { scaleX: 1, scaleY: 1, time: 1, transition: "easeOutElastic" } );
+
+			Tweener.addTween(bubble_comingsoon, { alpha: 0, time: 1, delay: 4 } );
+			Tweener.addTween(bubble_comingsoon, { scaleX: 0.8, scaleY: 0.8, time: 1, delay: 4 } );
+
 			cont_torating.addEventListener(TouchEvent.TOUCH_DOWN, torating_dwn, false, 0, true);
 			cont_torating.addEventListener(TouchEvent.TOUCH_UP, torating_up, false, 0, true);
 			cont_tostats.addEventListener(TouchEvent.TOUCH_DOWN, tostats_dwn, false, 0, true);
-			cont_tostats.addEventListener(TouchEvent.TOUCH_UP, tostats_up, false, 0, true);
+			cont_tostats.addEventListener(TouchEvent.TOUCH_UP, tostats_up, false, 0, true);*/
 		}
 
 		private function reset_animate(e:Event):void {
