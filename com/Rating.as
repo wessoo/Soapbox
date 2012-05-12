@@ -126,7 +126,7 @@
 		private static var BUBBLE_EMAILINSTRUCT_HT:int;
 		private static var BUBBLE_EMAILINSTRUCT_WD:int;
 		private static var REMOVEEMAIL_SIZE:int;
-		private static var SCREEN_URL:String = "http://192.168.3.197:4100/show?image=";
+		private static var SCREEN_URL:String = "http://192.168.10.101:4100/show?image=";
 
 		public function Rating() {
 			super();
