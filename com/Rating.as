@@ -21,6 +21,7 @@
 	import flash.text.TextField;
 	
 	import caurina.transitions.Tweener;	
+	import flash.net.*;
 
 	public class Rating extends TouchComponent {
 		private var images:Array;     	//the array of randomized image id's
@@ -541,8 +542,18 @@
 		}
 		
 		private function sendToDatabase(ext:String, rating:int):void{
-			//trace("Image: " + ext + ", Rating: " + rating);
-			//Add actual HTTP request once Alejandro finishes adding the database
+			var uR:URLRequest = new URLRequest("http://localhost/soapbox.php");
+            var uV:URLVariables = new URLVariables();
+			
+			uV.image = ext;
+			uV.rating = rating;
+			
+			var now:Date = new Date();
+            uV.date = now.toString();
+                        
+            uR.data = uV;
+			
+			var uL:URLLoader = new URLLoader(uR);
 		}
 		
 		//checks, based on the current location if you have gotten a badge or not

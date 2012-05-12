@@ -67,9 +67,15 @@
 		}
 		//testing
 		override protected function initialize():void {
+<<<<<<< HEAD
 			stage.scaleMode=StageScaleMode.SHOW_ALL;
 			stage.displayState=StageDisplayState.FULL_SCREEN;
 			//stage.align = StageAlign.CENTER;
+=======
+			/*stage.scaleMode=StageScaleMode.NO_SCALE;
+			stage.displayState=StageDisplayState.FULL_SCREEN;
+			stage.align = StageAlign.TOP_LEFT;*/
+>>>>>>> master
 
 			timeout = new Timer(46000, 1); //NOTE: Set to 21 seconds for testing
 			timeoutWarn = new Timer(35000, 1);
@@ -347,7 +353,9 @@
 				timeout.reset();
 
 				screen = 1;
-				Tweener.addTween(background_texture, {x: 0, time: 1.5, transition: "easeInOutQuart" });
+				Tweener.addTween(background_texture, {x: 0, time: 1.5, transition: "easeInOutQuart", onComplete: function(){
+								 ranking.reOrder();
+								 }});
 				Tweener.addTween(button_torating, {x: 960, time: 1.5, transition: "easeInOutQuart" });
 				Tweener.addTween(button_tostats, {x: 110, time: 1.5, transition: "easeInOutQuart" });
 				Tweener.addTween(landing_text, {x: LANDINGTEXT_X, time: 1.5, transition: "easeInOutQuart" });
@@ -587,6 +595,7 @@
 			
 			blockerOn();
 			Tweener.addTween(cont_blocker_fullscreen, { delay: 2, onComplete: blockerOff } );
+			ranking.updateRatings();
 		}
 
 		private function shiftUp(e:Event):void {
