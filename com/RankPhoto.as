@@ -40,10 +40,6 @@
 		public function get photoID():int{
 			return _photoID;
 		}
-
-		private function bold(input:String):String{
-			return "<B>" + input + "</B>";
-		}
 		
 		override protected function createUI():void {
 			iUrl = ImageParser.settings.Content.Source[_photoID - 1].url2;
