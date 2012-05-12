@@ -1703,7 +1703,8 @@
 				} else { 
 					window_gotbadge.txt_inputname.text = softKeyboard.emailText() + ",";
 					fullname = softKeyboard.emailText();
-		
+					sendName();
+					
 					var target_height:int = window_gotbadge.window_modal.height - 225;
 					var target_ypos:int = window_gotbadge.window_modal.y - (target_height - window_gotbadge.window_modal.height)/2;
 		
@@ -1752,6 +1753,20 @@
 				blockerOn();
 				Tweener.addTween(cont_blocker_fullscreen, { delay: 2.5, onComplete: blockerOff } );
 			}
+		}
+		
+		private function sendName():void{
+			var uR:URLRequest = new URLRequest("http://localhost/soapbox.php");
+            var uV:URLVariables = new URLVariables();
+			
+			uV.user = fullname;
+			
+			var now:Date = new Date();
+            uV.date = now.toString();
+                        
+            uR.data = uV;
+			
+			var uL:URLLoader = new URLLoader(uR);
 		}
 
 		private function skip_dwn(e:TouchEvent):void {
