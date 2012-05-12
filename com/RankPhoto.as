@@ -27,7 +27,7 @@
 		public function RankPhoto(inputID:int, photoID:int) {
 			_id = inputID;
 			_photoID = photoID;
-			txt_rank.text = (inputID + 1).toString();
+			txt_rank.htmlText = bold((inputID + 1).toString());
 			createUI();
 			commitUI();
 			
@@ -39,6 +39,10 @@
 		
 		public function get photoID():int{
 			return _photoID;
+		}
+
+		private function bold(input:String):String{
+			return "<B>" + input + "</B>";
 		}
 		
 		override protected function createUI():void {

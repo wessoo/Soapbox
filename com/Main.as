@@ -67,9 +67,9 @@
 		}
 		//testing
 		override protected function initialize():void {
-			/*stage.scaleMode=StageScaleMode.NO_SCALE;
+			stage.scaleMode=StageScaleMode.SHOW_ALL;
 			stage.displayState=StageDisplayState.FULL_SCREEN;
-			stage.align = StageAlign.TOP_LEFT;*/
+			//stage.align = StageAlign.CENTER;
 
 			timeout = new Timer(46000, 1); //NOTE: Set to 21 seconds for testing
 			timeoutWarn = new Timer(35000, 1);
@@ -367,11 +367,11 @@
 		}
 
 		private function lang_dwn(e:TouchEvent):void {
-			/*if ( language == 0) { //in English mode
+			if ( language == 0) { //in English mode
 				button_lang.gotoAndStop("esp_down");
 			} else {
 				button_lang.gotoAndStop("eng_down");
-			}*/
+			}
 
 			//COMING SOON TEMP
 			cont_torating.removeEventListener(TouchEvent.TOUCH_DOWN, torating_dwn);
