@@ -347,7 +347,9 @@
 				timeout.reset();
 
 				screen = 1;
-				Tweener.addTween(background_texture, {x: 0, time: 1.5, transition: "easeInOutQuart" });
+				Tweener.addTween(background_texture, {x: 0, time: 1.5, transition: "easeInOutQuart", onComplete: function(){
+								 ranking.reOrder();
+								 }});
 				Tweener.addTween(button_torating, {x: 960, time: 1.5, transition: "easeInOutQuart" });
 				Tweener.addTween(button_tostats, {x: 110, time: 1.5, transition: "easeInOutQuart" });
 				Tweener.addTween(landing_text, {x: LANDINGTEXT_X, time: 1.5, transition: "easeInOutQuart" });
@@ -587,6 +589,7 @@
 			
 			blockerOn();
 			Tweener.addTween(cont_blocker_fullscreen, { delay: 2, onComplete: blockerOff } );
+			ranking.updateRatings();
 		}
 
 		private function shiftUp(e:Event):void {

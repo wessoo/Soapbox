@@ -26,6 +26,7 @@
 		private var vheight:Number = 849;
 		private var vy:Number = -446;
 		private var correctV:Number = 25;
+		private var bottomCorrection = 19;
 		
 		//Flick variables
 		private var friction:Number = 0.955;
@@ -78,7 +79,7 @@
 				list.push(rp);
 			}
 
-			for (var j:int = 0; j < 8; ++j)
+			for (var j:int = 0; j < 12; ++j)
 			{
 				addChildAt(list[j], getChildIndex(graphic_headfoot));
 				displayed.push(list[j]);
@@ -112,6 +113,18 @@
 					list[j].y = list[j - 1].y;
 				}
 			}
+			
+			list[8].x = list[4].x;
+			list[8].y = list[4].y + vpadding;
+			
+			for (var k:int = 9; k < 12; ++k)
+			{
+				if (k != 0)
+				{
+					list[k].x = list[k - 1].x + hpadding;
+					list[k].y = list[k - 1].y;
+				}
+			}
 
 			scrollS.graphics.beginFill(0xFFFFFF);
 			scrollS.graphics.drawRect(-1925/2, vy, 1920, vheight);
@@ -119,7 +132,7 @@
 			scrollS.alpha = 0;
 
 			cont_scroll.addChild(scrollS);
-			addChildAt(cont_scroll, getChildIndex(displayed[7]) + 1)
+			addChildAt(cont_scroll, getChildIndex(displayed[11]) + 1)
 
 			cont_scroll.addEventListener(GestureEvent.GESTURE_DRAG , dragHandler, false, 0, true);
 			cont_scroll.addEventListener(TouchEvent.TOUCH_UP , touchUpHandler, false, 0, true);
@@ -135,6 +148,59 @@
 		{
 			//spacing = 66.48
 			trace("layout that wasn't working");
+		}
+		
+		override protected function updateUI():void{
+			hpadding = ((1920 - (list[0].width * 4))/5) + list[0].width;
+			vpadding = ((vheight - list[0].height * 2)/3) + list[0].height;
+
+			list[0].x = (-1920/2) + hpadding - (list[0].width/2);
+			list[0].y = vy + vpadding - (list[0].height/2) - correctV;
+
+			for (var i:int = 1; i < 4; ++i)
+			{
+				list[i].x = list[i - 1].x + hpadding;
+				list[i].y = list[i - 1].y;
+			}
+
+			list[4].x = list[0].x;
+			list[4].y = list[0].y + vpadding;
+
+			for (var j:int = 5; j < 8; ++j)
+			{
+				if (j != 0)
+				{
+					list[j].x = list[j - 1].x + hpadding;
+					list[j].y = list[j - 1].y;
+				}
+			}
+			
+			list[8].x = list[4].x;
+			list[8].y = list[4].y + vpadding;
+			
+			for (var k:int = 9; k < 12; ++k)
+			{
+				if (k != 0)
+				{
+					list[k].x = list[k - 1].x + hpadding;
+					list[k].y = list[k - 1].y;
+				}
+			}
+			removeChild(cont_scroll);
+			addChildAt(cont_scroll, getChildIndex(displayed[11]) + 1)
+		}
+		
+		public function reOrder():void{
+			for each(var item:RankPhoto in displayed){
+				removeChild(item);
+			}
+			displayed.splice(0, displayed.length);
+			for (var j:int = 0; j < 12; ++j)
+			{
+				addChildAt(list[j], getChildIndex(graphic_headfoot));
+				displayed.push(list[j]);
+			}
+			updateUI();
 		}
 
 		/* ------------------------------------------- */
@@ -166,14 +232,37 @@
 		}
 		
 		public function updateRatings():void{
-			ranks.splice();
+			ranks.splice(0, ranks.length);
+			for each(var item:RankPhoto in displayed){
+				removeChild(item);
+			}
+			
 			for each(var listed:RankPhoto in list){
 				listed.Dispose();
 			}
-			for each(var item:RankPhoto in displayed){
-				item.Dispose();
+			list.splice(0, list.length);
+			displayed.splice(0, displayed.length);
+			
+			var uR:URLRequest = new URLRequest("http://localhost/soapbox.php");
+            var uV:URLVariables = new URLVariables();
+			
+			var now:Date = new Date();
+            uV.date = now.toString();
+                        
+            uR.data = uV;
+			
+			var uL:URLLoader = new URLLoader(uR);
+			uL.addEventListener(Event.COMPLETE, loaderCompleteHandler);
+                        
+			function loaderCompleteHandler(e:Event):void{
+				var data:String = uL.data;
+				var returned:Array = data.split(",");
+				for each(var extension:String in returned){
+					ranks.push(dict[extension]);
+				}
+				createUI();
+				updateUI();
 			}
-			trace("size of ranks for reset: " + ranks.length);
 		}
 
 
@@ -218,7 +307,7 @@
 					else
 					{
 						bounceBottom = false;
-						if ((lastT1.y >= (vy + vheight - paddingH1) && (lastT1.y + e.dy) >= (vy + vheight - paddingH1)) || e.dy > 0)
+						if ((lastT1.y >= (vy + vheight - paddingH1 + correctV +  bottomCorrection) && (lastT1.y + e.dy) >= (vy + vheight - paddingH1 + correctV +  bottomCorrection)) || e.dy > 0)
 						{
 							for each (var k in displayed)
 							{
@@ -226,22 +315,21 @@
 							}
 							bounceBottom = false;
 						}
-						else if(lastT1.y >= vy + vheight - paddingH1 - maximumStretch){
+						else if(lastT1.y >= vy + vheight - paddingH1 + correctV +  bottomCorrection - maximumStretch){
 							for each (var m in displayed)
 							{
 								m.y += (e.dy * resist);
 							}
 						}
 						
-						if(lastT1.y <= vy + vheight - paddingH1){
+						if(lastT1.y <= vy + vheight - paddingH1 + correctV +  bottomCorrection){
 							bounceBottom = true;
 						}
 					}
 				}
 
-				if ((displayed[0].y) < vy - paddingH1 + 10)
+				if ((displayed[0].y) < vy - displayed[0].height/2 + 10)
 				{
-					//trace(displayed[0].y + " " + (vy - paddingH1 + 10)); 
 					removeChild(displayed[0]);
 					removeChild(displayed[1]);
 					removeChild(displayed[2]);
@@ -249,7 +337,7 @@
 					displayed.splice(0,4);
 				}
 
-				if (lastT1.y > vy + vheight + paddingH1 + 30) //- 20)
+				if (lastT1.y > vy + vheight + paddingH1) //- 20)
 				{
 					removeChild(displayed[displayed.length - 1]);
 					removeChild(displayed[displayed.length - 2]);
@@ -258,7 +346,7 @@
 					displayed.splice(displayed.length - 4, 4);
 				}
 
-				if ((displayed[0].y >= vy + paddingH1 - 7) && (displayed[0].id > 0))
+				if ((displayed[0].y >= vy + displayed[0].height/2) && (displayed[0].id > 0) && (e.dy > 0))
 				{
 					addChildAt(list[displayed[0].id - 4], getChildIndex(cont_scroll) - 1);
 					addChildAt(list[displayed[0].id - 3], getChildIndex(cont_scroll) - 1);
@@ -271,7 +359,7 @@
 					updateTop();
 				}
 
-				if ((lastT1.y <= vy + vheight - paddingH1 - 15) && (lastT1.id + 1 < totalAmount))
+				if ((lastT1.y <= vy + vheight - displayed[displayed.length -1].height/2) && (lastT1.id + 1 < totalAmount) && (e.dy < 0))
 				{
 					addChildAt(list[lastT1.id + 1], getChildIndex(cont_scroll) - 1);
 					addChildAt(list[lastT1.id + 2], getChildIndex(cont_scroll) - 1);
@@ -300,7 +388,7 @@
 			if(bounceBottom){
 				tweening = true;
 				var lastT1 = displayed[displayed.length - 1];
-				var correction2:Number = vy + vheight - paddingH1 - lastT1.y;
+				var correction2:Number = vy + vheight - paddingH1 + correctV +  bottomCorrection - lastT1.y;
 				for each (var j in displayed){
 					Tweener.addTween(j, {y: j.y + correction2, time: .5, onComplete: function(){tweening = false;}});
 				}
@@ -334,22 +422,22 @@
 
 		private function updateBottom():void
 		{
-			var prevID:RankPhoto = displayed[4];
-			var prevID2:RankPhoto = displayed[5];
-			var prevID3:RankPhoto = displayed[6];
-			var prevID4:RankPhoto = displayed[7];
+			var prevID:RankPhoto = displayed[displayed.length - 8];
+			var prevID2:RankPhoto = displayed[displayed.length - 7];
+			var prevID3:RankPhoto = displayed[displayed.length - 6];
+			var prevID4:RankPhoto = displayed[displayed.length - 5];
 
-			displayed[8].x = prevID.x;
-			displayed[8].y = prevID.y + vpadding;
+			displayed[displayed.length - 4].x = prevID.x;
+			displayed[displayed.length - 4].y = prevID.y + vpadding;
 
-			displayed[9].x = prevID2.x;
-			displayed[9].y = prevID2.y + vpadding;
+			displayed[displayed.length - 3].x = prevID2.x;
+			displayed[displayed.length - 3].y = prevID2.y + vpadding;
 
-			displayed[10].x = prevID3.x;
-			displayed[10].y = prevID3.y + vpadding;
+			displayed[displayed.length - 2].x = prevID3.x;
+			displayed[displayed.length - 2].y = prevID3.y + vpadding;
 
-			displayed[11].x = prevID4.x;
-			displayed[11].y = prevID4.y + vpadding;
+			displayed[displayed.length - 1].x = prevID4.x;
+			displayed[displayed.length - 1].y = prevID4.y + vpadding;
 		}
 		
 		private function flickHandler(e:GestureEvent):void{
@@ -393,7 +481,7 @@
 					else
 					{
 						bounceBottom = false;
-						if ((lastT1.y >= (vy + vheight - paddingH1) && (lastT1.y + dy) >= (vy + vheight - paddingH1)) || dy > 0)
+						if ((lastT1.y >= (vy + vheight - paddingH1 + correctV +  bottomCorrection) && (lastT1.y + dy) >= (vy + vheight - paddingH1 + correctV +  bottomCorrection)) || dy > 0)
 						{
 							for each (var k in displayed)
 							{
@@ -407,9 +495,8 @@
 					}
 				}
 
-				if ((displayed[0].y) < vy - paddingH1 + 10)
+				if ((displayed[0].y) < vy - displayed[0].height/2 + 10)
 				{
-					//trace(displayed[0].y + " " + (vy - paddingH1 + 10)); 
 					removeChild(displayed[0]);
 					removeChild(displayed[1]);
 					removeChild(displayed[2]);
@@ -417,7 +504,7 @@
 					displayed.splice(0,4);
 				}
 
-				if (lastT1.y > vy + vheight + paddingH1 + 30) //- 20)
+				if (lastT1.y > vy + vheight + paddingH1) //- 20)
 				{
 					removeChild(displayed[displayed.length - 1]);
 					removeChild(displayed[displayed.length - 2]);
@@ -426,7 +513,7 @@
 					displayed.splice(displayed.length - 4, 4);
 				}
 
-				if ((displayed[0].y >= vy + paddingH1 - 7) && (displayed[0].id > 0))
+				if ((displayed[0].y >= vy + displayed[0].height/2) && (displayed[0].id > 0) && (dy > 0))
 				{
 					addChildAt(list[displayed[0].id - 4], getChildIndex(cont_scroll) - 1);
 					addChildAt(list[displayed[0].id - 3], getChildIndex(cont_scroll) - 1);
@@ -439,7 +526,7 @@
 					updateTop();
 				}
 
-				if ((lastT1.y <= vy + vheight - paddingH1 - 15) && (lastT1.id + 1 < totalAmount))
+				if ((lastT1.y <= vy + vheight - displayed[displayed.length -1].height/2) && (lastT1.id + 1 < totalAmount) && (dy < 0))
 				{
 					addChildAt(list[lastT1.id + 1], getChildIndex(cont_scroll) - 1);
 					addChildAt(list[lastT1.id + 2], getChildIndex(cont_scroll) - 1);
