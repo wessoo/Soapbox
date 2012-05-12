@@ -1434,9 +1434,9 @@
 			cont_endsession_modal.addChild(window_endsession.txt_email); 
 
 			//end session layout animate
-			Tweener.addTween(window_endsession.txt_email, {alpha: 0, time: 0.5, onComplete: function() { window_endsession.txt_email.text = "enter e-mail here"; } });
+			Tweener.addTween(window_endsession.txt_email, {alpha: 0, time: 0.5, onComplete: function() { window_endsession.txt_email.htmlText = bold("enter e-mail here"); } });
 			Tweener.addTween(window_endsession.txt_email, {alpha: 1, time: 0.5, delay: 0.5});
-			Tweener.addTween(window_endsession.txt_prompt, {alpha: 0, time: 0.5, onComplete: function() { window_endsession.txt_prompt.text = "You have earned badges! You can send the badges to an e-mail. \n\n Send to:";} });
+			Tweener.addTween(window_endsession.txt_prompt, {alpha: 0, time: 0.5, onComplete: function() { window_endsession.txt_prompt.htmlText = bold("You have earned badges! You can send the badges to an e-mail. \n\n Send to:");} });
 			Tweener.addTween(window_endsession.txt_prompt, {alpha: 1, time: 0.5, delay: 0.5});
 			Tweener.addTween(cont_es_removeemail, {alpha: 0, time: 1, onComplete: function() { cont_endsession_modal.removeChild(cont_es_removeemail); } });
 			Tweener.addTween(cont_es_yes, {alpha: 0, time: 1, onComplete: function() { cont_endsession_modal.removeChild(cont_es_yes); } });
@@ -1646,7 +1646,7 @@
 			removeChild(cont_es_exitKeyboard);
 			
 			cont_es_mailbg.addEventListener(TouchEvent.TOUCH_UP, es_email_up, false, 0, true);
-			window_endsession.txt_email.text = 'enter e-mail here';
+			window_endsession.txt_email.htmlText = bold('enter e-mail here');
 
 			//shift down to hide keyboard
 			Tweener.addTween(window_endsession.window_modal, { height: 395, y: -197.5, time: 1});
@@ -2399,7 +2399,7 @@
 
 				window_endsession.txt_endsession.y = -220;
 				window_endsession.txt_prompt.y = -180;
-				window_endsession.txt_prompt.text = "Are you sure you would like to end your session?";
+				window_endsession.txt_prompt.htmlText = bold("Are you sure you would like to end your session?");
 				
 				window_endsession.button_yes.visible = true;
 				window_endsession.button_yes.y = -90 + ES_LOCY;
@@ -2422,8 +2422,8 @@
 			} else {
 				//email format
 				if(email != '') { //email entered
-					window_endsession.txt_prompt.text = "You have earned badges! Would you like to send these badges? \n\n Send to:";
-					window_endsession.txt_email.text = email;
+					window_endsession.txt_prompt.htmlText = bold("You have earned badges! Would you like to send these badges? \n\n Send to:");
+					window_endsession.txt_email.htmlText = bold(email);
 
 					window_endsession.button_removeemail.alpha = 1;
 					window_endsession.button_removeemail.x = getXpos(2);
@@ -2431,8 +2431,8 @@
 					cont_endsession_modal.removeChild(cont_es_mailbg);
 					cont_endsession_modal.removeChild(cont_es_esskip);
 				} else { //email not entered
-					window_endsession.txt_prompt.text = "You have earned badges! You can send the badges to an e-mail. \n\n Send to:";
-					window_endsession.txt_email.text = 'enter e-mail here';
+					window_endsession.txt_prompt.htmlText = bold("You have earned badges! You can send the badges to an e-mail. \n\n Send to:");
+					window_endsession.txt_email.htmlText = bold('enter e-mail here');
 					
 					cont_endsession_modal.addChild(cont_es_mailbg);
 					cont_endsession_modal.removeChild(cont_es_maillist);
