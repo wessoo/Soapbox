@@ -67,15 +67,8 @@
 		}
 		//testing
 		override protected function initialize():void {
-<<<<<<< HEAD
-			stage.scaleMode=StageScaleMode.SHOW_ALL;
-			stage.displayState=StageDisplayState.FULL_SCREEN;
-			//stage.align = StageAlign.CENTER;
-=======
-			/*stage.scaleMode=StageScaleMode.NO_SCALE;
-			stage.displayState=StageDisplayState.FULL_SCREEN;
-			stage.align = StageAlign.TOP_LEFT;*/
->>>>>>> master
+			stage.scaleMode = StageScaleMode.SHOW_ALL;
+			stage.displayState = StageDisplayState.FULL_SCREEN;
 
 			timeout = new Timer(46000, 1); //NOTE: Set to 21 seconds for testing
 			timeoutWarn = new Timer(35000, 1);
