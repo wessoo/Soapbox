@@ -195,10 +195,10 @@
 			}
 
 			//COMING SOON TEMP
-			if(bubble_comingsoon.alpha == 1) {
+			/*if(bubble_comingsoon.alpha == 1) {
 				Tweener.addTween(bubble_comingsoon, { alpha: 0, time: 1 } );
 				Tweener.addTween(bubble_comingsoon, { scaleX: 0.8, scaleY: 0.8, time: 1 } );
-			}
+			}*/
 		}
 
 		private function timeout_reset(e:TimerEvent):void {
@@ -376,23 +376,23 @@
 			}
 
 			//COMING SOON TEMP
-			cont_torating.removeEventListener(TouchEvent.TOUCH_DOWN, torating_dwn);
+			/*cont_torating.removeEventListener(TouchEvent.TOUCH_DOWN, torating_dwn);
 			cont_torating.removeEventListener(TouchEvent.TOUCH_UP, torating_up);
 			cont_tostats.removeEventListener(TouchEvent.TOUCH_DOWN, tostats_dwn);
-			cont_tostats.removeEventListener(TouchEvent.TOUCH_UP, tostats_up);
+			cont_tostats.removeEventListener(TouchEvent.TOUCH_UP, tostats_up);*/
 		}	
 		
 		private function lang_up(e:TouchEvent):void {
-			/*if ( language == 0) { //in English mode
+			if ( language == 0) { //in English mode
 				button_lang.gotoAndStop("eng_up");
 				changeLang(); //switch to Spanish
 			} else {
 				button_lang.gotoAndStop("esp_up");
 				changeLang(); //switch to English
-			}*/
+			}
 
 			//COMING SOON TEMP
-			button_lang.gotoAndStop("esp_up");
+			/*button_lang.gotoAndStop("esp_up");
 			Tweener.addTween(bubble_comingsoon, { alpha: 1, time: 1 } );
 			Tweener.addTween(bubble_comingsoon, { scaleX: 1, scaleY: 1, time: 1, transition: "easeOutElastic" } );
 
@@ -402,7 +402,7 @@
 			cont_torating.addEventListener(TouchEvent.TOUCH_DOWN, torating_dwn, false, 0, true);
 			cont_torating.addEventListener(TouchEvent.TOUCH_UP, torating_up, false, 0, true);
 			cont_tostats.addEventListener(TouchEvent.TOUCH_DOWN, tostats_dwn, false, 0, true);
-			cont_tostats.addEventListener(TouchEvent.TOUCH_UP, tostats_up, false, 0, true);
+			cont_tostats.addEventListener(TouchEvent.TOUCH_UP, tostats_up, false, 0, true);*/
 		}
 
 		private function reset_animate(e:Event):void {

@@ -863,10 +863,10 @@
 			}
 
 			//COMING SOON TEMP
-			if(bubble_comingsoon.alpha == 1) {
+			/*if(bubble_comingsoon.alpha == 1) {
 				Tweener.addTween(bubble_comingsoon, { alpha: 0, time: 1 } );
 				Tweener.addTween(bubble_comingsoon, { scaleX: 0.8, scaleY: 0.8, time: 1 } );
-			}
+			}*/
 		}
 		
 		public function showInstructions():void {
@@ -1033,15 +1033,15 @@
 
 			if (email == '') { //if no e-mail entered yet
 				//COMING SOON TEMP
-				bubble_comingsoon.x = 719.7;
+				/*bubble_comingsoon.x = 719.7;
 				bubble_comingsoon.y = 436.85;
 				Tweener.addTween(bubble_comingsoon, { alpha: 1, time: 1 } );
 				Tweener.addTween(bubble_comingsoon, { scaleX: 1, scaleY: 1, time: 1, transition: "easeOutElastic" } );
 
 				Tweener.addTween(bubble_comingsoon, { alpha: 0, time: 1, delay: 4 } );
-				Tweener.addTween(bubble_comingsoon, { scaleX: 0.8, scaleY: 0.8, time: 1, delay: 4 } );
+				Tweener.addTween(bubble_comingsoon, { scaleX: 0.8, scaleY: 0.8, time: 1, delay: 4 } );*/
 
-				/*
+				
 				shadeOn();
 				addChild(cont_exitEmail); //put exit_email above shade
 				addChild(window_email); //put window_email above shade
@@ -1065,7 +1065,7 @@
 				//timedBlocker(1.5);
 				blockerOn();
 				Tweener.addTween(cont_blocker_fullscreen, { y: cont_blocker_fullscreen.y + 300, time: 1 } );
-				Tweener.addTween(cont_blocker_fullscreen, { delay: 1.5, onComplete: blockerOff } );*/
+				Tweener.addTween(cont_blocker_fullscreen, { delay: 1.5, onComplete: blockerOff } );
 			} else if (!photoSent) { //e-mail already entered
 				/* code for sending e-mail */
 				if(!package_created) {
@@ -1589,7 +1589,7 @@
 
 		private function es_email_up(e:TouchEvent):void {
 			//COMING SOON TEMP
-			addChild(bubble_comingsoon);
+			/*addChild(bubble_comingsoon);
 			bubble_comingsoon.x = 150;
 			bubble_comingsoon.y = 150;
 
@@ -1602,13 +1602,13 @@
 			cont_es_continue.addEventListener(TouchEvent.TOUCH_DOWN, es_continue_dwn, false, 0, true);
 			cont_es_continue.addEventListener(TouchEvent.TOUCH_UP, es_continue_up, false, 0, true);
 			cont_es_esskip.addEventListener(TouchEvent.TOUCH_DOWN, es_esskip_dwn, false, 0, true);
-			cont_es_esskip.addEventListener(TouchEvent.TOUCH_UP, es_esskip_up, false, 0, true);
+			cont_es_esskip.addEventListener(TouchEvent.TOUCH_UP, es_esskip_up, false, 0, true);*/
 			
-			/*var target_height:int = window_endsession.window_modal.height + EXPAND_HEIGHT;
+			var target_height:int = window_endsession.window_modal.height + EXPAND_HEIGHT;
 			var target_ypos:int = window_endsession.window_modal.y - (target_height - window_endsession.window_modal.height)/2;
 			
 			addChild(cont_es_exitKeyboard);
-			window_endsession.txt_email.text = '';*/
+			window_endsession.txt_email.text = '';
 
 			/*trace("modal height: " + window_endsession.window_modal.height);
 			trace("modal y: " + window_endsession.window_modal.y);
@@ -1618,7 +1618,7 @@
 			trace("email text y: " + window_endsession.txt_email.y);
 			trace("invalid text y: " + window_endsession.txt_invalid.y);*/
 
-			/*//shift things up to make room for keyboard
+			//shift things up to make room for keyboard
 			Tweener.addTween(window_endsession.window_modal, { height: target_height, y: target_ypos, time: 1});
 			Tweener.addTween(window_endsession.window_emailbg, { y: window_endsession.window_emailbg.y - EXPAND_HEIGHT, time: 1});
 			Tweener.addTween(window_endsession.txt_endsession, { y: window_endsession.txt_endsession.y - EXPAND_HEIGHT, time: 1});
@@ -1651,7 +1651,7 @@
 			cont_es_esskip.addEventListener(TouchEvent.TOUCH_UP, es_esskip_up, false, 0, true);
 
 			blockerOn();
-			Tweener.addTween(cont_blocker_fullscreen, { delay: 1.5, onComplete: blockerOff } );*/
+			Tweener.addTween(cont_blocker_fullscreen, { delay: 1.5, onComplete: blockerOff } );
 		}
 
 		private function es_exitKeyboard_up(e:TouchEvent):void {
