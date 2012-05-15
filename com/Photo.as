@@ -125,7 +125,7 @@
 			//blocker
 			cont_blocker_fullscreen = new TouchSprite();
 			
-			photo.addEventListener(TouchEvent.TOUCH_DOWN, touch_dwn, false, 0, true);
+			addEventListener(TouchEvent.TOUCH_DOWN, touch_dwn, false, 0, true);
 			photo.addEventListener(TouchEvent.TOUCH_UP, touchHandler, false, 0, true);
 		}
 		
@@ -240,7 +240,7 @@
 		}
 		
 		public function blackOff():void {
-			Tweener.addTween(cont_black, { alpha: 0, time: 1, delay : .5, onComplete: function() { 
+			Tweener.addTween(cont_black, { alpha: 0, time: .5, delay : .5, onComplete: function() { 
 							 if(contains(cont_black)){
 							 	removeChild(cont_black);
 							 }
@@ -248,12 +248,13 @@
 		}
 		
 		public function blockerOn():void {
+			removeEventListener(TouchEvent.TOUCH_DOWN, touch_dwn);
 			photo.removeEventListener(TouchEvent.TOUCH_UP, touchHandler);
 		}
 		
 		public function blockerOff():void {
+			addEventListener(TouchEvent.TOUCH_DOWN, touch_dwn);
 			photo.addEventListener(TouchEvent.TOUCH_UP, touchHandler, false, 0, true);
-
 		}
 		
 		private function touch_dwn(e:TouchEvent):void{
@@ -287,7 +288,7 @@
 			Tweener.addTween(photo, {x: savedX, y: savedY, scaleX: savedScale, scaleY: savedScale, time: 1.5})
 			blackOff();
 			blockerOn();
-			Tweener.addTween(cont_blocker_fullscreen, { delay: .5, onComplete: function() { 
+			Tweener.addTween(cont_blocker_fullscreen, { delay: 1, onComplete: function() { 
 				blockerOff();
 				dispatchEvent(new Event("activate_exitphoto", true));
 			}});

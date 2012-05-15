@@ -2268,6 +2268,8 @@
 			cont_star4.removeEventListener(TouchEvent.TOUCH_DOWN, star4_dwn);
 			cont_star4.removeEventListener(TouchEvent.TOUCH_UP, star4_up);
 			dispatchEvent(new Event("deactivateLang", true));
+
+			trace("deactivate");
 		}
 
 		private function activate_exitphoto(e:Event):void {
@@ -2286,6 +2288,8 @@
 			cont_star4.addEventListener(TouchEvent.TOUCH_DOWN, star4_dwn, false, 0, true);
 			cont_star4.addEventListener(TouchEvent.TOUCH_UP, star4_up, false, 0, true);
 			dispatchEvent(new Event("activateLang", true));
+
+			trace("activate");
 		}
 		
 		private function setMetadata(iTitle, iArtist, iBio, iDate, iProcess, iCredit, iCopyright):void{
