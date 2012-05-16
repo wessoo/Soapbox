@@ -194,17 +194,17 @@
 
 				//HOME
 				//english off
-				Tweener.addTween(landing_text.txt_header_eng, {alpha: 0, time: 0.5});
-				Tweener.addTween(landing_text.txt_landing_eng, {alpha: 0, time: 0.5});
-				Tweener.addTween(button_torating.button_name_eng, {alpha: 0, time: 0.5});
-				Tweener.addTween(button_tostats.btxt_view_eng, {alpha: 0, time: 0.5});
-				Tweener.addTween(button_tostats.btxt_home_eng, {alpha: 0, time: 0.5});
+				Tweener.addTween(landing_text.txt_header_eng, {alpha: 0, time: 1});
+				Tweener.addTween(landing_text.txt_landing_eng, {alpha: 0, time: 1});
+				Tweener.addTween(button_torating.button_name_eng, {alpha: 0, time: 1});
+				Tweener.addTween(button_tostats.btxt_view_eng, {alpha: 0, time: 1});
+				Tweener.addTween(button_tostats.btxt_home_eng, {alpha: 0, time: 1});
 				//spanish on
-				Tweener.addTween(landing_text.txt_header_esp, {alpha: 1, time: 0.5});
-				Tweener.addTween(landing_text.txt_landing_esp, {alpha: 1, time: 0.5});
-				Tweener.addTween(button_torating.button_name_esp, {alpha: 1, time: 0.5});
-				Tweener.addTween(button_tostats.btxt_view_esp, {alpha: 1, time: 0.5});
-				Tweener.addTween(button_tostats.btxt_home_esp, {alpha: 1, time: 0.5});
+				Tweener.addTween(landing_text.txt_header_esp, {alpha: 1, time: 1});
+				Tweener.addTween(landing_text.txt_landing_esp, {alpha: 1, time: 1});
+				Tweener.addTween(button_torating.button_name_esp, {alpha: 1, time: 1});
+				Tweener.addTween(button_tostats.btxt_view_esp, {alpha: 1, time: 1});
+				Tweener.addTween(button_tostats.btxt_home_esp, {alpha: 1, time: 1});
 				//RANKING
 				ranking.changeLang(1);
 				//RATING
@@ -215,17 +215,17 @@
 
 				//HOME
 				//english on
-				Tweener.addTween(landing_text.txt_header_eng, {alpha: 1, time: 0.5});
-				Tweener.addTween(landing_text.txt_landing_eng, {alpha: 1, time: 0.5});
-				Tweener.addTween(button_torating.button_name_eng, {alpha: 1, time: 0.5});
-				Tweener.addTween(button_tostats.btxt_view_eng, {alpha: 1, time: 0.5});
-				Tweener.addTween(button_tostats.btxt_home_eng, {alpha: 1, time: 0.5});
+				Tweener.addTween(landing_text.txt_header_eng, {alpha: 1, time: 1});
+				Tweener.addTween(landing_text.txt_landing_eng, {alpha: 1, time: 1});
+				Tweener.addTween(button_torating.button_name_eng, {alpha: 1, time: 1});
+				Tweener.addTween(button_tostats.btxt_view_eng, {alpha: 1, time: 1});
+				Tweener.addTween(button_tostats.btxt_home_eng, {alpha: 1, time: 1});
 				//spanish off
-				Tweener.addTween(landing_text.txt_header_esp, {alpha: 0, time: 0.5});
-				Tweener.addTween(landing_text.txt_landing_esp, {alpha: 0, time: 0.5});
-				Tweener.addTween(button_torating.button_name_esp, {alpha: 0, time: 0.5});
-				Tweener.addTween(button_tostats.btxt_view_esp, {alpha: 0, time: 0.5});
-				Tweener.addTween(button_tostats.btxt_home_esp, {alpha: 0, time: 0.5});
+				Tweener.addTween(landing_text.txt_header_esp, {alpha: 0, time: 1});
+				Tweener.addTween(landing_text.txt_landing_esp, {alpha: 0, time: 1});
+				Tweener.addTween(button_torating.button_name_esp, {alpha: 0, time: 1});
+				Tweener.addTween(button_tostats.btxt_view_esp, {alpha: 0, time: 1});
+				Tweener.addTween(button_tostats.btxt_home_esp, {alpha: 0, time: 1});
 				//RANKING
 				ranking.changeLang(0);
 				//RATING
