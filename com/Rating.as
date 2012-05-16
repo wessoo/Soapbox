@@ -136,13 +136,6 @@
 			variables = new URLVariables();
 			loader = new URLLoader();
 
-			//Language presets
-			btxt_help_esp.alpha = 0;
-			txt_nextbadge_esp.alpha = txt_togo_esp.alpha = txt_badgesearned_esp.alpha = txt_low_esp.alpha = txt_high_esp.alpha = txt_enterrating_esp.alpha = txt_aboutsb_esp.alpha = 0;
-			button_endsession.btxt_es_esp.alpha = button_toscreen.btxt_screen_esp.alpha = button_email.text_emailimage_esp.alpha = button_email.text_emailimageto_esp.alpha = 0;
-			window_about.txt_body_esp.alpha = 0;
-			//End language presets
-
 			//initialize vars 
 			images = new Array();
 			ratings = new Array();
@@ -469,6 +462,15 @@
 			addChildAt(dummyPhoto, getChildIndex(photo) + 1);
 			
 			setMetadata(photo.title, photo.artist, photo.bio, photo.date, photo.process, photo.credit, photo.copyright);
+
+			//Language presets
+			btxt_help_esp.alpha = 0;
+			txt_nextbadge_esp.alpha = txt_togo_esp.alpha = txt_badgesearned_esp.alpha = txt_low_esp.alpha = txt_high_esp.alpha = txt_enterrating_esp.alpha = txt_aboutsb_esp.alpha = 0;
+			button_endsession.btxt_es_esp.alpha = button_toscreen.btxt_screen_esp.alpha = button_email.text_emailimage_esp.alpha = button_email.text_emailimageto_esp.alpha = 0;
+			window_about.txt_body_esp.alpha = 0;
+			bubble_emailinstruct.txt_body_esp.alpha = 0;
+			instructions.txt_instructions_esp.alpha = 0;
+			//End language presets
 			
 		}
 		
@@ -579,6 +581,8 @@
 				Tweener.addTween(button_email.text_emailimage, {alpha: 0, time: 0.5});
 				Tweener.addTween(button_email.text_emailimageto, {alpha: 0, time: 0.5});
 				Tweener.addTween(window_about.txt_body, {alpha: 0, time: 0.5});
+				bubble_emailinstruct.txt_body.alpha = 0;
+				instructions.txt_instructions.alpha = 0;
 				//spanish on
 				Tweener.addTween(btxt_help_esp, {alpha: 1, time: 0.5});
 				Tweener.addTween(txt_nextbadge_esp, {alpha: 1, time: 0.5});
@@ -591,8 +595,10 @@
 				Tweener.addTween(button_endsession.btxt_es_esp, {alpha: 1, time: 0.5});
 				Tweener.addTween(button_toscreen.btxt_screen_esp, {alpha: 1, time: 0.5});
 				Tweener.addTween(window_about.txt_body_esp, {alpha: 1, time: 0.5});
+				bubble_emailinstruct.txt_body_esp.alpha = 1;
 				if(email == '') { Tweener.addTween(button_email.text_emailimage_esp, {alpha: 1, time: 0.5}); } 
 				else { Tweener.addTween(button_email.text_emailimageto_esp, {alpha: 1, time: 0.5}); }
+				instructions.txt_instructions_esp.alpha = 1;
 			} else { //to English
 				//english on
 				Tweener.addTween(btxt_help, {alpha: 1, time: 0.5});
@@ -606,8 +612,10 @@
 				Tweener.addTween(button_endsession.btxt_es, {alpha: 1, time: 0.5});
 				Tweener.addTween(button_toscreen.btxt_screen, {alpha: 1, time: 0.5});
 				Tweener.addTween(window_about.txt_body, {alpha: 1, time: 0.5});
+				bubble_emailinstruct.txt_body.alpha = 1;
 				if(email == '') { Tweener.addTween(button_email.text_emailimage, {alpha: 1, time: 0.5}); } 
 				else { Tweener.addTween(button_email.text_emailimageto, {alpha: 1, time: 0.5}); }
+				instructions.txt_instructions.alpha = 1;
 				//spanish off
 				Tweener.addTween(btxt_help_esp, {alpha: 0, time: 0.5});
 				Tweener.addTween(txt_nextbadge_esp, {alpha: 0, time: 0.5});
@@ -622,6 +630,8 @@
 				Tweener.addTween(button_email.text_emailimage_esp, {alpha: 0, time: 0.5});
 				Tweener.addTween(button_email.text_emailimageto_esp, {alpha: 0, time: 0.5});
 				Tweener.addTween(window_about.txt_body_esp, {alpha: 0, time: 0.5});
+				bubble_emailinstruct.txt_body_esp.alpha = 0;
+				instructions.txt_instructions_esp.alpha = 0;
 			}
 		}
 		
