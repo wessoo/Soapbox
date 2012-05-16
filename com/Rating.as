@@ -742,6 +742,7 @@
 			cont_gotbadge_modal.addChild(cont_continue);
 			window_gotbadge.window_modal.height = 692.9;
 			window_gotbadge.window_modal.y = 70;
+			window_gotbadge.txt_continuerating.visible = true;
 
 			//badges
 			txt_10.alpha = txt_25.alpha = txt_45.alpha = txt_70.alpha = txt_95.alpha = txt_120.alpha = 0;
@@ -1256,8 +1257,13 @@
 		
 		private function removeemail_up(e:TouchEvent):void {
 			button_removeemail.gotoAndStop("up");
-			Tweener.addTween(button_email.text_emailimage, { alpha: 1, time: 1 } );
-			Tweener.addTween(button_email.text_emailimageto, { alpha: 0, time: 1 } );
+			if(language == 0) {
+				Tweener.addTween(button_email.text_emailimage, { alpha: 1, time: 1 } );
+				Tweener.addTween(button_email.text_emailimageto, { alpha: 0, time: 1 } );
+			} else {
+				Tweener.addTween(button_email.text_emailimage_esp, { alpha: 1, time: 1 } );
+				Tweener.addTween(button_email.text_emailimageto_esp, { alpha: 0, time: 1 } );
+			}
 			Tweener.addTween(button_removeemail, { alpha: 0, time: 1 } );
 			//Tweener.addTween(button_removeemail, { height: button_removeemail.height - 20, width: button_removeemail.width - 20, time: 1 } );
 			Tweener.addTween(button_removeemail, { scaleX: 0.8, scaleY: 0.8, time: 1 } );
@@ -1313,10 +1319,10 @@
 			} });
 
 			if(currentBadge == 1) {
-				Tweener.addTween(badge_1.color, { alpha: 1, time: 1, delay: 1.5 });
-				Tweener.addTween(badge1_glow, { delay: 1, onComplete: function() { badge1_glow.gotoAndPlay("play"); } } );
-				Tweener.addTween(badge_2.grey, { alpha: 1, time: 2, delay: 1.5 });
-				Tweener.addTween(txt_10, { alpha: 1, time: 1, delay: 1.5 });
+				Tweener.addTween(badge_1.color, { alpha: 1, time: 1, delay: 2 });
+				Tweener.addTween(badge1_glow, { delay: 2, onComplete: function() { badge1_glow.gotoAndPlay("play"); } } );
+				Tweener.addTween(badge_2.grey, { alpha: 1, time: 2, delay: 2.5 });
+				Tweener.addTween(txt_10, { alpha: 1, time: 1, delay: 2 });
 				Tweener.addTween(cont_video1, {alpha: 0, time: 1, onComplete: function() { removeChild(cont_video1); }});
 				if(video1.video.playing) {
 					Tweener.addTween(video1.graphic_videoblack, {alpha: 1, time: 1});
@@ -1324,10 +1330,10 @@
 					video1.video.stop();
 				}
 			} else if(currentBadge == 2) {
-				Tweener.addTween(badge_2.color, { alpha: 1, time: 1, delay: 1.5});
-				Tweener.addTween(badge2_glow, { delay: 1, onComplete: function() { badge2_glow.gotoAndPlay("play"); } } );
-				Tweener.addTween(badge_3.grey, { alpha: 1, time: 2, delay: 1.5 });
-				Tweener.addTween(txt_25, { alpha: 1, time: 1, delay: 1.5 });
+				Tweener.addTween(badge_2.color, { alpha: 1, time: 1, delay: 2});
+				Tweener.addTween(badge2_glow, { delay: 2, onComplete: function() { badge2_glow.gotoAndPlay("play"); } } );
+				Tweener.addTween(badge_3.grey, { alpha: 1, time: 2, delay: 2.5 });
+				Tweener.addTween(txt_25, { alpha: 1, time: 1, delay: 2 });
 				Tweener.addTween(cont_video2, {alpha: 0, time: 1, onComplete: function() { removeChild(cont_video2); }});
 				if(video2.video.playing) {
 					Tweener.addTween(video2.graphic_videoblack, {alpha: 1, time: 1});
@@ -1335,10 +1341,10 @@
 					video2.video.stop();
 				}
 			} else if(currentBadge == 3) {
-				Tweener.addTween(badge_3.color, { alpha: 1, time: 1, delay: 1.5});
-				Tweener.addTween(badge3_glow, { delay: 1, onComplete: function() { badge3_glow.gotoAndPlay("play"); } } );
-				Tweener.addTween(badge_4.grey, { alpha: 1, time: 2, delay: 1.5 });
-				Tweener.addTween(txt_45, { alpha: 1, time: 1, delay: 1.5 });
+				Tweener.addTween(badge_3.color, { alpha: 1, time: 1, delay: 2});
+				Tweener.addTween(badge3_glow, { delay: 2, onComplete: function() { badge3_glow.gotoAndPlay("play"); } } );
+				Tweener.addTween(badge_4.grey, { alpha: 1, time: 2, delay: 2.5 });
+				Tweener.addTween(txt_45, { alpha: 1, time: 1, delay: 2 });
 				Tweener.addTween(cont_video3, {alpha: 0, time: 1, onComplete: function() { removeChild(cont_video3); }});
 				if(video3.video.playing) {
 					Tweener.addTween(video3.graphic_videoblack, {alpha: 1, time: 1});
@@ -1346,10 +1352,10 @@
 					video3.video.stop();
 				}
 			} else if(currentBadge == 4) {
-				Tweener.addTween(badge_4.color, { alpha: 1, time: 1, delay: 1.5});
-				Tweener.addTween(badge4_glow, { delay: 1, onComplete: function() { badge4_glow.gotoAndPlay("play"); } } );
-				Tweener.addTween(badge_5.grey, { alpha: 1, time: 2, delay: 1.5 });
-				Tweener.addTween(txt_70, { alpha: 1, time: 1, delay: 1.5 });
+				Tweener.addTween(badge_4.color, { alpha: 1, time: 1, delay: 2});
+				Tweener.addTween(badge4_glow, { delay: 2, onComplete: function() { badge4_glow.gotoAndPlay("play"); } } );
+				Tweener.addTween(badge_5.grey, { alpha: 1, time: 2, delay: 2.5 });
+				Tweener.addTween(txt_70, { alpha: 1, time: 1, delay: 2 });
 				Tweener.addTween(cont_video4, {alpha: 0, time: 1, onComplete: function() { removeChild(cont_video4); }});
 				if(video4.video.playing) {
 					Tweener.addTween(video4.graphic_videoblack, {alpha: 1, time: 1});
@@ -1357,9 +1363,9 @@
 					video4.video.stop();
 				}
 			} else if(currentBadge == 5) {
-				Tweener.addTween(badge_5.color, { alpha: 1, time: 1, delay: 1.5});
-				Tweener.addTween(badge5_glow, { delay: 1, onComplete: function() { badge5_glow.gotoAndPlay("play"); } } );
-				Tweener.addTween(txt_95, { alpha: 1, time: 1, delay: 1.5 });
+				Tweener.addTween(badge_5.color, { alpha: 1, time: 1, delay: 2});
+				Tweener.addTween(badge5_glow, { delay: 2, onComplete: function() { badge5_glow.gotoAndPlay("play"); } } );
+				Tweener.addTween(txt_95, { alpha: 1, time: 1, delay: 2 });
 				Tweener.addTween(cont_video5, {alpha: 0, time: 1, onComplete: function() { removeChild(cont_video5); }});
 				if(video5.video.playing) {
 					Tweener.addTween(video5.graphic_videoblack, {alpha: 1, time: 1});
@@ -1367,7 +1373,7 @@
 					video5.video.stop();
 				}
 			} /*else if(currentBadge == 6) {
-				Tweener.addTween(badge_2.color, { alpha: 1, time: 1, delay: 1.5});
+				Tweener.addTween(badge_2.color, { alpha: 1, time: 1, delay: 2});
 				Tweener.addTween(badge2_glow, { delay: 1, onComplete: function() { badge2_glow.gotoAndPlay("play"); } } );
 			}*/
 
@@ -2594,22 +2600,52 @@
 				window_gotbadge.graphic_prompt.gotoAndStop("badge1");
 				addChild(cont_video1);
 				Tweener.addTween(cont_video1, {alpha: 1, time: 1, delay: 0.5});
+				Tweener.addTween(cont_video1, {delay: 1.5, onComplete: function() { 
+					video1.video.play();
+					Tweener.addTween(video1.graphic_play, {alpha: 0, time: 1});
+					Tweener.addTween(video1.graphic_videoblack, {alpha: 0, time: 1});
+					dispatchEvent(new Event("suspend_timeout", true));
+				}});
 			} else if(currentBadge == 2) {
 				window_gotbadge.graphic_prompt.gotoAndStop("badge2");
 				addChild(cont_video2);
 				Tweener.addTween(cont_video2, {alpha: 1, time: 1, delay: 0.5});
+				Tweener.addTween(cont_video2, {delay: 1.5, onComplete: function() { 
+					video2.video.play();
+					Tweener.addTween(video2.graphic_play, {alpha: 0, time: 1});
+					Tweener.addTween(video2.graphic_videoblack, {alpha: 0, time: 1});
+					dispatchEvent(new Event("suspend_timeout", true));
+				}});
 			} else if(currentBadge == 3) {
 				window_gotbadge.graphic_prompt.gotoAndStop("badge3");
 				addChild(cont_video3);
 				Tweener.addTween(cont_video3, {alpha: 1, time: 1, delay: 0.5});
+				Tweener.addTween(cont_video3, {delay: 1.5, onComplete: function() { 
+					video3.video.play();
+					Tweener.addTween(video3.graphic_play, {alpha: 0, time: 1});
+					Tweener.addTween(video3.graphic_videoblack, {alpha: 0, time: 1});
+					dispatchEvent(new Event("suspend_timeout", true));
+				}});
 			} else if(currentBadge == 4) {
 				window_gotbadge.graphic_prompt.gotoAndStop("badge4");
 				addChild(cont_video4);
 				Tweener.addTween(cont_video4, {alpha: 1, time: 1, delay: 0.5});
+				Tweener.addTween(cont_video4, {delay: 1.5, onComplete: function() { 
+					video4.video.play();
+					Tweener.addTween(video4.graphic_play, {alpha: 0, time: 1});
+					Tweener.addTween(video4.graphic_videoblack, {alpha: 0, time: 1});
+					dispatchEvent(new Event("suspend_timeout", true));
+				}});
 			} else if(currentBadge == 5) {
 				window_gotbadge.graphic_prompt.gotoAndStop("badge5");
 				addChild(cont_video5);
 				Tweener.addTween(cont_video5, {alpha: 1, time: 1, delay: 0.5});
+				Tweener.addTween(cont_video5, {delay: 1.5, onComplete: function() { 
+					video5.video.play();
+					Tweener.addTween(video5.graphic_play, {alpha: 0, time: 1});
+					Tweener.addTween(video5.graphic_videoblack, {alpha: 0, time: 1});
+					dispatchEvent(new Event("suspend_timeout", true));
+				}});
 			} else if(currentBadge == 6) {
 				window_gotbadge.graphic_prompt.gotoAndStop("badge6");
 				

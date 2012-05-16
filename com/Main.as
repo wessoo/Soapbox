@@ -92,6 +92,7 @@
 			landing_text.txt_header_esp.alpha = landing_text.txt_landing_esp.alpha = 0;
 			button_torating.button_name_esp.alpha = 0;
 			button_tostats.btxt_view_esp.alpha = button_tostats.btxt_home_esp.alpha = 0;
+			txt_timeout.txt_tap_esp.alpha = txt_timeout.txt_timeout_esp.alpha = 0;
 			//End language presets
 
 			cont_tostats = new TouchSprite();
@@ -199,12 +200,14 @@
 				Tweener.addTween(button_torating.button_name_eng, {alpha: 0, time: 1});
 				Tweener.addTween(button_tostats.btxt_view_eng, {alpha: 0, time: 1});
 				Tweener.addTween(button_tostats.btxt_home_eng, {alpha: 0, time: 1});
+				txt_timeout.txt_tap.alpha = txt_timeout.txt_timeout.alpha = 0;
 				//spanish on
 				Tweener.addTween(landing_text.txt_header_esp, {alpha: 1, time: 1});
 				Tweener.addTween(landing_text.txt_landing_esp, {alpha: 1, time: 1});
 				Tweener.addTween(button_torating.button_name_esp, {alpha: 1, time: 1});
 				Tweener.addTween(button_tostats.btxt_view_esp, {alpha: 1, time: 1});
 				Tweener.addTween(button_tostats.btxt_home_esp, {alpha: 1, time: 1});
+				txt_timeout.txt_tap_esp.alpha = txt_timeout.txt_timeout_esp.alpha = 1;
 				//RANKING
 				ranking.changeLang(1);
 				//RATING
@@ -220,12 +223,14 @@
 				Tweener.addTween(button_torating.button_name_eng, {alpha: 1, time: 1});
 				Tweener.addTween(button_tostats.btxt_view_eng, {alpha: 1, time: 1});
 				Tweener.addTween(button_tostats.btxt_home_eng, {alpha: 1, time: 1});
+				txt_timeout.txt_tap.alpha = txt_timeout.txt_timeout.alpha = 1;
 				//spanish off
 				Tweener.addTween(landing_text.txt_header_esp, {alpha: 0, time: 1});
 				Tweener.addTween(landing_text.txt_landing_esp, {alpha: 0, time: 1});
 				Tweener.addTween(button_torating.button_name_esp, {alpha: 0, time: 1});
 				Tweener.addTween(button_tostats.btxt_view_esp, {alpha: 0, time: 1});
 				Tweener.addTween(button_tostats.btxt_home_esp, {alpha: 0, time: 1});
+				txt_timeout.txt_tap_esp.alpha = txt_timeout.txt_timeout_esp.alpha = 0;
 				//RANKING
 				ranking.changeLang(0);
 				//RATING
