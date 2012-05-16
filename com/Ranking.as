@@ -59,6 +59,9 @@
 			scrollS = new Shape();
 			cont_scroll = new TouchSprite();
 			dict = new Dictionary();
+
+			//Language presets
+			txt_top40.txt_header_esp.alpha = txt_top40.txt_body_esp.alpha = 0;
 			
 			setupDict();
 			getInitialRankings();
@@ -262,6 +265,24 @@
 				}
 				createUI();
 				updateUI();
+			}
+		}
+
+		public function changeLang(lang:int):void {
+			if(lang == 1) { //to Spanish
+				//english off
+				Tweener.addTween(txt_top40.txt_header, {alpha: 0, time: 0.5});
+				Tweener.addTween(txt_top40.txt_body, {alpha: 0, time: 0.5});
+				//spanish on
+				Tweener.addTween(txt_top40.txt_header_esp, {alpha: 1, time: 0.5});
+				Tweener.addTween(txt_top40.txt_body_esp, {alpha: 1, time: 0.5});
+			} else { //to English
+				//english on
+				Tweener.addTween(txt_top40.txt_header, {alpha: 1, time: 0.5});
+				Tweener.addTween(txt_top40.txt_body, {alpha: 1, time: 0.5});
+				//spanish off
+				Tweener.addTween(txt_top40.txt_header_esp, {alpha: 0, time: 0.5});
+				Tweener.addTween(txt_top40.txt_body_esp, {alpha: 0, time: 0.5});
 			}
 		}
 

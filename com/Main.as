@@ -3,6 +3,7 @@
 	import flash.events.TimerEvent;
 	import flash.utils.Dictionary;
 	import flash.net.URLRequest;
+	import flash.net.URLLoader;
 	import flash.display.StageScaleMode;
 	import flash.display.StageAlign;
 	import flash.display.StageDisplayState;
@@ -24,7 +25,8 @@
 		private var timeout:Timer; //timer for idle
 		private var timeoutWarn:Timer; //timer for notifying time out
 		private var countdown:Timer;
-		
+		private var soapbox_xml:XML;
+		private var myLoader:URLLoader;
 		public static var parserLoaded = false;  //Tells you whether the metadata is available or not.
 		public static var language:int = 0; //language mode. 0: English, 1: Spanish
 		public static var rating:Rating;
@@ -70,7 +72,6 @@
 			stage.scaleMode = StageScaleMode.SHOW_ALL;
 			stage.displayState = StageDisplayState.FULL_SCREEN;
 
-
 			timeout = new Timer(46000, 1); //NOTE: Set to 21 seconds for testing
 			timeoutWarn = new Timer(35000, 1);
 			countdown = new Timer(1000, 10);
@@ -80,6 +81,18 @@
 			timeout.addEventListener(TimerEvent.TIMER, timeout_reset);
 			timeoutWarn.addEventListener(TimerEvent.TIMER, startCountdown);
 			countdown.addEventListener(TimerEvent.TIMER, count_down);
+
+			//Reading interface text from XML
+			myLoader = new URLLoader();
+			myLoader.load(new URLRequest("soapbox_interfacetext.xml"));
+			myLoader.addEventListener(Event.COMPLETE, processXML);
+			//End interface text from XML
+
+			//Language presets
+			landing_text.txt_header_esp.alpha = landing_text.txt_landing_esp.alpha = 0;
+			button_torating.button_name_esp.alpha = 0;
+			button_tostats.btxt_view_esp.alpha = button_tostats.btxt_home_esp.alpha = 0;
+			//End language presets
 
 			cont_tostats = new TouchSprite();
 			cont_torating = new TouchSprite();
@@ -172,17 +185,67 @@
 		}
 		
 		public function changeLang():void {
-			if (language == 0) {
+			if (language == 0) { //to Spanish
 				language = 1;
-			} else {
+
+				landing_text.txt_header_esp.alpha = landing_text.txt_landing_esp.alpha = 0;
+				button_torating.button_name_esp.alpha = 0;
+				button_tostats.btxt_view_esp.alpha = button_tostats.btxt_home_esp.alpha = 0;
+
+				//HOME
+				//english off
+				Tweener.addTween(landing_text.txt_header_eng, {alpha: 0, time: 0.5});
+				Tweener.addTween(landing_text.txt_landing_eng, {alpha: 0, time: 0.5});
+				Tweener.addTween(button_torating.button_name_eng, {alpha: 0, time: 0.5});
+				Tweener.addTween(button_tostats.btxt_view_eng, {alpha: 0, time: 0.5});
+				Tweener.addTween(button_tostats.btxt_home_eng, {alpha: 0, time: 0.5});
+				//spanish on
+				Tweener.addTween(landing_text.txt_header_esp, {alpha: 1, time: 0.5});
+				Tweener.addTween(landing_text.txt_landing_esp, {alpha: 1, time: 0.5});
+				Tweener.addTween(button_torating.button_name_esp, {alpha: 1, time: 0.5});
+				Tweener.addTween(button_tostats.btxt_view_esp, {alpha: 1, time: 0.5});
+				Tweener.addTween(button_tostats.btxt_home_esp, {alpha: 1, time: 0.5});
+				//RANKING
+				ranking.changeLang(1);
+				//RATING
+				rating.changeLang(1);
+
+			} else { //to English
 				language = 0;
+
+				//HOME
+				//english on
+				Tweener.addTween(landing_text.txt_header_eng, {alpha: 1, time: 0.5});
+				Tweener.addTween(landing_text.txt_landing_eng, {alpha: 1, time: 0.5});
+				Tweener.addTween(button_torating.button_name_eng, {alpha: 1, time: 0.5});
+				Tweener.addTween(button_tostats.btxt_view_eng, {alpha: 1, time: 0.5});
+				Tweener.addTween(button_tostats.btxt_home_eng, {alpha: 1, time: 0.5});
+				//spanish off
+				Tweener.addTween(landing_text.txt_header_esp, {alpha: 0, time: 0.5});
+				Tweener.addTween(landing_text.txt_landing_esp, {alpha: 0, time: 0.5});
+				Tweener.addTween(button_torating.button_name_esp, {alpha: 0, time: 0.5});
+				Tweener.addTween(button_tostats.btxt_view_esp, {alpha: 0, time: 0.5});
+				Tweener.addTween(button_tostats.btxt_home_esp, {alpha: 0, time: 0.5});
+				//RANKING
+				ranking.changeLang(0);
+				//RATING
+				rating.changeLang(0);
 			}
 		}
 
 		private function bold(input:String):String{
 			return "<B>" + input + "</B>";
 		}
-		
+
+		private function processXML(e:Event):void {
+			soapbox_xml = new XML(e.target.data);
+			//trace(soapbox_xml);
+			//trace(soapbox_xml.english);
+			//trace(soapbox_xml.other);
+			//trace(soapbox_xml.Content.English.landingbody);
+			//dummy.htmlText = bold(soapbox_xml.Content.English.landingbody);
+		}
+
 		/* -------------------------------------------- */
 		/* ------ Interface/Animation Functions ------- */
 		/* -------------------------------------------- */

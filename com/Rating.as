@@ -136,6 +136,13 @@
 			variables = new URLVariables();
 			loader = new URLLoader();
 
+			//Language presets
+			btxt_help_esp.alpha = 0;
+			txt_nextbadge_esp.alpha = txt_togo_esp.alpha = txt_badgesearned_esp.alpha = txt_low_esp.alpha = txt_high_esp.alpha = txt_enterrating_esp.alpha = txt_aboutsb_esp.alpha = 0;
+			button_endsession.btxt_es_esp.alpha = button_toscreen.btxt_screen_esp.alpha = button_email.text_emailimage_esp.alpha = button_email.text_emailimageto_esp.alpha = 0;
+			window_about.txt_body_esp.alpha = 0;
+			//End language presets
+
 			//initialize vars 
 			images = new Array();
 			ratings = new Array();
@@ -555,6 +562,68 @@
 			
 			var uL:URLLoader = new URLLoader(uR);
 		}
+
+		public function changeLang(lang:int):void {
+			if(lang == 1) { //to Spanish
+				//english off
+				Tweener.addTween(btxt_help, {alpha: 0, time: 0.5});
+				Tweener.addTween(txt_nextbadge, {alpha: 0, time: 0.5});
+				Tweener.addTween(txt_togo, {alpha: 0, time: 0.5});
+				Tweener.addTween(txt_badgesearned, {alpha: 0, time: 0.5});
+				Tweener.addTween(txt_low, {alpha: 0, time: 0.5});
+				Tweener.addTween(txt_high, {alpha: 0, time: 0.5});
+				Tweener.addTween(txt_enterrating, {alpha: 0, time: 0.5});
+				Tweener.addTween(txt_aboutsb, {alpha: 0, time: 0.5});
+				Tweener.addTween(button_endsession.btxt_es, {alpha: 0, time: 0.5});
+				Tweener.addTween(button_toscreen.btxt_screen, {alpha: 0, time: 0.5});
+				Tweener.addTween(button_email.text_emailimage, {alpha: 0, time: 0.5});
+				Tweener.addTween(button_email.text_emailimageto, {alpha: 0, time: 0.5});
+				Tweener.addTween(window_about.txt_body, {alpha: 0, time: 0.5});
+				//spanish on
+				Tweener.addTween(btxt_help_esp, {alpha: 1, time: 0.5});
+				Tweener.addTween(txt_nextbadge_esp, {alpha: 1, time: 0.5});
+				Tweener.addTween(txt_togo_esp, {alpha: 1, time: 0.5});
+				Tweener.addTween(txt_badgesearned_esp, {alpha: 1, time: 0.5});
+				Tweener.addTween(txt_low_esp, {alpha: 1, time: 0.5});
+				Tweener.addTween(txt_high_esp, {alpha: 1, time: 0.5});
+				Tweener.addTween(txt_enterrating_esp, {alpha: 1, time: 0.5});
+				Tweener.addTween(txt_aboutsb_esp, {alpha: 1, time: 0.5});
+				Tweener.addTween(button_endsession.btxt_es_esp, {alpha: 1, time: 0.5});
+				Tweener.addTween(button_toscreen.btxt_screen_esp, {alpha: 1, time: 0.5});
+				Tweener.addTween(window_about.txt_body_esp, {alpha: 1, time: 0.5});
+				if(email == '') { Tweener.addTween(button_email.text_emailimage_esp, {alpha: 1, time: 0.5}); } 
+				else { Tweener.addTween(button_email.text_emailimageto_esp, {alpha: 1, time: 0.5}); }
+			} else { //to English
+				//english on
+				Tweener.addTween(btxt_help, {alpha: 1, time: 0.5});
+				Tweener.addTween(txt_nextbadge, {alpha: 1, time: 0.5});
+				Tweener.addTween(txt_togo, {alpha: 1, time: 0.5});
+				Tweener.addTween(txt_badgesearned, {alpha: 1, time: 0.5});
+				Tweener.addTween(txt_low, {alpha: 1, time: 0.5});
+				Tweener.addTween(txt_high, {alpha: 1, time: 0.5});
+				Tweener.addTween(txt_enterrating, {alpha: 1, time: 0.5});
+				Tweener.addTween(txt_aboutsb, {alpha: 1, time: 0.5});
+				Tweener.addTween(button_endsession.btxt_es, {alpha: 1, time: 0.5});
+				Tweener.addTween(button_toscreen.btxt_screen, {alpha: 1, time: 0.5});
+				Tweener.addTween(window_about.txt_body, {alpha: 1, time: 0.5});
+				if(email == '') { Tweener.addTween(button_email.text_emailimage, {alpha: 1, time: 0.5}); } 
+				else { Tweener.addTween(button_email.text_emailimageto, {alpha: 1, time: 0.5}); }
+				//spanish off
+				Tweener.addTween(btxt_help_esp, {alpha: 0, time: 0.5});
+				Tweener.addTween(txt_nextbadge_esp, {alpha: 0, time: 0.5});
+				Tweener.addTween(txt_togo_esp, {alpha: 0, time: 0.5});
+				Tweener.addTween(txt_badgesearned_esp, {alpha: 0, time: 0.5});
+				Tweener.addTween(txt_low_esp, {alpha: 0, time: 0.5});
+				Tweener.addTween(txt_high_esp, {alpha: 0, time: 0.5});
+				Tweener.addTween(txt_enterrating_esp, {alpha: 0, time: 0.5});
+				Tweener.addTween(txt_aboutsb_esp, {alpha: 0, time: 0.5});
+				Tweener.addTween(button_endsession.btxt_es_esp, {alpha: 0, time: 0.5});
+				Tweener.addTween(button_toscreen.btxt_screen_esp, {alpha: 0, time: 0.5});
+				Tweener.addTween(button_email.text_emailimage_esp, {alpha: 0, time: 0.5});
+				Tweener.addTween(button_email.text_emailimageto_esp, {alpha: 0, time: 0.5});
+				Tweener.addTween(window_about.txt_body_esp, {alpha: 0, time: 0.5});
+			}
+		}
 		
 		//checks, based on the current location if you have gotten a badge or not
 		public function badgeCheck():Boolean{
@@ -592,14 +661,6 @@
 					return true;
 				default:
 					return false;
-			}
-		}
-		
-		public function changeLang():void {
-			if (Main.language == 0) {
-				
-			} else {
-				
 			}
 		}
 		
