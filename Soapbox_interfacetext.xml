@@ -5,49 +5,50 @@
 			<!-- HOME/LANDING -->
 			<!-- RANKING -->			
 			<!-- RATING -->
-			Thank You!
-			Please enter a full name.
-			Like this image? You can share this image with yourself or a friend. Enter an e-mail below.
-			Please enter a valid e-mail address.
-			End Session
-			Please include me on the MOPA newsletter mailing list.
-			Please enter valid e-mail
-			Continue Rating
-			End Session
-			without sending
-			Yes
-			Yes,
-			send badges
-			No
-			No,
-			don't send
-			Are you sure you would like to end your session?
-			You have earned badges! Would you like to send these badges? \n\n Send to:
-			You have earned badges! You can send the badges to an e-mail. \n\n Send to:
+			<thanks>Thank You!</thanks>
+			<invalidname>Please enter a full name.</invalidname>
+			<likeimage>Like this image? You can share this image with yourself or a friend. Enter an e-mail below.</likeimage>
+			<invalidemail>Please enter valid e-mail</invalidemail>
+			<enteremail>enter an e-mail</enteremail>
+			<es>Ending Session</es>
+			<mopamail>Please include me on the MOPA newsletter mailing list.</mopamail>
+			<continuer>Continue Rating</continuer>
+			<es2>End Session</es2>
+			<wosend>without sending</wosend>
+			<yes>Yes</yes>
+			<yescma>Yes,</yescma>
+			<sendbadges>send badges</sendbadges>
+			<no>No</no>
+			<nocma>No,</nocma>
+			<dontsend>don't send</dontsend>
+			<sure>Are you sure you would like to end your session?</sure>
+			<wouldsend>You have earned badges! Would you like to send these badges? &lt;br&gt;&lt;br&gt; Send to:</wouldsend>
+			<cansend>You have earned badges! You can send the badges to an e-mail. &lt;br&gt;&lt;br&gt; Send to:</cansend>
 		</English>
 		<Spanish>
 			<!-- HOME/LANDING -->
 			<!-- RANKING -->			
 			<!-- RATING -->
-			¡Gracias!
-			Por favor ingresa un nombre completo.
-			¿Te gusta esta imagen? Puedes enviártela a ti mismo o compartirla con un amigo. A correo electrónico.
-			Por favor introduce una dirección válida de correo electrónico.
-			"Fin de sesión
-			Por favor agréguenme a la lista de distribución \ndel boletín informativo de MOPA.
-			Por favor introduce una dirección válida de correo electrónico.
-			Continuar calificando
-			Terminar sesión
-			sin enviar
-			Sí
-			Sí,
-			envíenme las placas
-			No
-			No
-			me las envíen
-			¿Estás seguro que quieres terminar tu sesión?
-			¡Te has ganado unas placas! ¿Te gustaría enviarlas? \n\n Enviar a:
-			¡Te has ganado unas placas! Las puedes enviar por correo electrónico. \n\n Enviar a:
+			<thanks>¡Gracias!</thanks>
+			<invalidname>Por favor ingresa un nombre completo.</invalidname>
+			<likeimage>¿Te guest esta imagen? Para compartirla, introduce una dirección de correo electrónico.</likeimage>
+			<invalidemail>Por favor introduce una dirección válida de correo electrónico.</invalidemail>
+			<enteremail>Dirección de correo electrónico</enteremail>
+			<es>Fin de sesión</es>
+			<mopamail>Por favor agréguenme a la lista de distribución &lt;br&gt;del boletín informativo de MOPA.</mopamail>
+			<continuer>Continuar calificando</continuer>
+			<cont>Continuar</cont>
+			<es2>Terminar sesión</es2>
+			<wosend>sin enviar</wosend>
+			<yes>Sí</yes>
+			<yescma>Sí,</yescma>
+			<sendbadges>envíenme las placas</sendbadges>
+			<no>No</no>
+			<nocma>No</nocma>
+			<dontsend>me las envíen</dontsend>
+			<sure>¿Estás seguro que quieres terminar tu sesión?</sure>
+			<wouldsend>¡Te has ganado unas placas! ¿Te gustaría enviarlas? &lt;br&gt;&lt;br&gt; Enviar a:</wouldsend>
+			<cansend>¡Te has ganado unas placas! Las puedes enviar por correo electrónico. &lt;br&gt;&lt;br&gt; Enviar a:</cansend>
 		</Spanish>
 	</Content>
 </Soapbox>

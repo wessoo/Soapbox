@@ -10,6 +10,7 @@
 	import com.refunk.events.TimelineEvent;
     import com.refunk.timeline.TimelineWatcher;
     import fl.video.*;
+
 	
 	import gl.events.GestureEvent;
 	import gl.events.TouchEvent;
@@ -43,6 +44,8 @@
 		private var request:URLRequest;
 		private var variables:URLVariables;
 		private var loader:URLLoader;
+		private var soapbox_xml:XML;
+		private var myLoader:URLLoader;
 		private var now:Date; 			//used to differentiate requests of same time
 		private var language:int = 0;
 		private static var badge1:int = 10;		//The badges that can be attained
@@ -136,6 +139,12 @@
 			request = new URLRequest(SCREEN_URL);
 			variables = new URLVariables();
 			loader = new URLLoader();
+
+			//Reading interface text from XML
+			myLoader = new URLLoader();
+			myLoader.load(new URLRequest("soapbox_interfacetext.xml"));
+			myLoader.addEventListener(Event.COMPLETE, processXML);
+			//End interface text from XML
 
 			//initialize vars 
 			images = new Array();
@@ -550,6 +559,11 @@
 				return true;
 			}
 		}
+
+		private function processXML(e:Event):void {
+			soapbox_xml = new XML(e.target.data);
+			//trace(soapbox_xml.Content.English.thanks);
+		}
 		
 		private function sendToDatabase(ext:String, rating:int):void{
 			var uR:URLRequest = new URLRequest("http://localhost/soapbox.php");
@@ -585,7 +599,7 @@
 				Tweener.addTween(window_about.txt_body, {alpha: 0, time: 1});
 				bubble_emailinstruct.txt_body.alpha = 0;
 				instructions.txt_instructions.alpha = 0;
-				window_gotbadge.txt_continuerating.htmlText = bold("Continuar calificando");
+				window_gotbadge.txt_continuerating.htmlText = bold(soapbox_xml.Content.Spanish.continuer);
 				//spanish on
 				Tweener.addTween(btxt_help_esp, {alpha: 1, time: 1});
 				Tweener.addTween(txt_nextbadge_esp, {alpha: 1, time: 1});
@@ -604,24 +618,24 @@
 				instructions.txt_instructions_esp.alpha = 1;
 
 				//to Spanish
-				window_gotbadge.txt_thanks.htmlText = bold("¡Gracias!");
-				window_gotbadge.txt_invalid.htmlText = bold("Por favor ingresa un nombre completo.");
+				window_gotbadge.txt_thanks.htmlText = bold(soapbox_xml.Content.Spanish.thanks);
+				window_gotbadge.txt_invalid.htmlText = bold(soapbox_xml.Content.Spanish.invalidname);
 				window_email.txt_prompt.y = -144.65;
-				window_email.txt_prompt.htmlText = bold("¿Te gusta esta imagen? Puedes enviártela a ti mismo o compartirla con un amigo. A continuación, introduce una dirección de correo electrónico.");
-				window_email.text_invalidemail.htmlText = bold("Por favor introduce una dirección válida de correo electrónico.");
-				window_endsession.txt_endsession.htmlText = bold("Fin de sesión");
+				window_email.txt_prompt.htmlText = bold(soapbox_xml.Content.Spanish.likeimage);
+				window_email.text_invalidemail.htmlText = bold(soapbox_xml.Content.Spanish.invalidemail);
+				window_endsession.txt_endsession.htmlText = bold(soapbox_xml.Content.Spanish.es);
 				window_endsession.button_maillist.txt_prompt.y = -25.45;
-				window_endsession.button_maillist.txt_prompt.htmlText = bold("Por favor agréguenme a la lista de distribución \ndel boletín informativo de MOPA.");
-				window_endsession.txt_invalid.htmlText = bold("Por favor introduce una dirección válida de correo electrónico.");
-				window_endsession.txt_continue.htmlText = bold("Continuar calificando");
-				window_endsession.button_esskip.txt_es.htmlText = bold("Terminar sesión");
-				window_endsession.button_esskip.txt_wosending.htmlText = bold("sin enviar");
-				window_endsession.button_yes.txt_yes.htmlText = bold("Sí");
-				window_endsession.button_yes.txt_yeslong.txt_yes.htmlText = bold("Sí,");
-				window_endsession.button_yes.txt_yeslong.txt_sendbadges.htmlText = bold("envíenme las placas");
-				window_endsession.button_no.txt_no.htmlText = bold("No");
-				window_endsession.button_no.txt_nolong.txt_no.htmlText = bold("No");
-				window_endsession.button_no.txt_nolong.txt_dontsend.htmlText = bold("me las envíen");
+				window_endsession.button_maillist.txt_prompt.htmlText = bold(soapbox_xml.Content.Spanish.mopamail);
+				window_endsession.txt_invalid.htmlText = bold(soapbox_xml.Content.Spanish.invalidemail);
+				window_endsession.txt_continue.htmlText = bold(soapbox_xml.Content.Spanish.cont);
+				window_endsession.button_esskip.txt_es.htmlText = bold(soapbox_xml.Content.Spanish.es2);
+				window_endsession.button_esskip.txt_wosending.htmlText = bold(soapbox_xml.Content.Spanish.wosend);
+				window_endsession.button_yes.txt_yes.htmlText = bold(soapbox_xml.Content.Spanish.yes);
+				window_endsession.button_yes.txt_yeslong.txt_yes.htmlText = bold(soapbox_xml.Content.Spanish.yescma);
+				window_endsession.button_yes.txt_yeslong.txt_sendbadges.htmlText = bold(soapbox_xml.Content.Spanish.sendbadges);
+				window_endsession.button_no.txt_no.htmlText = bold(soapbox_xml.Content.Spanish.no);
+				window_endsession.button_no.txt_nolong.txt_no.htmlText = bold(soapbox_xml.Content.Spanish.nocma);
+				window_endsession.button_no.txt_nolong.txt_dontsend.htmlText = bold(soapbox_xml.Content.Spanish.dontsend);
 			} else { //to English
 				language = 0;
 				//english on
@@ -640,7 +654,7 @@
 				if(email == '') { Tweener.addTween(button_email.text_emailimage, {alpha: 1, time: 1}); } 
 				else { Tweener.addTween(button_email.text_emailimageto, {alpha: 1, time: 1}); }
 				instructions.txt_instructions.alpha = 1;
-				window_gotbadge.txt_continuerating.htmlText = bold("Continue Rating");
+				window_gotbadge.txt_continuerating.htmlText = bold(soapbox_xml.Content.English.continuer);
 				//spanish off
 				Tweener.addTween(btxt_help_esp, {alpha: 0, time: 1});
 				Tweener.addTween(txt_nextbadge_esp, {alpha: 0, time: 1});
@@ -659,24 +673,24 @@
 				instructions.txt_instructions_esp.alpha = 0;
 
 				//to English
-				window_gotbadge.txt_thanks.htmlText = bold("Thank You!");
-				window_gotbadge.txt_invalid.htmlText = bold("Please enter a full name.");
+				window_gotbadge.txt_thanks.htmlText = bold(soapbox_xml.Content.English.thanks);
+				window_gotbadge.txt_invalid.htmlText = bold(soapbox_xml.Content.English.invalidname);
 				window_email.txt_prompt.y = -134.65;
-				window_email.txt_prompt.htmlText = bold("Like this image? You can share this image with yourself or a friend. Enter an e-mail below.");
-				window_email.text_invalidemail.htmlText = bold("Please enter a valid e-mail address.");
-				window_endsession.txt_endsession.htmlText = bold("End Session");
+				window_email.txt_prompt.htmlText = bold(soapbox_xml.Content.English.likeimage);
+				window_email.text_invalidemail.htmlText = bold(soapbox_xml.Content.English.invalidemail);
+				window_endsession.txt_endsession.htmlText = bold(soapbox_xml.Content.English.es);
 				window_endsession.button_maillist.txt_prompt.y = -12.45;
-				window_endsession.button_maillist.txt_prompt.htmlText = bold("Please include me on the MOPA newsletter mailing list.");
-				window_endsession.txt_invalid.htmlText = bold("Please enter valid e-mail");
-				window_endsession.txt_continue.htmlText = bold("Continue Rating");
-				window_endsession.button_esskip.txt_es.htmlText = bold("End Session");
-				window_endsession.button_esskip.txt_wosending.htmlText = bold("without sending");
-				window_endsession.button_yes.txt_yes.htmlText = bold("Yes");
-				window_endsession.button_yes.txt_yeslong.txt_yes.htmlText = bold("Yes,");
-				window_endsession.button_yes.txt_yeslong.txt_sendbadges.htmlText = bold("send badges");
-				window_endsession.button_no.txt_no.htmlText = bold("No");
-				window_endsession.button_no.txt_nolong.txt_no.htmlText = bold("No,");
-				window_endsession.button_no.txt_nolong.txt_dontsend.htmlText = bold("don't send");
+				window_endsession.button_maillist.txt_prompt.htmlText = bold(soapbox_xml.Content.English.mopamail);
+				window_endsession.txt_invalid.htmlText = bold(soapbox_xml.Content.English.invalidemail);
+				window_endsession.txt_continue.htmlText = bold(soapbox_xml.Content.English.continuer);
+				window_endsession.button_esskip.txt_es.htmlText = bold(soapbox_xml.Content.English.es2);
+				window_endsession.button_esskip.txt_wosending.htmlText = bold(soapbox_xml.Content.English.wosend);
+				window_endsession.button_yes.txt_yes.htmlText = bold(soapbox_xml.Content.English.yes);
+				window_endsession.button_yes.txt_yeslong.txt_yes.htmlText = bold(soapbox_xml.Content.English.yescma);
+				window_endsession.button_yes.txt_yeslong.txt_sendbadges.htmlText = bold(soapbox_xml.Content.English.sendbadges);
+				window_endsession.button_no.txt_no.htmlText = bold(soapbox_xml.Content.English.no);
+				window_endsession.button_no.txt_nolong.txt_no.htmlText = bold(soapbox_xml.Content.English.nocma);
+				window_endsession.button_no.txt_nolong.txt_dontsend.htmlText = bold(soapbox_xml.Content.English.dontsend);
 			}
 		}
 		
@@ -748,8 +762,13 @@
 			
 			//share button
 			button_email.alpha = 1;
-			button_email.text_emailimage.alpha = 1;
-			button_email.text_emailimageto.alpha = 0;
+			if(language == 0) {
+				button_email.text_emailimage.alpha = 1;
+				button_email.text_emailimageto.alpha = 0;
+			} else {
+				button_email.text_emailimage_esp.alpha = 1;
+				button_email.text_emailimageto_esp.alpha = 0;
+			}
 			button_removeemail.alpha = 0;
 			button_removeemail.scaleX = button_removeemail.scaleY = 0.8;
 			
@@ -1575,11 +1594,11 @@
 			//end session layout animate
 			//XML
 			if(language == 0) {
-				Tweener.addTween(window_endsession.txt_email, {alpha: 0, time: 0.5, onComplete: function() { window_endsession.txt_email.htmlText = bold("enter e-mail here"); } });
-				Tweener.addTween(window_endsession.txt_prompt, {alpha: 0, time: 0.5, onComplete: function() { window_endsession.txt_prompt.htmlText = bold("You have earned badges! You can send the badges to an e-mail. \n\n Send to:");} });				
+				Tweener.addTween(window_endsession.txt_email, {alpha: 0, time: 0.5, onComplete: function() { window_endsession.txt_email.htmlText = bold(soapbox_xml.Content.English.enteremail); } });
+				Tweener.addTween(window_endsession.txt_prompt, {alpha: 0, time: 0.5, onComplete: function() { window_endsession.txt_prompt.htmlText = bold(soapbox_xml.Content.English.wouldsend);} });				
 			} else {
-				Tweener.addTween(window_endsession.txt_email, {alpha: 0, time: 0.5, onComplete: function() { window_endsession.txt_email.htmlText = bold("Ingresa aquí la dirección de correo electrónico"); } });
-				Tweener.addTween(window_endsession.txt_prompt, {alpha: 0, time: 0.5, onComplete: function() { window_endsession.txt_prompt.htmlText = bold("¡Te has ganado unas placas! ¿Te gustaría enviarlas? \n\n Enviar a:");} });				
+				Tweener.addTween(window_endsession.txt_email, {alpha: 0, time: 0.5, onComplete: function() { window_endsession.txt_email.htmlText = bold(soapbox_xml.Content.Spanish.enteremail); } });
+				Tweener.addTween(window_endsession.txt_prompt, {alpha: 0, time: 0.5, onComplete: function() { window_endsession.txt_prompt.htmlText = bold(soapbox_xml.Content.Spanish.wouldsend);} });				
 			}
 			Tweener.addTween(window_endsession.txt_email, {alpha: 1, time: 0.5, delay: 0.5});
 			Tweener.addTween(window_endsession.txt_prompt, {alpha: 1, time: 0.5, delay: 0.5});
@@ -2571,8 +2590,8 @@
 				window_endsession.txt_endsession.y = -220;
 				window_endsession.txt_prompt.y = -180;
 				//XML
-				if(language == 0) {	window_endsession.txt_prompt.htmlText = bold("Are you sure you would like to end your session?"); }
-				else { window_endsession.txt_prompt.htmlText = bold("¿Estás seguro que quieres terminar tu sesión?"); }
+				if(language == 0) {	window_endsession.txt_prompt.htmlText = bold(soapbox_xml.Content.English.sure); }
+				else { window_endsession.txt_prompt.htmlText = bold(soapbox_xml.Content.Spanish.sure); }
 				
 				window_endsession.button_yes.visible = true;
 				window_endsession.button_yes.y = -90 + ES_LOCY;
@@ -2596,8 +2615,8 @@
 				//email format
 				if(email != '') { //email entered
 					//XML
-					if(language == 0) { window_endsession.txt_prompt.htmlText = bold("You have earned badges! Would you like to send these badges? \n\n Send to:"); } 
-					else { window_endsession.txt_prompt.htmlText = bold("¡Te has ganado unas placas! ¿Te gustaría enviarlas? \n\n Enviar a:"); }
+					if(language == 0) { window_endsession.txt_prompt.htmlText = bold(soapbox_xml.Content.English.wouldsend); } 
+					else { window_endsession.txt_prompt.htmlText = bold(soapbox_xml.Content.Spanish.wouldsend); }
 					window_endsession.txt_email.htmlText = bold(email);
 
 
@@ -2609,11 +2628,11 @@
 				} else { //email not entered
 					//XML
 					if(language == 0) { 
-						window_endsession.txt_prompt.htmlText = bold("You have earned badges! You can send the badges to an e-mail. \n\n Send to:"); 
-						window_endsession.txt_email.htmlText = bold("enter e-mail here");
+						window_endsession.txt_prompt.htmlText = bold(soapbox_xml.Content.English.wouldsend); 
+						window_endsession.txt_email.htmlText = bold(soapbox_xml.Content.English.enteremail);
 					} else { 
-						window_endsession.txt_prompt.htmlText = bold("¡Te has ganado unas placas! Las puedes enviar por correo electrónico. \n\n Enviar a:"); 
-						window_endsession.txt_email.htmlText = bold("Ingresa aquí la dirección de correo electrónico");
+						window_endsession.txt_prompt.htmlText = bold(soapbox_xml.Content.Spanish.wouldsend); 
+						window_endsession.txt_email.htmlText = bold(soapbox_xml.Content.Spanish.enteremail);
 					}
 					
 					cont_endsession_modal.addChild(cont_es_mailbg);
