@@ -54,7 +54,7 @@
 		private static var badge4:int = 70;
 		private static var badge5:int = 95;
 		private static var badge6:int = 120;
-		private static var debugSpeed:int = 5; //The debugging speed for rating images (1 means normal, 2 mean 2x, etc...)
+		private static var debugSpeed:int = 1; //The debugging speed for rating images (1 means normal, 2 mean 2x, etc...)
 											   //Keep the debug speed a multiple of 120!!
 		
 		/* dyanmic interface components */
@@ -1024,6 +1024,8 @@
 
 			cont_toscreen.removeEventListener(TouchEvent.TOUCH_DOWN, toscreen_dwn);
 			cont_toscreen.removeEventListener(TouchEvent.TOUCH_UP, toscreen_up);
+			cont_help.removeEventListener(TouchEvent.TOUCH_DOWN, help_dwn);
+			cont_help.removeEventListener(TouchEvent.TOUCH_UP, help_up);
 			cont_email.removeEventListener(TouchEvent.TOUCH_DOWN, email_dwn);
 			cont_email.removeEventListener(TouchEvent.TOUCH_UP, email_up);
 			cont_star1.removeEventListener(TouchEvent.TOUCH_DOWN, star1_dwn);
@@ -1051,6 +1053,8 @@
 
 			cont_toscreen.addEventListener(TouchEvent.TOUCH_DOWN, toscreen_dwn, false, 0, true);
 			cont_toscreen.addEventListener(TouchEvent.TOUCH_UP, toscreen_up, false, 0, true);
+			cont_help.addEventListener(TouchEvent.TOUCH_DOWN, help_dwn, false, 0, true);
+			cont_help.addEventListener(TouchEvent.TOUCH_UP, help_up, false, 0, true);
 			cont_email.addEventListener(TouchEvent.TOUCH_DOWN, email_dwn, false, 0, true);
 			cont_email.addEventListener(TouchEvent.TOUCH_UP, email_up, false, 0, true);
 			cont_star1.addEventListener(TouchEvent.TOUCH_DOWN, star1_dwn, false, 0, true);
@@ -1135,6 +1139,8 @@
 
 			cont_endsession.removeEventListener(TouchEvent.TOUCH_DOWN, endsession_dwn);
 			cont_endsession.removeEventListener(TouchEvent.TOUCH_UP, endsession_up);
+			cont_help.removeEventListener(TouchEvent.TOUCH_DOWN, help_dwn);
+			cont_help.removeEventListener(TouchEvent.TOUCH_UP, help_up);
 			cont_toscreen.removeEventListener(TouchEvent.TOUCH_DOWN, toscreen_dwn);
 			cont_toscreen.removeEventListener(TouchEvent.TOUCH_UP, toscreen_up);
 			cont_star1.removeEventListener(TouchEvent.TOUCH_DOWN, star1_dwn);
@@ -1154,6 +1160,8 @@
 			
 			cont_endsession.addEventListener(TouchEvent.TOUCH_DOWN, endsession_dwn, false, 0, true);
 			cont_endsession.addEventListener(TouchEvent.TOUCH_UP, endsession_up, false, 0, true);
+			cont_help.addEventListener(TouchEvent.TOUCH_DOWN, help_dwn, false, 0, true);
+			cont_help.addEventListener(TouchEvent.TOUCH_UP, help_up, false, 0, true);
 			cont_toscreen.addEventListener(TouchEvent.TOUCH_DOWN, toscreen_dwn, false, 0, true);
 			cont_toscreen.addEventListener(TouchEvent.TOUCH_UP, toscreen_up, false, 0, true);
 			cont_star1.addEventListener(TouchEvent.TOUCH_DOWN, star1_dwn, false, 0, true);
@@ -2020,12 +2028,45 @@
 
 		private function help_dwn(e:TouchEvent):void {
 			button_help.gotoAndStop("down");
+
+			cont_toscreen.removeEventListener(TouchEvent.TOUCH_DOWN, toscreen_dwn);
+			cont_toscreen.removeEventListener(TouchEvent.TOUCH_UP, toscreen_up);
+			cont_endsession.removeEventListener(TouchEvent.TOUCH_DOWN, endsession_dwn);
+			cont_endsession.removeEventListener(TouchEvent.TOUCH_UP, endsession_up);
+			cont_email.removeEventListener(TouchEvent.TOUCH_DOWN, email_dwn);
+			cont_email.removeEventListener(TouchEvent.TOUCH_UP, email_up);
+			cont_star1.removeEventListener(TouchEvent.TOUCH_DOWN, star1_dwn);
+			cont_star1.removeEventListener(TouchEvent.TOUCH_UP, star1_up);
+			cont_star2.removeEventListener(TouchEvent.TOUCH_DOWN, star2_dwn);
+			cont_star2.removeEventListener(TouchEvent.TOUCH_UP, star2_up);
+			cont_star3.removeEventListener(TouchEvent.TOUCH_DOWN, star3_dwn);
+			cont_star3.removeEventListener(TouchEvent.TOUCH_UP, star3_up);
+			cont_star4.removeEventListener(TouchEvent.TOUCH_DOWN, star4_dwn);
+			cont_star4.removeEventListener(TouchEvent.TOUCH_UP, star4_up);
+			dispatchEvent(new Event("deactivateLang", true));
+			photo_blockerOn();
 		}
 		
 		private function help_up(e:TouchEvent):void {
 			button_help.gotoAndStop("up");
 
-			showInstructions();			
+			showInstructions();
+
+			cont_toscreen.addEventListener(TouchEvent.TOUCH_DOWN, toscreen_dwn, false, 0, true);
+			cont_toscreen.addEventListener(TouchEvent.TOUCH_UP, toscreen_up, false, 0, true);
+			cont_endsession.addEventListener(TouchEvent.TOUCH_DOWN, endsession_dwn, false, 0, true);
+			cont_endsession.addEventListener(TouchEvent.TOUCH_UP, endsession_up, false, 0, true);
+			cont_email.addEventListener(TouchEvent.TOUCH_DOWN, email_dwn, false, 0, true);
+			cont_email.addEventListener(TouchEvent.TOUCH_UP, email_up, false, 0, true);
+			cont_star1.addEventListener(TouchEvent.TOUCH_DOWN, star1_dwn, false, 0, true);
+			cont_star1.addEventListener(TouchEvent.TOUCH_UP, star1_up, false, 0, true);
+			cont_star2.addEventListener(TouchEvent.TOUCH_DOWN, star2_dwn, false, 0, true);
+			cont_star2.addEventListener(TouchEvent.TOUCH_UP, star2_up, false, 0, true);
+			cont_star3.addEventListener(TouchEvent.TOUCH_DOWN, star3_dwn, false, 0, true);
+			cont_star3.addEventListener(TouchEvent.TOUCH_UP, star3_up, false, 0, true);
+			cont_star4.addEventListener(TouchEvent.TOUCH_DOWN, star4_dwn, false, 0, true);
+			cont_star4.addEventListener(TouchEvent.TOUCH_UP, star4_up, false, 0, true);
+			dispatchEvent(new Event("activateLang", true));	
 		}
 
 		private function video1_dwn(e:TouchEvent):void {
