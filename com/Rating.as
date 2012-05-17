@@ -51,7 +51,7 @@
 		private static var badge4:int = 70;
 		private static var badge5:int = 95;
 		private static var badge6:int = 120;
-		private static var debugSpeed:int = 1; //The debugging speed for rating images (1 means normal, 2 mean 2x, etc...)
+		private static var debugSpeed:int = 5; //The debugging speed for rating images (1 means normal, 2 mean 2x, etc...)
 											   //Keep the debug speed a multiple of 120!!
 		
 		/* dyanmic interface components */
@@ -585,6 +585,7 @@
 				Tweener.addTween(window_about.txt_body, {alpha: 0, time: 1});
 				bubble_emailinstruct.txt_body.alpha = 0;
 				instructions.txt_instructions.alpha = 0;
+				window_gotbadge.txt_continuerating.htmlText = bold("Continuar calificando");
 				//spanish on
 				Tweener.addTween(btxt_help_esp, {alpha: 1, time: 1});
 				Tweener.addTween(txt_nextbadge_esp, {alpha: 1, time: 1});
@@ -601,6 +602,26 @@
 				if(email == '') { Tweener.addTween(button_email.text_emailimage_esp, {alpha: 1, time: 1}); } 
 				else { Tweener.addTween(button_email.text_emailimageto_esp, {alpha: 1, time: 1}); }
 				instructions.txt_instructions_esp.alpha = 1;
+
+				//to Spanish
+				window_gotbadge.txt_thanks.htmlText = bold("¡Gracias!");
+				window_gotbadge.txt_invalid.htmlText = bold("Por favor ingresa un nombre completo.");
+				window_email.txt_prompt.y = -144.65;
+				window_email.txt_prompt.htmlText = bold("¿Te gusta esta imagen? Puedes enviártela a ti mismo o compartirla con un amigo. A continuación, introduce una dirección de correo electrónico.");
+				window_email.text_invalidemail.htmlText = bold("Por favor introduce una dirección válida de correo electrónico.");
+				window_endsession.txt_endsession.htmlText = bold("Fin de sesión");
+				window_endsession.button_maillist.txt_prompt.y = -25.45;
+				window_endsession.button_maillist.txt_prompt.htmlText = bold("Por favor agréguenme a la lista de distribución \ndel boletín informativo de MOPA.");
+				window_endsession.txt_invalid.htmlText = bold("Por favor introduce una dirección válida de correo electrónico.");
+				window_endsession.txt_continue.htmlText = bold("Continuar calificando");
+				window_endsession.button_esskip.txt_es.htmlText = bold("Terminar sesión");
+				window_endsession.button_esskip.txt_wosending.htmlText = bold("sin enviar");
+				window_endsession.button_yes.txt_yes.htmlText = bold("Sí");
+				window_endsession.button_yes.txt_yeslong.txt_yes.htmlText = bold("Sí,");
+				window_endsession.button_yes.txt_yeslong.txt_sendbadges.htmlText = bold("envíenme las placas");
+				window_endsession.button_no.txt_no.htmlText = bold("No");
+				window_endsession.button_no.txt_nolong.txt_no.htmlText = bold("No");
+				window_endsession.button_no.txt_nolong.txt_dontsend.htmlText = bold("me las envíen");
 			} else { //to English
 				language = 0;
 				//english on
@@ -619,6 +640,7 @@
 				if(email == '') { Tweener.addTween(button_email.text_emailimage, {alpha: 1, time: 1}); } 
 				else { Tweener.addTween(button_email.text_emailimageto, {alpha: 1, time: 1}); }
 				instructions.txt_instructions.alpha = 1;
+				window_gotbadge.txt_continuerating.htmlText = bold("Continue Rating");
 				//spanish off
 				Tweener.addTween(btxt_help_esp, {alpha: 0, time: 1});
 				Tweener.addTween(txt_nextbadge_esp, {alpha: 0, time: 1});
@@ -635,6 +657,26 @@
 				Tweener.addTween(window_about.txt_body_esp, {alpha: 0, time: 1});
 				bubble_emailinstruct.txt_body_esp.alpha = 0;
 				instructions.txt_instructions_esp.alpha = 0;
+
+				//to English
+				window_gotbadge.txt_thanks.htmlText = bold("Thank You!");
+				window_gotbadge.txt_invalid.htmlText = bold("Please enter a full name.");
+				window_email.txt_prompt.y = -134.65;
+				window_email.txt_prompt.htmlText = bold("Like this image? You can share this image with yourself or a friend. Enter an e-mail below.");
+				window_email.text_invalidemail.htmlText = bold("Please enter a valid e-mail address.");
+				window_endsession.txt_endsession.htmlText = bold("End Session");
+				window_endsession.button_maillist.txt_prompt.y = -12.45;
+				window_endsession.button_maillist.txt_prompt.htmlText = bold("Please include me on the MOPA newsletter mailing list.");
+				window_endsession.txt_invalid.htmlText = bold("Please enter valid e-mail");
+				window_endsession.txt_continue.htmlText = bold("Continue Rating");
+				window_endsession.button_esskip.txt_es.htmlText = bold("End Session");
+				window_endsession.button_esskip.txt_wosending.htmlText = bold("without sending");
+				window_endsession.button_yes.txt_yes.htmlText = bold("Yes");
+				window_endsession.button_yes.txt_yeslong.txt_yes.htmlText = bold("Yes,");
+				window_endsession.button_yes.txt_yeslong.txt_sendbadges.htmlText = bold("send badges");
+				window_endsession.button_no.txt_no.htmlText = bold("No");
+				window_endsession.button_no.txt_nolong.txt_no.htmlText = bold("No,");
+				window_endsession.button_no.txt_nolong.txt_dontsend.htmlText = bold("don't send");
 			}
 		}
 		
@@ -1531,10 +1573,17 @@
 			cont_endsession_modal.addChild(window_endsession.txt_email); 
 
 			//end session layout animate
-			Tweener.addTween(window_endsession.txt_email, {alpha: 0, time: 0.5, onComplete: function() { window_endsession.txt_email.htmlText = bold("enter e-mail here"); } });
+			//XML
+			if(language == 0) {
+				Tweener.addTween(window_endsession.txt_email, {alpha: 0, time: 0.5, onComplete: function() { window_endsession.txt_email.htmlText = bold("enter e-mail here"); } });
+				Tweener.addTween(window_endsession.txt_prompt, {alpha: 0, time: 0.5, onComplete: function() { window_endsession.txt_prompt.htmlText = bold("You have earned badges! You can send the badges to an e-mail. \n\n Send to:");} });				
+			} else {
+				Tweener.addTween(window_endsession.txt_email, {alpha: 0, time: 0.5, onComplete: function() { window_endsession.txt_email.htmlText = bold("Ingresa aquí la dirección de correo electrónico"); } });
+				Tweener.addTween(window_endsession.txt_prompt, {alpha: 0, time: 0.5, onComplete: function() { window_endsession.txt_prompt.htmlText = bold("¡Te has ganado unas placas! ¿Te gustaría enviarlas? \n\n Enviar a:");} });				
+			}
 			Tweener.addTween(window_endsession.txt_email, {alpha: 1, time: 0.5, delay: 0.5});
-			Tweener.addTween(window_endsession.txt_prompt, {alpha: 0, time: 0.5, onComplete: function() { window_endsession.txt_prompt.htmlText = bold("You have earned badges! You can send the badges to an e-mail. \n\n Send to:");} });
 			Tweener.addTween(window_endsession.txt_prompt, {alpha: 1, time: 0.5, delay: 0.5});
+
 			Tweener.addTween(cont_es_removeemail, {alpha: 0, time: 1, onComplete: function() { cont_endsession_modal.removeChild(cont_es_removeemail); } });
 			Tweener.addTween(cont_es_yes, {alpha: 0, time: 1, onComplete: function() { cont_endsession_modal.removeChild(cont_es_yes); } });
 			Tweener.addTween(cont_es_no, {alpha: 0, time: 1, onComplete: function() { cont_endsession_modal.removeChild(cont_es_no); } });
@@ -1546,8 +1595,13 @@
 			
 			//share button animate
 			button_removeemail.gotoAndStop("up");
-			Tweener.addTween(button_email.text_emailimage, { alpha: 1, time: 1 } );
-			Tweener.addTween(button_email.text_emailimageto, { alpha: 0, time: 1 } );
+			if(language == 0) {
+				Tweener.addTween(button_email.text_emailimage, { alpha: 1, time: 1 } );
+				Tweener.addTween(button_email.text_emailimageto, { alpha: 0, time: 1 } );
+			} else {
+				Tweener.addTween(button_email.text_emailimage_esp, { alpha: 1, time: 1 } );
+				Tweener.addTween(button_email.text_emailimageto_esp, { alpha: 0, time: 1 } );
+			}
 			Tweener.addTween(button_removeemail, { alpha: 0, time: 1 } );
 			//Tweener.addTween(button_removeemail, { height: button_removeemail.height - 20, width: button_removeemail.width - 20, time: 1 } );
 			Tweener.addTween(button_removeemail, { scaleX: 0.8, scaleY: 0.8, time: 1 } );
@@ -1630,8 +1684,13 @@
 				}} );
 
 				//share button animate
-				Tweener.addTween(button_email.text_emailimage, { alpha: 0, delay: 1, time: 1 } );
-				Tweener.addTween(button_email.text_emailimageto, { alpha: 1, delay: 1, time: 1 } );
+				if(language == 0) {
+					Tweener.addTween(button_email.text_emailimage, { alpha: 0, delay: 1, time: 1 } );
+					Tweener.addTween(button_email.text_emailimageto, { alpha: 1, delay: 1, time: 1 } );
+				} else {
+					Tweener.addTween(button_email.text_emailimage_esp, { alpha: 0, delay: 1, time: 1 } );
+					Tweener.addTween(button_email.text_emailimageto_esp, { alpha: 1, delay: 1, time: 1 } );
+				}
 				Tweener.addTween(email_entered, { alpha: 1, delay: 1, time: 1 } );
 				addChildAt(cont_removeemail, getChildIndex(cont_shader) - 1);
 
@@ -1780,12 +1839,12 @@
 		private function okname_up(e:TouchEvent):void {
 			window_gotbadge.button_okname.gotoAndStop("up");
 
-			if(!contains(cont_video6)) {
+			if(!contains(cont_video6)) { //ok for name
 				if ( !softKeyboard.validateName(softKeyboard.emailText()) ) { //name invalid
 					Tweener.addTween( window_gotbadge.txt_invalid, { alpha: 1, time: 0.5 } );
 					Tweener.addTween( window_gotbadge.txt_invalid, { alpha: 0, delay: 2, time: 0.5 } );
 					trace("invalid");
-				} else { 
+				} else { //name valid
 					window_gotbadge.txt_inputname.text = softKeyboard.emailText() + ",";
 					fullname = softKeyboard.emailText();
 					sendName();
@@ -1818,7 +1877,7 @@
 					blockerOn();
 					Tweener.addTween(cont_blocker_fullscreen, { delay: 3, onComplete: blockerOff } );
 				}
-			} else if (contains(cont_video6)) {
+			} else if (contains(cont_video6)) { //ok for video
 				Tweener.addTween(cont_gotbadge_modal, { scaleX: 0.8, scaleY: 0.8, alpha: 0, time: 1, onComplete: function() {
 					removeChild(cont_gotbadge_modal);
 				} });
@@ -2353,8 +2412,6 @@
 			cont_star4.removeEventListener(TouchEvent.TOUCH_DOWN, star4_dwn);
 			cont_star4.removeEventListener(TouchEvent.TOUCH_UP, star4_up);
 			dispatchEvent(new Event("deactivateLang", true));
-
-			trace("deactivate");
 		}
 
 		private function activate_exitphoto(e:Event):void {
@@ -2373,8 +2430,6 @@
 			cont_star4.addEventListener(TouchEvent.TOUCH_DOWN, star4_dwn, false, 0, true);
 			cont_star4.addEventListener(TouchEvent.TOUCH_UP, star4_up, false, 0, true);
 			dispatchEvent(new Event("activateLang", true));
-
-			trace("activate");
 		}
 		
 		private function setMetadata(iTitle, iArtist, iBio, iDate, iProcess, iCredit, iCopyright):void{
@@ -2515,7 +2570,9 @@
 
 				window_endsession.txt_endsession.y = -220;
 				window_endsession.txt_prompt.y = -180;
-				window_endsession.txt_prompt.htmlText = bold("Are you sure you would like to end your session?");
+				//XML
+				if(language == 0) {	window_endsession.txt_prompt.htmlText = bold("Are you sure you would like to end your session?"); }
+				else { window_endsession.txt_prompt.htmlText = bold("¿Estás seguro que quieres terminar tu sesión?"); }
 				
 				window_endsession.button_yes.visible = true;
 				window_endsession.button_yes.y = -90 + ES_LOCY;
@@ -2538,8 +2595,11 @@
 			} else {
 				//email format
 				if(email != '') { //email entered
-					window_endsession.txt_prompt.htmlText = bold("You have earned badges! Would you like to send these badges? \n\n Send to:");
+					//XML
+					if(language == 0) { window_endsession.txt_prompt.htmlText = bold("You have earned badges! Would you like to send these badges? \n\n Send to:"); } 
+					else { window_endsession.txt_prompt.htmlText = bold("¡Te has ganado unas placas! ¿Te gustaría enviarlas? \n\n Enviar a:"); }
 					window_endsession.txt_email.htmlText = bold(email);
+
 
 					window_endsession.button_removeemail.alpha = 1;
 					window_endsession.button_removeemail.x = getXpos(2);
@@ -2547,8 +2607,14 @@
 					cont_endsession_modal.removeChild(cont_es_mailbg);
 					cont_endsession_modal.removeChild(cont_es_esskip);
 				} else { //email not entered
-					window_endsession.txt_prompt.htmlText = bold("You have earned badges! You can send the badges to an e-mail. \n\n Send to:");
-					window_endsession.txt_email.htmlText = bold('enter e-mail here');
+					//XML
+					if(language == 0) { 
+						window_endsession.txt_prompt.htmlText = bold("You have earned badges! You can send the badges to an e-mail. \n\n Send to:"); 
+						window_endsession.txt_email.htmlText = bold("enter e-mail here");
+					} else { 
+						window_endsession.txt_prompt.htmlText = bold("¡Te has ganado unas placas! Las puedes enviar por correo electrónico. \n\n Enviar a:"); 
+						window_endsession.txt_email.htmlText = bold("Ingresa aquí la dirección de correo electrónico");
+					}
 					
 					cont_endsession_modal.addChild(cont_es_mailbg);
 					cont_endsession_modal.removeChild(cont_es_maillist);
@@ -2597,7 +2663,8 @@
 			gotBadge_bool = true;
 
 			if(currentBadge == 1) {
-				window_gotbadge.graphic_prompt.gotoAndStop("badge1");
+				if(language == 0) {	window_gotbadge.graphic_prompt.gotoAndStop("badge1"); } 
+				else { window_gotbadge.graphic_prompt.gotoAndStop("badge1_esp"); }
 				addChild(cont_video1);
 				Tweener.addTween(cont_video1, {alpha: 1, time: 1, delay: 0.5});
 				Tweener.addTween(cont_video1, {delay: 1.5, onComplete: function() { 
@@ -2607,7 +2674,8 @@
 					dispatchEvent(new Event("suspend_timeout", true));
 				}});
 			} else if(currentBadge == 2) {
-				window_gotbadge.graphic_prompt.gotoAndStop("badge2");
+				if(language == 0) {	window_gotbadge.graphic_prompt.gotoAndStop("badge2"); } 
+				else { window_gotbadge.graphic_prompt.gotoAndStop("badge2_esp"); }
 				addChild(cont_video2);
 				Tweener.addTween(cont_video2, {alpha: 1, time: 1, delay: 0.5});
 				Tweener.addTween(cont_video2, {delay: 1.5, onComplete: function() { 
@@ -2617,7 +2685,8 @@
 					dispatchEvent(new Event("suspend_timeout", true));
 				}});
 			} else if(currentBadge == 3) {
-				window_gotbadge.graphic_prompt.gotoAndStop("badge3");
+				if(language == 0) {	window_gotbadge.graphic_prompt.gotoAndStop("badge3"); } 
+				else { window_gotbadge.graphic_prompt.gotoAndStop("badge3_esp"); }
 				addChild(cont_video3);
 				Tweener.addTween(cont_video3, {alpha: 1, time: 1, delay: 0.5});
 				Tweener.addTween(cont_video3, {delay: 1.5, onComplete: function() { 
@@ -2627,7 +2696,8 @@
 					dispatchEvent(new Event("suspend_timeout", true));
 				}});
 			} else if(currentBadge == 4) {
-				window_gotbadge.graphic_prompt.gotoAndStop("badge4");
+				if(language == 0) {	window_gotbadge.graphic_prompt.gotoAndStop("badge4"); } 
+				else { window_gotbadge.graphic_prompt.gotoAndStop("badge4_esp"); }
 				addChild(cont_video4);
 				Tweener.addTween(cont_video4, {alpha: 1, time: 1, delay: 0.5});
 				Tweener.addTween(cont_video4, {delay: 1.5, onComplete: function() { 
@@ -2637,7 +2707,8 @@
 					dispatchEvent(new Event("suspend_timeout", true));
 				}});
 			} else if(currentBadge == 5) {
-				window_gotbadge.graphic_prompt.gotoAndStop("badge5");
+				if(language == 0) {	window_gotbadge.graphic_prompt.gotoAndStop("badge5"); } 
+				else { window_gotbadge.graphic_prompt.gotoAndStop("badge5_esp"); }
 				addChild(cont_video5);
 				Tweener.addTween(cont_video5, {alpha: 1, time: 1, delay: 0.5});
 				Tweener.addTween(cont_video5, {delay: 1.5, onComplete: function() { 
@@ -2647,7 +2718,8 @@
 					dispatchEvent(new Event("suspend_timeout", true));
 				}});
 			} else if(currentBadge == 6) {
-				window_gotbadge.graphic_prompt.gotoAndStop("badge6");
+				if(language == 0) {	window_gotbadge.graphic_prompt.gotoAndStop("badge6"); } 
+				else { window_gotbadge.graphic_prompt.gotoAndStop("badge6_esp"); }
 				
 				//layout
 				window_gotbadge.graphic_continuebg.alpha = 1;

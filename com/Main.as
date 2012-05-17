@@ -311,7 +311,7 @@
 		}
 
 		private function startCountdown(e:TimerEvent):void {
-			trace("starting countdown");
+			//trace("starting countdown");
 			shadeOn();
 			txt_timeout.txt_counter.text = 10;
 			addChild(txt_timeout);

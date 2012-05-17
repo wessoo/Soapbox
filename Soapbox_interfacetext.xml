@@ -3,85 +3,51 @@
 	<Content>
 		<English>
 			<!-- HOME/LANDING -->
-			<landingheader>The next exhibition? You decide!</landingheader>
-			<landingbody>Rate the photographs you see here. MOPA will use your ratings to decide &lt;br&gt; what goes on the walls for an exhibition that opens in October 2012.</landingbody>
-			<btnstart>Start Rating!</btnstart>
-			<btnviewrankings>View Rankings</btnviewrankings>
-			<timeout>Timing out</timeout>
-			<tapcontinue>Tap screen to continue</tapcontinue>
-			<badgessent>Badges sent!</badgessent>
-			<thanks>Thank you for using Soapbox!</thanks>
-
+			<!-- RANKING -->			
 			<!-- RATING -->
-			<!-- Rate 10 images to earn your first badge!
-			Tap stars to rate image
-			Share an image with yourself or with friends
-			Tap image to view full screen
-			End session to send badges -->
-
-			<nextbadge>Next badge:</nextbadge> 
-			<togo>to go</togo>
-			<badgesearned>Badges earned</badgesearned>
-			<enterrating>Enter Your Rating</enterrating>
-			<!--Low    	High-->
-
-			<!-- <btnes>End Session</btnes>
-			        	[instruction] Ending Session
-			        	Are you sure you would like to end your session?
-			        	[button] Yes  	No
-			        	[instruction]
-			        	Ending Session
-			You have earned badges! You can send the badges to an e-mail.
-			Send to:
-			        	enter e-mail here
-			[button]
-			Please include me on the MOPA newsletter mailing list to receive updates about exhibitions, events, and programs.
-			[button] Yes, send badges
-			[button] No, don’t send
-			[button] End Session without sending
-			[button] Continue Rating
-
-			[button] Display on Screen
-			        	[information] Photo sent to screen!
-			[button] About Soapbox
-			        	[information]
-			Funding for Soapbox! The Audience Speaks was provided by the Institute of Museum and Library Services, The Downing Family Foundation, the Legler Benbough Foundation, The Parker Foundation, the National Institute of Information and Communications (Japan), Pacific Rim Undergraduate Experiences (PRIME) at the University of California-San Diego, the Price Family Charitable Fund, and the Balboa Park Online Collaborative.
-			[button] Share
-			        	[instruction]
+			Thank You!
+			Please enter a full name.
 			Like this image? You can share this image with yourself or a friend. Enter an e-mail below.
 			Please enter a valid e-mail address.
-			        	[instruction]
-			send to this e-mail.
-			remove this e-mail.
-			[button] Share with:
-			        	[information] Image will send at end session!
-
-			[instruction]
-			Congratulations! You got the Brownie badge for voting on 10 images! Below is a video with a message from the Director of MOPA. You may send the video with your badge at the end of the session.
-
-			[instruction]
-			Congratulations! You got the Instamatic badge for voting on 25 images! Watch this video to see actual photographic prints from the Soapbox! collection. You may send the video with your badge at the end of the session.
-
-			[instruction]
-			Congratulations! You got the Fisheye badge for voting on 45 images! Watch this video to get a behind-the-scenes look at the installation of the Three Story House exhibition. You may send the video with your badge at the end of the session.
-
-			[instruction]
-			Congratulations! You got the Land Camera badge for voting on 70 images! Watch this video to see rare books from MOPA's collection. You may send the video with your badge at the end of the session.
-
-			[instruction]
-			Congratulations! You got the Twin Lens Reflex badge for voting on 95 images! Watch this video to learn more about the first exhibition at MOPA in 1983. You may send the video with your badge at the end of the session.
-
-			[instruction]
-			You got the Bellows badge for voting on all 120 images in the Soapbox! The Audience Speaks collection. To recognize your effort, MOPA will display your name as a contributor to the exhibition.
-			Please enter your name as you would like it to appear.
-			        	[button] Skip
-
-			[instruction] Please enter a full name.
-
-			[instruction] Thank You! -->
-			<!-- Ranking -->
+			End Session
+			Please include me on the MOPA newsletter mailing list.
+			Please enter valid e-mail
+			Continue Rating
+			End Session
+			without sending
+			Yes
+			Yes,
+			send badges
+			No
+			No,
+			don't send
+			Are you sure you would like to end your session?
+			You have earned badges! Would you like to send these badges? \n\n Send to:
+			You have earned badges! You can send the badges to an e-mail. \n\n Send to:
 		</English>
 		<Spanish>
+			<!-- HOME/LANDING -->
+			<!-- RANKING -->			
+			<!-- RATING -->
+			¡Gracias!
+			Por favor ingresa un nombre completo.
+			¿Te gusta esta imagen? Puedes enviártela a ti mismo o compartirla con un amigo. A correo electrónico.
+			Por favor introduce una dirección válida de correo electrónico.
+			"Fin de sesión
+			Por favor agréguenme a la lista de distribución \ndel boletín informativo de MOPA.
+			Por favor introduce una dirección válida de correo electrónico.
+			Continuar calificando
+			Terminar sesión
+			sin enviar
+			Sí
+			Sí,
+			envíenme las placas
+			No
+			No
+			me las envíen
+			¿Estás seguro que quieres terminar tu sesión?
+			¡Te has ganado unas placas! ¿Te gustaría enviarlas? \n\n Enviar a:
+			¡Te has ganado unas placas! Las puedes enviar por correo electrónico. \n\n Enviar a:
 		</Spanish>
 	</Content>
 </Soapbox>
