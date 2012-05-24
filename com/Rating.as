@@ -552,11 +552,17 @@
 		}
 		
 		private function sendToDatabase(ext:String, rating:int):void{
-			var uR:URLRequest = new URLRequest("http://localhost/soapbox.php");
+			//var uR:URLRequest = new URLRequest("http://localhost/soapbox.php");
+			var uR:URLRequest = new URLRequest("http://dev-mopa.bpoc.org/js-api/vote");
             var uV:URLVariables = new URLVariables();
+			uR.method = URLRequestMethod.POST;
 			
-			uV.image = ext;
-			uV.rating = rating;
+			uV.uid = Main.uID.valueOf().toString().substr(0, 10);
+			//trace(uV.uid);
+			uV.nid = ext;
+			//trace(uV.nid)
+			uV.vote_value = rating * 25;
+			//trace(uV.vote_value);
 			
 			var now:Date = new Date();
             uV.date = now.toString();
