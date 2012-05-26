@@ -557,7 +557,7 @@
             var uV:URLVariables = new URLVariables();
 			uR.method = URLRequestMethod.POST;
 			
-			uV.uid = Main.uID.valueOf().toString().substr(0, 10);
+			uV.uid = Main.uID;
 			//trace(uV.uid);
 			uV.nid = ext;
 			//trace(uV.nid)
@@ -1485,6 +1485,7 @@
 				//call some function that send request
 				sendBadges = true;
 			}
+			sendUserData();
 
 			cont_es_continue.addEventListener(TouchEvent.TOUCH_DOWN, es_continue_dwn, false, 0, true);
 			cont_es_continue.addEventListener(TouchEvent.TOUCH_UP, es_continue_up, false, 0, true);
@@ -1590,6 +1591,7 @@
 				email_entered.alpha = 0;
 				//softKeyboard.clearEmail();
 				email = softKeyboard.emailText();
+				trace("session ended");
 				removeChild(cont_es_exitKeyboard);
 
 				//end session window animate
@@ -1788,7 +1790,7 @@
 				} else { 
 					window_gotbadge.txt_inputname.text = softKeyboard.emailText() + ",";
 					fullname = softKeyboard.emailText();
-					sendName();
+					//sendName();
 					
 					var target_height:int = window_gotbadge.window_modal.height - 225;
 					var target_ypos:int = window_gotbadge.window_modal.y - (target_height - window_gotbadge.window_modal.height)/2;
@@ -1840,11 +1842,26 @@
 			}
 		}
 		
-		private function sendName():void{
-			var uR:URLRequest = new URLRequest("http://localhost/soapbox.php");
+		private function sendUserData():void{
+			var uR:URLRequest = new URLRequest("http://dev-mopa.bpoc.org/js-api/vote");
             var uV:URLVariables = new URLVariables();
+			uR.method = URLRequestMethod.POST;
 			
-			uV.user = fullname;
+			if(fullname != ""){
+				uV.credits_name = fullname;
+			}
+			if(maillist_opt){
+				uV.optin = "1";
+			}
+			else{
+				uV.optin = "0";
+			}
+			
+			if(email != ""){
+				uV.email_address = email;
+			}
+			
+			uV.uid = Main.uID;
 			
 			var now:Date = new Date();
             uV.date = now.toString();
