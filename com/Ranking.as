@@ -10,6 +10,8 @@
 	//import flash.display.Stage;
 	import id.core.TouchSprite;
 	import flash.text.engine.EastAsianJustifier;
+	import com.adobe.serialization.json.JSON; 
+
 
 	import caurina.transitions.Tweener;
 	import flash.utils.Dictionary;
@@ -212,7 +214,7 @@
 		//Get ranks from database
 		private function getInitialRankings():void
 		{
-			var uR:URLRequest = new URLRequest("http://localhost/soapbox.php");
+			var uR:URLRequest = new URLRequest("http://dev-mopa.bpoc.org/js-api/vote");
             var uV:URLVariables = new URLVariables();
 			
 			var now:Date = new Date();
@@ -224,11 +226,18 @@
 			uL.addEventListener(Event.COMPLETE, loaderCompleteHandler);
                         
 			function loaderCompleteHandler(e:Event):void{
-				var data:String = uL.data;
-				var returned:Array = data.split(",");
-				for each(var extension:String in returned){
-					ranks.push(dict[extension]);
+				var json:Object = JSON.decode(uL.data)
+				for (var i:String in json)
+				{
+					var ext:String = json[i]["filename"];
+					ranks.push(dict[ext]);
 				}
+				
+				
+				//var returned:Array = data.split(",");
+				//for each(var extension:String in returned){
+					//ranks.push(dict[extension]);
+				//}
 				createUI();
 				commitUI();
 			}
@@ -246,7 +255,7 @@
 			list.splice(0, list.length);
 			displayed.splice(0, displayed.length);
 			
-			var uR:URLRequest = new URLRequest("http://localhost/soapbox.php");
+			var uR:URLRequest = new URLRequest("http://dev-mopa.bpoc.org/js-api/vote");
             var uV:URLVariables = new URLVariables();
 			
 			var now:Date = new Date();
@@ -258,10 +267,11 @@
 			uL.addEventListener(Event.COMPLETE, loaderCompleteHandler);
                         
 			function loaderCompleteHandler(e:Event):void{
-				var data:String = uL.data;
-				var returned:Array = data.split(",");
-				for each(var extension:String in returned){
-					ranks.push(dict[extension]);
+				var json:Object = JSON.decode(uL.data)
+				for (var i:String in json)
+				{
+					var ext:String = json[i]["filename"];
+					ranks.push(dict[ext]);
 				}
 				createUI();
 				updateUI();
