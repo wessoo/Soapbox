@@ -557,6 +557,7 @@
             var uV:URLVariables = new URLVariables();
 			uR.method = URLRequestMethod.POST;
 			
+			trace("UID: " + Main.uID + ", EXT: " + ext);
 			uV.uid = Main.uID;
 			//trace(uV.uid);
 			uV.nid = ext;
