@@ -2669,10 +2669,10 @@
 				} else { //email not entered
 					//XML
 					if(language == 0) { 
-						window_endsession.txt_prompt.htmlText = bold(soapbox_xml.Content.English.wouldsend); 
+						window_endsession.txt_prompt.htmlText = bold(soapbox_xml.Content.English.cansend); 
 						window_endsession.txt_email.htmlText = bold(soapbox_xml.Content.English.enteremail);
 					} else { 
-						window_endsession.txt_prompt.htmlText = bold(soapbox_xml.Content.Spanish.wouldsend); 
+						window_endsession.txt_prompt.htmlText = bold(soapbox_xml.Content.Spanish.cansend); 
 						window_endsession.txt_email.htmlText = bold(soapbox_xml.Content.Spanish.enteremail);
 					}
 					
