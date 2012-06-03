@@ -38,6 +38,7 @@
 		private var package_created:Boolean = false; 	//whether any images have been packaged
 		private var maillist_opt:Boolean = true;		//opting in/out of MOPA mail list. Default opt in.
 		public var sendBadges:Boolean = false;			//whether to send badges, used to determine animation
+		private var wantsShared = false 		//used to determine whether or not user wants to share an image with himself
 		private var aboutShowing:Boolean = false;
 		private var gotBadge_bool:Boolean = false;		//used to determine whether a blocker for the photo transition needs to last long
 		private var request:URLRequest;
@@ -564,13 +565,19 @@
 			//trace(uV.nid)
 			uV.vote_value = rating * 25;
 			//trace(uV.vote_value);
-			
+			if(wantsShared){
+				uV.email_link = 1;
+			}
+			else{
+				uV.email_link = 0;
+			}
 			var now:Date = new Date();
             uV.date = now.toString();
                         
             uR.data = uV;
 			
 			var uL:URLLoader = new URLLoader(uR);
+			wantsShared = false;
 		}
 
 		public function changeLang(lang:int):void {
@@ -701,6 +708,7 @@
 			aboutShowing = false;
 			emails.splice();
 			packages.splice();
+			wantsShared= false;
 
 			//VISUAL
 			//text
@@ -1155,6 +1163,8 @@
 					packages.push(new Array());
 					package_created = true;
 				}
+				
+				wantsShared = true;
 				
 				//trace("Packaged " + photo.ext + " with email: " + emails[emails.length - 1]);
 				packages[emails.length - 1].push(photo.ext);
