@@ -36,6 +36,7 @@
 		private var fullname:String;	//full name of person that completed Soapbox
 		public var currentBadge:int;	//The badge that the user currently has
 		private var photoSent:Boolean;	//whether current photo has been sent (e-mailed)
+		private var photosMarked:Boolean = false;		//whether there have been any photos marked for this session
 		private var package_created:Boolean = false; 	//whether any images have been packaged
 		private var maillist_opt:Boolean = true;		//opting in/out of MOPA mail list. Default opt in.
 		public var sendBadges:Boolean = false;			//whether to send badges, used to determine animation
@@ -1184,7 +1185,6 @@
 
 				Tweener.addTween(bubble_comingsoon, { alpha: 0, time: 1, delay: 4 } );
 				Tweener.addTween(bubble_comingsoon, { scaleX: 0.8, scaleY: 0.8, time: 1, delay: 4 } );*/
-
 				
 				shadeOn();
 				addChild(cont_exitEmail); //put exit_email above shade
@@ -1220,6 +1220,7 @@
 				}
 				
 				//trace("Packaged " + photo.ext + " with email: " + emails[emails.length - 1]);
+				photosMarked = true;
 				packages[emails.length - 1].push(photo.ext);
 				photoSent = true;
 				button_email.alpha = 0.5;

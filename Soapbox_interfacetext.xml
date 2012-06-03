@@ -24,6 +24,9 @@
 			<sure>Are you sure you would like to end your session?</sure>
 			<wouldsend>You have earned badges! Would you like to send these badges? &lt;br&gt;&lt;br&gt; Send to:</wouldsend>
 			<cansend>You have earned badges! You can send the badges to an e-mail. &lt;br&gt;&lt;br&gt; Send to:</cansend>
+			<sendbadim>You have badges and images ready to be sent! You can send them to an e-mail.</sendbadim>
+			<sendbadges>You have earned badges! You can send them to an e-mail.</sendbadges>
+			<sendimages>You have images ready to be sent! You can send them to an e-mail.</sendimages>
 		</English>
 		<Spanish>
 			<!-- HOME/LANDING -->
