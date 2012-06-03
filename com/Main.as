@@ -63,6 +63,8 @@
 		private static var TOSTATS_YPOS:int;
 		private static var LANDTXT_YPOS:int;
 		private static var LOGO_YPOS:int;
+		
+		public static var uID:String = new Date().valueOf().toString().substr(0, 10);
 
 		public function Main() {
 			settingsPath = "application.xml";
@@ -341,6 +343,7 @@
 		
 		private function torating_up(e:TouchEvent):void {
 			button_torating.gotoAndStop("up");
+			uID = new Date().valueOf().toString().substr(0, 10);
 			if(screen == 1) {
 				timeout.start();
 				timeoutWarn.start();
