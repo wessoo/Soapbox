@@ -55,7 +55,7 @@
 		private static var badge4:int = 70;
 		private static var badge5:int = 95;
 		private static var badge6:int = 120;
-		private static var debugSpeed:int = 1; //The debugging speed for rating images (1 means normal, 2 mean 2x, etc...)
+		private static var debugSpeed:int = 5; //The debugging speed for rating images (1 means normal, 2 mean 2x, etc...)
 											   //Keep the debug speed a multiple of 120!!
 		
 		/* dyanmic interface components */
@@ -477,7 +477,7 @@
 			//Language presets
 			btxt_help_esp.alpha = 0;
 			txt_nextbadge_esp.alpha = txt_togo_esp.alpha = txt_badgesearned_esp.alpha = txt_low_esp.alpha = txt_high_esp.alpha = txt_enterrating_esp.alpha = txt_aboutsb_esp.alpha = 0;
-			button_endsession.btxt_es_esp.alpha = button_toscreen.btxt_screen_esp.alpha = button_email.text_emailimage_esp.alpha = button_email.text_emailimageto_esp.alpha = 0;
+			button_endsession.btxt_es_esp.alpha = button_endsession.btxt_esbi_esp.alpha = button_toscreen.btxt_screen_esp.alpha = button_email.text_emailimage_esp.alpha = button_email.text_emailimageto_esp.alpha = 0;
 			window_about.txt_body_esp.alpha = 0;
 			bubble_emailinstruct.txt_body_esp.alpha = 0;
 			instructions.txt_instructions_esp.alpha = 0;
@@ -601,6 +601,7 @@
 				Tweener.addTween(txt_enterrating, {alpha: 0, time: 1});
 				Tweener.addTween(txt_aboutsb, {alpha: 0, time: 1});
 				Tweener.addTween(button_endsession.btxt_es, {alpha: 0, time: 1});
+				Tweener.addTween(button_endsession.btxt_esbi, {alpha: 0, time: 1});
 				Tweener.addTween(button_toscreen.btxt_screen, {alpha: 0, time: 1});
 				Tweener.addTween(button_email.text_emailimage, {alpha: 0, time: 1});
 				Tweener.addTween(button_email.text_emailimageto, {alpha: 0, time: 1});
@@ -618,6 +619,7 @@
 				Tweener.addTween(txt_enterrating_esp, {alpha: 1, time: 1});
 				Tweener.addTween(txt_aboutsb_esp, {alpha: 1, time: 1});
 				Tweener.addTween(button_endsession.btxt_es_esp, {alpha: 1, time: 1});
+				Tweener.addTween(button_endsession.btxt_esbi_esp, {alpha: 1, time: 1});
 				Tweener.addTween(button_toscreen.btxt_screen_esp, {alpha: 1, time: 1});
 				Tweener.addTween(window_about.txt_body_esp, {alpha: 1, time: 1});
 				bubble_emailinstruct.txt_body_esp.alpha = 1;
@@ -656,6 +658,7 @@
 				Tweener.addTween(txt_enterrating, {alpha: 1, time: 1});
 				Tweener.addTween(txt_aboutsb, {alpha: 1, time: 1});
 				Tweener.addTween(button_endsession.btxt_es, {alpha: 1, time: 1});
+				Tweener.addTween(button_endsession.btxt_esbi, {alpha: 1, time: 1});
 				Tweener.addTween(button_toscreen.btxt_screen, {alpha: 1, time: 1});
 				Tweener.addTween(window_about.txt_body, {alpha: 1, time: 1});
 				bubble_emailinstruct.txt_body.alpha = 1;
@@ -673,6 +676,7 @@
 				Tweener.addTween(txt_enterrating_esp, {alpha: 0, time: 1});
 				Tweener.addTween(txt_aboutsb_esp, {alpha: 0, time: 1});
 				Tweener.addTween(button_endsession.btxt_es_esp, {alpha: 0, time: 1});
+				Tweener.addTween(button_endsession.btxt_esbi_esp, {alpha: 0, time: 1});
 				Tweener.addTween(button_toscreen.btxt_screen_esp, {alpha: 0, time: 1});
 				Tweener.addTween(button_email.text_emailimage_esp, {alpha: 0, time: 1});
 				Tweener.addTween(button_email.text_emailimageto_esp, {alpha: 0, time: 1});
@@ -756,6 +760,7 @@
 			fullname = '';
 			sendBadges = false;
 			aboutShowing = false;
+			package_created = false;
 			emails.splice();
 			packages.splice();
 
@@ -2649,7 +2654,7 @@
 			cont_endsession_modal.addChild(cont_es_removeemail);
 
 			//if(false) { //testing
-			if(currentBadge == -1) { //if no badges earned
+			if(currentBadge == -1 && !package_created) { //if no badges earned AND no images marked
 				window_endsession.window_modal.height = 240;
 				window_endsession.window_modal.y = -(window_endsession.window_modal.height/2);
 
@@ -2677,14 +2682,25 @@
 				cont_endsession_modal.removeChild(cont_es_mailbg);
 				cont_endsession_modal.removeChild(cont_es_maillist);
 				cont_endsession_modal.removeChild(cont_es_removeemail);
-			} else {
+			} else { //either badge earned OR image marked
+				//determine text prompt
+				if(currentBadge != -1 && !package_created) { //got badge, no images marked
+					if(language == 0) { window_endsession.txt_prompt.htmlText = bold(soapbox_xml.Content.English.sendbadgesonly); } 
+					else { window_endsession.txt_prompt.htmlText = bold(soapbox_xml.Content.Spanish.wouldsend); }
+				} else if (currentBadge == -1 && package_created) { //images marked, no badges
+					if(language == 0) { window_endsession.txt_prompt.htmlText = bold(soapbox_xml.Content.English.sendimages); } 
+					else { window_endsession.txt_prompt.htmlText = bold(soapbox_xml.Content.Spanish.wouldsend); }
+				} else if (currentBadge != -1 && package_created) { //got badge, images marked
+					if(language == 0) { window_endsession.txt_prompt.htmlText = bold(soapbox_xml.Content.English.sendbadim); } 
+					else { window_endsession.txt_prompt.htmlText = bold(soapbox_xml.Content.Spanish.wouldsend); }
+				}
+
 				//email format
 				if(email != '') { //email entered
 					//XML
-					if(language == 0) { window_endsession.txt_prompt.htmlText = bold(soapbox_xml.Content.English.wouldsend); } 
-					else { window_endsession.txt_prompt.htmlText = bold(soapbox_xml.Content.Spanish.wouldsend); }
+					//if(language == 0) { window_endsession.txt_prompt.htmlText = bold(soapbox_xml.Content.English.wouldsend); } 
+					//else { window_endsession.txt_prompt.htmlText = bold(soapbox_xml.Content.Spanish.wouldsend); }
 					window_endsession.txt_email.htmlText = bold(email);
-
 
 					window_endsession.button_removeemail.alpha = 1;
 					window_endsession.button_removeemail.x = getXpos(2);
@@ -2693,13 +2709,8 @@
 					cont_endsession_modal.removeChild(cont_es_esskip);
 				} else { //email not entered
 					//XML
-					if(language == 0) { 
-						window_endsession.txt_prompt.htmlText = bold(soapbox_xml.Content.English.wouldsend); 
-						window_endsession.txt_email.htmlText = bold(soapbox_xml.Content.English.enteremail);
-					} else { 
-						window_endsession.txt_prompt.htmlText = bold(soapbox_xml.Content.Spanish.wouldsend); 
-						window_endsession.txt_email.htmlText = bold(soapbox_xml.Content.Spanish.enteremail);
-					}
+					if(language == 0) { window_endsession.txt_email.htmlText = bold(soapbox_xml.Content.English.enteremail); } 
+					else { window_endsession.txt_email.htmlText = bold(soapbox_xml.Content.Spanish.enteremail); }
 					
 					cont_endsession_modal.addChild(cont_es_mailbg);
 					cont_endsession_modal.removeChild(cont_es_maillist);

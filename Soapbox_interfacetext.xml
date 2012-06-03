@@ -7,7 +7,7 @@
 			<!-- RATING -->
 			<thanks>Thank You!</thanks>
 			<invalidname>Please enter a full name.</invalidname>
-			<likeimage>Like this image? You can share this image with yourself or a friend. Enter an e-mail below.</likeimage>
+			<likeimage>Like this image? You can mark this image to send when you end session.</likeimage>
 			<invalidemail>Please enter valid e-mail</invalidemail>
 			<enteremail>enter an e-mail</enteremail>
 			<es>Ending Session</es>
@@ -24,9 +24,9 @@
 			<sure>Are you sure you would like to end your session?</sure>
 			<wouldsend>You have earned badges! Would you like to send these badges? &lt;br&gt;&lt;br&gt; Send to:</wouldsend>
 			<cansend>You have earned badges! You can send the badges to an e-mail. &lt;br&gt;&lt;br&gt; Send to:</cansend>
-			<sendbadim>You have badges and images ready to be sent! You can send them to an e-mail.</sendbadim>
-			<sendbadges>You have earned badges! You can send them to an e-mail.</sendbadges>
-			<sendimages>You have images ready to be sent! You can send them to an e-mail.</sendimages>
+			<sendbadim>You have badges and images to be sent! You can send them to an e-mail. &lt;br&gt;&lt;br&gt; Send to:</sendbadim>
+			<sendbadgesonly>You have earned badges! You can send them to an e-mail. &lt;br&gt;&lt;br&gt; Send to:</sendbadgesonly>
+			<sendimages>You have images ready to be sent! You can send them to an e-mail. &lt;br&gt;&lt;br&gt; Send to:</sendimages>
 		</English>
 		<Spanish>
 			<!-- HOME/LANDING -->
@@ -52,6 +52,9 @@
 			<sure>¿Estás seguro que quieres terminar tu sesión?</sure>
 			<wouldsend>¡Te has ganado unas placas! ¿Te gustaría enviarlas? &lt;br&gt;&lt;br&gt; Enviar a:</wouldsend>
 			<cansend>¡Te has ganado unas placas! Las puedes enviar por correo electrónico. &lt;br&gt;&lt;br&gt; Enviar a:</cansend>
+			<sendbadim>You have badges and images ready to be sent! You can send them to an e-mail. &lt;br&gt;&lt;br&gt; Send to:</sendbadim>
+			<sendbadges>You have earned badges! You can send them to an e-mail. &lt;br&gt;&lt;br&gt; Send to:</sendbadges>
+			<sendimages>You have images ready to be sent! You can send them to an e-mail. &lt;br&gt;&lt;br&gt; Send to:</sendimages>
 		</Spanish>
 	</Content>
 </Soapbox>
