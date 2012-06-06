@@ -1,4 +1,4 @@
-﻿package com {
+package com {
 	import flash.display.Shader;
 	import flash.events.Event;
 	import flash.display.DisplayObject;	
@@ -1029,12 +1029,16 @@
 		public function showInstructions():void {
 			addChild(cont_instructions);
 			Tweener.addTween(cont_instructions, {alpha: 1, time: 1 } );
+
+			//COLLECT DATA
 		}
 
 		private function instructions_up(e:TouchEvent):void {
 			Tweener.addTween(cont_instructions, {alpha: 0, time: 0.5, onComplete: function () {
 				removeChild(cont_instructions);
-			}})
+			}});
+
+			//COLLECT DATA
 
 			blockerOn();
 			Tweener.addTween(cont_blocker_fullscreen, { delay: 0.5, onComplete: blockerOff } );
@@ -1117,6 +1121,8 @@
 		private function toscreen_up(e:TouchEvent):void {
 			button_toscreen.gotoAndStop("up");
 			
+			//COLLECT DATA
+
 			cont_toscreen.removeEventListener(TouchEvent.TOUCH_DOWN, toscreen_dwn);
 			cont_toscreen.removeEventListener(TouchEvent.TOUCH_UP, toscreen_up);
 
@@ -1231,6 +1237,8 @@
 				Tweener.addTween(cont_blocker_fullscreen, { y: cont_blocker_fullscreen.y + 300, time: 1 } );
 				Tweener.addTween(cont_blocker_fullscreen, { delay: 1.5, onComplete: blockerOff } );
 			} else if (!photoSent) { //e-mail already entered
+				//COLLECT DATA
+
 				/* code for sending e-mail */
 				if(!package_created) {
 					storeEmail(email);
@@ -1239,15 +1247,13 @@
 					package_created = true;
 				}
 				
-				wantsShared = true;
-				
+				wantsShared = true;				
 				//trace("Packaged " + photo.ext + " with email: " + emails[emails.length - 1]);
 				photosMarked = true;
 				packages[emails.length - 1].push(photo.ext);
 				photoSent = true;
 				button_email.alpha = 0.5;
 				Tweener.addTween(bubble_packaged, { alpha: 1, time: 1 } );
-				//Tweener.addTween(bubble_packaged, { height: 112.25, width: 157.55, time: 1 } );
 				Tweener.addTween(bubble_packaged, { scaleX: 1, scaleY: 1, time: 1 } );
 				bubble_packaged.gotoAndPlay("play");
 				
@@ -1316,6 +1322,8 @@
 				Tweener.addTween( window_email.text_invalidemail, { alpha: 1, time: 0.5 } );
 				Tweener.addTween( window_email.text_invalidemail, { alpha: 0, delay: 2, time: 0.5 } );
 			} else { //e-mail valid				
+				//COLLECT DATA
+
 				email = softKeyboard.emailText();
 				email_entered.htmlText = bold(softKeyboard.emailText());
 				email_entered.alpha = 0;
@@ -1389,6 +1397,10 @@
 
 		private function continue_up(e:TouchEvent):void {
 			window_gotbadge.button_continue.gotoAndStop("up");
+			
+			//COLLECT DATA
+			
+
 			gotBadge_bool = false;
 
 			cont_video1.addEventListener(TouchEvent.TOUCH_DOWN, video1_dwn, false, 0, true);
@@ -2134,6 +2146,8 @@
 		}
 
 		private function video1_complete(e:VideoEvent):void {
+			//COLLECT DATA
+
 			video1.video.stop();
 			Tweener.addTween(video1.graphic_videoblack, {alpha: 1, time: 1});
 			Tweener.addTween(video1.graphic_play, {alpha: 1, time: 1});
@@ -2165,6 +2179,8 @@
 		}
 
 		private function video2_complete(e:VideoEvent):void {
+			//COLLECT DATA
+
 			video2.video.stop();
 			Tweener.addTween(video2.graphic_videoblack, {alpha: 1, time: 1});
 			Tweener.addTween(video2.graphic_play, {alpha: 1, time: 1});
@@ -2196,6 +2212,8 @@
 		}
 
 		private function video3_complete(e:VideoEvent):void {
+			//COLLECT DATA
+
 			video3.video.stop();
 			Tweener.addTween(video3.graphic_videoblack, {alpha: 1, time: 1});
 			Tweener.addTween(video3.graphic_play, {alpha: 1, time: 1});
@@ -2227,6 +2245,8 @@
 		}
 
 		private function video4_complete(e:VideoEvent):void {
+			//COLLECT DATA
+
 			video4.video.stop();
 			Tweener.addTween(video4.graphic_videoblack, {alpha: 1, time: 1});
 			Tweener.addTween(video4.graphic_play, {alpha: 1, time: 1});
@@ -2258,6 +2278,8 @@
 		}
 
 		private function video5_complete(e:VideoEvent):void {
+			//COLLECT DATA
+
 			video5.video.stop();
 			Tweener.addTween(video5.graphic_videoblack, {alpha: 1, time: 1});
 			Tweener.addTween(video5.graphic_play, {alpha: 1, time: 1});
@@ -2289,6 +2311,8 @@
 		}
 
 		private function video6_complete(e:VideoEvent):void {
+			//COLLECT DATA
+
 			video6.video.stop();
 			Tweener.addTween(video6.graphic_videoblack, {alpha: 1, time: 1});
 			Tweener.addTween(video6.graphic_play, {alpha: 1, time: 1});
@@ -2767,6 +2791,8 @@
 			shadeOn();
 			addChild(cont_gotbadge_modal);
 			gotBadge_bool = true;
+
+			//COLLECT DATA
 
 			if(currentBadge == 1) {
 				if(language == 0) {	window_gotbadge.graphic_prompt.gotoAndStop("badge1"); } 

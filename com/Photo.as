@@ -265,6 +265,8 @@
 
 		private function touchHandler(e:TouchEvent):void{
 			if(!viewing){
+				//COLLECT DATA
+
 				parent.addChild(this);
 				blackOn();
 				
@@ -274,12 +276,8 @@
 				viewing = true;
 			}
 			else{
-				//Tweener.addTween(photo, {alpha: 0, time: .5, onComplete: function() { resetPhoto(); }});
-				/*Tweener.addTween(photo, {x: savedX, y: savedY, scaleX: savedScale, scaleY: savedScale, time: 1.5})
-				blackOff();
-				blockerOn();
-				Tweener.addTween(cont_blocker_fullscreen, { delay: .5, onComplete: function() { blockerOff(); } } );
-				viewing = false;*/
+				//COLLECT DATA
+				
 				exitViewing();
 			}
 		}

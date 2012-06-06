@@ -191,6 +191,8 @@
 			if (language == 0) { //to Spanish
 				language = 1;
 
+				//COLLECT DATA
+
 				landing_text.txt_header_esp.alpha = landing_text.txt_landing_esp.alpha = 0;
 				button_torating.button_name_esp.alpha = 0;
 				button_tostats.btxt_view_esp.alpha = button_tostats.btxt_home_esp.alpha = 0;
@@ -217,6 +219,8 @@
 
 			} else { //to English
 				language = 0;
+
+				//COLLECT DATA
 
 				//HOME
 				//english on
@@ -386,6 +390,8 @@
 		private function tostats_up(e:TouchEvent):void {
 			button_tostats.gotoAndStop("up");
 
+			//COLLECT DATA
+			
 			Tweener.addTween(this, {delay: 1.5, onComplete: function() { 
 				cont_torating.addEventListener(TouchEvent.TOUCH_DOWN, torating_dwn, false, 0, true);
 				cont_torating.addEventListener(TouchEvent.TOUCH_UP, torating_up, false, 0, true);
