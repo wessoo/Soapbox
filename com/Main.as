@@ -312,10 +312,12 @@
 			shadeOn();
 			txt_timeout.txt_counter.text = 10;
 			if(language == 0){
-				txt_timeout.gotoAndStop("english");
+				txt_timeout.txt_tap_esp.alpha = 0;
+				txt_timeout.txt_tap.alpha = 1;
 			}
 			else{
-				txt_timeout.gotoAndStop("spanish");
+				txt_timeout.txt_tap_esp.alpha = 1;
+				txt_timeout.txt_tap.alpha = 0;
 			}
 			addChild(txt_timeout);
 			Tweener.addTween(txt_timeout, { alpha: 1, time: 1, delay: 1} );
