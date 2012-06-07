@@ -311,6 +311,12 @@
 			trace("starting countdown");
 			shadeOn();
 			txt_timeout.txt_counter.text = 10;
+			if(language == 0){
+				txt_timeout.gotoAndStop("english");
+			}
+			else{
+				txt_timeout.gotoAndStop("spanish");
+			}
 			addChild(txt_timeout);
 			Tweener.addTween(txt_timeout, { alpha: 1, time: 1, delay: 1} );
 			countdown.start();
