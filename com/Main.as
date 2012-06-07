@@ -312,16 +312,12 @@
 			shadeOn();
 			txt_timeout.txt_counter.text = 10;
 			if(language == 0){
-				txt_timeout.txt_tap_esp.alpha = 0;
-				txt_timeout.txt_tap_esp.txt_timeout_esp = 0;
-				txt_timeout.txt_tap.alpha = 1;
-				txt_timeout.txt_tap.txt_timeout = 1;
+				txt_timeout.txt_tap.alpha = txt_timeout.txt_timeout.alpha = 1;
+				txt_timeout.txt_tap_esp.alpha = txt_timeout.txt_timeout_esp.alpha = 0;
 			}
 			else{
-				txt_timeout.txt_tap_esp.alpha = 1;
-				txt_timeout.txt_tap_esp.txt_timeout_esp = 1;
-				txt_timeout.txt_tap.alpha = 0;
-				txt_timeout.txt_tap.txt_timeout = 0;
+				txt_timeout.txt_tap.alpha = txt_timeout.txt_timeout.alpha = 0;
+				txt_timeout.txt_tap_esp.alpha = txt_timeout.txt_timeout_esp.alpha = 1;
 			}
 			addChild(txt_timeout);
 			Tweener.addTween(txt_timeout, { alpha: 1, time: 1, delay: 1} );
