@@ -214,68 +214,15 @@
 		//Get ranks from database
 		private function getInitialRankings():void
 		{
-			var uR:URLRequest = new URLRequest("http://dev-mopa.bpoc.org/js-api/vote");
-            var uV:URLVariables = new URLVariables();
-			
-			var now:Date = new Date();
-            uV.date = now.toString();
-                        
-            uR.data = uV;
-			
-			var uL:URLLoader = new URLLoader(uR);
-			uL.addEventListener(Event.COMPLETE, loaderCompleteHandler);
-                        
-			function loaderCompleteHandler(e:Event):void{
-				var json:Object = JSON.decode(uL.data)
-				for (var i:String in json)
-				{
-					var ext:String = json[i]["filename"];
-					ranks.push(dict[ext]);
+				for (var i:int = 1; i <= 40; ++i){ 
+					ranks.push(i);
 				}
-				
-				
-				//var returned:Array = data.split(",");
-				//for each(var extension:String in returned){
-					//ranks.push(dict[extension]);
-				//}
 				createUI();
 				commitUI();
-			}
+				
 		}
 		
 		public function updateRatings():void{
-			ranks.splice(0, ranks.length);
-			for each(var item:RankPhoto in displayed){
-				removeChild(item);
-			}
-			
-			for each(var listed:RankPhoto in list){
-				listed.Dispose();
-			}
-			list.splice(0, list.length);
-			displayed.splice(0, displayed.length);
-			
-			var uR:URLRequest = new URLRequest("http://dev-mopa.bpoc.org/js-api/vote");
-            var uV:URLVariables = new URLVariables();
-			
-			var now:Date = new Date();
-            uV.date = now.toString();
-                        
-            uR.data = uV;
-			
-			var uL:URLLoader = new URLLoader(uR);
-			uL.addEventListener(Event.COMPLETE, loaderCompleteHandler);
-                        
-			function loaderCompleteHandler(e:Event):void{
-				var json:Object = JSON.decode(uL.data)
-				for (var i:String in json)
-				{
-					var ext:String = json[i]["filename"];
-					ranks.push(dict[ext]);
-				}
-				createUI();
-				updateUI();
-			}
 		}
 
 		public function changeLang(lang:int):void {
