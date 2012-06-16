@@ -9,8 +9,7 @@
 	import flash.display.Graphics;
 	//import flash.display.Stage;
 	import id.core.TouchSprite;
-	import flash.text.engine.EastAsianJustifier;
-	import com.adobe.serialization.json.JSON; 
+	import flash.text.engine.EastAsianJustifier; 
 
 
 	import caurina.transitions.Tweener;
@@ -223,13 +222,18 @@
             uR.data = uV;
 			
 			var uL:URLLoader = new URLLoader(uR);
+			
+			uL.dataFormat = URLLoaderDataFormat.TEXT;
+			
 			uL.addEventListener(Event.COMPLETE, loaderCompleteHandler);
                         
 			function loaderCompleteHandler(e:Event):void{
-				var json:Object = JSON.decode(uL.data)
-				for (var i:String in json)
+  				var output:XML = XML(uL.data);
+				//trace("Data: " + output.item[0].filename);
+				
+				for (var i:int = 0; i < 40; ++i)
 				{
-					var ext:String = json[i]["filename"];
+					var ext:String = output.item[i].filename;
 					ranks.push(dict[ext]);
 				}
 				
@@ -264,13 +268,16 @@
             uR.data = uV;
 			
 			var uL:URLLoader = new URLLoader(uR);
+			uL.dataFormat = URLLoaderDataFormat.TEXT;
 			uL.addEventListener(Event.COMPLETE, loaderCompleteHandler);
                         
 			function loaderCompleteHandler(e:Event):void{
-				var json:Object = JSON.decode(uL.data)
-				for (var i:String in json)
+				var output:XML = XML(uL.data);
+				//trace("Data: " + output.item[0].filename);
+				
+				for (var i:int = 0; i < 40; ++i)
 				{
-					var ext:String = json[i]["filename"];
+					var ext:String = output.item[i].filename;
 					ranks.push(dict[ext]);
 				}
 				createUI();
