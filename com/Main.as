@@ -3,6 +3,7 @@
 	import flash.events.TimerEvent;
 	import flash.utils.Dictionary;
 	import flash.net.URLRequest;
+	import flash.net.URLVariables;
 	import flash.net.URLLoader;
 	import flash.display.StageScaleMode;
 	import flash.display.StageAlign;
@@ -188,10 +189,20 @@
 		}
 		
 		public function changeLang():void {
+			var uR:URLRequest = new URLRequest("http://localhost/userdata.php");
+	        var uV:URLVariables = new URLVariables();
+	        var now:Date = new Date();
+
 			if (language == 0) { //to Spanish
 				language = 1;
 
 				//COLLECT DATA
+	            uV.uid = uID;
+	            uV.changeTo = "Spanish";
+	            uV.changeLang = "true";
+	            uV.date = now.toString();
+	            uR.data = uV;
+				//END COLLECT DATA
 
 				landing_text.txt_header_esp.alpha = landing_text.txt_landing_esp.alpha = 0;
 				button_torating.button_name_esp.alpha = 0;
@@ -221,6 +232,12 @@
 				language = 0;
 
 				//COLLECT DATA
+	            uV.uid = uID;
+	            uV.changeTo = "English";
+	            uV.changeLang = "true";
+	            uV.date = now.toString();
+	            uR.data = uV;
+				//END COLLECT DATA
 
 				//HOME
 				//english on
@@ -242,6 +259,8 @@
 				//RATING
 				rating.changeLang(0);
 			}
+
+			var uL:URLLoader = new URLLoader(uR);
 		}
 
 		private function bold(input:String):String{
@@ -348,6 +367,18 @@
 		private function torating_up(e:TouchEvent):void {
 			button_torating.gotoAndStop("up");
 			uID = new Date().valueOf().toString().substr(0, 10);
+
+			//COLLECT DATA
+			var uR:URLRequest = new URLRequest("http://localhost/userdata.php");
+            var uV:URLVariables = new URLVariables();
+            uV.uid = uID;
+            uV.session = "true";
+            var now:Date = new Date();
+            uV.date = now.toString();
+            uR.data = uV;
+			var uL:URLLoader = new URLLoader(uR);
+			//END COLLECT DATA
+
 			if(screen == 1) {
 				timeout.start();
 				timeoutWarn.start();
@@ -391,6 +422,14 @@
 			button_tostats.gotoAndStop("up");
 
 			//COLLECT DATA
+			var uR:URLRequest = new URLRequest("http://localhost/userdata.php");
+            var uV:URLVariables = new URLVariables();
+            uV.viewRankings = "true";
+            var now:Date = new Date();
+            uV.date = now.toString();
+            uR.data = uV;
+			var uL:URLLoader = new URLLoader(uR);
+			//END COLLECT DATA
 			
 			Tweener.addTween(this, {delay: 1.5, onComplete: function() { 
 				cont_torating.addEventListener(TouchEvent.TOUCH_DOWN, torating_dwn, false, 0, true);

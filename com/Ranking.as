@@ -362,6 +362,7 @@
 						
 						if(lastT1.y <= vy + vheight - paddingH1 + correctV +  bottomCorrection){
 							bounceBottom = true;
+							trace("bottom");
 						}
 					}
 				}

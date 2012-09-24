@@ -756,6 +756,26 @@ package com {
 			//Randomize images
 			shuffle();
 			
+			//COLLECT DATA
+			var uR:URLRequest = new URLRequest("http://localhost/userdata.php");
+            var uV:URLVariables = new URLVariables();
+            uV.uid = Main.uID;
+            uV.earnedNum = currentBadge;
+            uV.badges = "true";
+            var now:Date = new Date();
+            uV.date = now.toString();
+            uR.data = uV;
+			var uL:URLLoader = new URLLoader(uR);
+
+			uR = new URLRequest("http://localhost/userdata.php");
+            uV = new URLVariables();
+            uV.uid = Main.uID;
+            uV.session = "true";
+            uV.date = now.toString();
+            uR.data = uV;
+			uL = new URLLoader(uR);
+			//END COLLECT DATA
+
 			//LOGICAL
 			currentLoc = -1;
 			reachedEnd = false;
@@ -1031,6 +1051,16 @@ package com {
 			Tweener.addTween(cont_instructions, {alpha: 1, time: 1 } );
 
 			//COLLECT DATA
+			var uR:URLRequest = new URLRequest("http://localhost/userdata.php");
+            var uV:URLVariables = new URLVariables();
+            uV.uid = Main.uID;
+            uV.onoff = "on";
+            uV.viewInstruct = "true";
+            var now:Date = new Date();
+            uV.date = now.toString();
+            uR.data = uV;
+			var uL:URLLoader = new URLLoader(uR);
+			//END COLLECT DATA
 		}
 
 		private function instructions_up(e:TouchEvent):void {
@@ -1039,6 +1069,16 @@ package com {
 			}});
 
 			//COLLECT DATA
+			var uR:URLRequest = new URLRequest("http://localhost/userdata.php");
+            var uV:URLVariables = new URLVariables();
+            uV.uid = Main.uID;
+            uV.onoff = "off";
+            uV.session = "true";
+            var now:Date = new Date();
+            uV.date = now.toString();
+            uR.data = uV;
+			var uL:URLLoader = new URLLoader(uR);
+			//END COLLECT DATA
 
 			blockerOn();
 			Tweener.addTween(cont_blocker_fullscreen, { delay: 0.5, onComplete: blockerOff } );
@@ -1122,6 +1162,16 @@ package com {
 			button_toscreen.gotoAndStop("up");
 			
 			//COLLECT DATA
+			var uR:URLRequest = new URLRequest("http://localhost/userdata.php");
+            var uV:URLVariables = new URLVariables();
+            uV.uid = Main.uID;
+            uV.imgid = photo.ext;
+            uV.viewBigscreen = "true";
+            var now:Date = new Date();
+            uV.date = now.toString();
+            uR.data = uV;
+			var uL:URLLoader = new URLLoader(uR);
+			//END COLLECT DATA
 
 			cont_toscreen.removeEventListener(TouchEvent.TOUCH_DOWN, toscreen_dwn);
 			cont_toscreen.removeEventListener(TouchEvent.TOUCH_UP, toscreen_up);
@@ -1238,6 +1288,16 @@ package com {
 				Tweener.addTween(cont_blocker_fullscreen, { delay: 1.5, onComplete: blockerOff } );
 			} else if (!photoSent) { //e-mail already entered
 				//COLLECT DATA
+				var uR:URLRequest = new URLRequest("http://localhost/userdata.php");
+	            var uV:URLVariables = new URLVariables();
+	            uV.uid = Main.uID;
+	            uV.imgid = photo.ext;
+	            uV.shares = "true";
+	            var now:Date = new Date();
+	            uV.date = now.toString();
+	            uR.data = uV;
+				var uL:URLLoader = new URLLoader(uR);
+				//END COLLECT DATA
 
 				/* code for sending e-mail */
 				if(!package_created) {
@@ -1323,6 +1383,15 @@ package com {
 				Tweener.addTween( window_email.text_invalidemail, { alpha: 0, delay: 2, time: 0.5 } );
 			} else { //e-mail valid				
 				//COLLECT DATA
+				var uR:URLRequest = new URLRequest("http://localhost/userdata.php");
+	            var uV:URLVariables = new URLVariables();
+	            uV.uid = Main.uID;
+	            uV.emailEntered = "true";
+	            var now:Date = new Date();
+	            uV.date = now.toString();
+	            uR.data = uV;
+				var uL:URLLoader = new URLLoader(uR);
+				//END COLLECT DATA
 
 				email = softKeyboard.emailText();
 				email_entered.htmlText = bold(softKeyboard.emailText());
@@ -1396,11 +1465,10 @@ package com {
 		}
 
 		private function continue_up(e:TouchEvent):void {
-			window_gotbadge.button_continue.gotoAndStop("up");
-			
-			//COLLECT DATA
-			
-
+			window_gotbadge.button_continue.gotoAndStop("up");			
+			var uR:URLRequest = new URLRequest("http://localhost/userdata.php");
+		    var uV:URLVariables = new URLVariables();
+		    var now:Date = new Date();
 			gotBadge_bool = false;
 
 			cont_video1.addEventListener(TouchEvent.TOUCH_DOWN, video1_dwn, false, 0, true);
@@ -1429,6 +1497,14 @@ package com {
 				Tweener.addTween(txt_10, { alpha: 1, time: 1, delay: 2 });
 				Tweener.addTween(cont_video1, {alpha: 0, time: 1, onComplete: function() { removeChild(cont_video1); }});
 				if(video1.video.playing) {
+					//COLLECT DATA
+		            uV.uid = Main.uID;
+		            uV.vidnum = 1;
+		            uV.skipVid = "true";
+		            uV.date = now.toString();
+		            uR.data = uV;
+					//END COLLECT DATA
+
 					Tweener.addTween(video1.graphic_videoblack, {alpha: 1, time: 1});
 					Tweener.addTween(video1.graphic_play, {alpha: 1, time: 1});
 					video1.video.stop();
@@ -1440,6 +1516,14 @@ package com {
 				Tweener.addTween(txt_25, { alpha: 1, time: 1, delay: 2 });
 				Tweener.addTween(cont_video2, {alpha: 0, time: 1, onComplete: function() { removeChild(cont_video2); }});
 				if(video2.video.playing) {
+					//COLLECT DATA
+		            uV.uid = Main.uID;
+		            uV.vidnum = 2;
+		            uV.skipVid = "true";
+		            uV.date = now.toString();
+		            uR.data = uV;
+					//END COLLECT DATA
+
 					Tweener.addTween(video2.graphic_videoblack, {alpha: 1, time: 1});
 					Tweener.addTween(video2.graphic_play, {alpha: 1, time: 1});
 					video2.video.stop();
@@ -1451,6 +1535,14 @@ package com {
 				Tweener.addTween(txt_45, { alpha: 1, time: 1, delay: 2 });
 				Tweener.addTween(cont_video3, {alpha: 0, time: 1, onComplete: function() { removeChild(cont_video3); }});
 				if(video3.video.playing) {
+					//COLLECT DATA
+		            uV.uid = Main.uID;
+		            uV.vidnum = 3;
+		            uV.skipVid = "true";
+		            uV.date = now.toString();
+		            uR.data = uV;
+					//END COLLECT DATA
+
 					Tweener.addTween(video3.graphic_videoblack, {alpha: 1, time: 1});
 					Tweener.addTween(video3.graphic_play, {alpha: 1, time: 1});
 					video3.video.stop();
@@ -1462,6 +1554,14 @@ package com {
 				Tweener.addTween(txt_70, { alpha: 1, time: 1, delay: 2 });
 				Tweener.addTween(cont_video4, {alpha: 0, time: 1, onComplete: function() { removeChild(cont_video4); }});
 				if(video4.video.playing) {
+					//COLLECT DATA
+		            uV.uid = Main.uID;
+		            uV.vidnum = 4;
+		            uV.skipVid = "true";
+		            uV.date = now.toString();
+		            uR.data = uV;
+					//END COLLECT DATA
+
 					Tweener.addTween(video4.graphic_videoblack, {alpha: 1, time: 1});
 					Tweener.addTween(video4.graphic_play, {alpha: 1, time: 1});
 					video4.video.stop();
@@ -1472,6 +1572,14 @@ package com {
 				Tweener.addTween(txt_95, { alpha: 1, time: 1, delay: 2 });
 				Tweener.addTween(cont_video5, {alpha: 0, time: 1, onComplete: function() { removeChild(cont_video5); }});
 				if(video5.video.playing) {
+					//COLLECT DATA
+		            uV.uid = Main.uID;
+		            uV.vidnum = 5;
+		            uV.skipVid = "true";
+		            uV.date = now.toString();
+		            uR.data = uV;
+					//END COLLECT DATA
+
 					Tweener.addTween(video5.graphic_videoblack, {alpha: 1, time: 1});
 					Tweener.addTween(video5.graphic_play, {alpha: 1, time: 1});
 					video5.video.stop();
@@ -1480,6 +1588,7 @@ package com {
 				Tweener.addTween(badge_2.color, { alpha: 1, time: 1, delay: 2});
 				Tweener.addTween(badge2_glow, { delay: 1, onComplete: function() { badge2_glow.gotoAndPlay("play"); } } );
 			}*/
+			var uL:URLLoader = new URLLoader(uR);
 
 			blockerOn();
 			Tweener.addTween(cont_blocker_fullscreen, { delay: 2, onComplete: blockerOff } );
@@ -1951,6 +2060,18 @@ package com {
 				Tweener.addTween(txt_120, { alpha: 1, time: 1, delay: 1.5 });
 				Tweener.addTween(cont_video6, {alpha: 0, time: 1, onComplete: function() { removeChild(cont_video6); }});
 				if(video6.video.playing) {
+					//COLLECT DATA
+					var uR:URLRequest = new URLRequest("http://localhost/userdata.php");
+		            var uV:URLVariables = new URLVariables();
+		            uV.uid = Main.uID;
+		            uV.vidnum = 6;
+		            uV.skipVid = "true";
+		            var now:Date = new Date();
+		            uV.date = now.toString();
+		            uR.data = uV;
+					var uL:URLLoader = new URLLoader(uR);
+					//END COLLECT DATA
+
 					Tweener.addTween(video6.graphic_videoblack, {alpha: 1, time: 1});
 					Tweener.addTween(video6.graphic_play, {alpha: 1, time: 1});
 					video6.video.stop();
@@ -2147,6 +2268,16 @@ package com {
 
 		private function video1_complete(e:VideoEvent):void {
 			//COLLECT DATA
+			var uR:URLRequest = new URLRequest("http://localhost/userdata.php");
+            var uV:URLVariables = new URLVariables();
+            uV.uid = Main.uID;
+            uV.vidnum = 1;
+            uV.finVid = "true";
+            var now:Date = new Date();
+            uV.date = now.toString();
+            uR.data = uV;
+			var uL:URLLoader = new URLLoader(uR);
+			//END COLLECT DATA
 
 			video1.video.stop();
 			Tweener.addTween(video1.graphic_videoblack, {alpha: 1, time: 1});
@@ -2180,6 +2311,16 @@ package com {
 
 		private function video2_complete(e:VideoEvent):void {
 			//COLLECT DATA
+			var uR:URLRequest = new URLRequest("http://localhost/userdata.php");
+            var uV:URLVariables = new URLVariables();
+            uV.uid = Main.uID;
+            uV.vidnum = 2;
+            uV.finVid = "true";
+            var now:Date = new Date();
+            uV.date = now.toString();
+            uR.data = uV;
+			var uL:URLLoader = new URLLoader(uR);
+			//END COLLECT DATA
 
 			video2.video.stop();
 			Tweener.addTween(video2.graphic_videoblack, {alpha: 1, time: 1});
@@ -2213,6 +2354,16 @@ package com {
 
 		private function video3_complete(e:VideoEvent):void {
 			//COLLECT DATA
+			var uR:URLRequest = new URLRequest("http://localhost/userdata.php");
+            var uV:URLVariables = new URLVariables();
+            uV.uid = Main.uID;
+            uV.vidnum = 3;
+            uV.finVid = "true";
+            var now:Date = new Date();
+            uV.date = now.toString();
+            uR.data = uV;
+			var uL:URLLoader = new URLLoader(uR);
+			//END COLLECT DATA
 
 			video3.video.stop();
 			Tweener.addTween(video3.graphic_videoblack, {alpha: 1, time: 1});
@@ -2246,6 +2397,16 @@ package com {
 
 		private function video4_complete(e:VideoEvent):void {
 			//COLLECT DATA
+			var uR:URLRequest = new URLRequest("http://localhost/userdata.php");
+            var uV:URLVariables = new URLVariables();
+            uV.uid = Main.uID;
+            uV.vidnum = 4;
+            uV.finVid = "true";
+            var now:Date = new Date();
+            uV.date = now.toString();
+            uR.data = uV;
+			var uL:URLLoader = new URLLoader(uR);
+			//END COLLECT DATA
 
 			video4.video.stop();
 			Tweener.addTween(video4.graphic_videoblack, {alpha: 1, time: 1});
@@ -2279,6 +2440,16 @@ package com {
 
 		private function video5_complete(e:VideoEvent):void {
 			//COLLECT DATA
+			var uR:URLRequest = new URLRequest("http://localhost/userdata.php");
+            var uV:URLVariables = new URLVariables();
+            uV.uid = Main.uID;
+            uV.vidnum = 5;
+            uV.finVid = "true";
+            var now:Date = new Date();
+            uV.date = now.toString();
+            uR.data = uV;
+			var uL:URLLoader = new URLLoader(uR);
+			//END COLLECT DATA
 
 			video5.video.stop();
 			Tweener.addTween(video5.graphic_videoblack, {alpha: 1, time: 1});
@@ -2312,6 +2483,16 @@ package com {
 
 		private function video6_complete(e:VideoEvent):void {
 			//COLLECT DATA
+			var uR:URLRequest = new URLRequest("http://localhost/userdata.php");
+            var uV:URLVariables = new URLVariables();
+            uV.uid = Main.uID;
+            uV.vidnum = 6;
+            uV.finVid = "true";
+            var now:Date = new Date();
+            uV.date = now.toString();
+            uR.data = uV;
+			var uL:URLLoader = new URLLoader(uR);
+			//END COLLECT DATA
 
 			video6.video.stop();
 			Tweener.addTween(video6.graphic_videoblack, {alpha: 1, time: 1});
