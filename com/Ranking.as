@@ -23,7 +23,7 @@
 		private var dict:Dictionary;
 
 
-		private var totalAmount:int = 40;
+		private var totalAmount:int = 120;
 		private var vheight:Number = 849;
 		private var vy:Number = -446;
 		private var correctV:Number = 25;
@@ -77,13 +77,14 @@
 
 		override protected function createUI():void
 		{
+			addChild(graphic_headfoot);
 			for (var i:int = 0; i < ranks.length; ++i)
 			{
 				var rp:RankPhoto = new RankPhoto(i,ranks[i]);
 				list.push(rp);
 			}
 			
-			//HERE!
+			
 			for (var j:int = 0; j < 12; ++j)
 			{
 				addChildAt(list[j], getChildIndex(graphic_headfoot));
@@ -232,10 +233,17 @@
   				//var output:XML = XML(uL.data);
 				//trace("Data: " + output.item[0].filename);
 				
-				for (var i:int = 0; i < 40; ++i)
+				
+				
+				for (var i:int = 1; i <= totalAmount; ++i)
 				{
-					//var ext:String = output.item[i].filename;
-					ranks.push(dict[ext]);
+					for(var j:int = 0; j < totalAmount; ++j){
+						if(ImageParser.settings.Content.Source[j].rank == i){
+							ranks.push(ImageParser.settings.Content.Source[j].@id);
+							//trace("found " + i + ", pushed " + ImageParser.settings.Content.Source[j].@id);
+							break;
+						}
+					}
 				}
 				
 				
@@ -245,7 +253,7 @@
 				//}
 				createUI();
 				commitUI();
-			}
+			//}
 		}
 		
 		public function updateRatings():void{
@@ -260,30 +268,30 @@
 			list.splice(0, list.length);
 			displayed.splice(0, displayed.length);
 			
-			var uR:URLRequest = new URLRequest("http://dev-mopa.bpoc.org/js-api/vote");
-            var uV:URLVariables = new URLVariables();
+			//var uR:URLRequest = new URLRequest("http://dev-mopa.bpoc.org/js-api/vote");
+            //var uV:URLVariables = new URLVariables();
 			
-			var now:Date = new Date();
-            uV.date = now.toString();
+			//var now:Date = new Date();
+            //uV.date = now.toString();
                         
-            uR.data = uV;
+            //uR.data = uV;
 			
-			var uL:URLLoader = new URLLoader(uR);
-			uL.dataFormat = URLLoaderDataFormat.TEXT;
-			uL.addEventListener(Event.COMPLETE, loaderCompleteHandler);
+			//var uL:URLLoader = new URLLoader(uR);
+			//uL.dataFormat = URLLoaderDataFormat.TEXT;
+			//uL.addEventListener(Event.COMPLETE, loaderCompleteHandler);
                         
-			function loaderCompleteHandler(e:Event):void{
-				var output:XML = XML(uL.data);
+			//function loaderCompleteHandler(e:Event):void{
+				//var output:XML = XML(uL.data);
 				//trace("Data: " + output.item[0].filename);
 				
-				for (var i:int = 0; i < 40; ++i)
-				{
-					var ext:String = output.item[i].filename;
-					ranks.push(dict[ext]);
-				}
+				//for (var i:int = 0; i < 40; ++i)
+				//{
+					//var ext:String = output.item[i].filename;
+					//ranks.push(dict[ext]);
+				//}
 				createUI();
 				updateUI();
-			}
+			//}
 		}
 
 		public function changeLang(lang:int):void {

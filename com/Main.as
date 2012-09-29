@@ -707,7 +707,6 @@
 		
 		private function imageParserLoaded(e:Event):void{
 			parserLoaded = true;
-			
 			ranking = new Ranking();
 			ranking.x = RANKING_X_POS;
 			ranking.y = RANKING_Y_POS;
