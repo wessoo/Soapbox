@@ -29,7 +29,7 @@
 		private var myLoader:URLLoader;
 		public static var parserLoaded = false;  //Tells you whether the metadata is available or not.
 		public static var language:int = 0; //language mode. 0: English, 1: Spanish
-		public static var rating:Rating;
+		//public static var rating:Rating;
 		public static var ranking:Ranking;
 		public var screen:int = 1; //1: home. 2: rating. 3: ranking.
 		public var countdown_sec:int = 10;
@@ -183,7 +183,7 @@
 		/* ------------ Logical Functions ------------- */
 		/* -------------------------------------------- */
 		public function resetSession():void {
-			rating.resetSession();
+			//rating.resetSession();
 
 		}
 		
@@ -215,7 +215,7 @@
 				//RANKING
 				ranking.changeLang(1);
 				//RATING
-				rating.changeLang(1);
+				//rating.changeLang(1);
 
 			} else { //to English
 				language = 0;
@@ -240,7 +240,7 @@
 				//RANKING
 				ranking.changeLang(0);
 				//RATING
-				rating.changeLang(0);
+				//rating.changeLang(0);
 			}
 		}
 
@@ -279,7 +279,7 @@
 			trace("reset");
 
 			if(screen == 2) {
-				rating.timeoutReset();
+				//rating.timeoutReset();
 
 				Tweener.addTween(shader, { alpha: 0, time: 0.5, onComplete: shadeOff});
 				Tweener.addTween(txt_timeout, { alpha: 0, time: 1} );
@@ -354,7 +354,7 @@
 				screen = 2;
 
 				Tweener.addTween(background_texture, {y: 1330 - 1080, time: 1.5, transition: "easeInOutQuart" });
-				Tweener.addTween(rating, {y: RATING_Y_POS, time: 1.5, transition: "easeInOutQuart" });
+				//Tweener.addTween(rating, {y: RATING_Y_POS, time: 1.5, transition: "easeInOutQuart" });
 				Tweener.addTween(button_torating, {y: 950.55 - SCREEN_HEIGHT, time: 1.5, transition: "easeInOutQuart" });
 				Tweener.addTween(button_tostats, {y: 952.2 - SCREEN_HEIGHT, time: 1.5, transition: "easeInOutQuart" });
 				Tweener.addTween(landing_text, {y: LANDINGTEXT_Y - SCREEN_HEIGHT, time: 1.5, transition: "easeInOutQuart" });
@@ -372,8 +372,8 @@
 				blockerOn();
 				Tweener.addTween(cont_blocker_fullscreen, { delay: 1.5, onComplete: function() {
 					blockerOff();
-					rating.graphic_fakebg.alpha = 1;
-					rating.showInstructions();
+					//rating.graphic_fakebg.alpha = 1;
+					//rating.showInstructions();
 				} } );
 			}
 		}
@@ -486,6 +486,7 @@
 			addChild(cont_resetanimation);
 			Tweener.addTween(effect_resetanimation, {alpha: 1, time: 3.5, delay: 1});
 			
+			/*
 			effect_resetanimation.badge1.gotoAndStop("on");
 			effect_resetanimation.badge2.gotoAndStop("on");
 			effect_resetanimation.badge3.gotoAndStop("on");
@@ -515,6 +516,7 @@
 			} else if (rating.currentBadge == 5) {
 				effect_resetanimation.badge6.gotoAndStop("off");
 			}
+			
 
 			//where to skip to
 			if(rating.sendBadges) {
@@ -523,9 +525,11 @@
 				effect_resetanimation.gotoAndStop("thanks");
 				Tweener.addTween(this, {delay: 2, onComplete: function() { effect_resetanimation.gotoAndPlay("thanks"); }});
 			}
+			*/
 		}
 
 		private function resetanim_done(e:TimelineEvent):void {
+			/*
 			if (e.currentLabel === "end") {
 				Tweener.addTween(effect_resetanimation, {alpha: 0, time: 2, onComplete: function() { 
 					effect_resetanimation.gotoAndStop(1);
@@ -625,7 +629,9 @@
 				} else if (rating.currentBadge == 5) {
 					effect_resetanimation.badge6.gotoAndStop("off");
 				}
+			
 			}
+			*/
 		}
 
 		private function deactivateLang(e:Event):void {
@@ -649,7 +655,7 @@
 		}
 
 		private function endSession(e:Event):void {
-			Tweener.addTween(rating, {y: RATING_Y_POS + SCREEN_HEIGHT, time: 2, transition: "easeInOutQuart" });
+			//Tweener.addTween(rating, {y: RATING_Y_POS + SCREEN_HEIGHT, time: 2, transition: "easeInOutQuart" });
 			screen = 1;
 			
 			timeout.reset();
@@ -707,11 +713,11 @@
 			ranking.y = RANKING_Y_POS;
 			addChildAt(ranking, getChildIndex(cont_tostats) - 1);
 			
-			rating = new Rating();
+			//rating = new Rating();
 			//Damn straight, hard coded screen positioning for Rating class, don't judge
-			rating.x = RATING_X_POS;
-			rating.y = RATING_Y_POS + SCREEN_HEIGHT;			
-			addChild(rating);
+			//rating.x = RATING_X_POS;
+			//rating.y = RATING_Y_POS + SCREEN_HEIGHT;			
+			//addChild(rating);
 		}
 	}
 	

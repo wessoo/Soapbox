@@ -82,7 +82,8 @@
 				var rp:RankPhoto = new RankPhoto(i,ranks[i]);
 				list.push(rp);
 			}
-
+			
+			//HERE!
 			for (var j:int = 0; j < 12; ++j)
 			{
 				addChildAt(list[j], getChildIndex(graphic_headfoot));
@@ -213,27 +214,27 @@
 		//Get ranks from database
 		private function getInitialRankings():void
 		{
-			var uR:URLRequest = new URLRequest("http://dev-mopa.bpoc.org/js-api/vote");
-            var uV:URLVariables = new URLVariables();
+			//var uR:URLRequest = new URLRequest("http://dev-mopa.bpoc.org/js-api/vote");
+            //var uV:URLVariables = new URLVariables();
 			
-			var now:Date = new Date();
-            uV.date = now.toString();
+			//var now:Date = new Date();
+            //uV.date = now.toString();
                         
-            uR.data = uV;
+            //uR.data = uV;
 			
-			var uL:URLLoader = new URLLoader(uR);
+			//var uL:URLLoader = new URLLoader(uR);
 			
-			uL.dataFormat = URLLoaderDataFormat.TEXT;
+			//uL.dataFormat = URLLoaderDataFormat.TEXT;
 			
-			uL.addEventListener(Event.COMPLETE, loaderCompleteHandler);
+			//uL.addEventListener(Event.COMPLETE, loaderCompleteHandler);
                         
-			function loaderCompleteHandler(e:Event):void{
-  				var output:XML = XML(uL.data);
+			//function loaderCompleteHandler(e:Event):void{
+  				//var output:XML = XML(uL.data);
 				//trace("Data: " + output.item[0].filename);
 				
 				for (var i:int = 0; i < 40; ++i)
 				{
-					var ext:String = output.item[i].filename;
+					//var ext:String = output.item[i].filename;
 					ranks.push(dict[ext]);
 				}
 				
