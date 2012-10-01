@@ -93,7 +93,7 @@
 			//Language presets
 			landing_text.txt_header_esp.alpha = landing_text.txt_landing_esp.alpha = 0;
 			button_torating.button_name_esp.alpha = 0;
-			button_tostats.btxt_view_esp.alpha = button_tostats.btxt_home_esp.alpha = 0;
+			//button_tostats.btxt_view_esp.alpha = button_tostats.btxt_home_esp.alpha = 0;
 			txt_timeout.txt_tap_esp.alpha = txt_timeout.txt_timeout_esp.alpha = 0;
 			//End language presets
 
@@ -101,11 +101,11 @@
 			cont_torating = new TouchSprite();
 			cont_lang = new TouchSprite();
 			
-			cont_tostats.addChild(button_tostats);
+			//cont_tostats.addChild(button_tostats);
 			addChild(cont_tostats);
 			cont_torating.addChild(button_torating);
 			addChild(cont_torating);
-			cont_lang.addChild(button_lang);
+			//cont_lang.addChild(button_lang);
 			addChild(cont_lang);
 			
 			cont_tostats.addEventListener(TouchEvent.TOUCH_DOWN, tostats_dwn, false, 0, true);
@@ -155,7 +155,7 @@
             LOGO_X = graphic_logo.x;
             BG_YPOS = background_texture.y;
 			TORATING_YPOS = button_torating.y;
-			TOSTATS_YPOS = button_tostats.y;
+			//TOSTATS_YPOS = button_tostats.y;
 			LANDTXT_YPOS = landing_text.y;
 			LOGO_YPOS = graphic_logo.y;
 
@@ -173,7 +173,7 @@
 			ImageParser.addEventListener(Event.COMPLETE, imageParserLoaded, false, 0, true);
 			ImageParser.settingsPath = "Soapbox.xml";
 
-			Tweener.addTween( button_tostats.btxt_view_eng, {delay: 1, onComplete: tostats} );
+			Tweener.addTween( this, {delay: 1, onComplete: tostats} );
 
 			/*rating = new Rating();
 			rating.x = RATING_X_POS;
@@ -197,22 +197,22 @@
 
 				landing_text.txt_header_esp.alpha = landing_text.txt_landing_esp.alpha = 0;
 				button_torating.button_name_esp.alpha = 0;
-				button_tostats.btxt_view_esp.alpha = button_tostats.btxt_home_esp.alpha = 0;
+				//button_tostats.btxt_view_esp.alpha = button_tostats.btxt_home_esp.alpha = 0;
 
 				//HOME
 				//english off
 				Tweener.addTween(landing_text.txt_header_eng, {alpha: 0, time: 1});
 				Tweener.addTween(landing_text.txt_landing_eng, {alpha: 0, time: 1});
 				Tweener.addTween(button_torating.button_name_eng, {alpha: 0, time: 1});
-				Tweener.addTween(button_tostats.btxt_view_eng, {alpha: 0, time: 1});
-				Tweener.addTween(button_tostats.btxt_home_eng, {alpha: 0, time: 1});
+				//Tweener.addTween(button_tostats.btxt_view_eng, {alpha: 0, time: 1});
+				//Tweener.addTween(button_tostats.btxt_home_eng, {alpha: 0, time: 1});
 				txt_timeout.txt_tap.alpha = txt_timeout.txt_timeout.alpha = 0;
 				//spanish on
 				Tweener.addTween(landing_text.txt_header_esp, {alpha: 1, time: 1});
 				Tweener.addTween(landing_text.txt_landing_esp, {alpha: 1, time: 1});
 				Tweener.addTween(button_torating.button_name_esp, {alpha: 1, time: 1});
-				Tweener.addTween(button_tostats.btxt_view_esp, {alpha: 1, time: 1});
-				Tweener.addTween(button_tostats.btxt_home_esp, {alpha: 1, time: 1});
+				//Tweener.addTween(button_tostats.btxt_view_esp, {alpha: 1, time: 1});
+				//Tweener.addTween(button_tostats.btxt_home_esp, {alpha: 1, time: 1});
 				txt_timeout.txt_tap_esp.alpha = txt_timeout.txt_timeout_esp.alpha = 1;
 				//RANKING
 				ranking.changeLang(1);
@@ -229,15 +229,15 @@
 				Tweener.addTween(landing_text.txt_header_eng, {alpha: 1, time: 1});
 				Tweener.addTween(landing_text.txt_landing_eng, {alpha: 1, time: 1});
 				Tweener.addTween(button_torating.button_name_eng, {alpha: 1, time: 1});
-				Tweener.addTween(button_tostats.btxt_view_eng, {alpha: 1, time: 1});
-				Tweener.addTween(button_tostats.btxt_home_eng, {alpha: 1, time: 1});
+				//Tweener.addTween(button_tostats.btxt_view_eng, {alpha: 1, time: 1});
+				//Tweener.addTween(button_tostats.btxt_home_eng, {alpha: 1, time: 1});
 				txt_timeout.txt_tap.alpha = txt_timeout.txt_timeout.alpha = 1;
 				//spanish off
 				Tweener.addTween(landing_text.txt_header_esp, {alpha: 0, time: 1});
 				Tweener.addTween(landing_text.txt_landing_esp, {alpha: 0, time: 1});
 				Tweener.addTween(button_torating.button_name_esp, {alpha: 0, time: 1});
-				Tweener.addTween(button_tostats.btxt_view_esp, {alpha: 0, time: 1});
-				Tweener.addTween(button_tostats.btxt_home_esp, {alpha: 0, time: 1});
+				//Tweener.addTween(button_tostats.btxt_view_esp, {alpha: 0, time: 1});
+				//Tweener.addTween(button_tostats.btxt_home_esp, {alpha: 0, time: 1});
 				txt_timeout.txt_tap_esp.alpha = txt_timeout.txt_timeout_esp.alpha = 0;
 				//RANKING
 				ranking.changeLang(0);
@@ -299,15 +299,15 @@
 				screen = 1;
 				Tweener.addTween(background_texture, {x: 0, time: 1.5, transition: "easeInOutQuart" });
 				Tweener.addTween(button_torating, {x: 960, time: 1.5, transition: "easeInOutQuart" });
-				Tweener.addTween(button_tostats, {x: 110, time: 1.5, transition: "easeInOutQuart" });
+				//Tweener.addTween(button_tostats, {x: 110, time: 1.5, transition: "easeInOutQuart" });
 				Tweener.addTween(landing_text, {x: LANDINGTEXT_X, time: 1.5, transition: "easeInOutQuart" });
 				Tweener.addTween(graphic_logo, {x: LOGO_X, time: 1.5, transition: "easeInOutQuart" });
 				Tweener.addTween(ranking, {x: -956.75, time: 1.5, transition: "easeInOutQuart" });
-				Tweener.addTween(cont_lang, { alpha: 0, time: 0.5, onComplete: function() {
+				/*Tweener.addTween(cont_lang, { alpha: 0, time: 0.5, onComplete: function() {
 					button_lang.x = 1832.35;
 					button_lang.y = 955;
 				} });
-				Tweener.addTween(cont_lang, { alpha: 1, time: 1, delay: 1.5});
+				Tweener.addTween(cont_lang, { alpha: 1, time: 1, delay: 1.5});*/
 			}
 
 		}
@@ -358,7 +358,7 @@
 				Tweener.addTween(background_texture, {y: 1330 - 1080, time: 1.5, transition: "easeInOutQuart" });
 				//Tweener.addTween(rating, {y: RATING_Y_POS, time: 1.5, transition: "easeInOutQuart" });
 				Tweener.addTween(button_torating, {y: 950.55 - SCREEN_HEIGHT, time: 1.5, transition: "easeInOutQuart" });
-				Tweener.addTween(button_tostats, {y: 952.2 - SCREEN_HEIGHT, time: 1.5, transition: "easeInOutQuart" });
+				//Tweener.addTween(button_tostats, {y: 952.2 - SCREEN_HEIGHT, time: 1.5, transition: "easeInOutQuart" });
 				Tweener.addTween(landing_text, {y: LANDINGTEXT_Y - SCREEN_HEIGHT, time: 1.5, transition: "easeInOutQuart" });
 				Tweener.addTween(graphic_logo, {y: LOGO_Y - SCREEN_HEIGHT, time: 1.5, transition: "easeInOutQuart" });
 				Tweener.addTween(cont_lang, { alpha: 0, time: 0.5});
@@ -381,7 +381,7 @@
 		}
 
 		private function tostats_dwn(e:TouchEvent):void {
-			button_tostats.gotoAndStop("down");
+			//button_tostats.gotoAndStop("down");
 
 			cont_torating.removeEventListener(TouchEvent.TOUCH_DOWN, torating_dwn);
 			cont_torating.removeEventListener(TouchEvent.TOUCH_UP, torating_up);
@@ -390,7 +390,7 @@
 		}	
 		
 		private function tostats_up(e:TouchEvent):void {
-			button_tostats.gotoAndStop("up");
+			//button_tostats.gotoAndStop("up");
 
 			//COLLECT DATA
 			
@@ -407,13 +407,13 @@
 				screen = 3;
 				Tweener.addTween(background_texture, {x: SCREEN_WIDTH, time: 1.5, transition: "easeInOutQuart" });
 				Tweener.addTween(button_torating, {x: 960 + SCREEN_WIDTH, time: 1.5, transition: "easeInOutQuart" });
-				Tweener.addTween(button_tostats, {x: 110 + SCREEN_WIDTH, time: 1.5, transition: "easeInOutQuart" });
+				//Tweener.addTween(button_tostats, {x: 110 + SCREEN_WIDTH, time: 1.5, transition: "easeInOutQuart" });
 				Tweener.addTween(landing_text, {x: LANDINGTEXT_X + SCREEN_WIDTH, time: 1.5, transition: "easeInOutQuart" });
 				Tweener.addTween(graphic_logo, {x: LOGO_X + SCREEN_WIDTH, time: 1.5, transition: "easeInOutQuart" });
 				Tweener.addTween(ranking, {x: -956.75 + SCREEN_WIDTH, time: 1.5, transition: "easeInOutQuart" });
 				Tweener.addTween(cont_lang, { alpha: 0, time: 0.5, onComplete: function() {
-					button_lang.x = 57.75;
-					button_lang.y = 985.95;
+					/*button_lang.x = 57.75;
+					button_lang.y = 985.95;*/
 					addChild(bubble_comingsoon);
 					bubble_comingsoon.y = 1010;
 					bubble_comingsoon.x = 220;
@@ -428,13 +428,13 @@
 								 ranking.reOrder();
 								 }});
 				Tweener.addTween(button_torating, {x: 960, time: 1.5, transition: "easeInOutQuart" });
-				Tweener.addTween(button_tostats, {x: 110, time: 1.5, transition: "easeInOutQuart" });
+				//Tweener.addTween(button_tostats, {x: 110, time: 1.5, transition: "easeInOutQuart" });
 				Tweener.addTween(landing_text, {x: LANDINGTEXT_X, time: 1.5, transition: "easeInOutQuart" });
 				Tweener.addTween(graphic_logo, {x: LOGO_X, time: 1.5, transition: "easeInOutQuart" });
 				Tweener.addTween(ranking, {x: -956.75, time: 1.5, transition: "easeInOutQuart" });
 				Tweener.addTween(cont_lang, { alpha: 0, time: 0.5, onComplete: function() {
-					button_lang.x = 1832.35;
-					button_lang.y = 955;
+					/*button_lang.x = 1832.35;
+					button_lang.y = 955;*/
 					bubble_comingsoon.x = 1680.5;
 					bubble_comingsoon.y = 977.6;
 				} });
@@ -449,13 +449,13 @@
 			screen = 3;
 			Tweener.addTween(background_texture, {x: SCREEN_WIDTH, time: 1.5, transition: "easeInOutQuart" });
 			Tweener.addTween(button_torating, {x: 960 + SCREEN_WIDTH, time: 1.5, transition: "easeInOutQuart" });
-			Tweener.addTween(button_tostats, {x: 110 + SCREEN_WIDTH, time: 1.5, transition: "easeInOutQuart" });
+			//Tweener.addTween(button_tostats, {x: 110 + SCREEN_WIDTH, time: 1.5, transition: "easeInOutQuart" });
 			Tweener.addTween(landing_text, {x: LANDINGTEXT_X + SCREEN_WIDTH, time: 1.5, transition: "easeInOutQuart" });
 			Tweener.addTween(graphic_logo, {x: LOGO_X + SCREEN_WIDTH, time: 1.5, transition: "easeInOutQuart" });
 			Tweener.addTween(ranking, {x: -956.75 + SCREEN_WIDTH, time: 1.5, transition: "easeInOutQuart" });
 			Tweener.addTween(cont_lang, { alpha: 0, time: 0.5, onComplete: function() {
-				button_lang.x = 57.75;
-				button_lang.y = 985.95;
+				/*button_lang.x = 57.75;
+				button_lang.y = 985.95;*/
 				addChild(bubble_comingsoon);
 				bubble_comingsoon.y = 1010;
 				bubble_comingsoon.x = 220;
@@ -468,9 +468,9 @@
 
 		private function lang_dwn(e:TouchEvent):void {
 			if ( language == 0) { //in English mode
-				button_lang.gotoAndStop("esp_down");
+				//button_lang.gotoAndStop("esp_down");
 			} else {
-				button_lang.gotoAndStop("eng_down");
+				//button_lang.gotoAndStop("eng_down");
 			}
 
 			//COMING SOON TEMP
@@ -482,11 +482,11 @@
 		
 		private function lang_up(e:TouchEvent):void {
 			if ( language == 0) { //in English mode
-				button_lang.gotoAndStop("eng_up");
-				changeLang(); //switch to Spanish
+				//button_lang.gotoAndStop("eng_up");
+				//changeLang(); //switch to Spanish
 			} else {
-				button_lang.gotoAndStop("esp_up");
-				changeLang(); //switch to English
+				//button_lang.gotoAndStop("esp_up");
+				//changeLang(); //switch to English
 			}
 
 			//COMING SOON TEMP
@@ -685,7 +685,7 @@
 			
 			Tweener.addTween(background_texture, {y: BG_YPOS, time: 2, transition: "easeInOutQuart" });
 			Tweener.addTween(button_torating, {y: TORATING_YPOS, time: 2, transition: "easeInOutQuart" });
-			Tweener.addTween(button_tostats, {y: TOSTATS_YPOS, time: 2, transition: "easeInOutQuart" });
+			//Tweener.addTween(button_tostats, {y: TOSTATS_YPOS, time: 2, transition: "easeInOutQuart" });
 			Tweener.addTween(landing_text, {y: LANDTXT_YPOS, time: 2, transition: "easeInOutQuart" });
 			Tweener.addTween(graphic_logo, {y: LOGO_YPOS, time: 2, transition: "easeInOutQuart" });
 			Tweener.addTween(cont_lang, { alpha: 0, time: 0.5});

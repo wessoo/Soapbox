@@ -21,7 +21,8 @@
 		private var list:Array;
 		private var displayed:Array;
 		private var dict:Dictionary;
-
+		private static var shader:Shade;
+		private static var blocker_fullscreen:Blocker;
 
 		private var totalAmount:int = 120;
 		private var vheight:Number = 849;
@@ -47,9 +48,11 @@
 		private var vpadding:Number;//= 399.7 + 19.8;
 
 		private var scrollS:Shape;
+		//Button container
 		private var cont_scroll:TouchSprite;
-
-
+		private var cont_info:TouchSprite;
+		private var cont_shader:TouchSprite;
+		private var cont_blocker_fullscreen:TouchSprite;
 
 		public function Ranking()
 		{
@@ -66,6 +69,31 @@
 			
 			setupDict();
 			getInitialRankings();
+
+			cont_info = new TouchSprite();
+			cont_info.addChild(button_info);
+			addChild(cont_info);
+
+			cont_info.addEventListener(TouchEvent.TOUCH_DOWN, info_dwn, false, 0, true);
+			cont_info.addEventListener(TouchEvent.TOUCH_UP, info_up, false, 0, true);
+
+			//shader
+			shader = new Shade();
+			cont_shader = new TouchSprite();
+			cont_shader.addChild(shader);
+			shader.alpha = 0;
+			cont_shader.addEventListener(TouchEvent.TOUCH_DOWN, shader_dwn, false, 0, true);
+			cont_shader.addEventListener(TouchEvent.TOUCH_UP, shader_up, false, 0, true);
+			
+			//blocker
+			blocker_fullscreen = new Blocker();
+			cont_blocker_fullscreen = new TouchSprite();
+			cont_blocker_fullscreen.addChild(blocker_fullscreen);
+
+			//info window
+			window_info.alpha = 0;
+			window_info.scaleX = window_info.scaleY = 0.9;
+			
 		}
 		
 		private function setupDict():void{
@@ -591,7 +619,57 @@
 			dy *= friction;
         }
 		
+		private function info_dwn(e:TouchEvent):void{
+			button_info.gotoAndStop("down");
+		}
+
+		private function info_up(e:TouchEvent):void{
+			button_info.gotoAndStop("up");
+			Tweener.addTween(window_info, { alpha: 1, delay: 0.5, time: 1 } );
+			Tweener.addTween(window_info, { scaleX: 1, scaleY: 1, time: 1, delay: 0.5, transition: "easeOutElastic" });
+
+			shadeOn();
+
+			blockerOn();
+			Tweener.addTween(cont_blocker_fullscreen, { delay: 1, onComplete: blockerOff } );
+
+			addChild(window_info);
+		}
+
+		private function shader_dwn(e:TouchEvent):void {
+
+		}
+
+		private function shader_up(e:TouchEvent):void {
+			shadeOff();
+			Tweener.addTween(window_info, { alpha: 0, time: 1 } );
+			Tweener.addTween(window_info, { scaleX: 0.9, scaleY: 0.9, time: 1 } );
+
+			blockerOn();
+			Tweener.addTween(cont_blocker_fullscreen, { delay: 1, onComplete: blockerOff } );
+		}
 		
+		public function shadeOn():void {
+			addChild(cont_shader);
+			Tweener.addTween(shader, { alpha: 1, time: 1 } );
+		}
 		
+		public function shadeOff():void {
+			//trace("call off shader");
+			Tweener.addTween(shader, { alpha: 0, time: 1, onComplete: function() { removeChild(cont_shader) } } );
+		}
+		
+		public function blockerOn():void {
+			//trace("blocker ON");
+			addChild(cont_blocker_fullscreen);
+			setChildIndex(cont_blocker_fullscreen, numChildren - 1);
+			cont_blocker_fullscreen.visible = true;
+		}
+		
+		public function blockerOff():void {
+			//trace("blocker OFF");
+			removeChild(cont_blocker_fullscreen);
+			cont_blocker_fullscreen.visible = false;
+		}
 	}
 }
