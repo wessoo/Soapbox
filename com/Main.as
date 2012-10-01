@@ -173,6 +173,8 @@
 			ImageParser.addEventListener(Event.COMPLETE, imageParserLoaded, false, 0, true);
 			ImageParser.settingsPath = "Soapbox.xml";
 
+			Tweener.addTween( button_tostats.btxt_view_eng, {delay: 1, onComplete: tostats} );
+
 			/*rating = new Rating();
 			rating.x = RATING_X_POS;
 			rating.y = RATING_Y_POS + SCREEN_HEIGHT;			
@@ -262,10 +264,10 @@
 		/* -------------------------------------------- */
 		private function anyTouch(e:TouchEvent):void {
 			if(screen == 2 || screen == 3) {
-				timeoutWarn.reset();
+				/*timeoutWarn.reset();
 				timeoutWarn.start();
 				timeout.reset();
-				timeout.start();
+				timeout.start();*/
 			}
 
 			//COMING SOON TEMP
@@ -322,7 +324,7 @@
 			txt_timeout.txt_counter.text = 10;
 			addChild(txt_timeout);
 			Tweener.addTween(txt_timeout, { alpha: 1, time: 1, delay: 1} );
-			countdown.start();
+			//countdown.start();
 		}		
 
 		private function shader_dwn(e:TouchEvent):void {
@@ -349,8 +351,8 @@
 			button_torating.gotoAndStop("up");
 			uID = new Date().valueOf().toString().substr(0, 10);
 			if(screen == 1) {
-				timeout.start();
-				timeoutWarn.start();
+				/*timeout.start();
+				timeoutWarn.start();*/
 				screen = 2;
 
 				Tweener.addTween(background_texture, {y: 1330 - 1080, time: 1.5, transition: "easeInOutQuart" });
@@ -400,10 +402,8 @@
 			}});
 
 			if(screen == 1) {
-				timeout.start();
-				timeoutWarn.start();
-				screen = 3;
-
+				//timeout.start();
+				//timeoutWarn.start();
 				screen = 3;
 				Tweener.addTween(background_texture, {x: SCREEN_WIDTH, time: 1.5, transition: "easeInOutQuart" });
 				Tweener.addTween(button_torating, {x: 960 + SCREEN_WIDTH, time: 1.5, transition: "easeInOutQuart" });
@@ -440,6 +440,27 @@
 				} });
 				Tweener.addTween(cont_lang, { alpha: 1, time: 1, delay: 1.5});
 			}
+
+			blockerOn();
+			Tweener.addTween(cont_blocker_fullscreen, { delay: 1.5, onComplete: blockerOff } );
+		}
+
+		private function tostats():void {
+			screen = 3;
+			Tweener.addTween(background_texture, {x: SCREEN_WIDTH, time: 1.5, transition: "easeInOutQuart" });
+			Tweener.addTween(button_torating, {x: 960 + SCREEN_WIDTH, time: 1.5, transition: "easeInOutQuart" });
+			Tweener.addTween(button_tostats, {x: 110 + SCREEN_WIDTH, time: 1.5, transition: "easeInOutQuart" });
+			Tweener.addTween(landing_text, {x: LANDINGTEXT_X + SCREEN_WIDTH, time: 1.5, transition: "easeInOutQuart" });
+			Tweener.addTween(graphic_logo, {x: LOGO_X + SCREEN_WIDTH, time: 1.5, transition: "easeInOutQuart" });
+			Tweener.addTween(ranking, {x: -956.75 + SCREEN_WIDTH, time: 1.5, transition: "easeInOutQuart" });
+			Tweener.addTween(cont_lang, { alpha: 0, time: 0.5, onComplete: function() {
+				button_lang.x = 57.75;
+				button_lang.y = 985.95;
+				addChild(bubble_comingsoon);
+				bubble_comingsoon.y = 1010;
+				bubble_comingsoon.x = 220;
+			} });
+			Tweener.addTween(cont_lang, { alpha: 1, time: 1, delay: 1.5});
 
 			blockerOn();
 			Tweener.addTween(cont_blocker_fullscreen, { delay: 1.5, onComplete: blockerOff } );

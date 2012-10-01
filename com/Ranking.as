@@ -78,6 +78,7 @@
 		override protected function createUI():void
 		{
 			addChild(graphic_headfoot);
+			addChild(txt_top40);
 			for (var i:int = 0; i < ranks.length; ++i)
 			{
 				var rp:RankPhoto = new RankPhoto(i,ranks[i]);
