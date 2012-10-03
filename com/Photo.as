@@ -188,6 +188,8 @@
 		
 		public function setupViewingPhoto():void{
 			addChild(photo);
+			//photo.x = -photo.width/2;
+			//photo.y = -photo.height/2;
 			//photo.alpha = 0;
 			var pw = photo.width + viewPadding * 2;
 			var ph = photo.height + viewPadding * 2;
@@ -282,15 +284,34 @@
 			}
 		}
 		
+		public function imitate_touchHandler():void{
+			if(!viewing){
+				//COLLECT DATA
+				blackOn();
+				
+				setupViewingPhoto();
+				blockerOn();
+				Tweener.addTween(cont_blocker_fullscreen, { delay: .5, onComplete: function() { blockerOff(); } } );
+				viewing = true;
+			}
+			else{
+				//COLLECT DATA
+				
+				exitViewing();
+			}
+		}
+		
 		public function exitViewing():void {
 			Tweener.addTween(photo, {x: savedX, y: savedY, scaleX: savedScale, scaleY: savedScale, time: 1.5})
 			blackOff();
 			blockerOn();
 			Tweener.addTween(cont_blocker_fullscreen, { delay: 1, onComplete: function() { 
 				blockerOff();
-				dispatchEvent(new Event("activate_exitphoto", true));
+				//dispatchEvent(new Event("activate_exitphoto", true));
 			}});
 			viewing = false;
+			parent.removeChild(this);
+			visible = false;
 		}
 
 		override public function Dispose():void{

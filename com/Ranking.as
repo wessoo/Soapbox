@@ -13,14 +13,14 @@
 
 
 	import caurina.transitions.Tweener;
-	import flash.utils.Dictionary;
+	//import flash.utils.Dictionary;
 
 	public class Ranking extends TouchComponent
 	{
 		private var ranks:Array;
 		private var list:Array;
 		private var displayed:Array;
-		private var dict:Dictionary;
+		//private var dict:Dictionary;
 		private static var shader:Shade;
 		private static var blocker_fullscreen:Blocker;
 
@@ -53,6 +53,9 @@
 		private var cont_info:TouchSprite;
 		private var cont_shader:TouchSprite;
 		private var cont_blocker_fullscreen:TouchSprite;
+		
+		//Photo for full screen display
+		private var photo:Photo;
 
 		public function Ranking()
 		{
@@ -62,12 +65,16 @@
 			displayed = new Array();
 			scrollS = new Shape();
 			cont_scroll = new TouchSprite();
-			dict = new Dictionary();
+			//dict = new Dictionary();
+			photo = new Photo(100);
+			photo.visible = false;
+			photo.blobContainerEnabled = true;
 
+			
 			//Language presets
 			txt_top40.txt_header_esp.alpha = txt_top40.txt_body_esp.alpha = 0;
 			
-			setupDict();
+			//setupDict();
 			getInitialRankings();
 
 			cont_info = new TouchSprite();
@@ -96,12 +103,14 @@
 			
 		}
 		
+		/*
 		private function setupDict():void{
 			for(var i:int = 0; i < 120; ++i){
 				var ext:String = ImageParser.settings.Content.Source[i].ext;
 				dict[ext] = i + 1;
 			}
 		}
+		*/
 
 		override protected function createUI():void
 		{
@@ -110,6 +119,7 @@
 			for (var i:int = 0; i < ranks.length; ++i)
 			{
 				var rp:RankPhoto = new RankPhoto(i,ranks[i]);
+				rp.addEventListener(TouchEvent.TOUCH_UP, photo_touch_fullscreen, false, 0, true);
 				list.push(rp);
 			}
 			
@@ -167,7 +177,7 @@
 			scrollS.alpha = 0;
 
 			cont_scroll.addChild(scrollS);
-			addChildAt(cont_scroll, getChildIndex(displayed[11]) + 1)
+			addChildAt(cont_scroll, getChildIndex(displayed[0]) - 1)
 
 			cont_scroll.addEventListener(GestureEvent.GESTURE_DRAG , dragHandler, false, 0, true);
 			cont_scroll.addEventListener(TouchEvent.TOUCH_UP , touchUpHandler, false, 0, true);
@@ -222,7 +232,7 @@
 				}
 			}
 			removeChild(cont_scroll);
-			addChildAt(cont_scroll, getChildIndex(displayed[11]) + 1)
+			addChildAt(cont_scroll, getChildIndex(displayed[0]) - 1)
 		}
 		
 		public function reOrder():void{
@@ -424,10 +434,10 @@
 
 				if ((displayed[0].y >= vy + displayed[0].height/2) && (displayed[0].id > 0) && (e.dy > 0))
 				{
-					addChildAt(list[displayed[0].id - 4], getChildIndex(cont_scroll) - 1);
-					addChildAt(list[displayed[0].id - 3], getChildIndex(cont_scroll) - 1);
-					addChildAt(list[displayed[0].id - 2], getChildIndex(cont_scroll) - 1);
-					addChildAt(list[displayed[0].id - 1], getChildIndex(cont_scroll) - 1);
+					addChildAt(list[displayed[0].id - 4], getChildIndex(cont_scroll) + 1);
+					addChildAt(list[displayed[0].id - 3], getChildIndex(cont_scroll) + 1);
+					addChildAt(list[displayed[0].id - 2], getChildIndex(cont_scroll) + 1);
+					addChildAt(list[displayed[0].id - 1], getChildIndex(cont_scroll) + 1);
 					displayed.splice(0,0, list[displayed[0].id - 1]);
 					displayed.splice(0,0, list[displayed[0].id - 1]);
 					displayed.splice(0,0, list[displayed[0].id - 1]);
@@ -437,10 +447,10 @@
 
 				if ((lastT1.y <= vy + vheight - displayed[displayed.length -1].height/2) && (lastT1.id + 1 < totalAmount) && (e.dy < 0))
 				{
-					addChildAt(list[lastT1.id + 1], getChildIndex(cont_scroll) - 1);
-					addChildAt(list[lastT1.id + 2], getChildIndex(cont_scroll) - 1);
-					addChildAt(list[lastT1.id + 3], getChildIndex(cont_scroll) - 1);
-					addChildAt(list[lastT1.id + 4], getChildIndex(cont_scroll) - 1);
+					addChildAt(list[lastT1.id + 1], getChildIndex(cont_scroll) + 1);
+					addChildAt(list[lastT1.id + 2], getChildIndex(cont_scroll) + 1);
+					addChildAt(list[lastT1.id + 3], getChildIndex(cont_scroll) + 1);
+					addChildAt(list[lastT1.id + 4], getChildIndex(cont_scroll) + 1);
 					displayed.push(list[lastT1.id + 1]);
 					displayed.push(list[lastT1.id + 2]);
 					displayed.push(list[lastT1.id + 3]);
@@ -591,10 +601,10 @@
 
 				if ((displayed[0].y >= vy + displayed[0].height/2) && (displayed[0].id > 0) && (dy > 0))
 				{
-					addChildAt(list[displayed[0].id - 4], getChildIndex(cont_scroll) - 1);
-					addChildAt(list[displayed[0].id - 3], getChildIndex(cont_scroll) - 1);
-					addChildAt(list[displayed[0].id - 2], getChildIndex(cont_scroll) - 1);
-					addChildAt(list[displayed[0].id - 1], getChildIndex(cont_scroll) - 1);
+					addChildAt(list[displayed[0].id - 4], getChildIndex(cont_scroll) + 1);
+					addChildAt(list[displayed[0].id - 3], getChildIndex(cont_scroll) + 1);
+					addChildAt(list[displayed[0].id - 2], getChildIndex(cont_scroll) + 1);
+					addChildAt(list[displayed[0].id - 1], getChildIndex(cont_scroll) + 1);
 					displayed.splice(0,0, list[displayed[0].id - 1]);
 					displayed.splice(0,0, list[displayed[0].id - 1]);
 					displayed.splice(0,0, list[displayed[0].id - 1]);
@@ -604,10 +614,10 @@
 
 				if ((lastT1.y <= vy + vheight - displayed[displayed.length -1].height/2) && (lastT1.id + 1 < totalAmount) && (dy < 0))
 				{
-					addChildAt(list[lastT1.id + 1], getChildIndex(cont_scroll) - 1);
-					addChildAt(list[lastT1.id + 2], getChildIndex(cont_scroll) - 1);
-					addChildAt(list[lastT1.id + 3], getChildIndex(cont_scroll) - 1);
-					addChildAt(list[lastT1.id + 4], getChildIndex(cont_scroll) - 1);
+					addChildAt(list[lastT1.id + 1], getChildIndex(cont_scroll) + 1);
+					addChildAt(list[lastT1.id + 2], getChildIndex(cont_scroll) + 1);
+					addChildAt(list[lastT1.id + 3], getChildIndex(cont_scroll) + 1);
+					addChildAt(list[lastT1.id + 4], getChildIndex(cont_scroll) + 1);
 					displayed.push(list[lastT1.id + 1]);
 					displayed.push(list[lastT1.id + 2]);
 					displayed.push(list[lastT1.id + 3]);
@@ -647,6 +657,13 @@
 
 			blockerOn();
 			Tweener.addTween(cont_blocker_fullscreen, { delay: 1, onComplete: blockerOff } );
+		}
+		
+		private function photo_touch_fullscreen(e:TouchEvent):void{
+			addChild(photo);
+			//photo.id = e.currentTarget.photoID;
+			photo.imitate_touchHandler();
+			photo.visible = true;
 		}
 		
 		public function shadeOn():void {
