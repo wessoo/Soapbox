@@ -24,7 +24,9 @@
 		private static var shader:Shade;
 		private static var blocker_fullscreen:Blocker;
 		private static var exit_fullscreen:Blocker;
-
+		private var request:URLRequest;
+		private var variables:URLVariables;
+		private var loader:URLLoader;
 		private var totalAmount:int = 120;
 		private var vheight:Number = 849;
 		private var vy:Number = -446;
@@ -38,7 +40,7 @@
 		//Variables used for bounce effect
 		private var resist:Number = .15;
 		private var maximumStretch:Number = 60;
-		
+		private var now:Date; 			//used to differentiate requests of same time
 		private var tweening:Boolean = false;
 		
 		//Variables to set off bounce back animation when trying to scroll past the end of the list
@@ -47,14 +49,16 @@
 
 		private var hpadding:Number;//= 396.2 + 66.48;
 		private var vpadding:Number;//= 399.7 + 19.8;
-
 		private var scrollS:Shape;
-		//Button container
+
+		//Containers
+		private static var SCREEN_URL:String = "http://192.168.10.101:4100/show?image=";
 		private var cont_scroll:TouchSprite;
 		private var cont_info:TouchSprite;
 		private var cont_shader:TouchSprite;
 		private var cont_blocker_fullscreen:TouchSprite;
 		private var cont_exit_fullscreen:TouchSprite;
+		private var cont_toscreen:TouchSprite;
 		
 		private var photo:Photo;		//Photo for full screen display
 		private var dummyPhoto:Photo;	//Photo object used for creating transition
@@ -63,6 +67,10 @@
 
 		public function Ranking()
 		{
+			request = new URLRequest(SCREEN_URL);
+			variables = new URLVariables();
+			loader = new URLLoader();
+
 			blobContainerEnabled = true;
 			ranks = new Array();
 			list = new Array();
@@ -91,6 +99,15 @@
 
 			cont_info.addEventListener(TouchEvent.TOUCH_DOWN, info_dwn, false, 0, true);
 			cont_info.addEventListener(TouchEvent.TOUCH_UP, info_up, false, 0, true);
+
+			//toscreen
+			cont_toscreen = new TouchSprite();
+			cont_toscreen.addChild(button_toscreen);
+			cont_toscreen.alpha = 0;
+			//addChild(cont_toscreen);
+			cont_toscreen.addEventListener(TouchEvent.TOUCH_DOWN, toscreen_dwn, false, 0, true);
+			cont_toscreen.addEventListener(TouchEvent.TOUCH_UP, toscreen_up, false, 0, true);
+			button_toscreen.btxt_screen_esp.alpha = 0;
 
 			//shader
 			shader = new Shade();
@@ -688,6 +705,26 @@
 			Tweener.addTween(cont_blocker_fullscreen, { delay: 1, onComplete: blockerOff } );
 		}
 
+
+		private function toscreen_dwn(e:TouchEvent):void {
+			button_toscreen.gotoAndStop("down");
+		}
+
+
+		private function toscreen_up(e:TouchEvent):void {
+			button_toscreen.gotoAndStop("up");
+
+			try {
+                //loader.load(request);
+                now = new Date();
+           		request.url = SCREEN_URL + photo.ext + "&time=" + now.minutes + now.seconds;
+           		loader.load(request);
+                trace(request.url);
+            } catch (error:Error) {
+                trace("Unable to load requested document.");
+            }
+		}
+
 		private function exitfs_dwn(e:TouchEvent):void {
 
 		}
@@ -696,24 +733,26 @@
 			//Tweener.addTween()
 			blackOff();
 			photo.exitViewing();
-			Tweener.addTween(photo, {alpha: 0, time: 1, onComplete: function() {
-				removeChild(photo);
-			}});
+			Tweener.addTween(photo, {alpha: 0, time: 1, onComplete: function() { removeChild(photo); }});
 
-			Tweener.addTween(this, {delay: 1.4, onComplete: function() {
-				removeChild(cont_exit_fullscreen);
-			}});
+			Tweener.addTween(cont_toscreen, {alpha: 0, time: 0.5, onComplete: function() { removeChild(cont_toscreen); }});
+
+			Tweener.addTween(this, {delay: 1.4, onComplete: function() { removeChild(cont_exit_fullscreen);	}});
 		}
 
 		private function thumb_tapped(e:Event):void {
 			//trace("tapped!");
 			blackOn();
 			addChild(photo);
+			addChild(cont_toscreen);
 			Tweener.addTween(photo, {alpha: 1, time: 1, delay: 0.2});
+			Tweener.addTween(cont_toscreen, {alpha: 1, time: 1, delay: 0.2})
 			photo.imitate_touchHandler();
 			
 			Tweener.addTween(this, {delay: 1.4, onComplete: function() {
 				addChild(cont_exit_fullscreen);
+				addChild(cont_toscreen);
+				Tweener.addTween(cont_toscreen, {alpha: 1, time: 0.5})
 			}});
 			photo.visible = true;
 		}
@@ -726,32 +765,13 @@
 			var thumb_point:Point = new Point(e.currentTarget.photo.x, e.currentTarget.photo.y);
 			result_point = e.currentTarget.photo.localToGlobal(thumb_point);
 
-
-			//photo.x = 0 - photo.photo.width/2;
-			//photo.y = 0 - photo.photo.height/2;
 			photo.x = -600;
 			photo.y = -400;
-			//photo.scaleX = photo.scaleY = 1.3
-			//trace()
 			
 			trace(photo.imgWidth);
 			trace(photo.imgHeight);
-			//photo.x = e.currentTarget.x;
-			//photo.y = e.currentTarget.y;
-			/*photo.x = result_point.x - 960;
-			photo.y = result_point.y - 540;
-			photo.width = 10;
-			photo.height = 10;
-			trace(e.currentTarget.x);
-			trace(e.currentTarget.y);
-			trace(e.currentTarget.width);
-			trace(e.currentTarget.height);*/
 
 		}
-
-		//private function center_x(imgWidth:int):int {
-			//imgWidth/2
-		//}
 		
 		public function shadeOn():void {
 			addChild(cont_shader);
