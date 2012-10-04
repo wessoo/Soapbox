@@ -219,7 +219,9 @@
 				//photo.scaleX = photo.scaleY = stage.stageHeight/ph;
 				nxt_xScale = stage.stageHeight/ph;
 				nxt_yScale = stage.stageHeight/ph;
-				Tweener.addTween(photo, {scaleX: nxt_xScale, scaleY: nxt_yScale, time: 2, delay: .5});
+				Tweener.addTween(photo, {scaleX: nxt_xScale, scaleY: nxt_yScale, time: 1.2, delay: .5});
+				/*scaleX = nxt_xScale;
+				scaleY = nxt_yScale;*/
 			}
 			else{
 				
@@ -228,12 +230,16 @@
 				if(nxt_yScale * ph > stage.stageHeight){
 					nxt_xScale = nxt_yScale = stage.stageHeight/ph;
 				}
-				Tweener.addTween(photo, {scaleX: nxt_xScale, scaleY: nxt_yScale, time: 2, delay: .5});
+				Tweener.addTween(photo, {scaleX: nxt_xScale, scaleY: nxt_yScale, time: 1.2, delay: .5});
+				/*scaleX = nxt_xScale;
+				scaleY = nxt_yScale;*/
 			}
 			var nextX = (stage.stageWidth/2) - ((photo.width * nxt_xScale)/2);
 			var nextY = (stage.stageHeight/2) - ((photo.height * nxt_yScale)/2);
 			var localPoint:Point = globalToLocal(new Point(nextX,nextY));
 			Tweener.addTween(photo, {x: localPoint.x, y: localPoint.y, time: 2, delay: .5} );
+			/*photo.x = localPoint.x;
+			photo.y = localPoint.y;*/
 			//Tweener.addTween(photo, {alpha: 1, time: .5, delay: .5});
 		}
 		
@@ -298,9 +304,11 @@
 		public function imitate_touchHandler():void{
 			if(!viewing){
 				//COLLECT DATA
-				blackOn();
+				//blackOn();
 				
+				Tweener.addTween(this, {delay: 0.2, onComplete: setupViewingPhoto});
 				setupViewingPhoto();
+				
 				blockerOn();
 				Tweener.addTween(cont_blocker_fullscreen, { delay: .5, onComplete: function() { blockerOff(); } } );
 				viewing = true;
@@ -314,15 +322,15 @@
 		
 		public function exitViewing():void {
 			Tweener.addTween(photo, {x: savedX, y: savedY, scaleX: savedScale, scaleY: savedScale, time: 1.5})
-			blackOff();
+			//blackOff();
 			blockerOn();
 			Tweener.addTween(cont_blocker_fullscreen, { delay: 1, onComplete: function() { 
 				blockerOff();
 				//dispatchEvent(new Event("activate_exitphoto", true));
 			}});
 			viewing = false;
-			parent.removeChild(this);
-			visible = false;
+			//parent.removeChild(this);
+			//visible = false;
 		}
 
 		override public function Dispose():void{

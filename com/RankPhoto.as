@@ -139,7 +139,7 @@
 		}
 
 		private function photo_up(e:TouchEvent):void {
-			dispatchEvent(new Event("photo_tapped", true));
+			dispatchEvent(new Event("thumb_tapped", true));
 		}
 	}
 	

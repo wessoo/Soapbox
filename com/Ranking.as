@@ -23,6 +23,7 @@
 		//private var dict:Dictionary;
 		private static var shader:Shade;
 		private static var blocker_fullscreen:Blocker;
+		private static var exit_fullscreen:Blocker;
 
 		private var totalAmount:int = 120;
 		private var vheight:Number = 849;
@@ -53,9 +54,12 @@
 		private var cont_info:TouchSprite;
 		private var cont_shader:TouchSprite;
 		private var cont_blocker_fullscreen:TouchSprite;
+		private var cont_exit_fullscreen:TouchSprite;
 		
 		private var photo:Photo;		//Photo for full screen display
 		private var dummyPhoto:Photo;	//Photo object used for creating transition
+		private static var black:Black;
+		private var cont_black:TouchSprite;
 
 		public function Ranking()
 		{
@@ -66,10 +70,14 @@
 			scrollS = new Shape();
 			cont_scroll = new TouchSprite();
 			//dict = new Dictionary();
+			
+			//Photo
 			photo = new Photo(100);
 			photo.visible = false;
 			photo.blobContainerEnabled = true;
-
+			photo.alpha = 0;
+			/*photo.addEventListener(TouchEvent.TOUCH_DOWN, photo_dwn, false, 0, true);
+			photo.addEventListener(TouchEvent.TOUCH_UP, photo_up, false, 0, true);*/
 			
 			//Language presets
 			txt_top40.txt_header_esp.alpha = txt_top40.txt_body_esp.alpha = 0;
@@ -97,12 +105,28 @@
 			cont_blocker_fullscreen = new TouchSprite();
 			cont_blocker_fullscreen.addChild(blocker_fullscreen);
 
+			//exit fullscreen
+			exit_fullscreen = new Blocker();
+			cont_exit_fullscreen = new TouchSprite();
+			cont_exit_fullscreen.addChild(exit_fullscreen);
+			cont_exit_fullscreen.addEventListener(TouchEvent.TOUCH_DOWN, exitfs_dwn, false, 0, true);
+			cont_exit_fullscreen.addEventListener(TouchEvent.TOUCH_UP, exitfs_up, false, 0, true);
+
+			//black
+			black = new Black();
+			cont_black = new TouchSprite();
+			cont_black.addChild(black);
+			//addChild(cont_black);
+			black.x += black.width/2;
+			black.y += black.height/2;
+			cont_black.alpha = 0;
+
 			//info window
 			window_info.alpha = 0;
 			window_info.scaleX = window_info.scaleY = 0.9;
 
 			//class event listeners
-			addEventListener("photo_tapped", photo_tapped);
+			addEventListener("thumb_tapped", thumb_tapped);
 			
 		}
 		
@@ -664,10 +688,33 @@
 			Tweener.addTween(cont_blocker_fullscreen, { delay: 1, onComplete: blockerOff } );
 		}
 
-		private function photo_tapped(e:Event):void {
+		private function exitfs_dwn(e:TouchEvent):void {
+
+		}
+
+		private function exitfs_up(e:TouchEvent):void {
+			//Tweener.addTween()
+			blackOff();
+			photo.exitViewing();
+			Tweener.addTween(photo, {alpha: 0, time: 1, onComplete: function() {
+				removeChild(photo);
+			}});
+
+			Tweener.addTween(this, {delay: 1.4, onComplete: function() {
+				removeChild(cont_exit_fullscreen);
+			}});
+		}
+
+		private function thumb_tapped(e:Event):void {
 			//trace("tapped!");
+			blackOn();
 			addChild(photo);
-			//photo.imitate_touchHandler();
+			Tweener.addTween(photo, {alpha: 1, time: 1, delay: 0.2});
+			photo.imitate_touchHandler();
+			
+			Tweener.addTween(this, {delay: 1.4, onComplete: function() {
+				addChild(cont_exit_fullscreen);
+			}});
 			photo.visible = true;
 		}
 		
@@ -684,6 +731,7 @@
 			//photo.y = 0 - photo.photo.height/2;
 			photo.x = -600;
 			photo.y = -400;
+			//photo.scaleX = photo.scaleY = 1.3
 			//trace()
 			
 			trace(photo.imgWidth);
@@ -726,6 +774,22 @@
 			//trace("blocker OFF");
 			removeChild(cont_blocker_fullscreen);
 			cont_blocker_fullscreen.visible = false;
+		}
+
+		public function blackOn():void {
+			addChild(cont_black);
+			var localPoint:Point = globalToLocal(new Point(0,0));
+			cont_black.x = localPoint.x;
+			cont_black.y = localPoint.y;
+			Tweener.addTween(cont_black, { alpha: 1, time: 1.5 } );
+		}
+		
+		public function blackOff():void {
+			Tweener.addTween(cont_black, { alpha: 0, time: .5, delay : .5, onComplete: function() { 
+							 if(contains(cont_black)){
+							 	removeChild(cont_black);
+							 }
+							 } } );
 		}
 	}
 }
