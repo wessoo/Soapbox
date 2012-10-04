@@ -679,12 +679,31 @@
 			var thumb_point:Point = new Point(e.currentTarget.photo.x, e.currentTarget.photo.y);
 			result_point = e.currentTarget.photo.localToGlobal(thumb_point);
 
-			photo.x = e.currentTarget.x;
-			photo.y = e.currentTarget.y;
-			trace(result_point.x);
-			trace(result_point.y);
-			e.currentTarget
+
+			//photo.x = 0 - photo.photo.width/2;
+			//photo.y = 0 - photo.photo.height/2;
+			photo.x = -600;
+			photo.y = -400;
+			//trace()
+			
+			trace(photo.imgWidth);
+			trace(photo.imgHeight);
+			//photo.x = e.currentTarget.x;
+			//photo.y = e.currentTarget.y;
+			/*photo.x = result_point.x - 960;
+			photo.y = result_point.y - 540;
+			photo.width = 10;
+			photo.height = 10;
+			trace(e.currentTarget.x);
+			trace(e.currentTarget.y);
+			trace(e.currentTarget.width);
+			trace(e.currentTarget.height);*/
+
 		}
+
+		//private function center_x(imgWidth:int):int {
+			//imgWidth/2
+		//}
 		
 		public function shadeOn():void {
 			addChild(cont_shader);

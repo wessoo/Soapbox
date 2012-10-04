@@ -13,7 +13,7 @@
 		
 	public class Photo extends TouchComponent{
 		//Variables this object is physically made up of
-		private var photo:BitmapLoader;
+		public var photo:BitmapLoader;
 		
 		//Data variables
 		private var iUrl:String;
@@ -99,6 +99,14 @@
 		public function get copyright():String{
 			return iCopyright;
 		}
+
+		public function get imgWidth():int{
+			return photo.width;
+		}
+
+		public function get imgHeight():int{
+			return photo.height;
+		}
 		
 		override protected function createUI():void{
 			//Data
@@ -133,7 +141,8 @@
 		
 		override protected function commitUI():void{
 			photo.url = iUrl;
-			
+			trace("Photo.as: " + photo.width);
+			trace("Photo.as: " + photo.height);
 		}
 		
 		override protected function layoutUI():void{
