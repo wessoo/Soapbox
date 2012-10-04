@@ -1,20 +1,20 @@
 ﻿package com {
 	//import flash.display.Shader;
-	//import flash.events.Event;
+	import flash.events.Event;
 	//import flash.display.DisplayObject;	
 	//import flash.display.MovieClip;
 	
 	//import gl.events.GestureEvent;
-	//import gl.events.TouchEvent;
+	import gl.events.TouchEvent;
 	import id.core.TouchComponent;
 	import id.element.BitmapLoader;
 
-	//import id.core.TouchSprite;
+	import id.core.TouchSprite;
 	
 	//import caurina.transitions.Tweener;	
 
 	public class RankPhoto extends TouchComponent {
-		private var photo:BitmapLoader;
+		public var photo:BitmapLoader;
 		private var _id:int;
 		private var _photoID:int;
 		
@@ -24,13 +24,22 @@
 		private var iDate:String;
 		private var iCopyright:String;
 
+		private var cont_photo:TouchSprite;
+
 		public function RankPhoto(inputID:int, photoID:int) {
 			_id = inputID;
 			_photoID = photoID;
 			txt_rank.htmlText = bold((inputID + 1).toString());
+			//trace(txt_rank.htmlText.length);
+			if(txt_rank.htmlText.length == 150) {
+				txt_rank.x -= 35;
+			} else if (txt_rank.htmlText.length == 151) {
+				txt_rank.x -= 70;
+			}
+
 			createUI();
 			commitUI();
-			
+			//layoutUI();
 		}
 		
 		override public function get id():int{
@@ -39,6 +48,10 @@
 		
 		public function get photoID():int{
 			return _photoID;
+		}
+
+		public function set photoID(idValue:int):void{
+			_photoID = idValue;
 		}
 		
 		override protected function createUI():void {
@@ -50,6 +63,8 @@
 			
 			photo = new BitmapLoader();
 			addChild(photo);
+
+			
 		}
 		override protected function commitUI():void{
 			photo.url = iUrl;
@@ -63,6 +78,12 @@
 		
 		override protected function layoutUI():void{
 			setupPhoto();
+
+			cont_photo = new TouchSprite();
+			cont_photo.addChild(photo);
+			addChild(cont_photo);
+			cont_photo.addEventListener(TouchEvent.TOUCH_DOWN, photo_dwn, false, 0, true);
+			cont_photo.addEventListener(TouchEvent.TOUCH_UP, photo_up, false, 0, true);
 		}
 		
 		override public function Dispose():void{
@@ -113,7 +134,13 @@
 		/* ------------------------------------------- */
 		/* ------ Interface/Animation Functions ------ */
 		/* ------------------------------------------- */
+		private function photo_dwn(e:TouchEvent):void {
 
+		}
+
+		private function photo_up(e:TouchEvent):void {
+			dispatchEvent(new Event("photo_tapped", true));
+		}
 	}
 	
 }

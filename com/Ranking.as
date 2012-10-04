@@ -10,14 +10,14 @@
 	//import flash.display.Stage;
 	import id.core.TouchSprite;
 	import flash.text.engine.EastAsianJustifier; 
-
+	import flash.geom.Point;
 
 	import caurina.transitions.Tweener;
 	//import flash.utils.Dictionary;
 
 	public class Ranking extends TouchComponent
 	{
-		private var ranks:Array;
+		private var ranks:Array; //an array of photo IDs, arranged by rank
 		private var list:Array;
 		private var displayed:Array;
 		//private var dict:Dictionary;
@@ -54,8 +54,8 @@
 		private var cont_shader:TouchSprite;
 		private var cont_blocker_fullscreen:TouchSprite;
 		
-		//Photo for full screen display
-		private var photo:Photo;
+		private var photo:Photo;		//Photo for full screen display
+		private var dummyPhoto:Photo;	//Photo object used for creating transition
 
 		public function Ranking()
 		{
@@ -100,6 +100,9 @@
 			//info window
 			window_info.alpha = 0;
 			window_info.scaleX = window_info.scaleY = 0.9;
+
+			//class event listeners
+			addEventListener("photo_tapped", photo_tapped);
 			
 		}
 		
@@ -116,10 +119,12 @@
 		{
 			addChild(graphic_headfoot);
 			addChild(txt_top40);
+			//add touch to each
 			for (var i:int = 0; i < ranks.length; ++i)
 			{
 				var rp:RankPhoto = new RankPhoto(i,ranks[i]);
-				rp.addEventListener(TouchEvent.TOUCH_UP, photo_touch_fullscreen, false, 0, true);
+				rp.photoID = ranks[i];
+				rp.addEventListener(TouchEvent.TOUCH_UP, tapped_id, false, 0, true);
 				list.push(rp);
 			}
 			
@@ -279,7 +284,7 @@
 					for(var j:int = 0; j < totalAmount; ++j){
 						if(ImageParser.settings.Content.Source[j].rank == i){
 							ranks.push(ImageParser.settings.Content.Source[j].@id);
-							//trace("found " + i + ", pushed " + ImageParser.settings.Content.Source[j].@id);
+							trace("found " + i + ", pushed " + ImageParser.settings.Content.Source[j].@id);
 							break;
 						}
 					}
@@ -658,12 +663,27 @@
 			blockerOn();
 			Tweener.addTween(cont_blocker_fullscreen, { delay: 1, onComplete: blockerOff } );
 		}
-		
-		private function photo_touch_fullscreen(e:TouchEvent):void{
+
+		private function photo_tapped(e:Event):void {
+			//trace("tapped!");
 			addChild(photo);
-			//photo.id = e.currentTarget.photoID;
-			photo.imitate_touchHandler();
+			//photo.imitate_touchHandler();
 			photo.visible = true;
+		}
+		
+		private function tapped_id(e:TouchEvent):void{
+			//trace(e.currentTarget.photoID);
+			photo.id = e.currentTarget.photoID;
+			
+			var result_point:Point = new Point();
+			var thumb_point:Point = new Point(e.currentTarget.photo.x, e.currentTarget.photo.y);
+			result_point = e.currentTarget.photo.localToGlobal(thumb_point);
+
+			photo.x = e.currentTarget.x;
+			photo.y = e.currentTarget.y;
+			trace(result_point.x);
+			trace(result_point.y);
+			e.currentTarget
 		}
 		
 		public function shadeOn():void {

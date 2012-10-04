@@ -25,6 +25,7 @@
 		private var iProcess:String;
 		private var iCredit:String;
 		private var iCopyright:String;
+		private var iRank:String;
 
 		//Other variables
 		private var _id:int;
@@ -110,6 +111,7 @@
 			iProcess = ImageParser.settings.Content.Source[_id - 1].process;
 			iCredit = ImageParser.settings.Content.Source[_id - 1].credit;
 			iCopyright = ImageParser.settings.Content.Source[_id - 1].copyright;
+			iRank = ImageParser.settings.Content.Source[_id - 1].rank;
 			
 			photo = new BitmapLoader();
 			addChild(photo);
