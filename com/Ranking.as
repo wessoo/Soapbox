@@ -737,10 +737,11 @@
 			blackOff();
 			photo.exitViewing();
 			Tweener.addTween(photo, {alpha: 0, time: 1, onComplete: function() { removeChild(photo); }});
-
 			Tweener.addTween(cont_toscreen, {alpha: 0, time: 0.5, onComplete: function() { removeChild(cont_toscreen); }});
+			Tweener.addTween(this, {delay: 1, onComplete: function() { removeChild(cont_exit_fullscreen);	}});
 
-			Tweener.addTween(this, {delay: 1.4, onComplete: function() { removeChild(cont_exit_fullscreen);	}});
+			blockerOn();
+			Tweener.addTween(cont_blocker_fullscreen, { delay: 1.4, onComplete: blockerOff } );
 		}
 
 		private function thumb_tapped(e:Event):void {
@@ -752,12 +753,15 @@
 			Tweener.addTween(cont_toscreen, {alpha: 1, time: 1, delay: 0.2})
 			photo.imitate_touchHandler();
 			
-			Tweener.addTween(this, {delay: 1.4, onComplete: function() {
+			Tweener.addTween(this, {delay: 1.7, onComplete: function() {
 				addChild(cont_exit_fullscreen);
 				addChild(cont_toscreen);
 				Tweener.addTween(cont_toscreen, {alpha: 1, time: 0.5})
 			}});
 			photo.visible = true;
+
+			blockerOn();
+			Tweener.addTween(cont_blocker_fullscreen, { delay: 1.7, onComplete: blockerOff } );
 		}
 		
 		private function tapped_id(e:TouchEvent):void{
@@ -773,7 +777,6 @@
 			
 			trace(photo.imgWidth);
 			trace(photo.imgHeight);
-
 		}
 		
 		public function shadeOn():void {

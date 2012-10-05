@@ -323,11 +323,6 @@
 		public function exitViewing():void {
 			Tweener.addTween(photo, {x: savedX, y: savedY, scaleX: savedScale, scaleY: savedScale, time: 1.5})
 			//blackOff();
-			blockerOn();
-			Tweener.addTween(cont_blocker_fullscreen, { delay: 1, onComplete: function() { 
-				blockerOff();
-				//dispatchEvent(new Event("activate_exitphoto", true));
-			}});
 			viewing = false;
 			//parent.removeChild(this);
 			//visible = false;
