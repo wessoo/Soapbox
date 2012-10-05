@@ -32,6 +32,7 @@
 		private var vy:Number = -446;
 		private var correctV:Number = 25;
 		private var bottomCorrection = 19;
+		private var touch_enabled:Boolean = false;
 		
 		//Flick variables
 		private var friction:Number = 0.955;
@@ -166,7 +167,8 @@
 				var rp:RankPhoto = new RankPhoto(i,ranks[i]);
 				rp.photoID = ranks[i];
 				rp.blobContainerEnabled = true;
-				rp.addEventListener(TouchEvent.TOUCH_TAP, tapped_id, false, 0, true);
+				rp.addEventListener(TouchEvent.TOUCH_UP, tapped_id, false, 0, true);
+				rp.addEventListener(TouchEvent.TOUCH_DOWN, touch_down_id, false, 0, true);
 				rp.addEventListener(GestureEvent.GESTURE_DRAG , dragHandler, false, 0, true);
 				rp.addEventListener(GestureEvent.GESTURE_FLICK, flickHandler, false, 0, true);
 				list.push(rp);
@@ -406,6 +408,7 @@
 		/* ------------------------------------------- */
 		private function dragHandler(e:GestureEvent):void
 		{
+			touch_enabled = false;
 			var paddingH1:Number = ((vheight - list[0].height * 2)/3) + list[0].height/2;
 			if (! tweening)
 			{
@@ -576,6 +579,7 @@
 		}
 		
 		private function flickHandler(e:GestureEvent):void{
+			touch_enabled = false;
 			dy = e.velocityY
             addEventListener(Event.ENTER_FRAME, onEnterFrameHandler);
 		}
@@ -746,37 +750,45 @@
 
 		private function thumb_tapped(e:Event):void {
 			//trace("tapped!");
-			blackOn();
-			addChild(photo);
-			addChild(cont_toscreen);
-			Tweener.addTween(photo, {alpha: 1, time: 1, delay: 0.2});
-			Tweener.addTween(cont_toscreen, {alpha: 1, time: 1, delay: 0.2})
-			photo.imitate_touchHandler();
-			
-			Tweener.addTween(this, {delay: 1.7, onComplete: function() {
-				addChild(cont_exit_fullscreen);
+			if(touch_enabled){
+				blackOn();
+				addChild(photo);
 				addChild(cont_toscreen);
-				Tweener.addTween(cont_toscreen, {alpha: 1, time: 0.5})
-			}});
-			photo.visible = true;
-
-			blockerOn();
-			Tweener.addTween(cont_blocker_fullscreen, { delay: 1.7, onComplete: blockerOff } );
+				Tweener.addTween(photo, {alpha: 1, time: 1, delay: 0.2});
+				Tweener.addTween(cont_toscreen, {alpha: 1, time: 1, delay: 0.2})
+				photo.imitate_touchHandler();
+				
+				Tweener.addTween(this, {delay: 1.7, onComplete: function() {
+					addChild(cont_exit_fullscreen);
+					addChild(cont_toscreen);
+					Tweener.addTween(cont_toscreen, {alpha: 1, time: 0.5})
+				}});
+				photo.visible = true;
+	
+				blockerOn();
+				Tweener.addTween(cont_blocker_fullscreen, { delay: 1.7, onComplete: blockerOff } );
+			}
+		}
+		
+		private function touch_down_id(e:TouchEvent):void{
+			touch_enabled = true;
 		}
 		
 		private function tapped_id(e:TouchEvent):void{
+			if(touch_enabled){
 			//trace(e.currentTarget.photoID);
-			photo.id = e.currentTarget.photoID;
-			
-			var result_point:Point = new Point();
-			var thumb_point:Point = new Point(e.currentTarget.photo.x, e.currentTarget.photo.y);
-			result_point = e.currentTarget.photo.localToGlobal(thumb_point);
-
-			photo.x = -600;
-			photo.y = -400;
-			
-			trace(photo.imgWidth);
-			trace(photo.imgHeight);
+				photo.id = e.currentTarget.photoID;
+				
+				var result_point:Point = new Point();
+				var thumb_point:Point = new Point(e.currentTarget.photo.x, e.currentTarget.photo.y);
+				result_point = e.currentTarget.photo.localToGlobal(thumb_point);
+	
+				photo.x = -600;
+				photo.y = -400;
+				
+				trace(photo.imgWidth);
+				trace(photo.imgHeight);
+			}
 		}
 		
 		public function shadeOn():void {

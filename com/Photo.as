@@ -283,6 +283,7 @@
 		}
 
 		private function touchHandler(e:TouchEvent):void{
+			trace("hi");
 			if(!viewing){
 				//COLLECT DATA
 
