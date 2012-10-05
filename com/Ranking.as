@@ -166,7 +166,7 @@
 				var rp:RankPhoto = new RankPhoto(i,ranks[i]);
 				rp.photoID = ranks[i];
 				rp.blobContainerEnabled = true;
-				rp.addEventListener(TouchEvent.TOUCH_UP, tapped_id, false, 0, true);
+				rp.addEventListener(TouchEvent.TOUCH_TAP, tapped_id, false, 0, true);
 				rp.addEventListener(GestureEvent.GESTURE_DRAG , dragHandler, false, 0, true);
 				rp.addEventListener(GestureEvent.GESTURE_FLICK, flickHandler, false, 0, true);
 				list.push(rp);
