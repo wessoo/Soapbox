@@ -112,6 +112,8 @@
 
 			//shader
 			shader = new Shade();
+			shader.x = -2.7;
+			shader.y = 4.6;
 			cont_shader = new TouchSprite();
 			cont_shader.addChild(shader);
 			shader.alpha = 0;
