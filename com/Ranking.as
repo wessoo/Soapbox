@@ -165,7 +165,10 @@
 			{
 				var rp:RankPhoto = new RankPhoto(i,ranks[i]);
 				rp.photoID = ranks[i];
+				rp.blobContainerEnabled = true;
 				rp.addEventListener(TouchEvent.TOUCH_UP, tapped_id, false, 0, true);
+				rp.addEventListener(GestureEvent.GESTURE_DRAG , dragHandler, false, 0, true);
+				rp.addEventListener(GestureEvent.GESTURE_FLICK, flickHandler, false, 0, true);
 				list.push(rp);
 			}
 			
@@ -325,7 +328,7 @@
 					for(var j:int = 0; j < totalAmount; ++j){
 						if(ImageParser.settings.Content.Source[j].rank == i){
 							ranks.push(ImageParser.settings.Content.Source[j].@id);
-							trace("found " + i + ", pushed " + ImageParser.settings.Content.Source[j].@id);
+							//trace("found " + i + ", pushed " + ImageParser.settings.Content.Source[j].@id);
 							break;
 						}
 					}
